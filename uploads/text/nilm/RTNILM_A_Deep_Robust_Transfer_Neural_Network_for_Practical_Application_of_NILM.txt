@@ -1,0 +1,1075 @@
+IEEE TRANSACTIONS ON INDUSTRIAL INFORMATICS
+1
+RTNILM: A Deep Robust Transfer Neural
+Network for Practical Application of NILM
+Xiaohua Pan, Linhui Ye
+, Deyu Weng
+, Jinyin Chen
+, and Jianwei Yin
+, Senior Member, IEEE
+Abstract—Nonintrusive
+load
+monitoring
+(NILM)
+has
+emerged as a pivotal technology in energy management,
+garnering signiﬁcant attention in both research and engi-
+neering communities. Despite its potential, conventional
+NILM methods often exhibit limitations in addressing crit-
+ical challenges such as domain shift, new appliance de-
+tection, and noise interference, thereby hindering their
+practical application. To overcome these limitations, we
+propose meta-learning named deep robust transfer neural
+network (RTNILM), a novel framework that simultaneously
+addresses these challenges while signiﬁcantly enhancing
+NILM performance in real-world scenarios. The RTNILM
+framework incorporates several innovative components:
+ﬁrst, an optimized deep, wide, and robust network archi-
+tecture is derived through neural architecture search from
+source domain data set; second, pretrained with optimized
+general end-to-end loss to acquire a general appliance
+recognition ability and enhance the model’s robustness;
+third, further trained with model-agnostic meta-learning
+strategy to improve the model’s generalization on the tar-
+get domain data set; fourth, by comparing the similarities
+between features from new appliances and known appli-
+ances, achieve new appliance detection. Extensive exper-
+imental evaluations across three public datasets and one
+self-collected dataset demonstrate the superiority of RT-
+NILM in cross-domain recognition, new appliance detec-
+tion, and noise interference. The average improvement in
+accuracy of cross domain appliance recognition, new ap-
+pliance detection, and noise interference compared to other
+methods exceeded 10% , 20% , and 5% , respectively.
+Index Terms—Cross-domain, metric learning, model-
+agnostic meta-learning (MAML), nonintrusive load monitor-
+ing (NILM), robustness.
+I. INTRODUCTION
+I
+N RECENT years, amid rapid economic and social devel-
+opment, the global energy demand has shown sustained
+growth [1]. This not only forces serious challenges to the
+Received 27 November 2024; revised 26 March 2025; accepted 2
+May 2025. Paper no. TII-24-6312. (Corresponding author: Deyu Weng.)
+Xiaohua Pan, Linhui Ye, and Deyu Weng are with the Soft-
+ware Innovation Laboratory, Binjiang Institute of Zhejiang Univer-
+sity, Hangzhou 310051, China (e-mail: panxh@zju-bj.com; yelin-
+hui@zju-bj.com; wengdeyu@zju-bj.com).
+Jinyin Chen is with the Institute of Cyberspace Security, College of
+Information Engineering, Zhejiang University of Technology, Hangzhou
+310023, China (e-mail: chenjinyin@zjut.edu.cn).
+Jianwei
+Yin
+is
+with
+the
+College
+of
+Computer
+Science
+and
+Technology, Zhejiang University, Hangzhou 310058, China (e-mail:
+zjuyjw@cs.zju.edu.cn).
+Digital Object Identiﬁer 10.1109/TII.2025.3574351
+efﬁciency and reliability of traditional power grids [2] but
+also increases CO2 emission, leading to the intensiﬁcation of
+global warming. By decomposing individual appliance power
+consumption from aggregated electrical data, nonintrusive load
+monitoring (NILM) enables precise management of residential
+electricity usage and optimizes energy consumption, thereby
+reducing CO2 emissions and contributing to environmental
+preservation.
+In the past few years, various NILM methods have been
+developed. Converting data into 2-D images [3], [4], feature
+representation [5], [6], [7], [8], [9], and model design [10],
+[11], [12] are commonly used techniques in load classiﬁcation.
+Chen et al. [5] proposed a scale and context-aware convolu-
+tional model for load identiﬁcation by integrating multiscale
+and contextual information from electrical data. Guo et al. [6]
+achieved better load identiﬁcation results with discrete wavelet
+transform and active deep learning. Yu et al. [13] extracted
+multitime-scale current shapelets to recognize appliances based
+on ensembled classiﬁers and achieved good classiﬁcation
+effects.
+More recently, considering the practical application of NILM
+methods, lightweight [14], [15], [16], [17] and scalable [18],
+[19] methods have also caught the attention of researchers.
+Lei et al. [17] proposed a lightweight neural network named
+NILM-LANN with several tricks to deepen the network while
+maintain a small number of parameters. The proposed method
+was successfully deployed in a embedding device and achieved
+excellent results on three different dataset. Futhermore, Athana-
+soulias et al. [16] designed a novel pretraining deep network
+compression strategy in the area of NILM based on L1 norm.
+Theproposedmethodgreatlyreducedthemodelparameterswith
+negligible performance degradation.
+Unfortunately, there are still some practical issues that need
+to be fully addressed in the real world.
+1) Robustness to power grid noise [20]: The model’s robust-
+ness to noise in the power grid is insufﬁciently discussed,
+even though noise is common in the grid.
+2) Detection of new appliance type [11]: With a wide variety
+of appliance types, models may encounter appliances that
+are not learned during training, causing misclassiﬁcation
+in practical applications.
+3) Model performance degradation caused by domain
+shift [21]: Differences in electrical data for appliances
+across different brands, users have a distribution gap
+between source and target domain datasets, leading to
+reduced model performance on the target domain.
+1941-0050 © 2025 IEEE. All rights reserved, including rights for text and data mining, and training of artiﬁcial intelligence and similar technologies.
+Personal use is permitted, but republication/redistribution requires IEEE permission. See https://www.ieee.org/publications/rights/index.html
+for more information.
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+2
+IEEE TRANSACTIONS ON INDUSTRIAL INFORMATICS
+Someoftheconcernsmentionedabovehavebeenaddressedin
+recent studies. For example, Fazio et al. [20] proposed a method
+to manage the off-state noise and improve model performance.
+Xiao et al. [11] leveraged a one-class classiﬁcation model to
+achievethedetectionofnewapplianceswithcompoundfeatures.
+Solutions [21], [22] that resort to meta-learning [23] have been
+proven effective in recent years. Wang et al. [22] ﬁrst applied
+model-agnostic meta-learning (MAML) in NILM. Combined
+with ensemble learning, the model achieved better performance
+with minimal samples in new tasks. However, trained with
+cross-entropy loss, the traditional MAML methods are incapable
+of detecting new appliances. Luo et al. [21] proposed a method
+for practical NILM via metric-based meta-learning, which im-
+proved the model performance across different domains. How-
+ever, existing methods can only address one or two concerns, and
+cannot simultaneously solve the three aforementioned problems.
+It should be noted that robustness, new appliance recognition,
+and domain transformation are common problems in practical
+application scenarios that need to be solved. The performance
+of the above methods in the application process is limited.
+To address the above issues simultaneously and improve the
+effectiveness of NILM in practical applications, a new NILM
+framework based on neural architecture search (NAS), opti-
+mized generalized end-to-end (OGE2E) loss, and meta-learning
+named deep robust transfer neural network (RTNILM) is pro-
+posed for practical NILM applications. The innovation of this
+framework lies in the following aspects.
+1) To the best of authors’ knowledge, this is the ﬁrst frame-
+work in NILM that enables a model to simultaneously
+possess robustness, new appliance recognition, and cross-
+domain capabilities.
+2) We have enhanced the generalized end-to-end (GE2E)
+loss function to develop the OGE2E loss function and
+integrated it with the NAS framework, thereby further
+strengthening the model’s feature extraction capabilities
+and imbuing it with robustness.
+3) By combining MAML with metric learning, we have
+achieved superior cross-domain capabilities compared to
+existing works.
+The speciﬁc workﬂow of RTNILM is as follows: an optimal
+sequential architecture constructed with predeﬁned CNN blocks
+is obtained using a differentiable NAS algorithm. Then, pretrain-
+ing the model on the source domain dataset with OGE2E loss
+to enlarge the distances between features of different types and
+enhance model robustness. In the end, to address new appliance
+detection and domain shift problems, the model is further trained
+with OGE2E loss and MAML strategy.
+The main contributions of this work can be summarized as
+follows.
+1) A new NILM framework named RTNILM based on NAS,
+OGE2E loss, and meta-learning is proposed to deal with
+the problems of noise interference, new appliance detec-
+tion, and domain shift simultaneously in practical NILM.
+2) The proposed method ﬁrst combines metric learning with
+MAML training strategy achieves a better performance
+than regular metric-based meta-learning with only a few
+ﬁne-tuning steps and samples while is capable of identi-
+fying new appliances.
+3) An OGE2E loss consisting of GE2E loss and spectral
+norm (SN) regularization is proposed not only to obtain
+discriminative features but also to force the model under
+Lipschitz constraint and enhance model robustness.
+4) Extensive experiments are carried out in this article with
+four different datasets to prove the effectiveness of the
+proposed method in cross-domain recognition, new ap-
+pliance detection, and antinoise ability.
+Compared with three SOTA methods in NILM, the superiority
+of the proposed method is further veriﬁed.
+The rest of this article is organized as follows. The proposed
+method and practical NILM framework are elaborated in Sec-
+tion II. The experimental results across four different datasets
+are demonstrated and analyzed in Section III. Finally, Section IV
+concludes this article.
+II. METHODOLOGY
+The concepts of the proposed RTNILM contain the following
+parts:
+1) robust architecture learning;
+2) MAML pertaining and ﬁne-tuning;
+3) loss function and regularization.
+The details are elaborated as follows. The overall framework
+of RTNILM is demonstrated in Fig. 1.
+A. Robust Architecture of RTNILM
+The robustness of the models needs to be discussed in NILM,
+as noise in the power grid is common. Increasing the depth and
+width of deep learning models is a common approach to enhance
+the robustness [24]. However, randomly stacking networks can
+complicate model optimization and increase complexity, which
+may degrade performance. Thus, the differentiable NAS named
+DARTS [25] is introduced to learn the model’s optimal archi-
+tecture for robust NILM automatically.
+DARTS [25] is currently one of the most practical NAS
+algorithms. Instead of searching for the optimal combination
+of network parameters, DARTS searches the optimal network
+from the predeﬁned network blocks. DARTS aims to select the
+best-performing combination of these predeﬁned blocks on the
+validation dataset based on the global network architecture.
+The proposed method deﬁnes the global architecture based
+on the sequential connection of CNN blocks, as depicted in
+Fig. 1 where Blocks 1 to Block n are candidate blocks and
+represent the whole search space. The predeﬁned blocks in this
+article are shown in Table I. The internal structures of StackConv
+and DilConv are standard residual blocks. StackConv refers
+to the stacked CNN with an expansion factor to increase the
+network’s width. DilConv represents dilated CNN, where the
+dilation coefﬁcient is set to 2 across different kernel sizes.
+The advantages of a sequential CNN architecture used in this
+article are as follows.
+1) CNN is faster in training and has better robustness com-
+pared to RNN [26].
+2) CNN is easy to expand in depth and width to achieve
+better robustness and resist noise interference.
+3) Sequential structures have fewer parameters and are eas-
+ier to train compared to parallel structures.
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+PAN et al.: RTNILM: A DEEP ROBUST TRANSFER NEURAL NETWORK FOR PRACTICAL APPLICATION OF NILM
+3
+Fig. 1.
+Illustration of the proposed RTNILM. The proposed NILM framework can be divided into three components: NAS, pretrain, and MAML
+ﬁne-tuning. At ﬁrst, the optimal network architecture is obtained with a differentiable NAS. Then, the model is pretrained on a fully supervised
+source domain dataset. In the end, the pretrained model is ﬁne-tuned with the MAML training strategy. The data preparation and task generation
+are depicted on the left. On the right, the visualization of OGE2E loss and testing stage are depicted.
+TABLE I
+PREDEFINED CNN BLOCKS OF RTNILM
+The speciﬁc search process of DARTS can be represented
+as follows. Suppose S is the search space containing predeﬁned
+network blocks. Therefore, the output of each layer in the overall
+architecture can be represented as follows:
+xi+1 =
+
+s∈S
+exp(αi
+s)
+
+s′∈S exp(αi
+s′)s(xi)
+(1)
+where xi is the input to the ith layer of the network, s(xi)
+represents the output of block s in ith layer, αi
+s denotes the
+architecture parameters of block s in ith layer. xi+1 is the output
+of the weighted sum of each block, where the weights are αi
+s con-
+strained via softmax function. The architecture search process
+consists of two steps: in the ﬁrst step, the network parameters w
+are updated using training set with ﬁxed architecture parameters.
+In the second step, the architecture parameters αi
+s are updated
+based on the loss of the validation set. Once the model converges,
+the optimal block in each layer is selected based on the largest
+softmax weights. The objective of the architecture search is
+to minimize the validation set loss, achieved by updating the
+network and architecture parameters successively. It can be
+described as follows:
+∇αLval (w −ϵ∇train(w, α), α)
+(2)
+where Lval is the validation loss, w and α represents the network
+parameters respectively, ϵ is the learning rate in the ﬁrst step
+update. To enhance the efﬁciency of DARTS, only one step of
+network parameter update is performed at each epoch.
+B. MAML Training in RTNILM
+MAML is an optimization-based meta-learning strategy that
+includes a two-step updating process with inner and outer loops.
+In the inner loop, the model parameters are updated using
+support set samples. In the outer loop, the model updates meta-
+knowledge with query set loss. The update strategy of MAML
+during the training stage is as follows:
+θ∗= argmin
+θ
+E(x,y)∈DS∼MT rL (x, y; θ, w)
+(3)
+w∗= argmin
+w
+E(x,y)∈DQ∼MT rL (x, y; θ∗(w))
+(4)
+where MT r = {T1, T2, . . ., T3} denotes the meta-training set,
+which consists of multiple appliance recognition tasks. The
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+4
+IEEE TRANSACTIONS ON INDUSTRIAL INFORMATICS
+parameter θ represents the task-speciﬁc network parameters
+and w represents the learned meta-knowledge, acting as the
+initialization parameters for each task. The objective of MAML
+is to train the model through various tasks and obtain the opti-
+mal initialization parameters (meta-knowledge), that allow the
+model to perform well on new tasks with only several ﬁne-tuning
+steps on a few samples.
+MAML has also been explored in the NILM [22]. However,
+extensive data is required for training, and new appliance types
+with cross-entropy loss are unable to be recognized. Different
+from [22], this article combines metric-learning loss GE2E
+(introduced in the following section) with the MAML training
+strategy, improving model performance on different domains
+while ensuring feature discrimination. Furthermore, trained with
+GE2E loss, the model is also capable of recognizing new appli-
+ances and better aligns with practical NILM applications.
+C. OGE2E Loss
+To better obtain discriminative and noise-insensitive features,
+an integrated loss function named OGE2E loss is proposed,
+which consists of GE2E loss and SN regularization.
+1) GE2E Loss: To capture the similarity relationship be-
+tween a batch of sample data, the GE2E loss [27] is introduced
+to broaden the distances between different classes and gather
+samples among the same class. GE2E loss covers the whole
+batch of the dataset with the maximum usage of data, the loss
+of a single sample can be represented as
+L(eij) = Vij,i −log
+N
+
+k=1
+exp(Vij,k)
+(5)
+where eij is the embedding feature of the jth sample in ith
+class. V ∈RM×N is the similarity matrix, where M represents
+the sample number of a single batch, and N is the number of
+classes. In this way, Vij,i is the scaled cosine similarity between
+eij and the centroid of the ith class. The scaled cosine similarity
+can be represented as
+Vij,k = w cos(eij, ck) + b
+(6)
+where ck is the centroid of the kth class, w and b are learnable
+parameters. Thus, the total loss of GE2E can be derived as
+LGE2E =
+
+i,j
+L(eij) =
+
+i,j
+Vij,i −log
+N
+
+k=1
+exp(Vij,k).
+(7)
+GE2E loss acts to reduce the distance of samples within the
+same class and increase the distance of samples from different
+classes by optimizing a batch of samples rather than pairs. In this
+way, the cluster of each class is gathered, and the new appliance
+data will be isolated beyond them. Meanwhile, the separated loss
+of GE2E generates more discriminative features and improves
+the model performance of appliance recognition.
+2) SN Regularization: SN regularization [28] is a technique
+that enables deep learning models to approximately achieve the
+Lipschitz constraint. The condition of the Lipschitz constraint
+is as follows:
+||f(x + ξ) −f(x) ≤C||(x + ξ) −x||
+(8)
+Fig. 2.
+Data collecting device of the proposed dataset in the laboratory.
+where f(·) is the model, C represents the Lipschitz constant
+that is determined by the model parameters. || · || is the L2 norm
+and ξ is a random noise. The inequality can be interpreted as
+when the model input is disturbed by a tiny random noise ξ, the
+L2 norm of perturbation between outputs should be less than
+or equal to C times the L2 norm of noise ξ. This means the
+Lipschitz constant C controls the robustness of the model f(·).
+Without loss of generality, suppose f(·) is a fully connected
+layer. The 8 can be simpliﬁed as
+||f(x + ξ) −f(x)||
+||ξ||
+= ||W(x + ξ) + b −(Wx + b)||
+||ξ||
+= ||Wξ||
+||ξ||
+≤σ(W) = max
+ξ̸=0
+||Wξ||
+||ξ||
+(9)
+where W and b are parameters of the fully connected layer,
+σ(W) is the SN of matrix W, and controls the robustness of f(·).
+Therefore, the robustness of the f(·) is controlled by σ(W). By
+constraining the SN of each layer in the network, the model can
+approximately achieve the Lipschitz constraint and improve the
+model’s robustness.
+Thus, the proposed OGE2E loss used can be concluded as
+GE2E loss plus regularization of the SN
+LOGE2E = LGE2E + λ
+
+i
+σ(Wi)
+(10)
+where λ is a regularization parameter and i refers to the ith
+operation in the neural network.
+D. Conclude the Proposed RTNILM Framework
+The overall framework of RTNILM is depicted in Fig. 1. At
+ﬁrst, a deeper and wider neural network architecture is obtained
+via DARTS trained on the source domain dataset and OGE2E
+loss. A head CNN block in the front and linear layers in the end
+are frozen for better representations.
+After the optimal architecture is achieved, the model is pre-
+trained with the source domain dataset and OGE2E loss to fully
+leverage the supervised information. The pretrained model is
+further learned with the MAML training strategy and meta-
+training set. The data from tasks are randomly sampled from
+source domain dataset in this article. The MAML strategy helps
+the model to perform better in different domains with a few
+ﬁne-tuning steps and data samples. In training stage, the model
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+PAN et al.: RTNILM: A DEEP ROBUST TRANSFER NEURAL NETWORK FOR PRACTICAL APPLICATION OF NILM
+5
+updates the inner loop and outer loop by comparing the cosine
+similarity between query samples and support samples from
+different classes. In the testing stage, the model is ﬁne-tuned with
+support set samples in 5 steps using OGE2E loss. The ﬁnal labels
+of query set samples are determined with the highest similarity
+of support set samples.
+By adding SN regularization during the training process, the
+model approximately satisﬁes the Lipschitz constraint, reduc-
+ing sensitivity to small disturbances and noises. Experimental
+results in Section III prove that it can effectively improve the
+robustness of the model in NILM.
+III. EXPERIMENTS AND ANALYSIS
+To validate the effectiveness of the proposed RTNILM, ex-
+periments are conducted under the conditions of cross-domain,
+new appliance detection, and noise interference. The results
+are compared against other SOTA NILM methods to prove the
+superiority of the proposed method.
+A. Experimental Setup
+To increase the network’s depth and width, the number of
+input channels is set to 32 and the number of candidate blocks
+is 6. The balance ratio λ of SN regularization in OGE2E loss
+is set to 0.1. To avoid gradient explosion in the process of
+MAML training, gradient clipping is applied with the clipping
+norm of 10. The few-shot learning setup N-way K-shots is
+used in MAML training and testing. To better simulate the
+scenarios in practical applications, N is set to the size of the
+whole label space and K is set to 1, 3, and 5 to mimic the small
+sample scenario. The source domain and target domain datasets
+are divided into tasks for testing. To reduce randomness, 1000
+tasks are randomly selected from the target domain dataset for
+testing. All experiments use current signals as input data and are
+resampled to the length of 150.
+The comparative methods studied in this article are selected
+from the NILM area, which is related to our topic.
+1) SiameseNet [29]: SiameseNet is a metric-learning model
+and trained with contrastive loss in the form of sample
+pairs.
+2) AWRG [4]: AWRG transforms raw current data into an
+adaptive two-dimensional recurrence graph and updates
+the parameters of the graph and model simultaneously
+during training.
+3) FS-RelationNet [21]: FS-RelationNet is the ﬁrst appli-
+cation of metric-based meta-learning in NILM and is
+dedicated to solving the cross-domain problem.
+B. Dataset Description
+Four different datasets are used in the experiments in-
+cluding three publicly available datasets: PLAID 2018 [30],
+WHITED [31], and COOLL [32], along with a self-collected
+dataset.
+1) The submetered data of the PLAID dataset are used which
+includes a diverse range of household appliance data,
+with 17 types of appliances from 56 brands, totaling 1876
+records.
+2) The WHITED dataset includes appliance data from
+households and small industrial equipment. It features
+56 types of appliances from 131 brands, totaling 1339
+records.
+3) The COOLL dataset was collected from a university
+laboratory and includes 42 appliances of 12 types, totaling
+840 records.
+4) Thedataset proposedinthis articleconsists of 17common
+household appliance types, such as washing machines,
+refrigerators, desktop computers, and hairdryers.
+This dataset is collected in the laboratory with the collec-
+tive device and procedure shown in Fig. 2 under the sampling
+frequency of 6400 HZ. To enrich the dataset, appliances like
+washing machines, refrigerators, kettles, rice cookers, and ovens
+include multiple brands. All data were collected in Hangzhou,
+China, with a total of 5806 appliance records.
+C. Evaluation Metrics
+The accuracy and macro F1 score (F1) are adopted in this ar-
+ticle to evaluate the performance of different methods. Accuracy
+measures the overall predictive performance of the algorithm,
+and is calculated using the following expression:
+Acc = count
+N
+= 1
+N
+N
+
+n=1
+I(ˆyn = yn)
+(11)
+where N is the total number of data samples in the test dataset,
+I(·) is the indicator function, which outputs 1 when the input
+is true and 0 otherwise. ˆyn is the predicted labels and yn is the
+ground truth.
+The F1 score is the harmonic mean of precision and recall,
+balancing the model’s ability to predict and identify speciﬁc cat-
+egories. The precision and recall for the ith class are calculated
+using the following equations:
+Precision(i) =
+TP(i)
+TP(i) + FP(i)
+(12)
+Recall(i) =
+TP(i)
+TP(i) + FN(i)
+.
+(13)
+The F1-macro score is commonly used in multiclass tasks
+and represents the mean of the F1 scores across all classes
+F1-macro = 1
+C
+K
+
+i=1
+F1(i)
+= 1
+C
+K
+
+i=1
+2 ∗Precision(i) ∗Recall(i)
+Precision(i) + Recall(i)
+(14)
+where C represents the number of classes. For binary classiﬁca-
+tion, the F1 score is referred to as F1-micro, which corresponds
+to the F1 score for each class.
+In our experiments, F1-macro is used to evaluate multiclass
+classiﬁcation and F1-micro for binary classiﬁcation in new
+appliance detection. In experimental results without given eval-
+uation metrics, -/- represents accuracy/F1.
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+6
+IEEE TRANSACTIONS ON INDUSTRIAL INFORMATICS
+TABLE II
+EXPERIMENTAL RESULTS OF BRAND PERSPECTIVE.
+D. Cross Domain Recognition
+Following the experimental setup in [21], this experiment
+evaluates methods from brands and dataset perspectives. In
+practical applications, appliances of the same type may come
+from various brands leading to differences in modality and
+power in the same appliance type. Furthermore, the transfer
+between different datasets is also experimented to demonstrate
+the superiority of RTNILM.
+From the perspective of brands, one brand data of each appli-
+ance is sampled as the target domain dataset and the remaining
+data are combined as the source domain dataset. The setup is the
+same in the dataset perspective. It should be noted that the source
+and target domain datasets in this section share the same label
+space, the problem of label heterogeneity is discussed in the next
+section. As for task generation, all tasks are randomly selected
+from their respective datasets. Data from the same appliance
+in each task may come from different brands and datasets
+in training, corresponding to the most challenging generation
+technique described in [21]. To avoid randomness of the results,
+each experiment is repeated 10 times.
+To fairly comparison with comparative methods, SiameseNet
+is trained with meta-learning tasks to improve its performance
+on different domains. The AWRG is ﬁrst trained on the source
+domain dataset using cross-entropy loss and ﬁne-tunes the ﬁnal
+fully connected layer in the testing stage as shown in [21].
+1) Cross Domain Experiment in Brand Perspective: The ex-
+perimental results of brand perspective are demonstrated in
+Table II. It can be seen that when K is equal to 1, RTNILM
+does not achieve the best results for the extreme lack of data in
+OGE2E training. However, when K is greater than 1, there is a
+signiﬁcant steeper improvement in the performance compared
+to other methods. With K = 3 and 5, the proposed algorithm
+achieves an accuracy improvement of approximately 6% –11%
+over the second-best results proving its superiority. RTNILM
+signiﬁcantly enhances the performance of cross-brand appliance
+recognition and is effective in real-world scenarios. Both the
+meta-learning based SiameseNet and FS-RelationNet trained
+on pair-wise metric loss do not fully utilize the dataset, re-
+sulting in limited performance. RTNILM achieves much better
+performance with only 5 steps of ﬁne-tuning, compared to 30
+ﬁne-tuning steps required by the ﬁne-tuned AWRG. The results
+TABLE III
+EXPERIMENTAL RESULTS OF DATASET PERSPECTIVE.
+further demonstrate the effectiveness of the proposed OGE2E
+loss and MAML training strategy in NILM cross-domain
+applications.
+2) Cross Domain Experiment in Dataset Perspective: The
+results of cross-dataset experiments are demonstrated in
+Table III. Similar to the results of the cross-brand experiment,
+RTNILM achieves the best performance in cross-dataset
+experiments when shots are greater than 1. Meanwhile, the
+results of RTNILM outperform the second-best methods by
+approximately 10% over four datasets. Due to the diverse modal-
+ities across different brands of the PLAID dataset, the transfer
+performance in PLAID is lower compared to other datasets. Both
+the FS-RelationNet and ﬁne-tuned AWRG performed poorly in
+four testing datasets, especially on the PLAID and WHITED
+datasets because of diverse brands. Fine-tuned AWRG is hard
+to achieve a good result with only a few samples of ﬁne-tuning.
+FS-RelationNet that without a particular training strategy is
+hard to transfer learned relation metrics to different datasets.
+E. New Appliance Detection and Recognition
+In the practical application of NILM, the model needs to
+identify and recognize new appliances which means a heteroge-
+neous label space between the source domain and target domain
+dataset. In this section, the problem is divided into detection
+(binary classiﬁcation) and recognition (multiclass classiﬁca-
+tion). For simplicity, the above four datasets are combined to
+generate two datasets from different perspectives. 1) Appliance
+types dataset (AT dataset): considering each appliance type as
+a class which includes a total of 38 appliance types (one class
+containing different brands). 2) Individual appliance dataset (IA
+dataset): considering each appliance as a class includes a total of
+218 appliances (appliances from different brands are different
+classes). The IA dataset is expanded with a random sliding
+window to enrich the dataset. As for the IA dataset, the model is
+trained to recognize different appliances which is more suitable
+to real-life NILM.
+Both the label spaces of these two datasets are randomly
+divided into seen labels and unseen labels with a proportion
+of 70% and 30% of the entire label space, respectively. The data
+from seen labels and unseen labels are also denoted as close-set
+and open-set. The source domain dataset contains close-set data
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+PAN et al.: RTNILM: A DEEP ROBUST TRANSFER NEURAL NETWORK FOR PRACTICAL APPLICATION OF NILM
+7
+TABLE IV
+EXPERIMENTAL RESULTS OF NEW APPLIANCE DETECTION.
+only and the target domain dataset contains both close-set and
+open-set data with an equal proportion. In the experiment of new
+appliance detection, the model is trained with source domain
+dataset and the trained embeddings are recorded. Compare sim-
+ilarities between recorded embeddings and embeddings from
+the target domain dataset. If the biggest similarity is greater
+than the predeﬁned threshold, it is classiﬁed as seen appliance
+otherwise it is new. The new appliance recognition experiment
+furtheridentiﬁesthespeciﬁcclassofthedetectedseenappliance.
+Only the correctly detected data in the binary experiment are
+further recognized in the multiclass experiment. Meanwhile,
+the model performance of close-set and open-set in the target
+domain dataset is recorded separately to better visualize the
+model performance.
+This article divides the new appliance detection problem into
+two experiments due to the practical considerations of NILM
+applications: 1) It is common for each household to acquire
+new appliances over time. The binary classiﬁcation experiment
+thus evaluates the algorithm’s capability to actively discover
+new appliances, which facilitates user interaction and man-
+agement of these new devices. 2) The multiclass classiﬁcation
+experiment follows the binary classiﬁcation. Here, the model
+not only distinguishes new appliances but also identiﬁes them.
+After recognizing a new appliance, the model actively records
+its feature by storing it in the feature repository. This allows
+the model to perform multiclass classiﬁcation of new appliance
+types by extracting deep features from the model.
+1) Experiments of New Appliance Detection: The experi-
+ment results of new appliance detection of two datasets are
+shown in Table IV. In cases where the similarity between close-
+set and open-set data cannot be effectively distinguished, the
+accuracy for both sets should be close to 50% . It can be seen
+that SiameseNet and FS-RelationNet both perform poorly in two
+datasets which means they are not qualiﬁed to distinguish new
+appliances. Meanwhile, the proposed RTNILM still achieves the
+best results and the detection accuracy is near 90% , proving the
+effectiveness of OGE2E loss in feature separation and gathering.
+2) Experiments of New Appliance Recognition: The exper-
+imental results of new appliance recognition are presented in
+Table V. It can be seen that the proposed method achieves
+TABLE V
+EXPERIMENTAL RESULTS OF NEW APPLIANCE RECOGNITION.
+the best recognition results compared to SiameseNet and FS-
+RelationNet. The classiﬁcation results from the open-set sig-
+niﬁcantly improve as the shots increase. In both datasets, the
+performance is substantially higher than comparative methods
+and is close to 100% in close-set. The SiameseNetML is hard
+to learn discriminative features in the IA dataset because of
+the huge amount of classes. Meanwhile, compared to Siame-
+seNetML and FS-RelationNet, the correctly detected data size
+of RTNILM is bigger because of the excellent results in binary
+experiments. Thus, the accuracy of FS-RelationNet is higher 7%
+than RTNILM in the 1-shot experiment.
+The experimental results in Section III-D prove that RTNILM
+is capable of detecting and recognizing new appliances under
+limited data samples, further proving the effectiveness of RT-
+NILM in practical NILM applications.
+F. Appliance Recognition Under Noise Interference
+In this section, the robustness of the RTNILM model is
+evaluated under noisy conditions. In real-world power grids, the
+collected electrical data often contain signiﬁcant noise, which
+can affect the accuracy of appliance recognition. To simulate the
+impact of noise on the model’s performance, this section extends
+the experiments conducted in Section III-D by introducing three
+types of noise into the target domain dataset: Gaussian noise, im-
+pulse noise, and power grid background noise collected from the
+power grid when there is no appliances are active. These noises
+are applied with signal-to-noise ratios (SNRs) ranging from −30
+to 50, and the corresponding accuracy is recorded. Since obtain-
+ing actual power grid noise data is challenging, Gaussian noise
+is used to simulate random ﬂuctuations in the grid, impulse noise
+is employed to mimic sudden current changes, and the collected
+power grid background noise is utilized to represent real-world
+noise conditions in the power grid. In this article, the Gaussian
+noise is generated from a normal distribution with a mean of
+0 and a nonﬁxed variance. The impulse noise is introduced
+with a ratio of 0.04, and its amplitude varies according to the
+SNR.
+In addition, the contribution of each component in RTNILM is
+evaluated with an ablation study under noise interference. The
+IA dataset with more data samples is experimented to better
+illustrate the accuracy-SNR curves. Meanwhile, the robustness
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+8
+IEEE TRANSACTIONS ON INDUSTRIAL INFORMATICS
+Fig. 3.
+Robust experiment results of (a) new appliance detection, (b) close-set recognition, and (c) open-set recognition under Gaussian noise.
+Fig. 4.
+Robust experiment results of (a) new appliance detection, (b) close-set recognition, and (c) open-set recognition under impulse noise.
+Fig. 5.
+Robust experiment results of (a) new appliance detection, (b) close-set recognition, and (c) open-set recognition under power grid
+background noise.
+of cross-domain performance is also considered because of new
+appliance recognition. The results of appliance detection and
+appliance recognition of close-set and open-set are recorded.
+1) Experiment of Robustness and Ablation Study: The
+accuracy-SNR curves of RTNILM, FS-RelationNet, RTNILM
+without sn (SN regularization), and RTNILM without NAS of
+three different noises are shown in Figs. 3 –5, respectively. From
+the overall results, it can be observed that RTNILM signiﬁcantly
+outperforms FS-RelationNet under various types of noise and
+different SNRs. Under different noise interferences, RTNILM
+demonstrates its ability to resist noise and achieve rising accu-
+racy in both close-set recognition and open-set recognition at
+SNRs of −20 dB and −10 dB. In contrast, FS-RelationNet only
+begins to show performance improvement at SNRs of 0 dB and
+10 dB. In addition, the SNR at which RTNILM’s performance
+starts to converge is much lower than that of FS-RelationNet,
+further proving the effectiveness and superiority of RTNILM
+in combating noise. Through comparisons with RTNILM under
+different types of noise and SNRs, it is further demonstrated
+that the OGE2E metric loss adopted by RTNILM can better
+aggregate samples of the same class, resulting in model features
+that are less sensitive to noise. In the ablation study of NAS, the
+model architecture is constructed with human experiences via
+the predeﬁned blocks. Comparing the results of RTNILM and
+RTNILM without sn and NAS, the curves are moving to the large
+side of SNR in the ablation study and the ﬁnal results are lower
+than RTNILM. It proves the effectiveness of SN regularization
+and learned optimal architecture in counteracting noise and
+appliance recognition.
+Besides, a toy noisy dataset collected in a real household from
+a power grid is used to quantify the performance of robustness.
+Different from the collective device in the laboratory, the data
+acquisition equipment is connected to the power bus directly.
+Thus, the collected data in the household is more inclined to
+be interfered by noises in the power system. The real collected
+toy noisy dataset includes household appliances Hood, washing
+machine, water heater, water kettle, and water dispenser. The
+comparative example of Hood in the noisy dataset and the data
+collected in the lab is shown in Fig. 6. It can be seen that
+there is a lot of high-frequency noise in real residential data
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+PAN et al.: RTNILM: A DEEP ROBUST TRANSFER NEURAL NETWORK FOR PRACTICAL APPLICATION OF NILM
+9
+Fig. 6.
+Comparison of the real residential power grid and proposed
+laboratory collected data of Hood.
+TABLE VI
+EXPERIMENTAL RESULTS OF THE REAL COLLECTED NOISY DATASET.
+compared to the lab data. The noisy dataset recognition results
+are demonstrated in Table VI (the models are from Section III-E
+of the IA dataset). It can be seen that RTNILM achieves the best
+performance in both accuracy and F1 score. The experiment
+of real collected noisy data further proves the robustness of
+RTNILM in practical NILM applications. The collective device
+illustration in the household is demonstrated in Fig. 7.
+2) Visualization and Analysis of Model’s Robustness: In this
+section, the robustness and performance of the model is further
+visualized. Speciﬁcally, data from 5 classes in the close-set
+and 3 classes in the open-set is randomly selected for data
+distribution visualization. To better demonstrate the distribution
+of data in high-dimensional space, this article projects data
+into 3-D using the tsne3D algorithm and visualizes data on a
+spherical surface. The visualization results of both close-set and
+open-set data are demonstrated in Fig. 8. It can be seen from
+the results that without noise, different classes of data features
+have better discriminability in RTNILM, which proves the ef-
+fectiveness of OGE2E loss in obtaining discriminative features.
+FS-RelationNet trained with mean square error resulting in an
+overlapped data distribution and poor recognition performance.
+To better demonstrate the ability of methods to resist noise,
+noise of 30 dB SNR is added and visualized together with clean
+data. It can be seen that with the noise of 30 dB, the noisy data
+are outside the original distribution in FS-RelationNet, which
+is consistent with the robustness results under different noises.
+While the noise data and the original data are distributed in the
+same location in RTNILM, further proves the robustness and
+superiority of the proposed algorithm against FS-RelationNet.
+Fig. 7.
+Data collecting device from the power line bus in the real
+household. Household electrical data is interfered with by background
+noise.
+G. Experiments of Parameter Sensitivity
+To better demonstrate the inﬂuence of different hyperparam-
+eters on the experimental results, the sensitivity experiments
+are conducted on parameters including the learning rate in the
+MAML inner loop training (denoted as task lr), the learning rate
+in the MAML outer loop training (denoted as meta lr), and the
+SN regularization parameter λ. The results are shown in Fig. 9.
+To investigate the inﬂuence of task lr and meta lr on model
+performance, the values are set from 1e−3 to 10e−2 and 1e−5
+and 10e−4, respectively, recording the accuracy in new appli-
+ance detection and appliance recognition on the IA dataset. The
+results of task lr and meta lr have the same trend of change. The
+experimental results indicate that when the task lr is from 1e−3
+to 1e−2 and the meta lr is from 1e−5 to 10e−4, the model’s
+performance remains stable and at its optimal level. However,
+when the learning rates continue to increase, the model’s per-
+formance signiﬁcantly declines and starts to ﬂuctuate. This
+indicates that the MAML training process is highly sensitive to
+the learning rate; excessively high learning rates can cause the
+model to deviate from the optimal range, leading to performance
+ﬂuctuations. Therefore, in practical applications, to ensure stable
+training, the task lr and meta lr should be set to a relatively small
+value, and the number of epochs can be appropriately increased
+to maintain the stability of model training.
+To investigate the impact of the SN regularization parameter
+on model performance, we vary it from 0.01 to 1, add noise with
+a ﬁxed SNR of 20 dB to the IA data set, and record accuracy
+on both clean and noisy IA datasets. The experimental results
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+10
+IEEE TRANSACTIONS ON INDUSTRIAL INFORMATICS
+Fig. 8.
+Visualization of embedding features in 3-D use of (a) RTNILM no noise, (b) RTNILM with noise, (c) FS-RelationNet no noise, and
+(d) FS-RelationNet with noise.
+Fig. 9.
+Sensitivity experiments of different parameters. (a) Task lr. (b) Meta lr. (c) Parameter of SN regularization.
+indicate that the model’s performance remains relatively stable
+on both noisy and clean datasets as the spectral regularization
+parameter changes. This stability is attributed to the use of
+the GE2E metric loss during model training. It can be seen
+from (7), that the second part of GE2E loss is log of the sum
+of multiple small values, the derivative of the second part of
+GE2E loss is the reciprocal of a small value. Therefore, in the
+process of backpropagation, gradient explosion is easy to occur.
+To prevent gradient explosion, a gradient clipping strategy was
+employedinboththepretrainingandMAMLtrainingstage(with
+a gradient clipping coefﬁcient of 3 during pretraining and 10
+during MAML training). Therefore, the gradient values updated
+at each step are close across different SN regularization param-
+eters, leading to stable model performance. Within this gradient
+clipping coefﬁcient, the SN regularization parameter can be
+selected from 0.01 to 1 and achieve good model performance.
+IV. CONCLUSION
+ThisarticlepresentsaninnovativesolutionforpracticalNILM
+named RTNILM to tackle the problems of robustness, new
+appliance detection, and cross-domain. At ﬁrst, the optimal
+components of a deep and wide neural network are obtained
+using DARTS. The model is pretrained to fully leverage the
+source domain dataset with OGE2E loss. After that, the MAML
+strategy is employed to ﬁne-tune and equip the model with
+the ability of cross-domain recognition. Extensive experiments
+across four datasets and three comparative methods proved the
+effectiveness and superiority of the proposed method in practical
+NILM.
+In the future, explorations toward one-shot learning will be
+made to improve the appliance recognition performance if only
+one data record is available. Techniques that stabilize the train-
+ing process of meta-learning will also be studied. Meanwhile,
+the best combination of gradient clipping coefﬁcients and SN
+regularization parameters will be explored.
+REFERENCES
+[1] “National statistics burean of China-the electrical consumption in recent
+years,” [Online]. Available: https://data.stats.gov.cn/easyquery.htm?cn=
+C01
+[2] L. Yan, W. Tian, J. Han, and Z. Li, “Event-driven two-stage solution to non-
+intrusive load monitoring,” Appl. Energy, vol. 311, 2022, Art. no. 118627.
+[3] J. Chen, X. Wang, X. Zhang, and W. Zhang, “Temporal and spectral
+feature learning with two-stream convolutional neural networks for ap-
+pliance recognition in NILM,” IEEE Trans. Smart Grid, vol. 13, no. 1,
+pp. 762–772, Jan. 2022.
+[4] A. Faustine, L. Pereira, and C. Klemenjak, “Adaptive weighted recurrence
+graphs for appliance recognition in non-intrusive load monitoring,” IEEE
+Trans. Smart Grid, vol. 12, no. 1, pp. 398–406, Jan. 2021.
+[5] K. Chen, Y. Zhang, Q. Wang, J. Hu, H. Fan, and J. He, “Scale-and context-
+aware convolutional non-intrusive load monitoring,” IEEE Trans. Power
+Syst., vol. 35, no. 3, pp. 2362–2373, May 2020.
+[6] L. Guo, S. Wang, H. Chen, and Q. Shi, “A load identiﬁcation method based
+on active deep learning and discrete wavelet transform,” IEEE Access,
+vol. 8, pp. 113932–113942, 2020.
+[7] E. Tabanelli, D. Brunelli, A. Acquaviva, and L. Benini, “Trimming feature
+extraction and inference for MCU-based edge NILM: A systematic ap-
+proach,”IEEETrans.Ind.Informat.,vol.18,no.2,pp. 943–952,Feb.2022.
+[8] Y. Liu, L. Bai, J. Ma, W. Wang, and W. Ouyang, “Self-supervised feature
+learning for appliance recognition in nonintrusive load monitoring,” IEEE
+Trans. Ind. Informat., vol. 20, no. 2, pp. 1698–1710, Feb. 2024.
+[9] Y. Han, H. Chen, J. Wu, and Q. Zhao, “Reconstruction-based supervised
+contrastive learning for unknown device identiﬁcation in nonintrusive load
+monitoring,” IEEE Trans. Instrum. Meas., vol. 73, 2024, Art. no. 2511313.
+[10] L. da Silva Nolasco, A. E. Lazzaretti, and B. M. Mulinari, “DeepDFML-
+NILM: A new CNN-based architecture for detection, feature extraction
+and multi-label classiﬁcation in NILM signals,” IEEE Sensors J., vol. 22,
+no. 1, pp. 501–509, Jan. 2022.
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+PAN et al.: RTNILM: A DEEP ROBUST TRANSFER NEURAL NETWORK FOR PRACTICAL APPLICATION OF NILM
+11
+[11] J. Xiao, M. Tan, R. Pan, Y. Su, T. Li, and Z. Xu, “Non-intrusive load
+identiﬁcation considering unknown load based on bi-modal fusion and
+one-class classiﬁcation,” IEEE Trans. Instrum. Meas., vol. 73, 2023,
+Art. no. 2504411.
+[12] E. L. de Aguiar, L. da Silva Nolasco, A. E. Lazzaretti, D. R. Pipa, and H.
+S. Lopes, “ST-NILM: A wavelet scattering-based architecture for feature
+extraction and multilabel classiﬁcation in NILM signals,” IEEE Sensors
+J., vol. 24, no. 7, pp. 10540–10550, Apr. 2024.
+[13] H. Yu, C. Xu, G. Geng, and Q. Jiang, “Multi-time-scale shapelet-based
+feature extraction for non-intrusive load monitoring,” IEEE Trans. Smart
+Grid, vol. 15, no. 1, pp. 1116–1128, Jan. 2024.
+[14] Z. Lu, Y. Cheng, M. Zhong, W. Luan, Y. Ye, and G. Wang, “LightNILM:
+Lightweight neural network methods for non-intrusive load monitoring,”
+in Proc. ACM Int. Conf. Syst. Energy-Efﬁcient Buildings Cities, Transp.,
+2022, pp. 383–387.
+[15] Y. Li, R. Yao, D. Qin, and Y. Wang, “Lightweight federated learning for on-
+device non-intrusive load monitoring,” IEEE Trans. Smart Grid, vol. 16,
+no. 2, pp. 1950–1961, Mar. 2025.
+[16] S. Athanasoulias, S. Sykiotis, N. Temenos, A. Doulamis, and N. Doulamis,
+“A pre-training pruning strategy for enabling lightweight non-intrusive
+load monitoring on edge devices,” in Proc. IEEE Int. Conf. Acoust. Speech
+Signal Process. Workshops, 2024, pp. 249–253.
+[17] Y. Lei, Z. Feng, X. Lin, D. Cao, and J. Zhang, “NILM-LANN: A
+lightweight attention-based neural network in non-intrusive load moni-
+toring,” in Proc. 27th Int. Conf. Comput. Supported Cooperative Work
+Des., 2024, pp. 181–186.
+[18] C. L. Athanasiadis, T. A. Papadopoulos, and D. I. Doukas, “Real-time non-
+intrusive load monitoring: A light-weight and scalable approach,” Energy
+Buildings, vol. 253, 2021, Art. no. 111523.
+[19] G. Tanoni, L. Stankovic, V. Stankovic, S. Squartini, and E. Principi,
+“Knowledge distillation for scalable nonintrusive load monitoring,” IEEE
+Trans. Ind. Informat., vol. 20, no. 3, pp. 4710–4721, Mar. 2024.
+[20] P. Fazio, M. Mehic, and M. Voznak, “Load monitoring and appliance
+recognition using an inexpensive, low frequency, data-to-image, neural
+network and network mobility approach for domestic IoT systems,” IEEE
+Internet Things J., vol. 11, no. 8, pp. 13961–13979, Apr. 2024.
+[21] Q. Luo, T. Yu, C. Lan, Y. Huang, Z. Wang, and Z. Pan, “A generaliz-
+able method for practical non-intrusive load monitoring via metric-based
+meta-learning,” IEEE Trans. Smart Grid, vol. 15, no. 1, pp. 1103–1115,
+Jan. 2024.
+[22] L. Wang, S. Mao, B. M. Wilamowski, and R. M. Nelms, “Pre-trained
+models for non-intrusive appliance load monitoring,” IEEE Trans. Green
+Commun. Netw., vol. 6, no. 1, pp. 56–68, Mar. 2022.
+[23] A. Vettoruzzo, M.-R. Bouguelia, J. Vanschoren, T. Rognvaldsson, and K.
+Santosh, “Advances and challenges in meta-learning: A technical review,”
+IEEE Trans. Pattern Anal. Mach. Intell., vol. 46, no. 7, pp. 4763–4779,
+Jul. 2024.
+[24] Z. Zhang and H. Peng, “Deeper and wider siamese networks for real-time
+visual tracking,” in Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit.,
+Jun. 2019, pp. 4586–4595.
+[25] H. Liu, K. Simonyan, and Y. Yang, “DARTS: Differentiable architecture
+search,” 2018, arXiv:1806.09055.
+[26] J. Chen et al., “RobustRMC: Robustness interpretable deep neural network
+for radio modulation classiﬁcation,” IEEE Trans. Cogn. Commun. Netw.,
+vol. 10, no. 4, pp. 1218–1240, Aug. 2024.
+[27] L. Wan, Q. Wang, A. Papir, and I. L. Moreno, “Generalized end-to-end loss
+for speaker veriﬁcation,” in Proc. IEEE Int. Conf. Acoust. Speech Signal
+Process., 2018, pp. 4879–4883.
+[28] Y. Yoshida and T. Miyato, “Spectral norm regularization for improving the
+generalizability of deep learning,” 2017, arXiv:1705.10941.
+[29] M. Yu, B. Wang, L. Lu, Z. Bao, and D. Qi, “Non-intrusive adaptive
+load identiﬁcation based on Siamese network,” IEEE Access, vol. 10,
+pp. 11564–11573, 2022.
+[30] R. Medico et al., “A voltage and current measurement dataset for plug
+load appliance identiﬁcation in households,” Sci. Data, vol. 7, no. 1, 2020,
+Art. no. 49.
+[31] M. Kahl, A. U. Haq, T. Kriechbaumer, and H.-A. Jacobsen, “Whited-a
+worldwide household and industry transient energy data set,” in Proc. 3rd
+Int. Workshop noN-Intrusive Load Monit., 2016, pp. 1–4.
+[32] T. Picon et al., “COOLL: Controlled on/off loads library, a public dataset
+of high-sampled electrical signals for appliance identiﬁcation,” 2016,
+arXiv:1611.05803.
+Xiaohua Pan is currently working toward the
+Ph.D. degree in computer science with the Col-
+lege of Computer Science and Technology, Zhe-
+jiang University, Hangzhou, China.
+He is currently a Head Researcher with the
+Software Innovation Laboratory, Binjiang Insti-
+tute, Zhejiang University. His research inter-
+est covers data mining, deep learning, Internet
+of Things technology, and their applications in
+industry.
+Linhui Ye received the master’s degree in elec-
+tronic information from the Zhejiang University
+of Technology, Hangzhou, China, in 2022.
+He is currently a Researcher with the Binjiang
+Institute, Zhejiang University, Hangzhou, China.
+His research interests include deep learning,
+data mining, digital signal processing, and ad-
+versarial attack and defense.
+Deyu Weng was born in Zhejiang, China, in
+1999. He received the B.S. degree in automa-
+tion from Lishui College, Lishui, China, in 2021
+and the M.S. degree in control science and tech-
+nonlogy from the Zhejiang University of Technol-
+ogy, Hangzhou, China, in 2024.
+He
+is
+currently
+an
+Algorithm
+Engineer
+with the Binjiang Institute, Zhejiang University,
+Hangzhou, China. His research interests in-
+clude deep learning, machine learning, and their
+applications in different ﬁelds.
+Jinyin Chen received the B.S. degree in com-
+puter science and the Ph.D. degree in control
+science and technonlogy from the Zhejiang Uni-
+versity of Technology, Hangzhou, China, in 2004
+and 2009, respectively.
+She studied evolutionary computing at the
+Ashikaga Institute of Technology, Ashikaga,
+Japan, in 2005 and 2006. She is currently a
+Professor with the Institute of Cyberspace Secu-
+rity and the College of Information Engineering,
+Zhejiang University of Technology. Her research
+interests include artiﬁcial intelligence security, graph data mining, and
+evolutionary computing.
+Jianwei Yin (Senior Member, IEEE) received
+the Ph.D. degree in computer science from
+Zhejiang University (ZJU), Hangzhou, China, in
+2001.
+He was a Visiting Scholar with the Georgia
+Institute of Technology, Atlanta, GA, USA. He
+is currently a Full Professor with the College
+of Computer Science, ZJU. Up to now, he has
+authored or coauthored more than 100 papers
+in top international journals and conferences.
+His current research interests include service
+computing, artiﬁcial intelligence, deep learning, and business process
+Management.
+Dr. Yin is currently an Associate Editor for IEEE TRANSACTIONS ON
+SERVICES COMPUTING.
+This article has been accepted for inclusion in a future issue of this journal. Content is final as presented, with the exception of pagination. 
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:42 UTC from IEEE Xplore.  Restrictions apply.

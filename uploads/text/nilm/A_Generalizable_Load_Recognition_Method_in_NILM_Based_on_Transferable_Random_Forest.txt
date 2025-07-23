@@ -1,0 +1,1324 @@
+IEEE TRANSACTIONS ON INSTRUMENTATION AND MEASUREMENT, VOL. 74, 2025
+6505312
+A Generalizable Load Recognition Method in
+NILM Based on Transferable Random Forest
+Zhongzong Yan , Pengfei Hao , Matteo Nardello , Member, IEEE, Davide Brunelli , Senior Member, IEEE,
+and He Wen , Senior Member, IEEE
+Abstract—Practical applications of nonintrusive load monitor-
+ing (NILM) require load recognition models that generalize to
+unseen data from new houses and operate eﬃciently on edge
+devices. However, existing NILM approaches, particularly deep
+learning (DL) models, are computationally intensive and prone
+to performance degradation when deployed to new houses due to
+domain shifts. To address these challenges, this article proposes a
+weighted transferable random forest (WTRF) approach for load
+recognition. Based on the random forest (RF) framework, WTRF
+incorporates a transfer learning (TL) mechanism to swiftly adapt
+the model to new houses using only one to three labeled samples
+per appliance. The model is lightweight, with a memory size
+under 300 kB. Case studies on three datasets demonstrate its
+eﬀectiveness, including a macro F1-score of 97.0% ± 2.6% when
+transferring from PLAID to WHITED, a signiﬁcant improvement
+over 5.7% ± 1.7% achieved by source-only models. Deployed
+on a Raspberry Pi 4, WTRF achieves update times as low
+as 3.1 ± 0.3 s and testing times of approximately 3 ms per
+house. These results highlight WTRF’s eﬃciency in address-
+ing domain shifts and its suitability for real-time NILM in
+resource-constrained edge environments.
+Index Terms—Load recognition, nonintrusive load monitoring
+(NILM), random forest (RF), transfer learning (TL).
+I. INTRODUCTION
+U
+NDERSTANDING energy usage is essential for opti-
+mizing energy management and ultimately promoting
+more eﬃcient energy consumption [1]. Smart grids enhance
+energy strategies by utilizing smart meters to collect data
+and provide real-time feedback on users’ energy consumption.
+Appliance-level feedback allows users to monitor individual
+devices and make timely adjustments, signiﬁcantly improving
+energy eﬃciency [2]. Pilot studies have reported that providing
+appliance-level feedback can reduce electricity consumption
+by 15% to 40% across dozens of monitored devices [3].
+To achieve these goals, a straightforward approach to mon-
+itoring appliance energy usage is to install a measurement
+Received 4 February 2025; revised 31 March 2025; accepted 27 April
+2025. Date of publication 15 May 2025; date of current version 3 June 2025.
+This work was supported by State Grid Jiangxi Electric Power Company
+Ltd., through Researching Key Science and Technology Projects under Grant
+521852230006. The Associate Editor coordinating the review process was
+Dr. Yau Chung. (Corresponding author: He Wen.)
+Zhongzong Yan, Pengfei Hao, and He Wen are with the College of
+Electrical and Information Engineering, Hunan University, Changsha 410012,
+China
+(e-mail:
+yanzhongzong@hnu.edu.cn;
+haopengfei0408@126.com;
+he wen82@126.com).
+Matteo Nardello and Davide Brunelli are with the Department of
+Industrial Engineering, University of Trento, 38123 Trento, Italy (e-mail:
+matteo.nardello@unitn.it; davide.brunelli@unitn.it).
+Data is available on-line at https://github.com/zhz-yan/TRFNILM
+Digital Object Identiﬁer 10.1109/TIM.2025.3570355
+sensor for each device [4]. However, this method is costly
+and impractical for large-scale deployment due to extensive
+hardware requirements. As an alternative, a technique known
+as nonintrusive load monitoring (NILM) was proposed by Har
+[5]. NILM aims to identify the operational states and energy
+consumption of individual appliances by analyzing aggregate
+signals collected from main meters, thereby eliminating the
+need for per-appliance sensors.
+Recent machine learning (ML)- and deep learning (DL)-
+based NILM methods have been successfully developed,
+eﬀectively addressing basic load recognition problems when
+the training and testing data come from the same distribution.
+However, in practical deployments, the data used to train
+the model are often collected from households or regions
+that diﬀer from the testing environment, leading to notable
+diﬀerences in load characteristics and discrepancies in the
+feature space. As a result, domain shifts can signiﬁcantly
+degrade model performance, particularly when the feature
+distributions of the two domains vary widely. For exam-
+ple, Liu et al. [6] reported that DL models trained on the
+PLAID dataset with an accuracy of 94.04% ± 1.27% were
+applied to classify the same 11 types of appliances in the
+WHITED dataset. As a result, the classiﬁcation accuracy
+dropped signiﬁcantly to 23.82% ± 3.63%. Similarly, the study
+in [7] reported that a DL-based model achieved a macro F1-
+score of 77.60% on the PLAID dataset and 75.45% on the
+WHITED dataset when evaluated using leave-one-house-out
+cross-validation (LoHoCV).1 These results are notably lower
+than those achieved with K-fold cross-validation on the same
+datasets, highlighting the challenges posed by domain shifts.
+To address these challenges, transfer learning (TL) techniques
+have been employed to mitigate distribution shifts caused by
+diﬀerences in load characteristics [8].
+TL techniques aim to improve model generalization in
+the target domain by leveraging knowledge from the source
+domain and related tasks. As outlined in [9], TL methods can
+be categorized into four groups: instance-, feature-, parameter-,
+and relational-based approaches. Among these, parameter-
+and feature-based methods are the most commonly used in
+NILM applications. Parameter-based ﬁne-tuning (F-T) adjusts
+the parameters of pretrained models using data from the
+target domain. For instance, the work in [1] studied the
+generalization of convolutional neural networks (CNNs) in
+energy disaggregation and demonstrated that F-T only the fully
+1LoHoCV: The training and testing sets are partitioned by household. Data
+from one household are used for testing, while data from all other households
+are used for training. This process is repeated for each household.
+1557-9662 © 2025 IEEE. All rights reserved, including rights for text and data mining, and training of artiﬁcial intelligence and
+similar technologies. Personal use is permitted, but republication/redistribution requires IEEE permission.
+See https://www.ieee.org/publications/rights/index.html for more information.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+6505312
+IEEE TRANSACTIONS ON INSTRUMENTATION AND MEASUREMENT, VOL. 74, 2025
+connected (FC) layers is suﬃcient for eﬀective TL. In [6], the
+AlexNet pretrained on image datasets was ﬁne-tuned for load
+recognition by adjusting the parameters of the last FC layer
+with electric signal data. In addition, [10] investigated the
+transferability of Transformer-based models and methods to
+reduce the computational cost of model pretraining. The work
+in [11] extended F-T to a one-to-many model for estimating
+the power consumption of multiple appliances simultaneously.
+It argued that F-T the FC layer alone is insuﬃcient, and
+adjustments to the CNN layers are required.
+Feature-based methods aim to enhance model transferability
+by learning transformations that extract invariant feature repre-
+sentations across domains. Prominent approaches include the
+domain adversarial neural network (DANN) [12], the adversar-
+ial deep neural network (ADNN) [13], multikernel maximum
+mean discrepancy (MK-MMD) [14], and deep correlation
+alignment (Deep CORAL) [15]. In the context of NILM,
+Lin et al. [16] applied domain adaptation techniques leveraging
+unlabeled target data to improve model transferability across
+domains using MMD and CORAL. Similarly, Liu et al. [17]
+proposed an unsupervised domain adaptation (UDA) approach
+based on DANN and ADNN, while Hao et al. [18] improved
+existing UDA methods by separating domain-speciﬁc and
+shared feature representations. Furthermore, Zhong et al. [19]
+introduced a source-free domain adaptation technique for
+NILM that eliminates the need for source data and labeled tar-
+get data. In addition to domain adaptation, several techniques
+aim to improve the generalization ability of NILM models,
+including self-supervised learning [20], knowledge distillation
+[21], and metalearning [22], [23].
+Despite recent progress, several challenges persist in NILM:
+1) ﬁne-tuned DL-based models require extensive labeled data
+to capture all possible operational states of appliances in the
+real world, making the process costly and time-consuming; 2)
+these models are computationally intensive, which complicates
+their deployment on resource-constrained edge devices, partic-
+ularly due to the need for posttraining updates; and 3) although
+UDA enables cross-domain learning without labeled target
+data, its success is inconsistent, and the causes of negative
+transfer, especially under signiﬁcant domain shifts, remain
+poorly understood. Given these challenges, improving the
+generalization of load recognition models and enabling few-
+shot recognition of appliances in the target domain have
+emerged as critical research focuses, especially in scenarios
+where labeled data for retraining are scarce.
+To address these issues, we propose a generalized load
+recognition method using a transferable random forest (RF)
+framework. The proposed approach utilizes a low-dimensional
+feature space in combination with a resource-eﬃcient RF
+algorithm to enhance load recognition accuracy. Our method
+requires only a small number of labeled samples per appliance
+from the new environment, enabling rapid adaptation. More-
+over, the proposed approach is signiﬁcantly more lightweight
+than DL-based models and can be deployed eﬃciently on edge
+devices, ensuring eﬀective updates after deployment. The main
+contributions are summarized as follows.
+1) We propose a weighted transferable RF (WTRF) method
+for load recognition in NILM. The method incorpo-
+rates a TL technique to adapt trained models to new
+houses with as few as one or three labeled samples per
+appliance, greatly reducing the data and computational
+requirements compared to DL-based methods.
+2) The WTRF method is evaluated across three public
+datasets, demonstrating its eﬀectiveness under domain
+shifts involving diﬀerent appliance brands, houses, and
+datasets. Our results show that WTRF achieves an F1-
+macro improvement of up to 90% over source-only
+models and outperforms UDA and ﬁne-tuned DL-based
+models.
+3) We deploy the model on a Raspberry Pi 4 to evaluate
+its suitability for edge computing. The model achieves
+update times as low as 3.1 ± 0.3 s and testing times
+of approximately 3 ms per house, enabling real-time
+adaptation in resource-constrained environments.
+The rest of this article is organized as follows. Section II
+introduces the problem formulation and fundamentals of RF.
+Section III details the proposed method, followed by the
+experimental setup in Section IV. Section V discusses the
+results, and conclusion are provided in Section VI.
+II. PRELIMINARIES
+A. Notations and Problem Formulation
+Let D = (X, Y, p) denote a domain, where X is the feature
+space, Y is the label space, and p is a joint probability
+distribution over (X, Y). In TL, we consider two domains:
+a source domain DS = (X S , YS , pS ) and a target domain
+DT = (X T, YT, pT). We assume that X S = X T and YS = YT,
+indicating that both domains contain the same appliance types
+and electrical features. However, the joint distributions diﬀer:
+pS (x, y) , pT(x, y).
+A dataset X = {(xi, yi)}n
+i=1 is sampled from D, where xi ∈RM
+represents the features, M is the feature dimension, and yi ∈Y
+represents the corresponding label. Here, Y corresponds to a
+set of class labels {1, 2, . . . ,C}. The source domain dataset
+XS
+= {(xS
+i , yS
+i )}ns
+i=1 contains ns samples, while the target
+domain dataset XT = {(xT
+j , yT
+j )}nt
+j=1 contains nt samples. In
+this study, a small subset Xu = {(xu
+i , yu
+i )}nu
+i=1, where Xu ⊆XT,
+is used for model updates, typically including 1 −3 labeled
+samples per appliance. We assume that XS and XT are sampled
+independently of the joint distributions pS (x, y) and pT(x, y),
+respectively. We follow the deﬁnition provided in [24], where
+appliance type refers to the general category (e.g., fridges,
+TV), while the term appliance or appliance instance denotes
+a speciﬁc brand or model within that category.
+Prior few-shot NILM studies have shown that even a few
+samples per appliance instance can yield competitive results,
+supporting our choice of using one to three samples per
+appliance. For example, [25] achieved an accuracy of 86.77%
+with just ten samples per appliance type in the PLAID dataset,
+[23] reported F1-macro scores exceeding 92% using only one
+to three samples per appliance on the WHITED dataset, and
+[26] reported an F1-macro of 76% using ﬁve samples per
+appliance on the PLAID dataset. These ﬁndings conﬁrm the
+feasibility of our experimental design, where our goal is to
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+YAN et al.: GENERALIZABLE LOAD RECOGNITION METHOD IN NILM BASED ON TRANSFERABLE RF
+6505312
+Fig. 1. NILM workﬂow and challenges under domain shift in edge deploy-
+ment. (a) NILM models perform well in Household A when training and
+testing data originate from the same domain. (b) Direct deployment to
+Household B suﬀers due to domain shift caused by variations in appliances
+or usage conditions. (c) General framework of the NILM approach.
+demonstrate eﬀective NILM adaptation with minimal data,
+reﬂecting realistic practical constraints.
+Fig. 1 illustrates an NILM framework designed for deploy-
+ment on edge devices. As shown in Fig. 1(c), the system
+consists of three key stages: data acquisition, feature extrac-
+tion, and load recognition [27]. In the data acquisition stage,
+voltage and current waveforms are sampled using analog-to-
+digital converters with a sliding window. Then, the feature
+extraction stage derives both time- and frequency-based fea-
+tures. If a variation in active power (∆Pi) exceeds a predeﬁned
+threshold (Pthresh), a switching event is detected, and the
+system triggers load recognition via an ML model.
+When an NILM model is deployed on the same household
+that it was trained on, it performs well because the training and
+testing data share the same domain, as illustrated in Fig. 1(a).
+However, direct deployment to a diﬀerent household (e.g.,
+Household B) results in poor accuracy due to domain shift,
+caused by diﬀerences in appliance models, brands, or usage
+patterns, as shown in Fig. 1(b). To address this issue, we
+propose an RF-based method enhanced with TL. By updating
+a subset of trees using a small number of labeled samples
+from the target household, our method adapts eﬃciently to
+new domains while keeping labeling costs and computational
+overhead low.
+B. DTs and RFs
+Now, we brieﬂy describe decision trees (DTs) based on the
+classiﬁcation and regression tree (CART) algorithm and RFs.
+The introduced notation will be useful for understanding the
+rest of this article.
+Let v denote a node in a tree and Xv denote the subset of
+the data that reach node v. The CART algorithm starts with
+the root node v0. At each node v, a particular subset Xv is
+processed (for the root, Xv0 = X). For a binary DT, the two
+children of a node v are referred to as the left child vl and the
+right child vr. Each internal node v selects a splitting feature
+a(v) and a numeric threshold τ(v) to divide Xv into left (Xvl)
+and right (Xvr) subsets.
+For each feature ai in Xv, where i ∈{1, 2, . . . , M}, candidate
+thresholds τi
+k are computed as the midpoints between sorted
+unique values of ai. Here, |Ai| represents the number of unique
+values of feature ai in Xv. These candidate thresholds are
+denoted as follows:
+Θi =
+n
+τi
+k =
+
+xi
+jk + xi
+jk+1
+.
+2
+ˇˇˇ k = 1, . . . , |Ai| −1
+o
+.
+(1)
+The Gini impurity of a split is deﬁned as follows:
+Ginisplit
+ Xv; τi
+k
+
+=
+ˇˇXvl
+ τi
+k
+ˇˇ
+|Xv|
+· Gini
+ Xvl
+ τi
+k
+
++
+ˇˇXvr
+ τi
+k
+ˇˇ
+|Xv|
+· Gini
+ Xvr
+ τi
+k
+
+(2)
+where Gini(Xv) = 1−P
+c∈Y p2
+c(v) and pc(v) is the proportion of
+samples in Xv belonging to class c. The splitting feature a(v)
+and threshold τ(v) are chosen to minimize the Gini impurity
+of the split
+a (v) , τ (v) = arg min
+ai,τi
+k∈Θi GiniSplit
+ Xv; τi
+k
+
+.
+(3)
+Once the optimal split is determined, Xv is divided into two
+subsets: Xvl = {x j ∈Xv | xa(v)
+j
+≤τ(v)} and Xvr = {xj ∈Xv |
+xa(v)
+j
+> τ(v)}. Finally, A node becomes a leaf when all samples
+belong to the same class or the sample count falls below a
+threshold. The leaf predicts the majority class in Xv
+y(v) ←arg max
+c∈Y
+ˇˇ˚
+xj ∈Xv|y j = c
+	ˇˇ .
+(4)
+To classify a sample x, the tree is traversed starting from the
+root v0. At each node v, the sample is sent to vl if xa(v)
+j
+≤τ(v)
+or to vr otherwise. This process continues until x reaches a
+leaf node, where it is assigned a prediction.
+The RF classiﬁer combines multiple DTs, each trained on a
+randomly sampled subset of data and with randomly selected
+features for each split. This approach has demonstrated supe-
+rior performance in the load recognition task [24], [27].
+However, when deployed across diﬀerent households, domain
+shift issues often arise due to variations in load characteristics,
+leading to degraded RF performance [28]. Therefore, it is
+essential to leverage TL techniques to adjust model parameters
+and adapt the RF model to new environments eﬀectively.
+III. METHODS
+This section describes the proposed methods for appliance
+recognition in NILM, including data collection, feature extrac-
+tion, an updated DT strategy for parameter updates, and a
+transferable RF framework for classiﬁcation.
+A. Data Collection and Feature Extraction
+In load recognition problems, current and voltage signals
+are used for analysis because they eﬀectively reﬂect the
+operational characteristics of various appliances. Event-based
+NILM assumes that only one appliance is switched on or
+oﬀat a time. When a signiﬁcant change in active power
+exceeds a set threshold, one or multiple cycles of voltage
+and current waveforms are segmented around the event. As
+depicted in Fig. 2(a), the active power waveform is marked
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+6505312
+IEEE TRANSACTIONS ON INSTRUMENTATION AND MEASUREMENT, VOL. 74, 2025
+Fig. 2. Active power variation and segmented current and voltage waveform
+extraction for a fan in the COOLL dataset (index: 25). (a) Active power. (b)
+Current waveform. (c) Voltage waveform.
+with red dashed lines to indicate the detected switching event,
+i.e., when ∆P > Pthresh. The positive zero-crossing point of
+the ac voltage waveform is used as the reference to align
+the extracted signal cycles. Then, one complete cycle of
+steady-state current and voltage data is extracted before and
+after the event, corresponding to the active power waveform,
+as shown in Fig. 2(b) and (c). The samples of one-cycle-
+long voltage data records (one just before and the other
+just after each event) are averaged to mitigate the eﬀect of
+noise. In contrast, the current samples before the event are
+subtracted from the current samples after the event to extract
+the actual consumption of the appliance that is switched on
+or oﬀ. In the following, the vectors of voltage and cur-
+rent data are then used to build feature sets for subsequent
+analysis.
+Recent studies have shown that typical electrical signal
+features generally yield better performance [27]. Therefore,
+we adopted a variety of time- and frequency-domain signal
+features. It is well known that the real and reactive power
+proﬁles can easily be used to track appliance usage [5]. How-
+ever, since the real and reactive power (P and Q) proﬁles may
+be insuﬃcient for accurate NILM classiﬁcation, especially in
+cases involving nonlinear loads, we also considered additional
+features of the current waveforms [29]. These include the root
+mean square (rms) value (Irms), the amplitude of the odd cur-
+rent harmonics till the eleventh (i.e., Ihar1, Ihar3, . . . , Ihar11), and
+the total harmonic distortion (THDI). Besides, a 16×16 binary
+V-I trajectory image will be used as the feature representation,
+which will be ﬂattened into a 256-D vector to serve as the
+input to the model. The extracted features are used to train
+ML models, which can be deployed to monitor appliances
+in real-world scenarios. The overall process is illustrated in
+Fig. 1(c).
+Since our method uses the RF model, feature importance
+can be estimated using the built-in impurity-based metric.
+However, a detailed feature engineering analysis is beyond
+the scope of this article. For further discussion, readers may
+refer to [30], [31], [32].
+B. ISER Algorithm
+When ML models are trained on speciﬁc household data,
+their performance often degrades in new environments due
+to domain shifts. To address these challenges, TL techniques
+have been developed to adapt pretrained models to new
+environments. Recently, two novel TL techniques for DTs
+were proposed by Segev et al. [33]: the structure expan-
+sion/reduction (SER) and structure transfer algorithms. Our
+methods build upon the SER algorithm.
+Given a pretrained DT from the source domain and a small
+subset Xu from the target domain, the SER algorithm adapts
+the tree in two steps: Expansion and Reduction.
+In the step of expansion, for each node v, the algorithm
+identiﬁes Xu
+v, the subset of Xu that reaches v. Each leaf node
+leaf node is then expanded by growing a binary subtree using
+the CART algorithm with Xu
+v. The BuildTree Function in
+Algorithm 1 is used for this purpose.
+The second step, called Reduction, involves pruning the tree
+structure by working bottom-up through the tree. Each internal
+node v is processed using the subset Xu
+v from the target domain
+that reaches v. Two types of errors are computed for each node.
+The ﬁrst one is the leaf error, which represents the empirical
+classiﬁcation error if node v was pruned as a leaf node. It is
+deﬁned as follows:
+leaf Err
+ v, Xu
+v
+
+=
+1
+ˇˇXuv
+ˇˇ
+|Xu
+v|
+X
+i=1
+1{yi,y(v)}
+(5)
+where |Xu
+v| is the number of samples reaching v, yi is the label
+of the i-sample of Xu
+v, and y(v) is the majority class at node
+v. 1{yi,y(v)} is the indicator function that counts misclassiﬁed
+samples at node v. The indicator function 1{yi,y(v)} returns 1 if
+the sample is misclassiﬁed and 0 otherwise.
+The second type of error, the subtree error, represents the
+empirical error of the entire subtree rooted at node v. It is
+formally deﬁned as follows:
+subtree Err
+ v, Xu
+v
+
+=
+1
+ˇˇXuv
+ˇˇ
+X
+z∈L(v)
+|Xu
+z|
+X
+i=1
+1{yi,y(z)}
+(6)
+where L(v) denotes the set of all leaf nodes in the subtree
+rooted as v, Xu
+z is the subset of samples that reach the leaf
+node z, and y(z) is the majority class label at z. If the leaf
+error is smaller than the subtree error, the subtree is pruned
+into a leaf node. The decision value at each leaf of the DT is
+obtained using the target (empirical) distribution.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+YAN et al.: GENERALIZABLE LOAD RECOGNITION METHOD IN NILM BASED ON TRANSFERABLE RF
+6505312
+Algorithm 1 Pseudocode of the WTRF Algorithm
+While the pruning step generally enhances eﬃciency and
+avoids overﬁtting, it may lead to suboptimal decisions in
+speciﬁc scenarios. For instance, when the target domain has
+an insuﬃcient number of samples for a particular class,
+pruning may incorrectly discard useful structures, resulting in
+unfavorable outcomes. To illustrate the pruning risk, we adopt
+the deﬁnition of leaf loss risk as described in [34].
+Deﬁnition 1: A minority class leaf v, corresponding to class
+cmin, is considered signiﬁcant for the target domain if
+pT (y = cmin|x ∈v) > pT (y = c|x ∈v)
+∀c , cmin
+(7)
+where cmin represents the minority class.
+Deﬁnition 2: Let nt(c) denote the number of samples for
+class c available for updating in the target domain. The pruning
+risk of deleting a minority class leaf v is quantiﬁed as follows:
+Rnt(cmin) (v) =
+
+pT (x < v|y = cmin)
+nt(cmin)
+(8)
+where pT(x ∈v|y = cmin) represents the probability that a
+sample of class cmin does not belong to leaf v. This risk metric
+captures the likelihood of removing signiﬁcant structures for
+the minority class.
+When the sample size nt(c) is suﬃcient and the classes
+are balanced, the pruning risk Rnt(cmin)(v) approaches zero, and
+pruning becomes negligible. However, in our study, only one to
+three samples per appliance are available for model updates,
+which may result in a signiﬁcant pruning risk, particularly
+for minority class leaves. As nt(c) decreases, the pruning risk
+for minority leaves increases, leading to a higher number of
+pruned leaves and potential degradation in model performance.
+During the transfer process, pruning risk for the minority
+class can arise under two circumstances: 1) the target update
+data reaches v, causing the majority class at v to change and
+2) the target update data does not reach v, leaving insuﬃcient
+samples to preserve the minority class leaves. These scenarios
+increase the risk of incorrectly pruning minority class struc-
+tures. To address class proportion shifts between domains,
+an improved SER (ISER) algorithm introduces a condition to
+preserve minority class leaves during the reduction phase. This
+condition ensures that minority class leaves are retained while
+allowing their controlled expansion. A pseudocode of this
+algorithm is presented in the ISER Function in Algorithm 1.
+C. Weighted Transferable RF
+Based on the ISER algorithm, a WTRF method is proposed
+to adapt tree-based models to the target domain. The WTRF
+algorithm selectively updates a subset of pretrained trees using
+the update dataset Xu while retraining the remaining trees to
+form a hybrid model. This approach integrates the adaptability
+of ISER with the robustness of the RF framework, ensuring
+eﬃcient handling of domain shifts. The steps are given as
+follows.
+Step 1: Let T
+= {Ti}Nt
+i=1 denote a pretrained RF from the
+source domain, where Ti represents a DT and Nt is
+the number of trees in the forest.
+Step 2: Randomly select Nu trees (Nu < Nt) from T to create
+Tnew =
+˚
+T ′
+i
+	Nu
+i
+,, while Told = T \Told contains the
+retained trees. Each tree in Tnew is updated using the
+ISER algorithm and Xu. The selective update ensures
+that the method remains computationally eﬃcient
+while adapting to the target domain.
+Step 3: Once Tnew is obtained, a new hybrid model can be
+constructed by
+T ′ ←Tnew ∪Told .
+(9)
+The WTRF algorithm is detailed in Algorithm 1. By updat-
+ing only a subset of trees, this approach balances adaptation
+to the target domain with retaining source-domain knowledge.
+Once T ′ is obtained, it can be used to make a prediction of
+the target domain data. Since new trees Tnew are likely better
+adapted to the target domain than old trees Told , give more
+weight on them, and the trees in Told , are weighted to have
+less voting power. Thus, the ﬁnal prediction of the model can
+be expressed as follows:
+ˆT ′(x) = argmax
+c
+0
+@ X
+Ti∈Tnew
+wnew ˆpc (Ti) +
+X
+Ti∈Told
+wold ˆpc (Ti)
+1
+A
+(10)
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+6505312
+IEEE TRANSACTIONS ON INSTRUMENTATION AND MEASUREMENT, VOL. 74, 2025
+Fig. 3. Waveforms of current and voltage signals for a microwave, CFL, and
+fridge in the PLAID dataset.
+where ˆpc(Ti) is the predicted probability of class c from tree
+Ti. wnew ∈[0, 1] and wold ∈[0, 1] are the weights assigned
+to Tnew and Told ,, respectively. Note that wnew > wold, and
+wnew + wold = 1.
+The combination of updated and retained trees leverages
+the adaptability of Tnew while preserving the robustness of
+Told, ensuring a balance between computational eﬃciency
+and adaptability. This design allows the WTRF algorithm to
+address domain shifts eﬀectively in NILM tasks. Note that the
+proposed method adopts a TL approach. Model updating is
+required only once when deploying to a new household or
+replacing monitored appliances. After the update, the model
+functions as a standard RF predictor, without further adapta-
+tion.
+IV. CASE SETTINGS
+This section presents the experimental setup used to evaluate
+the proposed method, including the datasets, performance
+indicators, comparison methods, and evaluation procedure.
+A. Dataset Description
+In this study, we use three publicly available datasets to
+evaluate the proposed method: PLAID [35], WHITED [36],
+and COOLL [37], following the original labeling speciﬁcations
+provided by each dataset. Each of these provides voltage and
+current measurements from various appliances.
+1) The PLAID dataset contains 1793 voltage and current
+waveforms sampled at 30 kHz, representing 11 appliance
+types collected from over 50 U.S. households. Fig. 3
+shows waveforms of current and voltage signals for a
+microwave, compact ﬂuorescent lamp (CFL), and fridge
+in the PLAID dataset.
+2) The WHITED dataset is a public dataset comprising
+submetered voltage and current measurements sampled
+at 44 kHz for 46 appliance types. Each appliance type
+includes data from one to nine diﬀerent brands, with
+ten start-up events per brand, resulting in 1100 total
+measurements.
+3) The COOLL dataset contains 840 voltage and current
+measurements for 42 controllable appliances, sampled
+at 100 kHz. For each appliance, it includes 20 turn-
+on transient signals with varied delays relative to the
+mains voltage zero-crossing. These appliances have 12
+diﬀerent types, each with multiple instances.
+B. Performance Indicators
+To evaluate the performance of our method, we use widely
+recognized metrics in load recognition: accuracy (Acc), preci-
+sion (Pre), recall (Rec), and F1-score. Accuracy measures the
+percentage of correctly classiﬁed results over the total samples
+and is deﬁned as follows:
+Accuracy =
+TP + TN
+TP + TN + FN + FP
+(11)
+where TP, TN, FP, and FN denote the number of true positives,
+true negatives, false positives, and false negatives, respectively.
+The F1-score is a useful metric, particularly for imbalanced
+data, and is calculated separately for each appliance type. For
+the ith appliance type, the F1-score is deﬁned as follows:
+F1i = 2 · Prei · Reci
+Prei + Reci
+(12)
+where
+Prei =
+TPi
+TPi + FPi
+,
+and Reci =
+TPi
+TPi + FNi
+(13)
+are the precision and recall in classifying the items of
+class i. We use the macroaverage F1-score for overall eval-
+uation in multiclass classiﬁcation, calculated as Fmacro
+=
+(1/C) PC
+i=1 F1i.
+C. Comparison Methods
+To verify the eﬀectiveness of the proposed approach, the
+following groups of methods are carried out for comparison.
+1) Source-Only: The source-only approach refers to train-
+ing only on source data and testing on target data
+without any TL techniques. We select four state-of-the-
+art (SOTA) methods that have demonstrated superior
+performance in previous studies: RF [24], TFCNN [6],2
+AWRG [38],3 and LILA [39].4 These methods are
+chosen for their proven eﬀectiveness and availability of
+open-source code, which makes them easy to reproduce.
+2) Feature-Based:Four commonly used UDA methods are
+adopted for evaluation: DANN [12],5 ADNN [13],6 MK-
+MMD [14],7 and Deep CORAL [15].8 This group of
+methods utilizes both labeled source data and unlabeled
+target data, classifying them as UDA methods. This
+categorization enables us to evaluate the eﬀect of UDA
+methods on load identiﬁcation. We select a CNN model
+using V-I trajectories as the baseline [7].
+2https://github.com/zhz-yan/HSV-VI-NILM
+3https://github.com/sambaiga/AWRGNILM
+4https://github.com/Deep-ﬁshing/ALILS
+5https://github.com/fungtion/DANN
+6https://github.com/corenel/pytorch-adda
+7https://github.com/thuml/DAN
+8https://github.com/SSARCandy/DeepCORAL
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+YAN et al.: GENERALIZABLE LOAD RECOGNITION METHOD IN NILM BASED ON TRANSFERABLE RF
+6505312
+3) Instance-Based: Instance-based methods aim to reweight
+samples in the source domain to address marginal distri-
+bution diﬀerences and improve alignment with the target
+domain. In this study, we adopt two commonly used
+approaches: KMM [40] and TrAdaBoost [41].9 KMM
+is an unsupervised method that reweights samples by
+aligning the means of source and target distributions.
+TrAdaBoost is a supervised method that uses 10% of
+the target data to reweight the source data in this study.
+4) Fine-Tuning:In this study, the models in the source-only
+group are ﬁrst pretrained on source data. Then, we ﬁne-
+tune these models using a small subset (10%) of the
+target data. Following prior works [1], [6], only the last
+FC layer is ﬁne-tuned to adapt to the target domain
+for CNN-based models, while the CNN layers remain
+untuned. For the RF, we retrain the model using 10% of
+the target data.
+D. Evaluation Procedure
+In this study, we evaluate the proposed method in scenarios
+involving both intradomain and interdomain shifts. Intrado-
+main shifts are assessed in Case 1 to validate the method’s
+suitability for online applications, while interdomain shifts are
+tested in Cases 2 and 3 from two perspectives: household and
+dataset.
+Case 1: For intradomain shifts, one house is randomly selected
+as the source domain, and one appliance is replaced with
+a device of a diﬀerent brand or model (of the same
+type). During online monitoring, the proposed method
+detects domain shifts caused by appliance replacement
+and updates the model accordingly. The test is repeated
+20 times, with a diﬀerent house and appliance randomly
+selected in each iteration.
+Case 2: From the household perspective, the training and
+testing sets are separated by household. For the WHITED
+and COOLL datasets, we perform LoHoCV. For the
+PLAID dataset, where some houses have very few sam-
+ples, we randomly select 20 houses for testing and use
+the remaining houses for training. Each test is repeated
+20 times to compute the average (Avg.) and standard
+deviation (STD).
+Case 3: From the dataset perspective, models trained on the
+PLAID dataset are reused to classify the same 11 types
+of appliances in the WHITED dataset.
+Note that the annotation of measurement households is
+only available in the PLAID dataset. For the WHITED and
+COOLL datasets, households are artiﬁcially created by ran-
+domly assigning each appliance of each type to a household
+[7]. The total number of households is set to 9 in the
+WHITED dataset and 8 in the COOLL dataset, corresponding
+to the maximum number of appliances per type. Consequently,
+appliance types with only one sample per type are excluded.
+In this study, kT
+i and kS
+i represent the number of samples
+per appliance in the target and source domains, respectively.
+For example, kT
+i = 1 indicates that one sample per appliance
+is used to update the model in the target domain.
+9https://github.com/surajiyer/Transfer-learning-with-TrAdaBoost
+Fig. 4. Impact of Nt on (a) avg. F1-macro and (b) update time (kT
+i = 1).
+Fig. 5. Impact of hmax on (a) avg. F1-macro and (b) update time (kT
+i = 1).
+TABLE I
+F1-MACRO VALUE RESULTS UNDER DIFFERENT kS
+i
+AND kT
+i CONFIGURA-
+TIONS IN CASE 1
+V. RESULTS AND DISCUSSION
+A. Parameter Studies
+Experimental results of Cases 1–3 are shown in Tables I–
+III respectively. Test results of average training, updated and
+testing times, and memory footprint of the proposed methods
+are provided in Table IV. Results obtained on the Raspberry Pi
+4 are listed in Table Table V. We ﬁrst investigate the impact of
+various parameters on the performance of the WTRF method.
+Let Nt denote the number of trees, hmax denote the parameter
+controlling the maximum depth of trees, and pnew represent the
+proportion of new trees in the total forest, i.e., pnew = Nu/Nt.
+Here, we evaluate the impact of Nt, hmax, wnew, and pnew on
+model accuracy and update time. The evaluation is performed
+using LoHoCV, with each test repeated ten times. For model
+updates, one sample is selected from each appliance in the
+target domain, i.e., kT
+i = 1.
+1) Eﬀect of Nt: To investigate the impact of Nt on predic-
+tion performance, we varied Nt from 3 to 62 with a step size
+of 1. The depth of each tree was not constrained, and we ﬁxed
+wn = 1.0 and pnew = 1.0. Fig. 4(a) illustrates that F1-macro
+improves signiﬁcantly as Nt increases, particularly when Nt
+is below 10. Beyond this threshold, the performance stabi-
+lizes due to suﬃcient model capacity. However, as shown in
+Fig. 4(b), excessive trees increase model complexity, resulting
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+6505312
+IEEE TRANSACTIONS ON INSTRUMENTATION AND MEASUREMENT, VOL. 74, 2025
+TABLE II
+EXPERIMENTAL RESULTS IN CASE 2
+TABLE III
+EXPERIMENTAL RESULTS IN CASE 3
+TABLE IV
+TEST OF AVERAGE TRAINING, UPDATED AND TESTING TIMES, AND
+MEMORY FOOTPRINT OF THE PROPOSED METHODS
+TABLE V
+RESULTS OBTAINED ON THE RASPBERRY PI 4
+in higher update times. To balance update time and accuracy,
+we selected Nt = 11 for subsequent experiments.
+2) Eﬀect of hmax: We analyzed the impact of hmax on model
+performance by varying hmax from 5 to 100 in steps of 5.
+As shown in Fig. 5, the results indicate that increasing hmax
+beyond 20 provides minimal improvements. This is because
+the limited feature set and small number of update samples
+limit deeper splits. Thus, we set hmax = 20 for the remaining
+experiments, as moderate tree depths are suﬃcient to achieve
+promising results.
+Fig. 5 shows that the F1-macro on the PLAID dataset
+improves signiﬁcantly when hmax < 15 but exhibits dimin-
+ishing returns beyond that point. Similarly, the update time
+increases with deeper trees and begins to ﬂuctuate when hmax >
+20, as shown in Fig. 5(b). These trends are mainly attributed to
+diﬀerences in the complexity of pretrained trees. The PLAID
+dataset contains signiﬁcantly more appliance instances than
+WHITED and COOLL, which leads to deeper pretrained DTs
+with a higher number of nodes. As a result, the update process
+becomes more time-consuming since more nodes may be
+aﬀected during model adaptation and require modiﬁcation. As
+shown in Table V, the pretrained decision trees are generally
+deeper and have more nodes (e.g., hmax = 14.3 ± 0.5 and
+nnode = 226.9 ± 7.0). When hmax is set too low (e.g., <10),
+these deep trees are pruned prematurely, leading to suboptimal
+learning. As hmax increases, the model can better leverage the
+tree structure and improve its performance. However, once
+the trees reach their eﬀective depth (e.g., hmax > 20), further
+increases in depth have little eﬀect, as no additional splits
+occur during model updating.
+3) Eﬀect of pNew and wNew: The impact of pnew and wnew
+was studied by varying pnew from 0.4 to 0.9 and wnew from
+0.6 to 0.9, both with a step size of 0.1. We conducted two sets
+of tests on the COOLL and WHITED datasets, respectively,
+as illustrated in Fig. 6. The results reveal that increasing pnew
+initially improves F1-macro scores, but performance plateaus
+when pnew > 0.7. While larger pnew values improve adaptation,
+they also increase update times due to the computational
+cost of incorporating more trees. Through trial and error,
+we determined pnew = 0.7 and wnew = 0.8 in subsequent
+experiments to ensure eﬃcient updates without compromising
+performance.
+B. Results on Case 1
+Table I presents the experimental results of Case 1. When
+no samples from either the old or new appliances are used
+to update the model (kT
+i = kS
+i = 0), the model struggles to
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+YAN et al.: GENERALIZABLE LOAD RECOGNITION METHOD IN NILM BASED ON TRANSFERABLE RF
+6505312
+Fig. 6. Eﬀect of pnew and wnew on model performance and eﬃciency. (a) Avg.
+F1-macro in COOLL. (b) Update time in COOLL. (c) Avg. F1-macro in
+WHITED. (d) Update time in WHITED.
+classify new appliances, with F1new values consistently below
+50%. This highlights the model’s limited ability to generalize
+to unseen appliances without additional training data. When
+updates rely solely on new appliance samples (kS
+i
+= 0 and
+kT
+i = 1 or 3), F1new improves slightly, but F1-macro values
+for old appliances decline signiﬁcantly. This indicates catas-
+trophic forgetting, where the model loses previously learned
+information due to the absence of old appliance data.
+As kT
+i and kS
+i increase, the model’s performance improves
+signiﬁcantly across all datasets. Both F1-macro and F1new
+achieve their highest values when kT
+i = kS
+i = 3, indicating the
+importance of including samples from both new and old appli-
+ances during updates. This ﬁnding suggests that in the online
+deployment of NILM models, when and only when individual
+appliances are replaced, the retraining process should include
+samples from unchanged appliances to prevent catastrophic
+forgetting while adapting to the new ones. Nevertheless, even
+providing only one to three samples per device is suﬃcient
+to eﬀectively adjust model parameters and achieve excellent
+performance.
+C. Results on Case 2
+Table II presents the experiment results of Case 2. Models
+trained solely on source domain data perform poorly, partic-
+ularly on COOLL, where the highest macro F1-score among
+source-only models is just 39.8% ± 17.1%. These results
+underscore the limitations of source-only models in handling
+domain shifts eﬀectively.
+While UDA techniques oﬀer promising scenarios without
+labeled target data, they may underperform under substantial
+domain shifts. For instance, ADDN achieves a macro F1-
+score of 56.0% ± 4.6% on PLAID, which is lower than some
+source-only models. This indicates that UDA methods may
+struggle with severe domain shifts, occasionally leading to
+negative transfer.
+In contrast, incorporating a small amount of labeled tar-
+get data signiﬁcantly improves performance. Retrained RF
+achieves macro F1-scores of 93.2% ± 6.1% on COOLL,
+and TrAdaBoost achieves 74.5% ± 4.5% on PLAID using
+just 10% of target data. F-T DL-based models also yield
+better results in most cases, such as AWRG (F-T) achieving
+82.2% ± 16.7% on WHITED. However, F-T can sometimes
+result in negative transfer, as observed with LILA (F-T), where
+its macro F1-score drops from 78.8% ± 3.6% to 59.6%
+± 8.0%. These ﬁndings emphasize that introducing labeled
+target data is far more eﬀective for adapting to domain shifts.
+The proposed methods consistently outperform both source-
+only and UDA approaches. With just one sample per
+appliance, the proposed (one-shot) achieves an F1-macro of
+86.1% ± 0.3% on PLAID, 98.2% ± 4.9% on WHITED, and
+88.0% ± 8.8% on COOLL. Increasing to three samples per
+load, the proposed (three-shot) further improves performance
+to 92.3% ± 3.7%, 99.6% ± 0.7%, and 94.8% ± 5.5%,
+respectively. These results demonstrate the eﬀectiveness of
+the proposed methods in handling intradomain shifts, achiev-
+ing high performance even with minimal target data while
+mitigating the risks of negative transfer.
+D. Results on Case 3
+In Case 3, models trained on the PLAID are tested on
+the WHITED, where signiﬁcant interdomain shifts present
+challenges for most methods. Source-only models perform
+poorly, with macro F1-scores ranging from 5.7% ± 1.7%
+to 19.1% ± 3.6%. This highlights the diﬃculty of directly
+applying models across datasets with distinct distributions.
+Similarly, UDA methods fail to bridge the domain gap eﬀec-
+tively, with macro F1-scores close to 0%, indicating severe
+negative transfer. These results underscore the impact of
+substantial feature diﬀerences between datasets, a limitation
+that UDA methods fail to address eﬀectively.
+Incorporating 10% labeled target domain data signiﬁcantly
+improves performance. TrAdaBoost and Retrained RF achieve
+macro F1-scores of 77.2% ± 5.0% and 88.0% ± 5.9%,
+respectively, demonstrating the beneﬁt of labeled target data.
+F-T neural models provide moderate improvements but show
+inconsistencies. For example, AWRG (F-T) achieves a macro
+F1-score of 62.8% ± 9.9%, but LILA (F-T) suﬀers from
+negative transfer, dropping to 55.1% ± 12.8%.
+The proposed method consistently outperforms all other
+approaches,
+achieving
+97.0%
+±
+2.6%
+(one-shot)
+and
+97.6% ± 1.7% (three-shot). This demonstrates its ability to
+eﬃciently leverage minimal labeled data to adapt to new
+domains, overcoming interdomain shifts while maintaining
+robust performance. These results underscore the necessity of
+incorporating labeled target data to mitigate domain discrep-
+ancies and achieve superior generalization.
+E. Computational Eﬃciency Analysis
+The proposed technique updates a pretrained RF. Let nnode
+be the average number of nodes per tree. During the update
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+6505312
+IEEE TRANSACTIONS ON INSTRUMENTATION AND MEASUREMENT, VOL. 74, 2025
+Fig. 7. Impact of training ratios on F1-Macro Scores in (a) PLAID, (b) WHITED, and (c) COOLL.
+phase, the algorithm evaluates whether each node requires
+modiﬁcation based on error metrics (leafErr and subtreeErr)
+using nu samples, taking O(nu) time per node. If modiﬁ-
+cation is required, the algorithm either reassigns the class
+label or rebuilds subtrees. Rebuilding involves constructing
+a DT using the CART algorithm, which has a complexity
+of O(Mnu log2(nu)) for each rebuilt node. For a single tree
+with nnode, the worst case complexity of the update phase is
+O(nnodenu + nrebuildMnu log2(nu)), where nrebuild is the num-
+ber of nodes requiring subtree rebuilding. When extending
+to Nu trees, the overall computational complexity becomes
+O(Nu · (nnodenu + nrebuildMnu log2(nu))).
+To analyze computational eﬃciency, Table IV presents the
+average training time, update time, testing time, memory foot-
+print, and model size of the proposed method under LoHoCV
+with one-shot updating. The proposed method achieves fast
+update times on WHITED (0.499 ± 0.081 s) and COOLL
+(0.742 ± 0.101 s), while PLAID exhibits a higher update time
+(12.107 ± 2.012 s) due to its larger node numbers.
+The method maintains a low memory footprint across all
+datasets, with values of 34.6 ± 100.3 kB (PLAID), 123.1 ±
+178.7 kB (WHITED), and 131.1 ± 240.2 kB (COOLL). In
+addition, its compact model size, particularly for WHITED
+(108.9 ± 7.3 kB) and COOLL (103.7 ± 4.1 kB), ensures
+compatibility with resource-constrained devices. Compared to
+DL-based methods, the proposed technique requires signiﬁ-
+cantly less memory and computation while maintaining ease
+of integration into RF-based methods [24], [27]. These results
+highlight its suitability for deployment in edge computing
+environments.
+F. Edge Computing Implementation
+The deployment of NILM systems on embedded devices is
+crucial to enable real-time, low-latency, and resource-eﬃcient
+energy monitoring for practical applications. The proposed
+technique was implemented and tested on a Raspberry Pi 4
+board to evaluate its performance in an edge computing envi-
+ronment. We selected Raspberry Pi due to its wide adoption
+in previous NILM studies [42], [43], [44], strong community
+support,10 and cost-eﬀectiveness, despite the availability of
+more powerful alternatives such as the NVIDIA Jetson Nano
+10https://forums.raspberrypi.com/
+and Odroid XU4. Using LoHoCV and updating the model
+with one sample per appliance, the method achieves high F1-
+macro scores of 94.6% ± 10.1% (PLAID), 98.5% ± 3.2%
+(WHITED), and 93.9% ± 5.9% (COOLL), as shown in
+Table V.
+The update time varies signiﬁcantly across datasets. PLAID
+requires 66.5±6.0 s due to its larger number of appliances on
+the source domain, leading to a more complex tree structure
+with greater depth (hmax = 14.3 ± 0.5) and more nodes
+(nnode = 226.9±7.0). In contrast, WHITED and COOLL, with
+simpler tree structures, achieve much faster update times of
+3.1±0.3 s and 5.4±1.0 s, respectively. Despite requiring only
+4.7±2.3 update samples per house on PLAID, the complexity
+of the tree increases the update time. Once updated, the
+model achieves extremely low prediction times (e.g., 3 ms per
+house for PLAID), demonstrating its suitability for real-time
+applications on resource-constrained devices.
+G. Eﬀect of Training Set Size
+Practical applications of NILM require load recognition
+models to generalize eﬀectively to unseen environments,
+including new appliances and households. It is widely assumed
+that increasing the training data improves generalization per-
+formance on new houses. To evaluate this, we adopt LoHoCV
+and vary the training set ratio from 0.1 to 1.0 in increments of
+0.1, repeating each test 20 times. As shown in Fig. 7, increas-
+ing the training data slightly improves DL-based methods, but
+their performance remains poor, with F1-macro scores below
+60% on WHITED and COOLL, even with the full training set.
+This highlights the limitations of existing models in adapting
+to new environments due to their sensitivity to domain shifts.
+In contrast, the proposed WTRF method achieves consis-
+tently high F1-macro scores across all datasets, performing
+near-optimally on PLAID and WHITED with a training ratio
+as low as 0.1. These ﬁndings underline the eﬀectiveness of
+WTRF in leveraging limited labeled data to achieve robust
+performance, even under signiﬁcant domain shifts.
+VI. CONCLUSION
+This article proposes a WTRF method for load recogni-
+tion in NILM, addressing performance degradation caused by
+domain shifts. The proposed method requires only a small
+number of labeled samples from the new environment for
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+YAN et al.: GENERALIZABLE LOAD RECOGNITION METHOD IN NILM BASED ON TRANSFERABLE RF
+6505312
+model updates (e.g., one to three samples per appliance).
+When using just one sample per appliance, the method
+achieves an F1-macro of 97.0% ± 1.7% when transferring
+from the PLAID dataset to the WHITED dataset, signiﬁcantly
+outperforming source-only models, ﬁne-tuned models, and
+domain adaptation methods. Moreover, the model exhibits low
+computational overhead, requiring less than 300 kB in total
+memory.
+On a Raspberry Pi 4, it achieves F1-macro scores of
+94.6% ± 10.1% (PLAID), 98.5% ± 3.2% (WHITED), and
+93.9% ± 5.9% (COOLL) under LoHoCV. The average update
+times are 66.5 ± 6.0 s (PLAID), 3.1 ± 0.3 s, and 5.4 ± 1.0 s,
+highlighting the method’s suitability for resource-constrained
+edge computing environments.
+Limitations and Future Works: This study assumes that
+the target and source domains share the same label space,
+which may not hold in real-world scenarios. In addition, the
+algorithm’s complexity increases with the number of trees
+and nodes in the source model, resulting in longer update
+times for complex models. Nevertheless, this limitation can be
+mitigated by optimizing tree depth and the number of trees in
+future studies. Future work will focus on extending the method
+to accommodate diﬀering label spaces and exploring ways
+to leverage unlabeled target data, enhancing adaptability to
+real-world conditions.
+REFERENCES
+[1]
+M. D’Incecco, S. Squartini, and M. Zhong, “Transfer learning for non-
+intrusive load monitoring,” IEEE Trans. Smart Grid, vol. 11, no. 2,
+pp. 1419–1429, Mar. 2020.
+[2]
+D. Zheng, X. Ma, Y. Wang, Y. Wang, and H. Luo, “Non-intrusive load
+monitoring based on the graph least squares reconstruction method,”
+IEEE Trans. Power Del., vol. 37, no. 4, pp. 2562–2570, Aug. 2022.
+[3]
+K. Carrie Armel, A. Gupta, G. Shrimali, and A. Albert, “Is disaggrega-
+tion the holy grail of energy eﬃciency? The case of electricity,” Energy
+Policy, vol. 52, pp. 213–234, Jan. 2013.
+[4]
+W. Chen, Q. Gong, G. Geng, and Q. Jiang, “Cloud-based non-intrusive
+leakage current detection for residential appliances,” IEEE Trans. Power
+Del., vol. 35, no. 4, pp. 1977–1986, Aug. 2020.
+[5]
+G. W. Hart, “Nonintrusive appliance load monitoring,” Proc. IEEE,
+vol. 80, no. 12, pp. 1870–1891, Jun. 1992.
+[6]
+Y. Liu, X. Wang, and W. You, “Non-intrusive load monitoring by
+voltage-current trajectory enabled transfer learning,” IEEE Trans. Smart
+Grid, vol. 10, no. 5, pp. 5609–5619, Sep. 2019.
+[7]
+L. De Baets, J. Ruyssinck, C. Develder, T. Dhaene, and D. Deschrijver,
+“Appliance classiﬁcation using VI trajectories and convolutional neural
+networks,” Energy Build., vol. 158, pp. 32–36, Jan. 2018.
+[8]
+D. Murray, L. Stankovic, V. Stankovic, S. Lulic, and S. Sladojevic,
+“Transferability of neural network approaches for low-rate energy
+disaggregation,” in Proc. IEEE Int. Conf. Acoust. Speech Signal Process.
+(ICASSP), Aug. 2019, pp. 8330–8334.
+[9]
+S. J. Pan and Q. Yang, “A survey on transfer learning,” IEEE Trans.
+Knowl. Data Eng., vol. 22, no. 10, pp. 1345–1359, Oct. 2009.
+[10] L. Wang, S. Mao, and R. M. Nelms, “Transformer for nonintrusive load
+monitoring: Complexity reduction and transferability,” IEEE Internet
+Things J., vol. 9, no. 19, pp. 18987–18997, Oct. 2022.
+[11] D. Li et al., “Transfer learning for multi-objective non-intrusive load
+monitoring in smart building,” Appl. Energy, vol. 329, Jan. 2023, Art.
+no. 120223.
+[12] Y. Ganin et al., “Domain-adversarial training of neural networks,”
+J. Mach. Learn. Res., vol. 17, no. 1, pp. 1–35, 2016.
+[13] E. Tzeng, J. Hoﬀman, K. Saenko, and T. Darrell, “Adversarial discrim-
+inative domain adaptation,” in Proc. IEEE Conf. Comput. Vis. Pattern
+Recognit. (CVPR), Jul. 2017, pp. 7167–7176.
+[14] M. Long, Y. Cao, J. Wang, and M. Jordan, “Learning transferable
+features with deep adaptation networks,” in Proc. 32nd Int. Conf. Mach.
+Learn., vol. 37, Jul. 2015, pp. 97–105.
+[15] B. Sun and K. Saenko, “Deep CORAL: Correlation alignment for
+deep domain adaptation,” in Proc. Computer Vision (ECCV) Work-
+shops, Amsterdam, The Netherlands. Cham, Switzerland: Springer,
+2016, pp. 443–450.
+[16] J. Lin, J. Ma, J. Zhu, and H. Liang, “Deep domain adaptation for
+non-intrusive load monitoring based on a knowledge transfer learning
+network,” IEEE Trans. Smart Grid, vol. 13, no. 1, pp. 280–292, Jan.
+2022.
+[17] Y. Liu, L. Zhong, J. Qiu, J. Lu, and W. Wang, “Unsupervised
+domain adaptation for nonintrusive load monitoring via adversarial and
+joint adaptation network,” IEEE Trans. Ind. Informat., vol. 18, no. 1,
+pp. 266–277, Jan. 2022.
+[18] P. Hao, L. Zhu, Z. Yan, Y. Huang, Y. Lei, and H. Wen, “Synthetic-to-real
+domain adaptation for nonintrusive load monitoring via reconstruction-
+based transfer learning,” IEEE Trans. Instrum. Meas., vol. 73, pp. 1–13,
+2024.
+[19] F. Zhong, Z. Shan, G. Si, A. Liu, G. Zhao, and B. Li, “Source-free
+domain adaptation with self-supervised learning for nonintrusive load
+monitoring,” IEEE Trans. Instrum. Meas., vol. 73, pp. 1–13, 2024.
+[20] S. Chen, B. Zhao, M. Zhong, W. Luan, and Y. Yu, “Nonintrusive load
+monitoring based on self-supervised learning,” IEEE Trans. Instrum.
+Meas., vol. 72, pp. 1–13, 2023.
+[21] G. Tanoni, L. Stankovic, V. Stankovic, S. Squartini, and E. Principi,
+“Knowledge distillation for scalable nonintrusive load monitoring,”
+IEEE Trans. Ind. Informat., vol. 20, no. 3, pp. 4710–4721, Mar. 2024.
+[22] L. Wang, S. Mao, B. M. Wilamowski, and R. M. Nelms, “Pre-trained
+models for non-intrusive appliance load monitoring,” IEEE Trans. Green
+Commun. Netw., vol. 6, no. 1, pp. 56–68, Mar. 2022.
+[23] Q. Luo, T. Yu, C. Lan, Y. Huang, Z. Wang, and Z. Pan, “A generalizable
+method for practical non-intrusive load monitoring via metric-based
+meta-learning,” IEEE Trans. Smart Grid, vol. 15, no. 1, pp. 1103–1115,
+Jan. 2023.
+[24] J. Gao, E. C. Kara, S. Giri, and M. Berges, “A feasibility study of
+automated plug-load identiﬁcation from high-frequency measurements,”
+in Proc. IEEE Global Conf. Signal Inf. Process. (GlobalSIP), Dec. 2015,
+pp. 220–224. Accessed: Nov. 27, 2022.
+[25] Y. Han, Q. Gao, H. Chen, and Q. Zhao, “A few-shot learning method
+for nonintrusive load monitoring with V–I trajectory features,” IEEE
+Sensors J., vol. 24, no. 7, pp. 11867–11877, Apr. 2024.
+[26] D. Ding, J. Li, H. Wang, and K. Wang, “Load recognition with few-
+shot transfer learning based on meta-learning and relational network in
+non-intrusive load monitoring,” IEEE Trans. Smart Grid, vol. 15, no. 5,
+pp. 4861–4876, Sep. 2024.
+[27] E. Tabanelli, D. Brunelli, A. Acquaviva, and L. Benini, “Trimming fea-
+ture extraction and inference for MCU-based edge NILM: A systematic
+approach,” IEEE Trans. Ind. Informat., vol. 18, no. 2, pp. 943–952, Feb.
+2022.
+[28] Z. Yan, D. Brunelli, D. Macii, M. Nardello, H. Wen, and D. Petri,
+“Appliance identiﬁcation in NILM through image or signal features:
+A performance comparison,” in Proc. AEIT Int. Annu. Conf. (AEIT),
+Sep. 2024, pp. 1–6.
+[29] J. Liang, S. K. K. Ng, G. Kendall, and J. W. M. Cheng, “Load signature
+study—Part I: Basic concept, structure, and methodology,” IEEE Trans.
+Power Del., vol. 25, no. 2, pp. 551–560, Apr. 2010.
+[30] M. Kahl, T. Kriechbaumer, A. U. Haq, and H.-A. Jacobsen, “Appliance
+classiﬁcation across multiple high frequency energy datasets,” in Proc.
+IEEE Int. Conf. Smart Grid Commun. (SmartGridComm), Oct. 2017,
+pp. 147–152.
+[31] M. Kahl, A. Ul Haq, T. Kriechbaumer, and H.-A. Jacobsen, “A com-
+prehensive feature study for appliance recognition on high frequency
+energy data,” in Proc. 8th Int. Conf. Future Energy Syst. New York,
+NY, USA: ACM, May 2017, pp. 121–131.
+[32] N. Sadeghianpourhamami, J. Ruyssinck, D. Deschrijver, T. Dhaene, and
+C. Develder, “Comprehensive feature selection for appliance classiﬁca-
+tion in NILM,” Energy Buildings, vol. 151, pp. 98–106, Sep. 2017.
+[33] N. Segev, M. Harel, S. Mannor, K. Crammer, and R. El-Yaniv, “Learn
+on source, reﬁne on target: A model transfer learning framework with
+random forests,” IEEE Trans. Pattern Anal. Mach. Intell., vol. 39, no. 9,
+pp. 1811–1824, Sep. 2017.
+[34] L. Minvielle, M. Atiq, S. Peignier, and M. Mougeot, “Transfer learning
+on decision tree with class imbalance,” in Proc. IEEE 31st Int. Conf.
+Tools Artif. Intell. (ICTAI), Nov. 2019, pp. 1003–1010.
+[35] J. Gao, S. Giri, E. C. Kara, and M. Berg´es, “Plaid: A public dataset of
+high-resoultion electrical appliance measurements for load identiﬁcation
+research: Demo abstract,” in Proc. 1st ACM Conf. Embedded Syst.
+Energy-Eﬃcient Buildings, Jun. 2014, pp. 198–199.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply. 
+
+6505312
+IEEE TRANSACTIONS ON INSTRUMENTATION AND MEASUREMENT, VOL. 74, 2025
+[36] M. Kahl, A. U. Haq, T. Kriechbaumer, and H.-A. Jacobsen, “WHITED-
+a worldwide household and industry transient energy data set,” in Proc.
+3rd Int. Workshop Non-Intrusive Load Monitor., 2016, pp. 1–4.
+[37] T. Picon et al., “COOLL: Controlled on/oﬀloads library, a public dataset
+of high-sampled electrical signals for appliance identiﬁcation,” 2016,
+arXiv:1611.05803.
+[38] A. Faustine, L. Pereira, and C. Klemenjak, “Adaptive weighted recur-
+rence graphs for appliance recognition in non-intrusive load monitoring,”
+IEEE Trans. Smart Grid, vol. 12, no. 1, pp. 398–406, Jan. 2021.
+[39] Y. Zhang, H. Wu, Q. Ma, Q. Yang, and Y. Wang, “A learnable image-
+based load signature construction approach in NILM for appliances
+identiﬁcation,” IEEE Trans. Smart Grid, vol. 14, no. 5, pp. 3841–3849,
+Jan. 2023.
+[40] J. Huang, A. Smola, A. Gretton, K. Borgwardt, and B. Sch¨olkopf,
+“Correcting sample selection bias by unlabeled data,” in Proc. Adv.
+Neural Inf. Process. Syst., vol. 19, Dec. 2007, pp. 601–608.
+[41] W. Dai, Q. Yang, G.-R. Xue, and Y. Yu, “Boosting for transfer learning,”
+in Proc. 24th Int. Conf. Mach. Learn., Jun. 2007, pp. 193–200.
+[42] E. Viciana, F. M. Arrabal-Campos, A. Alcayde, R. Ba˜nos, and
+F. G. Montoya, “All-in-one three-phase smart meter and power qual-
+ity analyzer with extended IoT capabilities,” Measurement, vol. 206,
+Jan. 2023, Art. no. 112309.
+[43] Z. Wu, C. Wang, L. Xiong, R. Li, T. Wu, and H. Zhang, “A smart socket
+for real-time nonintrusive load monitoring,” IEEE Trans. Ind. Electron.,
+vol. 70, no. 10, pp. 10618–10627, Oct. 2023.
+[44] S. Kotsilitis, E. C. Marcoulaki, and E. Kalligeros, “A versatile, low-cost
+monitoring device suitable for non-intrusive load monitoring research
+purposes,” Meas., Sensors, vol. 32, Apr. 2024, Art. no. 101081.
+Zhongzong Yan is currently pursuing the Ph.D.
+degree with the College of Electrical and Infor-
+mation Engineering, Hunan University, Changsha,
+China.
+Since October 2023, he has been a Visiting Ph.D.
+Student with the Department of Industrial Engineer-
+ing, University of Trento, Trento, Italy. His research
+interests include machine learning, deep learning
+(DL), optimization, and control for power systems.
+Pengfei Hao received the B.S. degree in electrical
+engineering from East China Jiaotong University,
+Nanchang, China, in 2022. She is currently pursu-
+ing the Ph.D. degree in electrical engineering with
+Hunan University, Changsha, Hunan, China.
+Her current research interests include machine
+learning, transfer learning, and nonintrusive load
+monitoring.
+Matteo Nardello (Member, IEEE) received the
+M.S. degree in electronics and telecommunications
+engineering and the Ph.D. degree in materials,
+mechatronics, and systems engineering and from the
+University of Trento, Trento, Italy, in 2016 and 2020,
+respectively.
+He is currently a Research Fellow with the Depart-
+ment of Industrial Engineering, University of Trento.
+His research interests include the investigation of
+machine learning techniques applied to resource-
+constrained embedded platforms (TinyML), with a
+special focus on autonomous smart IoT devices, the evaluation of printed
+electronic solutions and applications, and the study of new architecture for
+indoor localization services. His other research interests encompass model-
+ing and hardware-software codesign of original solutions to reduce power
+requirements of distributed wireless sensor networks.
+Davide Brunelli (Senior Member, IEEE) received
+the M.S. (cum laude) and Ph.D. degrees in elec-
+trical engineering from the University of Bologna,
+Bologna, Italy, in 2002 and 2007, respectively.
+He is currently an Associate Professor of electron-
+ics with the Department of Industrial Engineering,
+University of Trento, Trento, Italy. He has published
+more than 300 research papers in international con-
+ferences and journals on ultralow-power embedded
+systems, energy harvesting, and power management
+of VLSI circuits. He holds several patents and is
+annually ranked among the top 2% scientists according to the “Stanford
+World Ranking of Scientists” from 2020. His current research interests
+include new techniques of energy scavenging for IoT and embedded systems,
+the optimization of low-power and low-cost consumer electronics, and the
+interaction and design issues in embedded personal and wearable devices.
+Dr. Brunelli is a member of several TPC conferences on the Internet of
+Things (IoT). He is an Associate Editor of IEEE TRANSACTIONS.
+He Wen (Senior Member, IEEE) was born in Hunan,
+China, in 1982. He received the B.Sc., M.Sc., and
+Ph.D. degrees in electrical engineering from Hunan
+University, Changsha, Hunan, in 2004, 2007, and
+2009, respectively.
+He is currently a Full Professor with the College
+of Electrical and Information Engineering, Hunan
+University. His research interests include electrical
+contact reliability, wireless communications, power
+system harmonic measurement and analysis, power
+quality, and digital signal processing.
+Dr. Wen is an Associate Editor of IEEE TRANSACTIONS ON INSTRU-
+MENTATION AND MEASUREMENT and a Member of the Editorial Board of
+Fluctuation and Noise Letters.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 23,2025 at 07:04:08 UTC from IEEE Xplore.  Restrictions apply.

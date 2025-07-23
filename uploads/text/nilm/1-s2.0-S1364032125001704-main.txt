@@ -1,0 +1,2370 @@
+NILM in high frequency domain: A critical review on recent trends and 
+practical challenges
+Petros G. Papageorgiou *
+, Georgios C. Christoforidis
+, Aggelos S. Bouhouras
+Dept. of Electrical & Computer Engineering, University of Western Macedonia, ZEP Campus, Kozani, 50150, Greece
+A R T I C L E  I N F O
+Keywords:
+NILM
+High sampling rate
+Practical challenges
+Load disaggregation
+Energy management
+Smart buildings
+Smart grid
+Demand response
+A B S T R A C T
+The benefits of monitoring aggregated electric load consumption and distinguishing it into its components are 
+numerous and are mainly related to more efficient household energy management. Non-intrusive load moni­
+toring (NILM) as a key method to accomplish this task has attracted the interest of the research community. The 
+basis of this method is the acquisition process of the aggregated electrical signal, which can be performed at 
+different sampling frequencies depending on the specifications of the disaggregation model. Nevertheless, the use 
+of higher sampling frequencies can improve the performance of the disaggregation process. The development of 
+different disaggregation models should be based on their applicability under practical conditions. This means 
+that during their development, these models should include all parameters that will be met in real application. In 
+this way, they will have a higher chance of effectively applying the load disaggregation in practice. Although 
+there are several published review papers about NILM, there is a lack of a systematic review focusing on both the 
+high-frequency domain and the practical aspects that need to be considered during model development. To this 
+end, this study systematically reviews 40 recent papers in the high-frequency domain published between 2019 
+and 2022. Then, the practical issues derived from them are discussed and referred to the different steps of NILM 
+development. Finally, 30 of them are evaluated in terms of their disaggregation performance and whether their 
+development is focused on practical applications, according to several criteria.
+Nomenclature
+Abbreviations
+ARTMAP
+Adaptive resonance theory mapping
+BDT
+Bagging decision tree
+CNN
+Convolutional neural network
+COA
+Combined operation of appliances
+COA-EBTL
+Combined operation of appliances with event based true labels
+COA-LFTL
+Combined operation of appliances with low frequency true labels
+CUSUM-MLP
+Cumulative summation-multilayer perceptron
+DBSCAN
+Density based spatial clustering of applications with noise
+DR
+Demand response
+DSWC
+Dual sliding window-based cumulative sum
+DT
+Decision tree
+HD
+Harmonic distortion
+KNN
+K-nearest neighbor
+LSTM
+Long short-term memory
+MILP
+Mixed integer linear programming
+NILM
+Non-intrusive load monitoring
+RF
+Random forest
+RMS
+Root mean square
+(continued on next column)
+(continued)
+FFT
+Fast Fourier transform
+SOA
+Single operation of appliances
+SoC
+System on chip
+SVM
+Support vector machine
+TSDM
+Time shift downsampling matching
+VIIF
+Voting improved isolated forest
+Units
+Time
+second (sec), minute (min)
+Frequency
+Hertz (Hz)
+1. Introduction
+NILM is not a new concept. It was first introduced by Hart in 1992 to 
+determine the electrical energy consumption of individual appliances 
+based on the aggregated electrical power measurements at the main 
+feeding panel of an electrical installation [1]. Since then, several re­
+searches have been performed in this area and many benefits have been 
+* Corresponding author.
+E-mail address: petros.gpap@uowm.gr (P.G. Papageorgiou). 
+Contents lists available at ScienceDirect
+Renewable and Sustainable Energy Reviews
+journal homepage: www.elsevier.com/locate/rser
+https://doi.org/10.1016/j.rser.2025.115497
+Received 14 July 2023; Received in revised form 19 January 2025; Accepted 11 February 2025  
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+Available online 16 February 2025 
+1364-0321/© 2025 The Authors. Published by Elsevier Ltd. This is an open access article under the CC BY license ( http://creativecommons.org/licenses/by/4.0/ ). 
+
+identified, suggesting that NILM could offer much to the electrical en­
+ergy sector.
+The reduction of greenhouse gas emissions and the reduction of 
+electricity consumption are more than ever a necessity due to the 
+greenhouse effect and the recent energy price crisis. Recent studies have 
+shown that if consumers of electrical energy are aware of their elec­
+tricity consumption, they can significantly reduce it. When real-time 
+feedback is provided and at appliance level, consumers can reduce 
+their electricity consumption by more than 12 % [2]. Therefore, NILM 
+could be a game changer in attempts to improve electrical energy effi­
+ciency and minimize greenhouse gas emissions.
+Another aspect of using NILM in a more sustainable energy future is 
+its applications in demand response (DR) activities. The decomposition 
+of electrical energy into its component parts offers electric utilities and 
+grid operators the opportunity to understand the consumption patterns 
+at individual device level. In this way, DR strategies could be developed 
+based on specific habits of electricity consumers, making specific sug­
+gestions for the use of appliances, or control certain appliances without 
+disturbing the comfort of consumers [3].
+Up to this point, the potential contribution of NILM to a more sus­
+tainable energy system was clearly related to consumer electricity con­
+sumption flow. Nowadays, however, renewable energy sources, such as 
+photovoltaic (PV) systems, are increasingly being integrated into 
+household electrical installations shifting the traditional consumer to act 
+as prosumer [4]. This current state of affairs has revealed an important 
+new potential contribution of NILM in the context of prosumers’ elec­
+tricity generation flow, bringing benefits to both prosumers and con­
+sumers. The literature has shown that NILM can be used to determine 
+the electricity production of residential photovoltaic systems [5–7]. In 
+this way, DR strategies could be further developed based on consum­
+ers’/prosumers’ electricity consumption and prosumers’ generation 
+patterns and mitigate the potential negative impacts that could be hid­
+den behind decentralized energy sources in a more sustainable way [5]. 
+Power inverters coupled with PV systems or battery energy storage 
+systems inject traceable harmonic distortion to the point of common 
+coupling, thus NILM could also contribute in supervising the operation 
+of these systems in order to ensure that the harmonic distortion does not 
+exceed the permissible threshold set by the regulations. Also, in satu­
+rated distribution networks (DN) new regulations define that additional 
+PV systems should cap their power injection in the DN to avoid 
+congestion and power quality issues; with NILM it is possible to verify 
+the compliance of the PV power output to the permissible set points 
+defined by the system operator.
+One of the main characteristics of the NILM framework is whether 
+the disaggregation scheme is based on event detection. In the case that 
+an event detection algorithm is integrated in the NILM process, the 
+disaggregation is taking place only after an event occurrence [8]. An 
+event could be considered as an appliance transition from one steady 
+state to another [9].
+Another important point for grouping NILM techniques is whether 
+they use true labels during development. If this is the case, the technique 
+is supervised; if not, it is unsupervised. Supervised NILM techniques use 
+true labeled datasets to be trained in the training phase, in order to link 
+the data with the available true labels and achieve accurate predictions 
+when unknown data are fed into the already trained NILM model. On the 
+other hand, unsupervised NILM implementations are developed without 
+the inclusion of true labels. In this case, data are grouped during model 
+development and execution, without any guidance [10]. In recent years, 
+due to practical needs for NILM applications, another category has 
+emerged for grouping NILM techniques. This is the semi-supervised 
+category, which can be considered a compromise between the super­
+vised and unsupervised techniques. In the latter distinction, a small set 
+of true labeled data is used along with a much larger unlabeled dataset 
+[10,11].
+Feature extraction is an essential component of any NILM system. It 
+is a central part of the NILM implementation, whether the model is 
+considered event-driven or not, and whether it is supervised, semi- 
+supervised, unsupervised, or any other type of categorization. As part 
+of the feature extraction process, the NILM device located at the main 
+distribution board takes measurements of instantaneous values of cur­
+rent and/or voltage at a specified sampling rate [12]. From these mea­
+surements, it is possible to calculate different types of features that can 
+be employed by the disaggregation model. The type of calculated fea­
+tures is strongly dependent on the utilized sampling rate [13]. The 
+literature review suggests that high sampling signals for feature 
+extraction are those sampled at a frequency equal to, or higher than the 
+fundamental frequency [14–16]. For example, the authors of [17] used 
+instantaneous current measurements sampled at 10 kHz to apply 
+short-time Fourier transform and extract current spectrograms. In 
+Ref. [18], the amplitude and phase of the odd harmonic currents up to 
+5th order were used as a result of applying fast Fourier transform (FFT) 
+to the instantaneous current using zero-crossing detection of instanta­
+neous voltage. Both instantaneous current and voltage measurements 
+were sampled at 50 kHz.
+The higher the sampling rate, the more information is included in the 
+extracted signals, since more instantaneous values of current and 
+voltage are extracted. Therefore, there is a higher probability of 
+capturing the characteristics of appliances’ signatures, especially during 
+transients or nonlinear behavior [19]. In addition, the advent of smart 
+devices in modern homes, which are mainly power electronic loads, has 
+led to the injection of harmonics into power lines. Hence, calculated 
+features after harmonic analysis of an extracted signal could play an 
+important role in a more robust description of the electrical signatures of 
+such devices [20]. Consequently, a high sampling rate for the extraction 
+of current and voltage signals could increase the robustness of the 
+calculated features, leading to higher overall performance for the NILM 
+task [21].
+In recent years, the development of NILM has made great progress, 
+especially involving high sampling rate signals. However, there is still a 
+lack of practical applicability under real-world conditions. These con­
+ditions are described by the need for a relatively cheap, plug-in, and 
+easy-to-use NILM device with high sampling capabilities that would be 
+responsible for extracting high sampling rate signals and computing 
+features [15]. In this way, the acceptance by users would be significantly 
+increased, leading to full exploitation of all the benefits that NILM can 
+provide for better electrical energy management. Under real-operating 
+conditions, it is almost unrealistic to develop disaggregation models 
+able to handle any possible appliance brand. Thus, there is a need to 
+develop NILM architectures characterized by universal models that can 
+be used in any electrical installation [22]. To this end, further analysis of 
+the key aspects of high sampling rate NILM frameworks and of how 
+practical challenges can be incorporated into the development of a more 
+accurate NILM system, should be conducted.
+Recent reviews of NILM have already been presented in Refs. [2,15,
+23]. In Ref. [15], the authors compared different NILM research works 
+in terms of the features, algorithms, and datasets used, as well as the 
+target applications of the developed frameworks. However, the litera­
+ture compared use both low and high frequency, and its applicability in 
+practice is compared and evaluated only within the narrow constraints 
+of whether it incorporates publicly available benchmark datasets. 
+Similarly, in Ref. [2], the authors review several recent NILM methods 
+and features using any type of input signal sampling rate. As for the 
+evaluation of the practicality of the compared works, it was limited to 
+the general discussion of the difficulties of using NILM with supervised 
+models due to the high labeling cost. Finally, in Ref. [23], the authors 
+presented a multi-criteria comparison of different NILM implementa­
+tions in terms of the datasets, models, and features used, as well as the 
+associated extracted performance evaluation metrics without their 
+values. Again, this work compared models belonging to both the low and 
+high frequency domains. Furthermore, the comparison and evaluation 
+of the literature in terms of practical challenges is limited to the 
+computational costs related to the different NILM architectures. 
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+2 
+
+Consequently, to the best of the authors’ knowledge, an analytical re­
+view of recent developments in high sampling rate NILM and a detailed 
+analysis of the practical challenges that should be considered at each 
+stage of NILM development have not yet been thoroughly examined.
+To address the identified research gap, this review work systemati­
+cally examines the recently developed NILM frameworks that use high 
+sampling rate input signals, discusses the parameters that should be 
+considered with respect to practical NILM application, and critically 
+evaluates most of the frameworks with respect to their performance and 
+their applicability. In this sense, this work has the following 
+contributions: 
+• Presentation, analysis, and comparison of all publicly available high- 
+frequency NILM datasets and their critical evaluation in terms of how 
+valuable they are in enabling the research community to benchmark 
+their work towards the practical application of NILM.
+• Present and analyze different data processing approaches in terms of 
+training, validation, and testing, and how best to use them to develop 
+NILM in practice.
+• Summarize different types of features extracted from high-frequency 
+input signals and present the features that could make the difference 
+in the performance of NILM application, considering real practical 
+challenges.
+• Presentation, analysis, and comparison of different NILM architec­
+tures for the developed NILM frameworks and critical evaluation of 
+these architectures in terms of their contributions and limitations in 
+case of a practical NILM application.
+• Detailed analysis and comparison of different current high sampling 
+rate NILM implementations with an assessment of their performance 
+and provision of their key metrics, while in parallel they are critically 
+evaluated regarding all the above parameters that need to be 
+considered in terms of their practicality. Providing the key metrics 
+also gives the NILM research community the opportunity for 
+benchmarking comparison, keeping in mind the practical challenges.
+• Presentation of various other practical challenges that may arise in 
+NILM development and the proposed solutions with concrete 
+examples.
+2. Data
+2.1. High sampling NILM datasets
+Datasets are an essential part of NILM development. They contain 
+various electrical power measurements including aggregate and indi­
+vidual measurement points, along with the required true labels [24]. 
+Over the past decade, a significant amount of publicly available NILM 
+datasets have emerged, which is an important prerequisite for the 
+development of NILM methodologies, i.e. the existence of a benchmark 
+evaluation step. This step involves applying known evaluation metrics to 
+various proposed NILM algorithms using measurements from these 
+datasets [25].
+In this review, a comprehensive analysis of the most recent publicly 
+available versions of high sampling NILM datasets has shown that they 
+can be divided into 3 categories. The categorization is firstly derived 
+from whether the high sampling rate signals concern single or combined 
+operation of appliances. Secondly, from whether the true labels of the 
+signals for the combined operation of appliances are derived from time- 
+stamped low-frequency measurements or are derived directly from time- 
+stamped events of appliances. 
+1) Single operation of appliances (SOA): The basic goal of the disag­
+gregation scheme is to decompose the extracted signal into its 
+components. However, in this category there are only high sampling 
+rate signals related to the single operation of appliances, which is far 
+from the usual practical conditions and far from the goal of NILM 
+[26]. Here, there are 4 high sampling NILM datasets. 
+• WHITED [27].
+• COOLL [28].
+• HFED [29].
+• MORED [30].
+2) Combined operation of appliances with low frequency true labels 
+(COA-LFTL): These datasets provide publicly available electricity 
+consumption data on the combined operation of appliances. How­
+ever, they do not contain sufficiently reliable true labels due to the 
+low frequency of them [26]. For example, the true operation of ap­
+pliances is implied from power consumption data given every few 
+seconds. Here, there are 4 high sampling NILM datasets. 
+• REDD [31].
+• UK-DALE [32].
+• NILM-UY [33].
+• SustDataED2 [34].
+3) Combined operation of appliances with event based true labels 
+(COA-EBTL): This category of publicly available high-frequency 
+NILM datasets fits perfectly with the requirements of real-world 
+NILM development. Here, more than one appliance is operating 
+simultaneously and true labels about appliance operation are derived 
+directly and reliably from appliance events, facilitating accurate 
+training and performance evaluation [26]. In this last category there 
+are 6 high sampling NILM datasets. 
+• PLAID3 [35].
+• BLOND [36].
+• HELD2 [26,37].
+• LIT [38].
+• BLUED [38,39].
+• LILAC [40].
+The main features of the above high sampling NILM datasets under 
+the scope of this study are shown in Table 1. In summary, the most useful 
+datasets for the development of real-world high sampling rate NILM are 
+those that allow researchers to apply their disaggregation algorithms to 
+multiple instances that involve the simultaneous operation of appli­
+ances. The availability of highly reliable true labels through appliance 
+events is of paramount importance for the development of accurate 
+disaggregation methods. When this is not the case, biased errors occur 
+during both training and evaluation, making benchmarking of the 
+methods difficult.
+2.2. Processing of NILM datasets
+The use of datasets is a necessary step in the implementation of 
+NILM. The way available data are processed during the development of 
+the NILM framework strongly affects the generalizability that the 
+disaggregation scheme gains over real-world data [41].
+One of the main aspects of datasets’ processing relates to the 
+approach used to divide the data into training, validation, and test 
+datasets for supervised and unsupervised techniques, or some other 
+compromise thereof [42]. Several approaches to data partitioning are 
+known in the literature. The most common of these for high sample rate 
+NILM implementations are presented in the following analysis, along 
+with a critical evaluation of the limitations and contributions to the 
+potential application of the developed load disaggregation models in 
+unseen data from real implementations.
+A common method for splitting is to randomly split the dataset into 
+only 2 subsets. The first is called the training set, in which the NILM 
+algorithm is trained, and the second is called the test set, where the 
+algorithm is evaluated. The percentage split of the total available data 
+determines the size of the 2 sets. A common percentage split is 80 %/20 
+%, where 80 % of the total available data is considered the training set 
+and the remaining 20 % is considered the test set [17,43]. Within this 
+category of random data splitting, there are also some other percentage 
+splitting values, for example, the 70 %/30 % [44] or the 50 %/50 % 
+[45]. Despite the simplicity of this approach, it lacks good generalization 
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+3 
+
+ability. This is because this random partitioning of data results in some 
+data classes being trained with many examples and others with fewer 
+examples, which means poor performance on the available test data 
+[46].
+In the same context, but with a different approach for dividing the 
+dataset into training and testing subsets, there is the time-based data 
+splitting. In this case, a certain percentage of the first entries of the 
+dataset is considered as the training set, while the rest of the data 
+collected in time form the test set. Again, the percentage partitioning 
+varies. For example, in Ref. [47], the authors study the identification of a 
+coil gun. For their work, they created a private dataset by extracting 
+instantaneous current measurements from a single operation of a coil 
+gun with a sampling frequency of 10 kHz. The first 70 % of the 140 
+monitored seconds of coil gun operation constituted the training set, 
+while the remaining 30 % represented the test set. In the same way, the 
+authors in Ref. [48] created a private dataset containing example sets of 
+10 features involving the percent harmonic distortion of odd total har­
+monic currents. All features were extracted from a commercial smart 
+electricity meter with high sampling capabilities (62.5 kHz) and stored 
+with a recording frequency of 1/60 Hz with respect to 4 different clus­
+ters for a total data collection of 6 months. This dataset was divided into 
+training and test sets, with the first 70 % of the data assigned to the 
+training set and the remaining 30 % to the test set. Other percentage 
+apportionment approaches are the 90 %/10 % [49] or the 6 days/1 day 
+[19] for training and test sets respectively. As with the random-based 
+division of the dataset into training and test sets, the time-based 
+approach lacks generalizability for the same reasons. However, this 
+approach tests the NILM framework one step closer to reality by 
+providing a clear time division in training and then applying the trained 
+electrical energy disaggregation scheme to unseen data in practice [50].
+To bring the character of practical real-world conditions into the 
+developed model, the authors in Ref. [51] developed a private dataset 
+with training and testing parts. The training set consisted of 7 subsets of 
+200 s of extracted instantaneous current measurements per appliance 
+and aggregated instantaneous voltage measurements, including all 15 
+different appliance combinations from 4 different appliances with 
+different starting conditions per subset. During the training phase a 
+7-fold cross validation approach was used. Finally, the test set included 6 
+subsets of instantaneous measurements, just like the training set, but this 
+time with significantly more load variation.
+The inclusion of a validation set along with the different types of 
+measurements in all parts of a utilized dataset improves the general­
+ization capability and evaluates the NILM model under unseen practical 
+operating conditions [52]. However, not only different patterns in 
+appliance operation, but also measurements coming from different 
+brands of the same appliance type could be considered as an even 
+greater practical challenge in real case NILM implementations [53]. In 
+this direction, the authors in Ref. [54] used samples from an older 
+version of the dataset PLAID and divided it into training, validation, and 
+test sets. For the formation of the training set, samples from the appli­
+ances of 42 randomly selected houses were used, which are among the 
+60 available houses in the dataset. For the formation of the validation 
+set, samples from the appliances of 6 of the remaining houses were used, 
+and for the formation of the test set, samples from the appliances of the 
+last 12 houses were used. In this way, generalizability under practical 
+conditions and evaluation in real unseen scenarios are taken into ac­
+count by using a validation set and a test set containing appliances of the 
+same type but different in terms of brand, even if different from the 
+training set. In this way, once a model has been developed and gener­
+alized to different data distributions, it is tested as an application-ready 
+solution in different electrical installations [55].
+As can be seen from the above analysis, the training, validation, and 
+testing subsets are important for the development of real-world appli­
+cable disaggregation models. The availability of true labels is of great 
+importance in all subsets and incurs significant costs in terms of time and 
+money [56]. When applying a NILM model in practice, cost should be 
+considered in all aspects. Therefore, reducing the cost of labeling while 
+maintaining disaggregation performance is a current research goal. The 
+main method that meets these requirements is active learning. In this 
+approach, true labels are assigned only to those examples that contain 
+the most valuable information. Thus, the development of the disaggre­
+gation algorithm is based only on high value features; the size of dataset 
+used is reduced and that corresponds to a reduction in the labeling cost 
+[57]. For example, in Ref. [56], the most valuable labeling samples were 
+selected and the features were learned with an active deep learning 
+model using a convolutional neural network (CNN) classifier, resulting 
+in a significant reduction in the required samples while maintaining the 
+same classification performance.
+Table 1 
+High sampling NILM datasets.
+Dataset
+Sampling 
+Frequency of Aggregate Signal
+Class
+True Labels’ 
+Availability
+Predominant Appliance 
+Types
+Download Link
+WHITED
+44.1 kHz
+SOA
+–
+Residential
+WHITED
+COOLL
+100 kHz
+SOA
+–
+Electrical Tools
+COOLL
+HFED
+10 kHz–5 MHz
+SOA
+–
+Residential
+HFED
+MORED
+50 kHz
+SOA
+–
+Residential/Electrical 
+Tools
+MORED
+REDD
+15 kHz (cut-off frequency of the current sensors at 300 Hz [39])
+COA- 
+LFTL
+1/3 Hz
+Residential
+REDD
+UK-DALE
+44.1 kHz (down-sampled to 16 kHz for storage [32])
+COA- 
+LFTL
+1/6 Hz
+Residential
+UK-DALE
+NILM-UY
+14 kHz
+COA- 
+LFTL
+1/60 Hz
+Residential
+After request to the 
+authors
+SustDataED2
+12.8 kHz
+COA- 
+LFTL
+1/2 Hz
+Residential
+SustDataED2
+PLAID3
+30 kHz (cut-off frequency of the current sensors at 10 kHz [35])
+COA- 
+EBTL
+Event Based
+Residential
+PLAID3
+BLOND
+250 kHz 
+50 kHz
+COA- 
+EBTL
+Event Based
+Office Equipment
+BLOND
+HELD2
+4 kHz (low pass filter at 1.3 kHz was applied before sampling 
+stage [26])
+COA- 
+EBTL
+Event Based
+Residential
+HELD2
+LIT
+15.36 kHz
+COA- 
+EBTL
+Event Based
+Residential
+LIT
+BLUED
+12 kHz (cut-off frequency of the current sensors at 300 Hz [39])
+COA- 
+EBTL
+Event Based
+Residential
+BLUED
+LILAC
+50 kHz
+COA- 
+EBTL
+Event Based
+Industrial/Residential
+LILAC
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+4 
+
+In summary, the nature of the data and the way they are processed 
+during the development of the NILM model determines the scalability of 
+the disaggregation scheme in real-world scenarios. In practice, it is more 
+than likely that the NILM will have to be applied under different con­
+ditions for appliances of different brands and operating patterns, 
+compared to those for which it was developed. Thus, the greater the 
+generalizability that a model acquires, the greater the possibility of 
+successfully applying it to completely unknown measurements. This 
+possibility should be tested and the results should be presented 
+regarding the performance of a proposed NILM framework on real-world 
+scenarios. In this case, the NILM research community has the opportu­
+nity to evaluate the applicability of the proposed algorithms in terms of 
+sufficient disaggregation performance on real implementations. In 
+addition, NILM application should consider cost, even at this early stage 
+of model development in terms of the data processing part. All of these 
+desirable data processing aspects for a NILM that can be applied in 
+practice are summarized in Fig. 1.
+2.3. High sampling features
+The datasets to be used for high-frequency NILM development, like 
+those mentioned above, include high sampling rate feature extraction 
+signals, or recorded features extracted from high sampling rate signals 
+[48]. Either way, high sampling rate signals are an essential part of the 
+necessary feature extraction in a high sampling rate disaggregation 
+process. The contribution of using high sampling features has been 
+highlighted in several works [33,58] and several high sampling features 
+have been extracted in different implementations utilizing signals with 
+high sampling rate of instantaneous current and/or voltage [59].
+A common approach to create features is to directly use the high 
+sampling rate signals of instantaneous current and voltage. The authors 
+in Ref. [60] used instantaneous current and voltage measurements for 
+extracting one electrical cycle at a time through the proposed method to 
+form the recurrence plots for current and voltage cycles. These were 
+then introduced in the proposed spatial pyramid pooling CNN archi­
+tecture for appliance classification.
+Another type of feature extraction is to process the high sampling 
+rate current and voltage measurements and create features from the 
+results of the processing. A common processing step prior to the feature 
+creation phase is the application of frequency domain analysis. In this 
+context, in Ref. [19], the instantaneous current and voltage measure­
+ments were preprocessed and converted into 1-sec frames with 16,000 
+samples per electrical feature to form the instantaneous power matrix 
+per frame for the application of the double Fourier integral analysis and 
+the extraction of the magnitude and phase matrices. These matrices 
+were then used by the proposed CNN regression model per appliance to 
+determine the power consumption of the appliances. The robustness of 
+these features is based on the additional information of the sideband 
+harmonics they contain. The sideband harmonics are ensembles of sums 
+and differences of current and voltage waveforms that fully reproduce 
+the spectral content of the appliance model, especially under the sign of 
+even-order harmonics.
+Another possible result of the frequency domain analysis is the 
+amplitude and phase extraction of the current harmonics. In Ref. [61], 
+the FFT for the instantaneous current was performed using the 
+zero-crossing detection of the instantaneous voltage, both sampled at 50 
+kHz. Then, the amplitudes and phases of the odd harmonic currents up 
+to the 5th order (1st, 3rd, and 5th) were extracted for 10 different ap­
+pliances, taking a total of about 4–5 min per appliance for data collec­
+tion. Here, the combined extraction of amplitudes and phases facilitates 
+the formulation of the vectors of current harmonics, resulting in 
+improved disaggregation performance. Similarly, in Ref. [48], the 
+extracted amplitudes of odd harmonic currents up to the 7th order were 
+used to calculate the % harmonic distortion of the 3rd, 5th, and 7th 
+current harmonics provided by a smart electricity meter along with 
+other general electrical characteristics. Finally, in the same context of 
+Fig. 1. Data processing steps for real-world applicable NILM development.
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+5 
+
+processing the instantaneous values prior to feature generation, the 
+authors in Ref. [62] contributed to appliance classification by presenting 
+a set of novel features describing the transient current shape of the 
+harmonics of certain orders extracted by applying the Stockwell trans­
+form to the transient instantaneous current measurements. In Ref. [63], 
+three proposed transient features were calculated from the application 
+of the Hilbert transform to the extracted transient instantaneous current. 
+These were the instantaneous amplitude, phase and frequency. The 
+employment of them resulted in better appliance classification due to 
+better description of time and shape of the transients.
+The main objective of feature extraction based on instantaneous 
+values of current and voltage with high sampling rate is to significantly 
+improve the uniqueness of the created features. In this way, better 
+disaggregation performance is anticipated for the NILM model. How­
+ever, the robustness of the extracted features should be oriented to be 
+preserved under real practical disaggregation conditions. For example, 
+the high percentage of similarity that resistive appliances have in a real 
+household makes appliance classification not an easy task without 
+appropriate measures [40]. In this context, the authors in Ref. [64] 
+proposed a reconstruction method for typical V-I images to make these 
+features more unique and improve the identification performance 
+among similar appliances, especially the resistive ones. Similarly, in 
+Ref. [65], magnitude and phase of the lower odd harmonics were 
+extracted by FFT processing of the instantaneous current signal to enable 
+better classification performance for appliances with similar power 
+consumption, which is common in the real household electrical 
+installations.
+3. High sampling NILM frameworks
+3.1. Analysis
+In general, after a common pre-processing phase, the analysis of 
+which is beyond the scope of this study, the features extracted from high 
+sampling rate signals are introduced into a NILM architecture that per­
+forms the necessary tasks to classify the appliances and/or determine the 
+power consumption of the appliances [23,66].
+In the pre-processing phase, some potential practical issues related to 
+the data can be addressed to mitigate the negative impact on the sub­
+sequent feature extraction process. When using time series, missing 
+values are not an unlikely scenario. Although there is no universal so­
+lution for this case in the literature, the variants of interpolation are 
+commonly used [23]. Simple interpolation techniques, such as linear 
+interpolation, have the advantage that they are easy to implement. 
+However, for highly fluctuating time series, they may not be sufficient to 
+accurately fill in the missing values. The main reason for this is that 
+these methods do not consider the entire data series [67]. An improved 
+method proposed in Ref. [67], called noisy interpolation, uses a cubic 
+interpolation in which white Gaussian noise is added to fill in the 
+missing values in a correlated but also stochastic way in a limited range. 
+Another data-related aspect that could be solved in the pre-processing 
+phase is the existence of outliers. A widely used solution for the pres­
+ence of outliers is filtering. Median filters or other filter combinations 
+applied to the input data aim to smooth it out, resulting in improved 
+disaggregation performance [68,69]. The presence of outliers can also 
+have a negative impact in certain NILM-related processes such as 
+dimension reduction through principal component analysis (PCA) [70]. 
+In Ref. [70], the negative effects of outliers are mitigated by the pro­
+posed robust PCA method, which leads to more reliable PCA features.
+The number of different NILM architectures in the literature is huge 
+and could be divided into several groups. However, given the high 
+sampling rate nature studied in this review and the evaluation of the 
+NILM frameworks under real-world applicability, the number of 
+different disaggregation models is limited, and the main categorization 
+perspective followed here depends on whether the disaggregation 
+scheme follows a time-driven or an event-driven approach.
+In a disaggregation model, a time-driven approach is assumed to be 
+followed when the NILM algorithm is invoked to perform appliance 
+classification continuously per each set of features extracted per each 
+time window of the signal or signals. On the other hand, a disaggrega­
+tion scheme is considered event-driven if it is invoked to apply the 
+appliance classification for sets of features that come from time windows 
+in which an appliance event occurs [9]. In particular, in the high fre­
+quency domain, this categorization is closely related to whether or not 
+the NILM frameworks can be used efficiently in a real practical scenario. 
+This conclusion stems firstly from the nature of NILM in the 
+high-frequency domain, where the data resolution of the processed 
+signals is high, and secondly from the frequency at which the total load 
+disaggregation processing is invoked. Clearly, both of these issues 
+significantly affect the computational complexity required in a NILM 
+algorithm, especially in a real-time application [9]. The event-driven 
+approaches have higher practical applicability in actual operating con­
+ditions since the total times in which the algorithm is invoked to apply 
+high frequency load disaggregation are significantly lower.
+1) Time-Driven High Sampling NILM Frameworks: The main point 
+that characterizes all the different NILM frameworks in this category is 
+that there is no event detection algorithm in the different implementa­
+tions to detect state changes of the appliances and trigger load classifi­
+cation. There are 2 types of high sampling NILM frameworks in this 
+category. 
+a) Time-Driven Appliance Event Type Classification High Sampling 
+NILM Frameworks: In this type, the goal of the NILM framework is to 
+use the extracted set of features continuously for each time window 
+of the input signal to match it with an on or off event of a particular 
+appliance, as implemented in Ref. [71].
+b) Time-Driven Appliance Classification High Sampling NILM Frame­
+works: This type is different from the above in terms of the final 
+output result. Here, the NILM framework tries to assign each 
+extracted set of features to the corresponding cluster related to the 
+operation of a particular load, as in Ref. [51].
+2) Event-Driven High Sampling NILM Frameworks: In this category, 
+the key process, which is also a fundamental difference in terms of how a 
+time-driven NILM framework works, is event detection. The task of the 
+event detection algorithm is to detect any change in the operational 
+status of the appliances and trigger load classification. In this category, 
+there are 3 types of high sampling NILM frameworks. 
+a) Event-Driven Event Matching and Appliance Classification High 
+Sampling NILM Frameworks: The objective of this type is to extract 
+sets of features related to the time windows of the input signal where 
+events occur in order to match the on with the off events. This is 
+followed by a classification process to associate the extracted fea­
+tures of the time window of the time frame between the on and off 
+events to the operation of a particular load, as [72] performed. This 
+approach to a high-sampling NILM framework is more applicable 
+than the time-driven approaches under real practical conditions due 
+to its event-driven nature, but it still has room for improvement in 
+post-event detection processing. The processes of event detection, 
+event matching, and load classification could be shortened to obtain 
+the total load disaggregation in the same type of output.
+b) Event-Driven Appliance Classification High Sampling NILM Frame­
+works: In this approach, there is no event matching within the load 
+disaggregation task. More specifically, for the needs of event detec­
+tion the model uses the input signal to detect if there is a change in 
+the operating mode of the appliances. When an event is detected, the 
+framework again uses the input signal to extract a set of features that 
+describe the time window of the event. Then, usually, these features 
+are introduced into the load classification algorithm to determine the 
+appliances that participate in the total power consumption, as in 
+Ref. [63]. This method, where there is no event matching step, leads 
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+6 
+
+to the same load disaggregation result but with less complicated 
+processing after event detection. When an event is detected, load 
+classification determines the appliances in operation, taking into 
+account that they will remain in operation until a new event is 
+detected. Then the load classification determines again which ap­
+pliances are in operation. From this new result, it can be concluded 
+which appliance has changed its state, bypassing event matching.
+c) Event-Driven Appliance Event Type Classification High Sampling 
+NILM Frameworks: The above type of event-driven high-sampling 
+NILM framework appears to involve dual processing within the 
+overall implementation of load disaggregation [17]. This can be 
+easily deduced by focusing on the completely separate processes of 
+event detection in the first stage, which uses the input signal, and 
+load classification in the second stage, which in turn uses the input 
+signal of the measurements. On the other hand, in the event-driven 
+appliance event type classification high sampling NILM framework, 
+which is analyzed as a potential application in this section, event 
+detection and classification of the detected event as on or off event of 
+a particular appliance are implemented sequentially as one process. 
+Thus, the classifier does not need to use the input signal again to 
+extract a set of features describing the detected event and classify it. 
+In this way, the processing time is reduced, which facilitates the 
+development of a NILM framework that can be used in practice for 
+high sampling rate measurements. For a general analysis of the 
+framework, it could be noted that the event detection algorithm in 
+the first phase could use the input signal to compute a feature that is 
+used to detect the occurrence of an appliance event. After an event is 
+detected, the feature related to the time window of the event could 
+usually be introduced into the event classification part and assigned 
+to a on or off of a particular appliance.
+The summary representation of the different categories in relation to 
+the high sampling NILM frameworks is shown in Fig. 2.
+3.2. Literature evaluation
+The crux of this section is the comparative presentation of 30 
+research studies. These studies were the result of a systematic search for 
+NILM works published from 2019 to 2022, under the consideration that: 
+(a) they should have used high sampling rate signals, (b) they can be 
+evaluated in terms of disaggregation performance, and (c) they can be 
+evaluated in terms of contribution to the development of NILM in the 
+real world regarding the aspects that have been discussed. Specifically, 
+the NILM papers published in the above-mentioned period were first 
+evaluated according to whether or not they used high sampling rate 
+signals as input for the corresponding disaggregation task. Obviously, 
+only the papers that processed high sampling rate signals as input were 
+selected for further evaluation. In the next step, the NILM works were 
+evaluated as to whether or not they contained the required disaggre­
+gation performance evaluation of their proposed method. Only if this 
+was the case, they could in turn be compared with the rest of the liter­
+ature. The NILM papers that met conditions (a) and (b) were assessed for 
+final selection according to whether or not they could be evaluated in 
+terms of practical NILM development. Specifically, for the final selection 
+related to the practical development of NILM according to the aspects 
+discussed, the works were evaluated according to whether or not they 
+contain the necessary information about the single or combined opera­
+tion of appliances, the dataset(s) used, the type of framework and the 
+utilized features. For example, if a paper used a high sampling rate input 
+signal and presented its evaluation of disaggregation performance, but 
+did not mention the type of operation of the appliances for which the 
+evaluation metric was extracted, it could not be part of the literature 
+review presented here. The same exclusion would apply in the case that 
+not all necessary specifications were included to facilitate categorization 
+under the NILM frameworks mentioned above.
+Table 2 is a more general comparison table of the performance of the 
+NILM frameworks presented. In Table 3, the reader will find a com­
+parison that elaborates on the applicability of the included works in the 
+real world. In Table 2, for each reference, some main aspects of the 
+respective NILM framework are presented, starting with the year of 
+publication, the frequency of the input signal used, and the general in­
+formation of the framework. Furthermore, the main performance metric 
+is listed. Indeed, the overwhelming majority of the compared works 
+have included more than one performance metrics in their imple­
+mentations. However, for the presentation in Table 2, the evaluation 
+metric chosen was the one that was closer to evaluating the application 
+of each proposed NILM method in real-world scenarios. In addition, the 
+performance metric chosen was the one that more rigorously assessed 
+the developed framework. For example, if a work was evaluated using 
+both the FScore and the accuracy metric for the single and combined 
+operation of appliances, the FScore for the combined operation of ap­
+pliances was chosen as the final metric. In this way, the work is evalu­
+ated more rigorously by the comparatively more reliable FScore metric 
+on the one hand, and under conditions closer to practical application, 
+such as combined operation of appliances versus single operation of 
+appliances, on the other. The type and number of instances used to 
+extract each metric are presented subsequently. For example, in 
+Ref. [45], the metric presented was extracted using 6 different appli­
+ances, 2 of which had 2 discrete modes of operation. Therefore, the total 
+number of distinct groups for which the proposed disaggregation algo­
+rithm was applied was 8. In Ref. [73], the number of distinct appliances 
+involved was 20, but the evaluation was the average result of a 10-fold 
+Fig. 2. Categories of high sampling NILM frameworks.
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+7 
+
+Table 2 
+Evaluation of high sampling NILM frameworks in terms of performance.
+Ref.
+Year of 
+Publication
+Frequency of 
+Input Signal
+General Description of 
+Framework (core algorithm)
+Critical Metric (Examined on Highlight Data Processing)
+Competent Comparison 
+with Literature
+Value
+Number of Examined
+Appl.
+Combos.
+Groups
+[45]
+2021
+6.25 kHz
+Supervised Learning 
+Machine Learning (KNN)
+Multi-Class Macro- Averaged 
+Accuracy
+6
+–
+8
+X
+100 %
+[60]
+2022
+2.4 kHz
+Supervised Learning 
+Deep Learning (CNN)
+Multi-Class Macro-Averaged 
+FScore
+–
+–
+55
+✓
+89.42 %
+[49]
+2021
+6.4 kHz
+Supervised Learning 
+Deep Learning (CUSUM-MLP)
+Multi-Class Micro- Averaged 
+Accuracy
+30
+–
+30
+X
+99.10 %
+[58]
+2021
+16 kHz
+Reinforcement Learning 
+Machine Learning (KNN)
+Multi-Label Micro- Averaged 
+Accuracy
+21
+–
+21
+X
+98.91 %
+[77]
+2020
+250 kHz
+Supervised Learning 
+Deep Learning (LSTM)
+Multi-Label Macro-Averaged 
+FScore
+–
+–
+4
+X
+21.00 %
+[78]
+2020
+1.6 kHz
+Unsupervised Learning 
+Machine Learning (MILP)
+Multi-Class FScore presented in 
+graphs
+19
+–
+–
+X
+[54]
+2020
+30 kHz
+Supervised Learning 
+Deep Learning (CNN)
+Multi-Class Micro-Averaged 
+FScore
+–
+–
+8
+✓
+78.96 %
+[56]
+2020
+20 kHz
+Active Learning 
+Deep Learning (CNN)
+Multi-Class Macro-Averaged 
+FScore
+389
+–
+10
+✓ 
+For Labeling
+88.00 %
+[73]
+2020
+15.36 kHz
+Supervised Learning 
+Machine Learning (Prony’s 
+method)
+Multi-Label Macro- Averaged 
+Accuracy
+20
+–
+10
+X
+97.00 %
+[47]
+2020
+10 kHz
+Supervised Learning 
+Deep Learning (LSTM)
+Multi-Class Micro- Averaged 
+Accuracy
+1
+–
+4
+X
+99.94 % (Coil gun)/93.90 % 
+(Permanent magnet synchronous 
+model)
+[64]
+2021
+30 kHz
+Supervised Learning 
+Deep Learning (CNN)
+Multi-Class Macro- Averaged 
+FScore
+–
+–
+11
+✓ 
+For Private Dataset
+97.36 %
+[79]
+2022
+12 kHz
+Supervised Learning 
+Probabilistic and Expert 
+Heuristic (VIIF-TSDM)
+Micro-Averaged FScore
+–
+–
+3
+✓
+99.22 %
+[21]
+2022
+15.36 kHz
+Supervised Learning 
+Deep Learning (CNN)
+Multi-Label Macro-Averaged 
+FScore
+–
+–
+3
+X
+96.80 %
+[71]
+2022
+250 kHz
+Supervised Learning 
+Machine Learning (Dictionary 
+method)
+Multi-Label Micro- Averaged 
+Accuracy
+14
+–
+14
+X
+99.02 % (Ons)/98.90 % (Offs)
+[72]
+2019
+12 kHz
+Supervised Learning 
+Machine Learning (ARTMAP)
+Δ ratio
+6
+–
+6
+X
+þ2.75 %
+[63]
+2021
+2 kHz
+Supervised Learning 
+Deep Learning (LSTM)
+Multi-Class Macro- Averaged 
+FScore
+5
+4
+9
+✓ 
+For BLUED & PLAID 
+Datasets
+94.47 %
+[17]
+2021
+12 kHz
+Supervised Learning 
+Deep Learning (CNN)
+Multi-Label Micro- Averaged 
+FScore
+34
+–
+69
+✓
+99.80 %
+[22]
+2021
+3.2 kHz
+Transfer Learning 
+Deep Learning (convolutional 
+architecture)
+Multi-Label Macro- Averaged 
+FScore
+3
+–
+12
+X
+93.80 %
+[20]
+2021
+2 kHz
+Supervised Learning 
+Machine Learning (fuzzy 
+technique)
+Multi-Class FScore
+COA
+5
+1
+1
+✓
+99.33 %
+Multi-Class Macro- 
+Averaged FScore
+Multi- 
+State
+2
+–
+8
+99.03 %
+[74]
+2020
+3 kHz
+Supervised Learning 
+Machine Learning (KNN)
+Multi-Label Micro- Averaged 
+FScore
+5
+1
+5
+X
+96.00 %
+[80]
+2020
+15 kHz
+Supervised Learning 
+Deep Learning (CNN)
+Multi-Class Macro-Averaged 
+Accuracy
+7
+10
+10
+✓ 
+For another testing 
+within 5 houses
+92.40 %
+[51]
+2020
+200 kHz
+Supervised Learning 
+Machine Learning (RF)
+Multi-Class Macro-Averaged 
+FScore
+4
+15
+10
+X
+99.45 %
+[65]
+2020
+15 kHz
+Supervised Learning 
+Machine Learning (BDT)
+Multi-Class Macro-Averaged 
+FScore
+5
+4
+9
+✓ 
+For PLAID 
+Dataset
+93.14 %
+(continued on next page)
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+8 
+
+replicate. Therefore, the number in the Groups section is 10. Another 
+example is [63] where the proposed disaggregation method concerned 5 
+different appliances and 4 different combinations of them, so the total 
+number of different groups is 9. In Refs. [20,74], there was 1 combi­
+nation of 5 different appliances. However, in the first study, the appli­
+ance classification was evaluated under a multi-class consideration, 
+meaning that the identification aimed at the whole combination of ap­
+pliances involved, so the number of groups was 1 [48]. On the other 
+hand, in Ref. [74], despite the fact that the combination of appliances 
+was 1, the identification of the 5 different appliances within the com­
+bination was evaluated under a multi-label consideration, resulting in a 
+total number of 5 different groups. In the multi-label assessment, the 
+identification of each appliance within the combination was assessed 
+separately from the others [48]. As a result, the performance metric was 
+extracted between 5 different groups. A more general explanation of the 
+multi-label nature in the presented evaluation metrics is that in the 
+corresponding implementations, the identification performance was 
+focused on specific appliances while other appliances were in operation. 
+Another concept that needs to be clarified is the macro/micro-averaged 
+calculation of the presented metrics. The macro-averaged calculation 
+refers to the well-known and easy-to-calculate arithmetic averaging 
+which adds the separately extracted metrics for all participating groups 
+and then divides the sum by the total number of all different groups 
+[64]. The micro-average, on the other hand, is calculated considering 
+the number of examples evaluated per group [75]. Table 2 concludes 
+with the information about the inclusion of a competent comparison of 
+the presented implementations with other literature methods regarding 
+the listed performance metrics. A comparison is considered competent 
+only if it was applied to the same type of data in terms of the dataset 
+used, the appliances studied, etc. If there was another important com­
+parison, this is indicated with the appropriate comment.
+Table 3 compares the main aspects of each study that could facilitate 
+the evaluation of each proposed method in terms of whether or not it 
+was developed with real-world scenarios in mind. The first criterion for 
+this type of evaluation is the dataset used and the processing of the data 
+in the development of each proposed NILM disaggregation algorithm 
+based on the analysis presented in Sections 2.1 and 2.2 respectively. In 
+detail, for each work, all the examined datasets are presented with a 
+further explanation of the dataset used to extract the highlight metric. 
+The fifth and sixth columns of Table 3 provide the type of each devel­
+oped NILM framework, in the context of the analysis presented in Sec­
+tion 3.1, as well as the features used, extracted from the high sampling 
+rate signals and introduced in each proposed NILM architecture.
+Finally, the last three columns of Table 3 contain the rest of the 
+assessment of the applicability of the compared studies in real world 
+applications. In particular, the seventh column indicates whether or not 
+the proposed NILM schemes have evaluated the disaggregation algo­
+rithms on the combined operation of appliances, which is more than 
+expected in a real scenario. It is not uncommon to see research works in 
+the field of NILM that evaluate their developed models on single 
+appliance operation. In other words, they evaluate the identification 
+performance of the algorithms while a single appliance is operating at a 
+time. The eighth column of Table 3 indicates whether or not the 
+compared studies explored disaggregation of appliances into multiple 
+states for the extraction of highlight metrics. This type of disaggregation 
+is a criterion for evaluating applicability in the real case, since in real life 
+a non-negligible number of appliances operate in different modes. Thus, 
+if a disaggregation model could recognize the different modes of oper­
+ation, then it could be useful for application to a complicated disag­
+gregation task that corresponds to reality and provides a more detailed 
+understanding of the electrical energy consumption [76]. The last col­
+umn of Table 3 lists the information about the appliances with the lowest 
+active power consumption that participated in the disaggregation task. 
+The identification of appliances with low power consumption is a proof 
+of the robustness of the proposed NILM models, which can even classify 
+appliances whose consumption is comparable to noise [77].
+4. Other practical challenges
+4.1. Noise effects
+The presence of noise is inevitable in measurements related to NILM 
+and is associated with performance degradation in terms of load disag­
+gregation accuracy [84]. Therefore, various approaches have been used 
+to try to reduce the noise effects in different parts of the NILM pipeline.
+For example, in Ref. [72], the authors converted the classical cu­
+mulative sum control chart algorithm into a DSWC control chart algo­
+rithm for transient event detection. This was achieved by applying 
+variable point identification in a composite dual sliding window 
+method. In DSWC, small variables in composite sliding windows are 
+more sensitive and the effects of data noise are reduced. As a result, the 
+true load event can be extracted from the raw data and isolated from the 
+power fluctuations.
+Aiming to reduce the effects of noise in load disaggregation, the 
+authors in Ref. [79] developed a novel method for event detection 
+combining probabilistic and expert heuristic models. This method is 
+overall more powerful than other implementations, especially when the 
+events are characterized as small current events (when the difference in 
+Table 2 (continued)
+Ref. 
+Year of 
+Publication 
+Frequency of 
+Input Signal 
+General Description of 
+Framework (core algorithm) 
+Critical Metric (Examined on Highlight Data Processing) 
+Competent Comparison 
+with Literature
+Value 
+Number of Examined
+Appl. 
+Combos. 
+Groups
+[81]
+2019
+1.6 kHz
+Unsupervised Learning 
+Machine Learning (DBSCAN)
+Multi-Label Macro-Averaged 
+FScore
+3
+–
+3
+X
+94.70 %
+[18]
+2019
+50 kHz
+Supervised Learning 
+Machine Learning (DT)
+Multi-Label Macro-Averaged 
+FScore
+5
+6
+6
+X
+86.62 %
+[61]
+2019
+50 kHz
+Supervised Learning 
+Machine Learning (Load 
+signature)
+Multi-Label Macro-Averaged 
+FScore
+8
+3
+3
+X
+88.43 %
+[82]
+2021
+50 kHz
+Unsupervised Learning 
+Machine Learning (K-means)
+Multi-Label Macro-Averaged 
+FScore
+6
+22
+23
+X
+81.47 %
+[48]
+2022
+62.5 kHz
+Supervised Learning 
+Machine Learning (SVM)
+Multi-Label Macro-Averaged 
+FScore
+3
+2
+4
+X
+86.11 %
+[19]
+2021
+16 kHz
+Supervised Learning 
+Deep Learning (CNN)
+Multi-Label Macro-Averaged 
+FScore
+5
+–
+5
+✓
+98.00 %
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+9 
+
+Table 3 
+Evaluation of high sampling NILM frameworks in terms of applicability on real conditions.
+Ref.
+Utilized 
+Datasets
+Highlight Data Processing for NILM 
+Development
+Type of Time/ 
+Event Driven 
+Framework
+Utilized Features
+Kind of 
+Appliances’ 
+Operation
+Multi-State 
+Disaggregation of 
+Appliances
+Involved Appliance 
+with the Minimum 
+Nominal Active 
+Power 
+Consumption
+Dataset
+Brief Description
+[45]
+Private
+Private
+Load Signature
+Event-Driven 
+Appliance 
+Classification
+V-I trajectory
+SOA
+Display screen and 
+Microwave oven
+LED lights (5 W)
+Amplitudes of current 
+harmonics (1st, 3rd, 5th 
+and 7th)
+Active power overshoot 
+multiple
+[60]
+PLAID 
+COOLL 
+WHITED
+PLAID
+Leave One Group Out
+Time-Driven 
+Appliance 
+Classification
+Unthreshold recurrence 
+plots for current and 
+voltage cycles
+SOA
+X
+–
+[49]
+Private
+Private
+Time-Based Split into Training 
+(90 %)/Test (10 %) Sets
+Event-Driven 
+Appliance 
+Classification
+Active power
+SOA
+X
+–
+Reactive power
+Apparent power
+Power factor
+RMS current value of odd 
+harmonics from 1st to 
+21st order
+[58]
+REDD
+REDD
+Load Signature
+Event-Driven 
+Appliance 
+Classification
+Current waveform 
+difference before and after 
+an event detection
+COA
+X
+–
+[77]
+BLOND
+BLOND
+Unspecified Split into 
+Training/Validation/Test Sets
+Time-Driven 
+Appliance 
+Classification
+Not clearly specified 
+voltage and current 
+features
+COA
+X
+Computer monitor 
+and fan (5 W)
+[78]
+Private
+Private
+3 Sets of Private Data Used in 
+an Unsupervised 
+Implementation
+Event-Driven 
+Event Matching 
+and Appliance 
+Classification
+Active power
+SOA
+X
+–
+Reactive power
+RMS value of the 3rd 
+order current harmonic
+[54]
+COOLL 
+PLAID 
+UK-DALE
+PLAID
+Samples of the appliances of: 
+•42 randomly selected but 
+different from the validation 
+and test houses used for 
+Training Set development 
+•6 randomly selected but 
+different from the training and 
+test houses used for Validation 
+Set development 
+•12 randomly selected but 
+different from the training and 
+validation houses used for Test 
+Set development
+Time-Driven 
+Appliance 
+Classification
+Features extracted by the 
+proposed CNN 
+architecture
+SOA
+X
+–
+[56]
+Private
+Private
+The Private Dataset that was 
+developed based on PLAID, 
+COOLL and WHITED datasets 
+randomly split into training 
+(80 %) and test (20 %) parts 
+for each cluster to form the 
+Training and Test Sets. This 
+split was repeated 10 times for 
+average evaluation.
+Event-Driven 
+Appliance 
+Classification
+RMS features extracted by 
+the proposed 
+methodology
+SOA
+X
+–
+[73]
+COOLL 
+LIT
+LIT
+Random Split into training 
+and test parts for each cluster 
+to form the Training (80 %) 
+and Test (20 %) Sets. This split 
+was repeated 10 times for 
+average evaluation.
+Event-Driven 
+Appliance 
+Classification
+Exponential damping
+COA
+Microwave Drill 
+Oil heater 
+Hair dryer
+Microwave- 
+standby (4.5 W)
+Frequency
+Phase
+Amplitude
+[47]
+Private
+Private
+Time-Based Split into Training 
+(70 %)/Test (30 %) Sets
+Time-Driven 
+Appliance 
+Classification
+Time and frequency 
+features extracted by the 
+proposed methodology
+SOA
+Coil gun and 
+Permanent magnet 
+synchronous 
+model
+–
+[64]
+PLAID 
+Private
+PLAID
+Unspecified Split into Training 
+(80 %)/Test (20 %) Sets. In the 
+training set there was 
+followed a 10-fold cross 
+validation approach.
+Time-Driven 
+Appliance 
+Classification
+Reconstructed V-I images
+SOA
+X
+–
+[79]
+BLUED 
+PLAID 
+Private
+BLUED
+Unspecified Split into 
+Training/Test Sets
+Event-Driven 
+(Event Detection 
+only)
+RMS current
+COA
+X
+–
+Fundamental frequency 
+purity up to the 5th order
+[21]
+LIT
+LIT
+Unspecified Split into 
+Training/Test Sets
+Time-Driven 
+Appliance Event 
+Type 
+Classification
+Features extracted by the 
+proposed CNN 
+architecture
+COA
+X
+Microwave- 
+standby (4.5 W)
+(continued on next page)
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+10 
+
+Table 3 (continued)
+Ref. 
+Utilized 
+Datasets 
+Highlight Data Processing for NILM 
+Development 
+Type of Time/ 
+Event Driven 
+Framework 
+Utilized Features 
+Kind of 
+Appliances’ 
+Operation 
+Multi-State 
+Disaggregation of 
+Appliances 
+Involved Appliance 
+with the Minimum 
+Nominal Active 
+Power 
+Consumption
+Dataset 
+Brief Description
+[71]
+Private
+Private
+Load Signature
+Time-Driven 
+Appliance Event 
+Type 
+Classification
+Current waveform 
+difference between 
+specific cycles
+COA
+X
+4x LED (5 W)
+[72]
+BLUED 
+Private
+BLUED
+Unspecified Split into 
+Training/Test Sets
+Event-Driven 
+Event Matching 
+and Appliance 
+Classification
+Active power
+COA
+X
+Lights (60 W)
+Reactive power
+1st, 3rd and 5th order 
+current harmonics
+[63]
+BLUED 
+PLAID 
+Private
+Private
+Unspecified Split into 
+Training/Test Sets
+Event-Driven 
+Appliance 
+Classification
+Instantaneous current 
+amplitude
+COA
+X
+–
+Instantaneous current 
+phase
+Instantaneous current 
+frequency
+[17]
+BLUED 
+Private
+BLUED
+Random Split into Training 
+(80 %)/Test (20 %) Sets
+Time-Driven 
+Appliance Event 
+Type 
+Classification
+Instantaneous current 
+spectrograms
+COA
+Hairdryer (added 
+on [83])
+–
+[22]
+COOLL 
+WHITED
+COOLL 
+WHITED
+The COOLL dataset was split 
+into Training (60 
+%)/Validation (20 %)/Test 
+(20 %) Sets to develop the 
+NILM model that was fine- 
+tuned on the Transfer (50 %) 
+part and tested on the Test (50 
+%) part of the WHITED 
+dataset. The Transfer (50 
+%)/Test (50 %) split of the 
+WHITED dataset was done 4 
+times to develop 4 different 
+scenarios. In each scenario 
+different appliance brands for 
+the used appliance types of the 
+background load were 
+employed. The 3 target 
+appliances were also different 
+in brand between the COOLL 
+and WHITED datasets.
+Time-Driven 
+Appliance Event 
+Type 
+Classification
+Current images
+COA
+X
+–
+[20]
+PLAID 
+Private
+Private
+Unspecified Split into Training 
+(50 %)/Test (50 %) Sets
+Time-Driven 
+Appliance 
+Classification
+Ratio of 3rd harmonic 
+current component to 
+fundamental current
+COA
+Dimming bulb and 
+Ceiling fan
+–
+Ratio of 5th harmonic 
+current component to 
+fundamental current
+Ratio of 7th harmonic 
+current component to 
+fundamental current
+Ratio of 5th harmonic 
+current component to 7th 
+harmonic current 
+component
+Fundamental current 
+phase angle
+[74]
+Private
+Private
+Random Split into Training 
+(70 %)/Test (30 %) Sets and 
+extra 120 examples for 
+Validation Set formation
+Time-Driven 
+Appliance 
+Classification
+Instantaneous current
+COA
+X
+Phone (8 W)
+[80]
+UK-DALE 
+REDD
+Not clearly specified
+Event-Driven 
+Appliance 
+Classification
+Current gray scale images
+COA
+X
+–
+[51]
+Private
+Private
+Split into Training (55 % or 7 
+independent subsets)/Test 
+(45 % or 6 independent 
+subsets) Sets containing data 
+that differ from each other in 
+terms of appliances’ operation 
+patterns. During the training 
+phase a 7-fold cross validation 
+approach was followed. The 
+testing was repeated 10 times 
+for average evaluation.
+Time-Driven 
+Appliance 
+Classification
+Magnitudes of the Fourier 
+series coefficients at the 
+fundamental, 3rd, 5th, 
+7th, 9th, 11th, and 13th 
+current harmonics
+COA
+X
+–
+Normalized magnitudes of 
+the Fourier series 
+coefficients at the 3rd and 
+5th current harmonics
+Coefficients #12–23 for a 
+total of 12 out of the 25 
+total discrete wavelet 
+(continued on next page)
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+11 
+
+high-frequency current amplitude of the current transition from one 
+steady state to another is less than 1 A), with a lower signal-to-noise ratio 
+and a larger fundamental current.
+4.2. Execution time
+A crucial parameter for NILM implementation in real-time applica­
+tions concerns the execution time of the disaggregation scheme [85].
+In this review work, we highlight some attempts aimed at reducing 
+the time required for the load disaggregation process. In Ref. [49], a 
+multi-threaded architecture for real-time load identification was pro­
+posed that significantly reduces the time required to implement parallel 
+NILM tasks. A comparison showed that the single-threaded cumulative 
+summation-multilayer perceptron (CUSUM-MLP) NILM framework 
+required 45 ms to identify a single example, while the multi-threaded 
+CUSUM-MLP NILM framework required 7 ms to identify the same 
+example.
+In another example from the literature, the authors in Ref. [80] 
+suggest that translating the instantaneous current waveform into 
+grayscale images can reduce the time required to identify loads. More 
+specifically, in their implementation, the process of capturing the event 
+instantaneous current is applied with the use of the sliding window al­
+gorithm. Each sliding window (containing periods of instantaneous 
+current waveform) is converted into a 320x320 grayscale image. All 
+320x320 extracted grayscale images are compared with the grayscale 
+images (under the same resolution) extracted during the training phase 
+and stored in the database. The comparison is achieved by the proposed 
+CNN-based architecture, which uses the extracted 320x320 grayscale 
+images and leads to the identification of the load. The extended results 
+by determining the start-stop time and state change of the load facilitate 
+the determination of the power consumption of the load.
+4.3. Equipment
+As NILM evolves in practical applications, the existence of devices 
+that can perform measurements at a high sampling rate and function 
+properly the NILM tasks at an affordable cost is a goal that some re­
+searchers have already investigated. In Ref. [86], the authors propose a 
+Table 3 (continued)
+Ref. 
+Utilized 
+Datasets 
+Highlight Data Processing for NILM 
+Development 
+Type of Time/ 
+Event Driven 
+Framework 
+Utilized Features 
+Kind of 
+Appliances’ 
+Operation 
+Multi-State 
+Disaggregation of 
+Appliances 
+Involved Appliance 
+with the Minimum 
+Nominal Active 
+Power 
+Consumption
+Dataset 
+Brief Description
+transform coefficients 
+derived from an 8-level 1- 
+D discrete wavelet 
+transform
+3 wave shape features 
+analytically explained in 
+the study
+[65]
+PLAID 
+Private
+Private
+Unspecified Split into 
+Training/Test Sets
+Event-Driven 
+Appliance 
+Classification
+Magnitude and Phase of 
+1st, 3rd, 5th and 7th odd 
+order current harmonics
+COA
+X
+Monitor (private 
+dataset), compact 
+fluorescent lamp 
+and fridge (PLAID 
+dataset) (23 W)
+[81]
+Private
+Private
+3 Sets of Private Data Used in 
+an Unsupervised 
+Implementation
+Event-Driven 
+Event Matching 
+and Appliance 
+Classification
+Active power
+COA
+Washing machine
+–
+Reactive power
+[18]
+Private
+Private
+2 Sets of Private 
+Measurements extracted form 
+2 Houses and used for 
+Training (7525 s of 
+measurements from House 1)/ 
+Test (5375 s of measurements 
+from House 2) Sets. The 
+appliances between the 2 
+houses differed in brands.
+Time-Driven 
+Appliance 
+Classification
+Amplitude and phase of 
+odd harmonic currents up 
+to the 5th order (1st, 3rd 
+and 5th)
+COA
+X
+–
+[61]
+Private
+Private
+Load Signature
+Time-Driven 
+Appliance 
+Classification
+Amplitude and phase of 
+odd harmonic currents up 
+to the 5th order (1st, 3rd 
+and 5th)
+COA
+X
+–
+[82]
+Private
+Private
+Random Split into Training 
+(70 %)/Test (30 %) Sets
+Time-Driven 
+Appliance 
+Classification
+Amplitude of odd 
+harmonic currents up to 
+the 5th order (1st, 3rd and 
+5th)
+COA
+Hair dryer
+–
+[48]
+Private
+Private
+Time-Based Split into Training 
+(70 %)/Test (30 %) Sets
+Time-Driven 
+Appliance 
+Classification
+RMS current
+COA
+X
+–
+Power factor
+Reactive power
+Active power
+% Harmonic distortion 
+(HD) of 3rd, 5th and 7th 
+harmonic currents
+Previous minute % HD of 
+3rd and 5th harmonic 
+currents
+[19]
+UK-DALE
+UK- 
+DALE
+Time-Based Split into Training 
+(6 days of measurements)/ 
+Test (1 day of measurements) 
+Sets
+Time-Driven 
+Appliance 
+Classification
+Magnitude and phase 
+matrices of power matrix
+COA
+X
+–
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+12 
+
+device for measuring instantaneous current and voltage and provide a 
+design analysis of the hardware architecture for the current and voltage 
+conditioning stages along with the software implementation in an 
+Arduino MKR Zero microcontroller that mainly uses an interrupt routine 
+for real-time data acquisition and storage on a micro-SD card. The 
+proposed system implementation enables a high sampling rate (6.25 
+kHz), resulting in a duration of about 37 ms for storing 204 current and 
+voltage values on the used SD card. Moreover, the whole data acquisi­
+tion process could be applied for 25.4 days. The proposed system is 
+low-cost and low-power, requires its own power supply, and is easy to 
+install. Some other specifications of the proposed measurement system 
+are the maximum active power monitoring of about 6 kW with granu­
+larity of 11.3 W. Therefore, this device could be used for monitoring the 
+electrical power of a main feeding panel for the needs of practical 
+application of NILM.
+In this sense, in Refs. [87,88], the authors have proposed a system on 
+chip (SoC) architecture based on a field programmable gate array device 
+targeted to real-time applications of NILM. More specifically, the ar­
+chitecture is associated with an ADE9153A circuit that extracts the 
+instantaneous current and voltage measurements with a sampling fre­
+quency of 4 kHz. In addition, a low-level peripheral integrated into the 
+SoC architecture is responsible for real-time filtering and event detection 
+of the extracted signals. The event detection algorithm examines the 
+amplitude value of the difference between 2 consecutive samples of the 
+mean square current. An event is considered as such if the amplitude 
+value is greater than a threshold and at the same time the maximum of 
+the amplitude values of a given window of amplitude value samples. 
+Finally, an ARM processor controls the entire system and could be used 
+by a NILM load identification model. This type of architecture facilitates 
+real-time, high-sampling-rate event-driven load disaggregation at the 
+input point of an electrical system. Also, enables real-time, high-­
+sampling-rate event data transmission to the cloud side of an end-cloud 
+NILM framework for load disaggregation without bandwidth conges­
+tion. In this way, the overall implementation cost remains low despite 
+the high sampling rate of the device.
+5. Conclusion and study outputs
+Research on the development of NILM has been at the forefront for 
+more than three decades. Its contribution to the energy sector has been 
+highlighted in various research papers in different ways and improving 
+its performance has been a goal of researchers. Technological develop­
+ment in measurement systems has enabled higher sampling rates, which 
+allowed the investigation of the contribution of higher sampling rate to 
+improve the performance of the NILM application. The results suggest 
+that a deeper analysis of the electrical signal in terms of acquiring a 
+higher number of samples for a given time window could significantly 
+improve the performance of load disaggregation and distinguish the 
+fingerprints of the different types of electrical loads represented on the 
+aggregated electrical signal. However, NILM is a framework developed 
+with the perspective of applying it in practice to fully exploit its benefits. 
+To this end, several parameters should be considered in the different 
+steps of NILM development. This review study shows that: 
+• The type of a public high sampling NILM dataset is of paramount 
+importance for the NILM research community to benchmark its work 
+against practical conditions of combined operation of appliances. 
+Thus, such a dataset should contain instances of combined operation 
+of appliances along with high reliability of true labels’ availability.
+• Processing the available data in terms of training, validation, and 
+testing of the developed NILM models should be done considering 
+different operating patterns and different brands of appliances 
+participating in the training, validation, and test sets to ensure 
+improved generalization capability of the developed models. In this 
+sense, better disaggregation performance could be achieved in 
+practice if completely unseen data are fed into the NILM model used.
+• The development of high-frequency features should aim to represent 
+inherent characteristics that could distinguish appliances with 
+similar electrical behavior in terms of their operation, which is a 
+common challenge in practice.
+• The character of the developed high sampling rate NILM frameworks 
+should be event-driven to reduce computational complexity and 
+make the NILM systems applicable in a real-world scenario.
+• The disaggregation capabilities should include the combined and 
+multi-state operation of appliances, which correspond to reality. In 
+addition, noise, computation time, and other practical challenges 
+should also be considered.
+In this way, the maturity of the NILM system could be significantly 
+increased so that its application in the real world would be reliable and 
+feasible.
+Declaration of competing interest
+The authors declare that they have no known competing financial 
+interests or personal relationships that could have appeared to influence 
+the work reported in this paper.
+Acknowledgements
+We acknowledge support of this work by the project “Development 
+of New Innovative Low-Carbon Energy Technologies to Enhance excel­
+lence in the Region of Western Macedonia” (MIS 5047197) under the 
+Action “Reinforcement of the Research and Innovation Infrastructure”, 
+funded by the Operational Program “Competitiveness, Entrepreneurship 
+and Innovation” (NSRF 2014–2020) and co-financed by Greece and the 
+European Union (European Regional Development Fund).
+Data availability
+Data will be made available on request.
+References
+[1] Hart GW. Nonintrusive appliance load monitoring. Proc IEEE 1992;80:1870–91.
+[2] Gopinath R, Kumar M, Prakash Chandra Joshua C, Srinivas K. Energy management 
+using non-intrusive load monitoring techniques – state-of-the-art and future 
+research directions. Sustain Cities Soc 2020;62:102411.
+[3] Yue H, Yan K, Zhao J, Ren Y, Yan X, Zhao H. Estimating demand response 
+flexibility of smart home appliances via NILM algorithm. 2020 IEEE 4th 
+Information Technology, Networking, Electronic and Automation Control 
+Conference (ITNEC) 2020;1:394–8.
+[4] Gernaat DEHJ, Boer HSd, Dammeier LC, Dv Vuuren. The role of residential rooftop 
+photovoltaic in long-term energy and climate scenarios. Appl Energy 2020;279: 
+115705.
+[5] Moreno Jaramillo AF, Raouf Mohamed AA, Laverty DM, del Rinc´on JM, Foley AM. 
+Photovoltaic power disaggregation using a non-intrusive load monitoring 
+regression model. 2021 IEEE PES innovative smart grid Technologies europe (ISGT 
+europe). 2021. p. 1–6.
+[6] Salani M, Derboni M, Rivola D, Medici V, Nespoli L, Rosato F, et al. Non intrusive 
+load monitoring for demand side management. Energy Informatics 2020;3:1–12.
+[7] Dinesh C, Welikala S, Warahena Liyanage Y, Ekanayake MPB, Godaliyadda RI, 
+Ekanayake JB. Non-intrusive load monitoring under residential solar power influx. 
+Appl Energy 2017;205:1068–80.
+[8] Lu M, Li Z. A hybrid event detection approach for non-intrusive load monitoring. 
+IEEE Trans Smart Grid 2019;11:528–40.
+[9] Yan L, Tian W, Han J, Li Z. Event-driven two-stage solution to non-intrusive load 
+monitoring. Appl Energy 2021;311:118627.
+[10] Liu Y, Zhong L, Qiu J, Lu J, Wang W. Unsupervised domain adaptation for 
+nonintrusive load monitoring via adversarial and joint adaptation network. IEEE 
+Trans Ind Inf 2021;18:266–77.
+[11] Yang Y, Zhong J, Li W, Aaron Gulliver T, Li S. Semisupervised multilabel deep 
+learning based nonintrusive load monitoring in smart grids. IEEE Trans Ind Inf 
+2020;16:6892–902.
+[12] Calamaro N, Donko M, Shmilovitz D. A highly accurate NILM: with an electro- 
+spectral space that best fits algorithm’s national deployment requirements. 
+Energies 2021;14:7410.
+[13] Tabanelli E, Brunelli D, Acquaviva A, Benini L. Trimming feature extraction and 
+inference for MCU-based edge NILM: a systematic approach. IEEE Trans Ind Inf 
+2021;18:943–52.
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+13 
+
+[14] Clark M. Improving the feasibility of energy disaggregation in very high- and low- 
+rate sampling scenarios 2015.
+[15] Ruano AE, Hern´andez ´A, Ure˜na J, Ruano MdG, García JJ. NILM techniques for 
+intelligent home energy management and ambient assisted living: a review. 
+Energies 2019;12:2203.
+[16] Huber P, Calatroni A, Rumsch A, Paice A. Review on deep neural networks applied 
+to low-frequency NILM. Energies 2021;14:2390.
+[17] Ciancetta F, Bucci G, Fiorucci E, Mari S, Fioravanti A. A new convolutional neural 
+network-based system for NILM applications. IEEE Trans Instrum Meas 2021;70: 
+1–12.
+[18] Loukas L, Bodurri K, Evangelopoulos P, Bouhouras AS, Poulakis N, 
+Christoforidis GC, et al. A machine learning approach for NILM based on odd 
+harmonic current vectors. 2019 8th international conference on modern power 
+systems (MPS). 2019. p. 1–6.
+[19] Schirmer PA, Mporas I. Double fourier integral analysis based convolutional neural 
+network regression for high-frequency energy disaggregation. IEEE Transactions 
+on Emerging Topics in Computational Intelligence 2021;6:439–49.
+[20] Ghosh S, Chatterjee A, Chatterjee D. An improved load feature extraction 
+technique for smart homes using fuzzy-based NILM. IEEE Trans Instrum Meas 
+2021;70:1–9.
+[21] Nolasco LdS, Lazzaretti AE, Mulinari BM. DeepDFML-NILM: a new CNN-based 
+architecture for detection, feature extraction and multi-label classification in NILM 
+signals. IEEE Sens J 2022;22:501–9.
+[22] Chen C, Geng G, Yu H, Liu Z, Jiang Q. An end-cloud collaborated framework for 
+transferable non-intrusive load monitoring. IEEE Transactions on Cloud Computing 
+2023;11:1157–69.
+[23] Angelis G-F, Timplalexis C, Krinidis S, Ioannidis D, Tzovaras D. NILM Applications: 
+literature review of learning approaches, recent developments and challenges. 
+Energy Build 2022;261:111951.
+[24] Pereira L, Nunes NJ. Performance evaluation in non-intrusive load monitoring: 
+datasets, metrics, and tools—a review. Wiley Interdisciplinary Reviews: Data Min 
+Knowl Discov 2018;8.
+[25] Iqbal HK, Malik FH, Muhammad A, Qureshi MA, Abbasi MN, Chishti AR. A critical 
+review of state-of-the-art non-intrusive load monitoring datasets. Elec Power Syst 
+Res 2020:106921.
+[26] Held P, Mauch S, Saleh A, Benyoucef D, Abdeslam DO. HELD1: Home Equipment 
+Laboratory Dataset for Non-Intrusive Load Monitoring 2018.
+[27] Kahl M, Haq Au, Kriechbaumer T, Jacobsen H-A. WHITED-A Worldwide Household 
+and Industry Transient Energy Data Set 2016.
+[28] Picon T, Meziane MN, Ravier P, Lamarque G, Novello C, Bunetel J-CL, et al. 
+COOLL: controlled on/off loads library, a public dataset of high-sampled electrical 
+signals for appliance identification. ArXiv. 2016:05803. abs/1611.
+[29] Gulati M, Ram SS, Singh A. An in depth study into using EMI signatures for 
+appliance identification. Proceedings of the 1st ACM conference on embedded 
+systems for energy-efficient buildings. 2014.
+[30] Ahajjam MA, Bonilla Licea D, Essayeh C, Ghogho M, Kobbane A. MORED: a 
+Moroccan buildings’ electricity consumption dataset. Energies 2020;13:6737.
+[31] Kolter JZ, Johnson MJ. REDD : A Public Data Set for Energy Disaggregation 
+Research 2011.
+[32] Kelly J, Knottenbelt WJ. The UK-DALE dataset, domestic appliance-level electricity 
+demand and whole-house demand from five UK homes, vol. 2. Scientific Data; 
+2014.
+[33] Mari˜no C, Masquil Ei, Marchesoni F, Fern´andez A, Massaferro P. NILM: 
+multivariate DNN performance analysis with high frequency features. 2021 IEEE 
+PES innovative smart grid Technologies conference - Latin America. ISGT Latin 
+America); 2021. p. 1–5.
+[34] Ribeiro M, Pereira L, Quintal F, Nunes NJ. SustDataED: A Public Dataset for 
+Electric Energy Disaggregation Research 2016.
+[35] Medico R, De Baets L, Gao J, Giri S, Kara EC, Dhaene T, et al. A voltage and current 
+measurement dataset for plug load appliance identification in households, vol. 7. 
+Scientific Data; 2020.
+[36] Kriechbaumer T, Jacobsen H-A. BLOND, a building-level office environment 
+dataset of typical electrical appliances. Sci Data 2018;5.
+[37] Held P, Mauch S, Saleh A, Ould Abdeslam D, Benyoucef D. Frequency invariant 
+transformation of periodic signals (FIT-PS) for classification in NILM. IEEE Trans 
+Smart Grid 2019;10:5556–63.
+[38] Renaux DPB, Pottker F, Ancelmo HC, Lazzaretti AE, Lima CRE, Linhares RR, et al. 
+A dataset for non-intrusive load monitoring: design and implementation. Energies 
+2020;13:5371.
+[39] Anderson KD, Ocneanu A, Carlson DR, Rowe AG, Berges ME. BLUED : A Fully 
+Labeled Public Dataset for Event-Based Non-Intrusive Load Monitoring Research 
+2012.
+[40] Kahl M, Krause V, Hackenberg R, Ul Haq A, Horn A, Jacobsen H-A, et al. 
+Measurement system and dataset for in-depth analysis of appliance energy 
+consumption in industrial environment. TM - Tech Mess 2018;86:1–13.
+[41] May RJ, Maier HR, Dandy GC. Data splitting for artificial neural networks using 
+SOM-based stratified sampling. Neural Netw : the official journal of the 
+International Neural Network Society 2010;23(2):283–94.
+[42] Zhao B, Stankovi´c L, Stankovi´c V. On a training-less solution for non-intrusive 
+appliance load monitoring using graph signal processing. IEEE Access 2016;4: 
+1784–99.
+[43] Zhou Z, Xiang Y, Xu H, Wang Y, Shi D. Unsupervised learning for non-intrusive 
+load monitoring in smart grid based on spiking deep neural network. J Mod Power 
+Syst Clean Energy 2021;10:606–16.
+[44] Ren Z, Tang B, Wang L, Liu H, Li Y, Wu H. Non-intrusive load identification method 
+based on integrated intelligence strategy. 2019 25th international conference on 
+automation and computing (ICAC). 2019. p. 1–6.
+[45] Hu M, Tao S, Fan H, Li X, Sun Y, Sun J. Non-intrusive load monitoring for 
+residential appliances with ultra-sparse sample and real-time computation. Sensors 
+2021;21.
+[46] Liu H, Haig E. Semi-random partitioning of data into training and test sets in 
+granular computing context. Granular Computing 2017;2:357–86.
+[47] Oslebo D, Corzine KA, Weatherford TR, Maqsood A, Norton M. DC pulsed load 
+transient classification using long short-term memory recurrent neural networks. 
+2019 13th international conference on signal processing and communication 
+systems (ICSPCS). 2019. p. 1–6.
+[48] Papageorgiou P, Christoforidis GC, Bouhouras AS. Odd harmonic distortion 
+contribution on a support vector machine NILM approach. 2022 2nd international 
+conference on energy transition in the mediterranean area (SyNERGY MED). 2022. 
+p. 1–6.
+[49] Zhao H, Wei G, Hu C, Liu Q. Research on online non-intrusive load identification 
+system based on multi-threaded CUSUM-MLP algorithm. 2021 IEEE Sensors 2021: 
+1–4.
+[50] Morita K, Mizuno T, Kusuhara H. Investigation of a data split strategy involving the 
+time axis in adverse event prediction using machine learning. J Chem Inf Model 
+2022;62:3982–92.
+[51] Lundstrom B, Saraswat G, Salapaka MV. High-frequency, multiclass nonintrusive 
+load monitoring for grid-interactive residential buildings. 2020 IEEE power & 
+energy society innovative smart grid Technologies conference (ISGT). 2020. p. 1–5.
+[52] Lai P-H, Trayer M, Ramakrishna S, Li Y. Database establishment for machine 
+learning in nilm. Proceedings of the 1st International non-intrusive load 
+monitoring Workshop2012.
+[53] Ahmed S, Bons M. Edge computed NILM: a phone-based implementation using 
+MobileNet compressed by Tensorflow Lite. Proceedings of the 5th international 
+workshop on non-intrusive load monitoring. 2020.
+[54] Saha D, Bhattacharjee A, Chowdhury D, Hossain E, Islam MM. Comprehensive 
+NILM framework: device type classification and device activity status monitoring 
+using capsule network. IEEE Access 2020;8:179995–80009.
+[55] D’Incecco M, Squartini S, Zhong M. Transfer learning for non-intrusive load 
+monitoring. IEEE Trans Smart Grid 2019;11:1419–29.
+[56] Guo L, Wang S, Chen H, Shi Q. A load identification method based on active deep 
+learning and discrete wavelet transform. IEEE Access 2020;8:113932–42.
+[57] Aghdam HH, Gonzalez-Garcia A, Jvd Weijer, L´opez AM. Active learning for deep 
+detection neural networks. 2019 IEEE/CVF international conference on computer 
+vision (ICCV). 2019. p. 3671–9.
+[58] Mughal AH, Tahir A, Javed F. MTopsOREDC: M tops KNN for online reinforced 
+electric device classification. 2020 IEEE 17th international conference on smart 
+communities: improving quality of life using ICT, IoT and AI (HONET). 2020. 
+p. 54–8.
+[59] Diego-Ot´on Ld, Hern´andez ´A, Nieto R, P´erez-Rubio MC. Comparison of neural 
+networks for high-sampling rate NILM scenario. 2022 IEEE international 
+symposium on medical measurements and applications (MeMeA). 2022. p. 1–6.
+[60] Wenninger M, Bayerl SP, Maier A, Schmidt J. Recurrence plot spacial pyramid 
+pooling network for appliance identification in non-intrusive load monitoring. 
+2021 20th IEEE international conference on machine learning and applications 
+(ICMLA). 2021. p. 108–15.
+[61] Bouhouras AS, Gkaidatzis PA, Panagiotou EN, Poulakis N, Christoforidis GC. 
+A NILM algorithm with enhanced disaggregation scheme under harmonic current 
+vectors. Energy Build 2019;183:392–407.
+[62] Drouaz M, Colicchio B, Moukadem A, Dieterlen A, Ould-Abdeslam D. New time- 
+frequency transient features for nonintrusive load monitoring. Energies 2021;14: 
+1437.
+[63] Le T-T-H, Heo S, Kim H. Toward load identification based on the Hilbert transform 
+and sequence to sequence long short-term memory. IEEE Trans Smart Grid 2021; 
+12:3252–64.
+[64] Jia D, Li Y, Du Z, Xu J, Yin B. Non-intrusive load identification using reconstructed 
+voltage–current images. IEEE Access 2021;9:77349–58.
+[65] Le T-T-H, Kang H, Kim H. Household appliance classification using lower odd- 
+numbered harmonics and the bagging decision tree. IEEE Access 2020;8:55937–52.
+[66] Nieto R, Diego-Ot´on Ld, Hern´andez ´A, Ure˜na J. Data collection and cloud 
+processing architecture applied to NILM techniques for independent living. 2021 
+IEEE international instrumentation and measurement technology conference 
+(I2MTC). 2021. p. 1–6.
+[67] Attar AA, Schirle F, Hofmann M. Noise added on interpolation as a simple novel 
+method for imputing missing data from household’s electricity consumption. 
+International conference on knowledge-based intelligent information & 
+engineering Systems2022.
+[68] Tang G, Wu K, Lei J, Tang J. A simple and robust approach to energy 
+disaggregation in the presence of outliers. Sustain Comput Informatics Syst 2016;9: 
+8–19.
+[69] Ronaghi S, Ferrero A, Salicone S, Jetti HV. Novel algorithms for filtering and event 
+detection in non-intrusive load monitoring. 2023 IEEE 13th international 
+workshop on applied measurements for power systems (AMPS). 2023:01-6.
+[70] Yaniv A, Beck Y. Enhancing NILM classification via robust principal component 
+analysis dimension reduction. Heliyon 2024;10:e30607.
+[71] Dowalla K, Bilski P, Łukaszewski R, W´ojcik A, Kowalik R. Application of the time- 
+domain signal analysis for electrical appliances identification in the non-intrusive 
+load monitoring. Energies 2022;15:3325.
+[72] Liu H, Zou Q, Zhang Z. Energy disaggregation of appliances consumptions using 
+HAM approach. IEEE Access 2019;7:185977–90.
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+14 
+
+[73] Ancelmo HC, Grando FL, Mulinari BM, da Costa CH, Lazzaretti AE, Oroski E, et al. 
+A transient and steady-state power signature feature extraction using different 
+prony’s methods. 2019 20th international conference on intelligent system 
+application to power systems (ISAP). 2019. p. 1–6.
+[74] Abeykoon AMHS, Perera APS, Prabodhanie RKS, Matharage MDNV, 
+Abeysinghe AMGP. A machine learning approach for NILM based on superimposed 
+current profiles. 2020 moratuwa engineering research conference (MERCon). 
+2020. p. 584–9.
+[75] Garcia FD, Souza WAd, Diniz IS, Maraf˜ao FP. NILM-based approach for energy 
+efficiency assessment of household appliances. Energy Informatics 2020;3:1–21.
+[76] Egarter D, Bhuvana VP, Elmenreich W. PALDi: online load disaggregation via 
+particle filtering. IEEE Trans Instrum Meas 2015;64:467–77.
+[77] Astal M-TE, Kalloub M, Abu-Hudrouss AM, Frey G. Office appliances identification 
+and monitoring using deep leaning based energy disaggregation for smart 
+buildings. IECON 2020 the 46th annual conference of the. IEEE Industrial 
+Electronics Society; 2020. p. 1986–91.
+[78] Jacobs G, Henneaux P. Unsupervised learning procedure for NILM applications. 
+2020 IEEE 20th mediterranean electrotechnical conference (MELECON). 2020. 
+p. 559–64.
+[79] Zhang F, Qu L, Dong W, Zou H, Guo Q, Kong Y. A novel NILM event detection 
+algorithm based on different frequency scales. IEEE Trans Instrum Meas 2022;71: 
+1–11.
+[80] Yang D, Gao X, Kong L, Pang Y, Zhou B. An event-driven convolutional neural 
+architecture for non-intrusive load monitoring of residential appliance. IEEE Trans 
+Consum Electron 2020;66:173–82.
+[81] Jacobs G, Maun JC. Identifying washing machine consumption in supervised global 
+electric consumption. 2019 IEEE Milan PowerTech 2019:1–6.
+[82] Papageorgiou P, Gkaidatzis PA, Christoforidis GC, Bouhouras AS. Unsupervised 
+NILM implementation using odd harmonic currents. 2021 56th international 
+universities power engineering conference (UPEC). 2021. p. 1–6.
+[83] Bucci G, Ciancetta F, Fiorucci E, Mari S, Fioravanti A. Multi-state appliances 
+identification through a NILM system based on convolutional neural network. 2021 
+IEEE international instrumentation and measurement technology conference 
+(I2MTC). 2021. p. 1–6.
+[84] Bonfigli R, Felicetti A, Principi E, Fagiani M, Squartini S, Piazza F. Denoising 
+autoencoders for non-intrusive load monitoring: improvements and comparative 
+evaluation. Energy Build 2018;158:1461–74.
+[85] Rafiq H, Zhang H, Li H, Ochani MK. Regularized LSTM based deep learning model: 
+first step towards real-time non-intrusive load monitoring. 2018 IEEE international 
+conference on smart energy grid engineering (SEGE). 2018. p. 234–9.
+[86] Houidi S, Auger F, Fr´etaud P, Fourer D, Miegeville L, Attia Sethom HB. Design of an 
+electricity consumption measurement system for non intrusive load monitoring. 
+2019 10th international renewable energy congress (IREC). 2019. p. 1–6.
+[87] Barbero JC, Hern´andez ´A, Ure˜na J. FPGA-Based architecture for identification 
+algorithms in NILM techniques. 2020 IEEE international instrumentation and 
+measurement technology conference (I2MTC). 2020. p. 1–5.
+[88] Hern´andez ´A, Nieto R, Fuentes D, Ure˜na J. Design of a SoC architecture for the 
+edge computing of NILM techniques. 2020 XXXV conference on design of circuits 
+and integrated systems (DCIS). 2020. p. 1–6.
+P.G. Papageorgiou et al.                                                                                                                                                                                                                       
+Renewable and Sustainable Energy Reviews 213 (2025) 115497 
+15
