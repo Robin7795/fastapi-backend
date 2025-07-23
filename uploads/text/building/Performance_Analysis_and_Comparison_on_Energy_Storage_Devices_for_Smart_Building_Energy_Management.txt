@@ -1,0 +1,1221 @@
+2136
+IEEE TRANSACTIONS ON SMART GRID, VOL. 3, NO. 4, DECEMBER 2012
+Performance Analysis and Comparison on
+Energy Storage Devices for Smart Building
+Energy Management
+Zhanbo Xu, Xiaohong Guan, Fellow, IEEE, Qing-Shan Jia, Senior Member, IEEE, Jiang Wu, Member, IEEE,
+Dai Wang, and Siyun Chen
+Abstract—A smart building energy system usually contains
+multiple energy sources such as power grids, autonomous genera-
+tors, renewable resources, storage devices, and schedulable loads.
+Storage devices such as batteries, ice/heat storage units, and water
+tanks play an important role in reducing energy cost in building
+energy systems since they can help sufﬁciently utilize renewable
+energy resources and time-of-use electricity prices. It is important
+to plan, schedule, and coordinate all the storage devices together
+with schedulable loads in a building facilitated by microgrid
+technology. To consider the above problem with uncertainties in
+solar radiation and demand proﬁles, a stochastic optimization
+problem is formulated and solved by the scenario tree method.
+The best combination and the optimal capacities of storage de-
+vices for speciﬁc building energy systems are then determined.
+Furthermore, the optimal operating strategy of building energy
+systems can be obtained. The performance analysis on the storage
+devices is conducted and the numerical results show that thermal
+storage devices (e.g., ice storage units, water tanks) are good for
+saving energy costs but batteries may not be economical due to
+their high investment cost and short lifetime. It is also observed
+that the aforementioned uncertainties have an impact on selecting
+which type and capacity of storage device should be used.
+Index Terms—Building energy saving, mixed integer program-
+ming, optimal capacities and types, storage devices.
+I. NOMENCLATURE
+NIT price of battery (RMB/kWh).
+Unit price of heat storage unit (RMB/kWh).
+Unit price of ice storage unit (RMB/kWh).
+Unit price of water tank
+.
+Upper lifetime of battery converted to
+scheduling horizon.
+Manuscript received November 15, 2011; revised May 08, 2012; accepted
+September 08, 2012. Date of publication December 20, 2012; date of cur-
+rent version December 28, 2012. This work was supported in part by the
+Tsinghua-UTC Research Institute for Integrated Building Energy, Safety and
+Control System, the United Technologies Research Center, NSFC (60704008,
+60736027, 60921003, 61174072, and 90924001), the Specialized Research
+Fund for the Doctoral Program of Higher Education (20070003110), the
+National 111 International Collaboration Project (B06002), and the TNList
+Cross-Disciplinary Research Funding. Paper no. TSG-00637-2011.
+Z. Xu, X. Guan, J. Wu, D. Wang, and S. Chen are with the Moe Klinns
+Lab of Xi’an Jiaotong University, Xi’an, 710049, China (e-mail: zbxu@sei.
+xjtu.edu.cn; jwu@sei.xjtu.edu.cn; daiwang@sei.xjtu.edu.cn; sychen@sei.xjtu.
+edu.cn; xhguan@xjtu.edu.cn).
+X. Guan is also with the Center for Intelligent and Networked Systems
+(CFINS), Department of Automation, TNLIST, Tsinghua University, Beijing
+100084, China.
+Q.-S. Jia is with the CFINS, TNLIST, Department of Automation, Tsinghua
+University, Beijing 100084, China (e-mail: jiaqs@tsinghua.edu.cn).
+Digital Object Identiﬁer 10.1109/TSG.2012.2218836
+Penalty due to using battery during scheduling
+horizon (RMB).
+Penalty cost when the utilization time of
+battery exceed
+.
+Investment cost of battery (RMB).
+Investment cost of heat storage unit (RMB).
+Investment cost of ice storage unit (RMB).
+Investment cost of water tank (RMB).
+Buying price of electricity during
+.
+Selling price of electricity during
+.
+Total cost of electricity during
+.
+Price of natural gas during
+.
+Total cost of natural gas during
+.
+Coefﬁcient of performance in refrigeration
+mode.
+Coefﬁcient of performance in heating mode.
+Coefﬁcient of performance in ice-making
+mode.
+Electrical consumption by auxiliary electric
+heater during
+.
+Electrical consumption in heating mode during
+.
+Electrical consumption by chiller in
+refrigeration mode during
+.
+Total electrical demand during
+.
+Electrical consumption by chiller in ice-making
+mode during
+.
+Capacity of battery
+.
+Time period index,
+.
+A great positive integer.
+Number of solar thermal collectors.
+Rated power of auxiliary electric heater (kW).
+Battery charge
+or discharge
+during
+.
+Maximal discharge rate of battery (kW).
+Maximal charge rate of battery (kW).
+Minimal charge rate of battery (kW).
+1949-3053/$31.00 © 2012 IEEE
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+XU et al.: PERFORMANCE ANALYSIS AND COMPARISON ON ENERGY STORAGE DEVICES FOR SMART BUILDING ENERGY MANAGEMENT
+2137
+Minimal discharge rate of battery (kW).
+CCHP power generated during
+.
+Electrical capacity of CCHP unit (kW).
+Rated power of chiller (kW).
+Power supplied to loads from grid
+during
+.
+Solar power generated during
+.
+Power fed into grid
+during
+.
+CCHP cooling generated during
+.
+Total heating demand during
+.
+CCHP heat generated during
+.
+Cooling quantity stored in ice storage unit
+during
+.
+Cooling quantity supplied by ice storage unit
+during
+.
+Heat quantity supplied by heat storage unit
+during
+.
+Heat quantity stored in heat storage unit during
+.
+Remaining cooling quantity in ice storage unit
+during
+.
+Remaining heat quantity in heat storage unit
+during
+.
+Total cooling demand during
+.
+Capacity of heat storage unit (kWh).
+Capacity of ice storage unit (kWh).
+Horizontal solar radiation (kWh).
+Scenario index of demand proﬁle,
+.
+Scenario index of solar radiation,
+.
+Demanded temperature of hot water
+.
+Environmental temperature
+.
+Temperature of municipal water
+.
+Hot water generated during
+.
+Natural gas consumed by CCHP during
+.
+Capacity of water tank
+.
+Remaining hot water in tank during
+.
+Demand of hot water during
+.
+Remaining electrical energy in battery during
+.
+Lower bound of state of charge (SOC) of
+battery.
+Upper bound of SOC of battery.
+Electrical load ratio of CCHP during
+.
+Minimal electrical load rate of CCHP.
+Maximal electrical load rate of CCHP.
+Discrete variable, “1” if utilization time of
+battery has not exceeded
+during scheduling
+horizon, “2” if it exceeds
+.
+Discrete variable, “1” if battery is charging
+during
+, “0” otherwise.
+Discrete variable, “
+” if battery is discharging
+during
+, “0” otherwise.
+Discrete variable, “1” if battery charge is
+generating penalty during
+, “0” otherwise.
+Discrete variable, “
+” if battery discharge is
+generating penalty during
+, “0” otherwise.
+if CCHP is started up (or
+shut down) during
+.
+if chiller is in
+refrigeration mode (or not) during
+.
+if chiller is in ice-making
+mode (or not) during
+.
+Discrete variable, “1” if power is supplied to
+terminal loads during
+, “0” otherwise.
+Discrete variable, “1” if power is fed into grid
+during
+, “0” otherwise.
+if cooling is (or not)
+supplied by ice storage unit.
+Time length of a period (hour).
+Efﬁciency of solar thermal collectors.
+Efﬁciency of auxiliary electric heater.
+Efﬁciency of chiller in ice-making mode.
+Loss coefﬁcient of heat storage unit.
+Loss heat coefﬁcient.
+Loss coefﬁcient of ice storage unit.
+Conversion coefﬁcient
+.
+Density of hot water
+.
+Probability of
+scenario of demand proﬁle.
+Probability of
+scenario of solar radiation.
+II. INTRODUCTION
+B
+UILDING energy efﬁciency has attracted a lot of re-
+search efforts in recent years since buildings use a
+signiﬁcant percentage of energy consumption in our modern
+society. A building energy system usually consists of multiple
+energy sources and media such as power distribution grids, au-
+tonomous generators (such as combined cooling, heating, and
+power (CCHP) generating units), renewable energy resources
+(such as photovoltaic (PV) panels, solar thermal collectors,
+and wind power generators), various storage devices (such as
+electrical batteries, ice storage units, heat storage units, and
+water tanks), and schedulable loads (such as heating, ventila-
+tion, and air conditioning (HVAC) systems and room thermal
+loads controlled by blinds or opening windows) [1], [2], [4].
+Various energy sources and loads (such as electricity, natural
+gas, solar power and thermal generation, cooling, and heating)
+are correlated or coupled with one another as shown in Fig. 1.
+Many efforts have been made in building energy efﬁciency.
+Firstly, most studies focus on improving the energy efﬁciency
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+2138
+IEEE TRANSACTIONS ON SMART GRID, VOL. 3, NO. 4, DECEMBER 2012
+Fig. 1. Multiple energy sources of the building energy system.
+of an HVAC system since it uses the most building energy con-
+sumption. Huang [1] proposed a method to increase efﬁciency
+of the HVAC systems by natural ventilation with information
+about the outdoor environment. Li et al. [2] and Braun [3]
+showed that an ice storage unit can reduce the operating cost
+of an HVAC system and the capacity of a chiller. Secondly,
+some research focuses on improving building energy efﬁciency
+through integrated control of terminal loads. Sun et al. [4]
+showed that integrated terminal control and HVAC systems can
+signiﬁcantly save energy while satisfying occupant comfort
+requirements. Tzempelikos and Athienitis [5] revealed an
+approach to providing the required illuminance and minimizing
+the energy cost of the lights by jointly controlling blinds and
+lights. Thirdly, some researchers study the utilization of re-
+newable energy resources in building energy supply systems
+as well as the usage of microgrid technology in improving
+energy efﬁciency of building energy supply systems. Mooney
+and Kroposki [6] analyzed the potential to save building energy
+consumption with renewable energy resources. Guan, Xu, and
+Jia [7] revealed a method to improve operation efﬁciency of
+building energy systems through microgrid. Marnay et al. [8]
+proposed an optimization approach for obtaining the control
+strategy of commercial-building microgrids with the distributed
+energy resources customer adoption model.
+Storage devices play a very important role in reducing energy
+consumption and cost in building energy systems since they
+can improve the efﬁciency of renewable energy resource util-
+ities and the ﬂexibility of time-of-use (TOU) electricity prices.
+One of the salient features of building energy systems is that
+thermal energy provided by HVAC systems may take more than
+40% of the total building energy consumption. However, few ef-
+forts were made to study the building energy system integrated
+with both thermal and electrical storage devices. In this paper
+we focus on planning, scheduling, and coordinating different
+storage devices together with other energy devices in a building
+energy system facilitated by microgrid technology.
+As aforementioned, there are many types of storage devices,
+and selecting the appropriate storage devices is very impor-
+tant for building energy efﬁciency based on quantitative perfor-
+mance analysis and comparison. For the management of these
+devices with the TOU electricity price in a microgrid, the goal is
+generally to minimize the overall energy cost while satisfying
+the occupant demands. This problem is very challenging, and
+few efforts have been made to address the difﬁculties in eval-
+uating the storage devices in building energy systems. Firstly,
+the storage devices couple supply and demand across time and
+evaluation of these devices is nested with complicated sched-
+uling problems. Secondly, the electrical and thermal demand
+proﬁles are uncertain since they are based on uncertain occu-
+pant movement and behavior. Meanwhile, the demand proﬁles
+are also subject to ﬂuctuation of the outdoor environment. Fur-
+thermore, the renewable energy supply, such as solar power and
+thermal generation, is highly uncertain due to solar radiation and
+weather conditions.
+This paper presents a stochastic analysis and optimization
+problem for the integrated planning and scheduling of the smart
+building energy systems in a microgrid environment. With the
+proposed formulation, the best combination and optimal capaci-
+ties of storage devices such as electrical batteries and ice storage
+units can be obtained at the planning level. This is very impor-
+tant to design and allocate the storage devices in a smart building
+energy system. The optimal operating strategy of the building
+energy system can be obtained at the scheduling level to reduce
+energy consumption and cost. To deal with the uncertainties ef-
+fectively, the proposed problem is solved by the scenario tree
+method using an efﬁcient optimization solver CPLEX, where
+the uncertainties in the demand proﬁles and solar radiation are
+represented through multiple scenarios.
+The numerical testing is performed with the electrical and
+thermal demand proﬁles taken from our previous work [4] with
+different weather data. The test results show that, with the pro-
+posed model and method, the appropriate types and capacities
+of storage devices for a speciﬁc building can be effectively de-
+termined. Through our performance analysis and comparison
+based on the cases for the three typical temperate and subtrop-
+ical locations described in the paper, it is found that the thermal
+storage devices, such as the ice storage unit and the hot water
+tank, are effective in saving energy costs. But with the TOU
+electricity price considered in the paper, the current electrical
+battery used as energy storage may not be economical enough
+due to its high investment costs and short lifetime. The princi-
+ples of selecting storage devices are summarized for different
+conditions. It is also observed that the uncertainties in demand
+and solar radiation proﬁles can inﬂuence determination of the
+type and capacity of the storage devices. For example, when the
+variance of both solar radiation and demand proﬁles is large,
+it would be amenable to use electrical batteries to store excess
+solar power.
+The rest of this paper is organized as follows. In Section III,
+the stochastic problem formulation is presented. In Section IV,
+the approximate problem is solved by the scenario tree method.
+In Section V, the proposed method is tested with various numer-
+ical cases, and the results on performance and comparison are
+shown. The concluding remarks then follow.
+III. PROBLEM FORMULATION
+The focus of this paper is to study the performance analysis
+of different energy storage devices by investigating the inte-
+grated planning-and-scheduling problem coordinated with other
+devices in the building energy system while satisfying the oc-
+cupant requirements. The energy system considered includes a
+power grid, PV panels, solar hot water system (including solar
+thermal collectors and an auxiliary electric heater), CCHP unit,
+HVAC system, electrical battery, water tank, ice storage unit,
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+XU et al.: PERFORMANCE ANALYSIS AND COMPARISON ON ENERGY STORAGE DEVICES FOR SMART BUILDING ENERGY MANAGEMENT
+2139
+and heat storage unit. The scheduling horizon is
+with dis-
+crete time periods. The objective is to minimize the overall cost
+of electricity, natural gas, and the investment cost of storage de-
+vices with TOU electricity prices over the entire lifetime on av-
+erage for all scenarios in 8760 hours. The forecasted electrical
+and thermal demand proﬁles are assumed by the previous work
+[4] with weather data of different locations. A set of scenarios
+of demand proﬁles and solar radiation are generated by the fore-
+casted ones using their distributions.
+The integrated planning-and-scheduling problem is to deter-
+mine the type and capacity of the storage devices and the oper-
+ating strategies of all energy supplies and storage devices over
+the scheduling horizon such that the total cost of electricity, nat-
+ural gas, and the investment cost of storage devices is mini-
+mized. It is formulated as the following optimization problem:
+(1)
+subject to the following constraints. For simplicity, the notation
+for scenarios of demand proﬁles and solar radiation is dropped,
+but the constraints should be satisﬁed for all scenarios.
+i) System constraints
+Electrical, cooling, and heating energy balance and re-
+quirements represent the balance and requirements of var-
+ious energy ﬂows between supply and demand. The en-
+ergy balance and requirement constraints are shown in
+(2)– (4).
+1) Electrical energy balance:
+(2)
+2) Cooling energy requirement:
+(3)
+In this paper, it is assumed that the heating energy
+is provided by the HVAC system in winter and the
+heating energy requirement is similar to (3) as shown
+in (4).
+3) Heating energy requirement:
+(4)
+ii) Cost of electricity and natural gas
+1) Operating state of power grid
+(5)
+2) Cost of electricity:
+(6)
+3) Cost of natural gas:
+(7)
+iii) Investment cost of storage devices
+(8)
+In this paper, the investment costs of storage devices are
+converted to the scheduling horizon with the parameters
+obtained from [9], [10] according to their lifetime.
+iv) Constraint of battery control
+1) Input and output power capacities:
+(9)
+2) Constraint of SOC:
+(10)
+3) SOC dynamics:
+(11)
+4) Initial and last state of SOC:
+(12)
+5) Constraint of penalty of battery lifetime:
+(13)
+(14)
+where
+and
+are the assistant parameters
+to balance (14) when the state of the battery changes
+from charge (discharge) to idle, since this state tran-
+sition does not generate penalty.
+(15)
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+2140
+IEEE TRANSACTIONS ON SMART GRID, VOL. 3, NO. 4, DECEMBER 2012
+Since the lifetime of battery is limited, the usage cost
+is appended when the utilization time is more than
+half of the lifetime.
+v) Constraint of CCHP
+1) Constraint of operation of CCHP:
+(16)
+2) Output energy of CCHP:
+(17)
+3) Consumed rate of natural gas:
+(18)
+Note that the output energy and natural gas consumed
+by CCHP are ﬁtted by a linear function of electric
+load rate with operation data.
+, , ,
+, , and
+are
+parameters of CCHP and can be obtained by linear ﬁt-
+ting [11]; these parameters depend on the rated power
+of CCHP.
+vi) Constraint of ice storage unit
+1) Constraint of chiller mode:
+(19)
+The chiller can be set to either refrigeration mode
+or ice-making mode, and the ice storage unit would
+supply the cooling energy when the chiller is not in
+ice-making mode.
+2) Cooling energy generated in two modes:
+(20)
+3) Remaining cooling dynamics in ice storage unit:
+(21)
+vii) Constraint of heat storage unit
+1) Heating energy generated in heating mode:
+(22)
+2) Remaining heating dynamics in heat storage unit:
+(23)
+viii) Constraint of solar hot water system
+1) Power capacities of auxiliary electric heater:
+(24)
+2) Remaining water dynamics:
+(25)
+(26)
+3) Water production of solar hot water system:
+(27)
+ix) Constraint of PV panels [12]
+1) Electric power output of PV panels:
+A PV module is composed of PV cells in series. Mul-
+tiple modules in series-parallel connections form the
+PV array. The output power of the entire PV panel is:
+(28)
+where
+is the number of PV cells in a PV module,
+is the number of series PV modules, and
+is
+the number of parallel PV module strands.
+2) I-V equation of PV cell in PV panels:
+(29)
+The derivative of PV cell power to PV cell voltage is zero at
+the maximum power point (MPP). So we have
+(30)
+where
+and
+are the output current and voltage
+of PV cells during
+, respectively,
+is the current gener-
+ated by the incident light during
+,
+is the reverse satura-
+tion or leakage current of the diode during ,
+and
+are the
+equivalent series resistance and parallel resistance of the cell,
+respectively, and
+is the modiﬁed ideality factor. All the afore-
+mentioned parameters depend on solar radiation, cell surface,
+temperature, and the optical air mass, and can be calculated as
+shown in [12].
+IV. SOLUTION METHODOLOGY
+A. Linearization of HVAC Formulation
+In order to simplify the formulation of the HVAC system (in-
+cluding the ice storage unit and the heat storage unit), the coefﬁ-
+cient of performance (COP) is used to describe the refrigerating
+(or heating) efﬁciency of the HVAC system. The cooling (or
+heating) supplied by the HVAC system is the product of the COP
+and its electrical energy consumption, and the COP varies with
+the electric load rate of the chiller. Note that the electric load
+rate is the ratio of the operating power and the nominal power
+of a chiller, and it is a no-dimension variable. In this paper, the
+COP of the HVAC system is assumed to be a piecewise linear
+function of the electric load rate for simpliﬁcation. So the rate
+of cooling supplied by the HVAC system is the piecewise par-
+abolic function of the electric load rate as shown in Fig. 2. To
+simplify, the parabolic function is piecewise linearized in this
+paper. The refrigeration mode of the HVAC system is used as
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+XU et al.: PERFORMANCE ANALYSIS AND COMPARISON ON ENERGY STORAGE DEVICES FOR SMART BUILDING ENERGY MANAGEMENT
+2141
+Fig. 2. The rate of cooling supplied as a function of electric load rate.
+an example to present the linearization method. The ice-making
+mode and heating mode conditions are omitted since they are
+similar to that of the refrigeration mode.
+As shown in Fig. 2, the electric load rate is divided into I
+segments. It is assumed that the rate of cooling supplied by the
+HVAC system is a linear function of the electric load rate in each
+segment. With the parabolic function, the minimal and maximal
+rate of cooling supplied by the HVAC system in each segment
+can be obtained. The slope of each segment then can also be
+determined using the minimal and maximal values. So (20) can
+be linearized as follows.
+(31)
+(32)
+where
+,
+are the electric load rate and rate of
+cooling supplied by the HVAC system in
+segment during
+, respectively,
+and
+are the minimal and
+maximal electric load rate in
+segment, respectively,
+and
+are the minimal and maximal rate of cooling sup-
+plied by the HVAC system, respectively.
+is the integer
+variable, where
+means that there is an electric
+load rate in the segment
+during
+; otherwise,
+.
+is the slope of
+segment.
+is the rated value of the
+COP in refrigeration mode. Note that the range of the electric
+load rate and the refrigeration capacity rate in each segment
+are conﬁrmed in the ﬁrst and the second formula in (31), and
+the refrigeration capacity rate can be calculated with the third
+formula. In (32), the ﬁrst formula shows that if the chiller works
+in refrigeration mode, the refrigeration capacity should only be
+in one segment during
+, according to the ﬁrst formula in (19).
+The energy consumption of the HVAC system and the cooling
+supplied by the HVAC system also can be calculated with the
+second and the third formula in (32), respectively.
+In this paper, the CPLEX solver is applied to solve the
+proposed problem. It is designed to solve large, difﬁcult prob-
+lems efﬁciently with the minimal user intervention. Access is
+provided to the branch-and-cut solution algorithms for linear,
+quadratically constrained, and mixed integer programming
+problems with computation and memory- intensive tasks [13].
+The above mixed integer programming problem of (1)–(32) is
+solved by this CPLEX solver with demand and solar radiation
+proﬁles.
+B. Solution to Stochastic Problem by Scenario Tree Method
+In practice, there are signiﬁcant uncertainties in demand pro-
+ﬁles of building energy systems since electrical demand and
+thermal demand (such as lighting, energy consumption of fan
+coin units, cooling units, etc.) are uncertain due to uncertain oc-
+cupant movement and behavior as well as weather conditions.
+Moreover, solar power and thermal generation are also uncer-
+tain as they are closely related to the solar radiation and weather
+conditions. Therefore, it is necessary to consider the above plan-
+ning-and-scheduling problem, keeping in mind the uncertainties
+in both the supply and demand side, to obtain the best combi-
+nation and optimal capacities of storage devices, as well as the
+schedule of all controllable devices in a building energy system
+with the best expected cost.
+When demand proﬁles and solar radiation are forecasted, it
+is likely that the actual demand proﬁles and solar radiation are
+signiﬁcantly different from the forecasted values [14]. For the
+proposed problem with a clear multi-stage stochastic decision
+structure, the scenario tree method is effective in handling the
+uncertainties in the demand proﬁles and solar radiation with
+multiple scenarios [14], [15]. A scenario is used to describe a
+speciﬁc set of demand proﬁles or solar radiation, which is ei-
+ther randomly generated with environmental data according to
+the signiﬁcant demand proﬁle, or manually built according to
+heuristics information of the problem. In order to manage the
+aforementioned uncertainties, two sets of scenarios should be
+established, which are scenarios of demand proﬁles (including
+electrical demand and thermal demand) and of solar radiation.
+Note that the scenarios of solar power and thermal generation
+can be obtained from solar radiation in (28)–(30) and (27), re-
+spectively. Furthermore, in order to obtain a good solution for
+the proposed problem, we need to establish different sets of rep-
+resentative scenarios. Then the stochastic optimization problem
+is solved with the average cost of all scenarios. Considering the
+uncertainties in demand proﬁles and solar radiation, this formu-
+lation is necessary for solving the stochastic problem by the sce-
+nario tree method.
+In particular, if the demand proﬁles and solar radiation are
+known in advance or they vary only slightly, the stochastic
+problem can be approximately simpliﬁed as a deterministic
+model with one scenario of the forecasted demand proﬁles and
+solar radiation. The best combination and optimal capacities of
+storage devices with the forecasted demands and solar radiation
+are also obtained by solving the deterministic problem, and
+they are compared with the results from solving the stochastic
+problem with multiple scenarios. A numerical case of the
+procedure to solve the stochastic problem by the scenario tree
+method and the comparison to the forecasted demand and solar
+radiation will be presented in the next section.
+V. NUMERICAL RESULTS
+The problem based on an ofﬁce building with three demand
+proﬁles is tested at Guangzhou (with hot and humid weather
+and solar radiation with little variation), Beijing (with four dis-
+tinct seasons), and Harbin (with cold weather and solar radiation
+with little variation), China, and the results are presented in this
+section. The building energy system includes the power grid,
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+2142
+IEEE TRANSACTIONS ON SMART GRID, VOL. 3, NO. 4, DECEMBER 2012
+Fig. 3. (a) Electrical demand at Guangzhou. (b) Electrical demand at Beijing. (c) Electrical demand at Harbin. (d) Thermal demand at Guangzhou. (e) Thermal
+demand at Beijing. (f) Thermal demand at Harbin. (g) Hot water demand at Guangzhou. (h) Hot water demand at Beijing. (i) Hot water demand at Harbin.
+one CCHP unit (with a rated power of 50 kW), PV panels (con-
+sisting of two 3-parallel modules with 54 cells in series), a solar
+hot water system (containing 10 solar thermal collectors and one
+auxiliary electric heater with rated power of 96 kW), one chiller
+of a HVAC system (with capacity of 200 kWh), one battery,
+one ice storage unit, one water tank, and one heat storage unit.
+Testing is performed for over one year. The weather data, in-
+cluding the solar radiation and outdoor temperature of the afore-
+mentioned locations, is obtained from [16].
+It is assumed that the occupants work in the building
+from 7:00 to 23:00 everyday. The annual electrical and
+thermal demand proﬁles are obtained by solving the ter-
+minal control problem according to the occupant comfort
+requirements [4] with 2010 weather conditions of the afore-
+mentioned locations. With the given comfort level (indoor
+temperature:
+in summer,
+in
+winter,
+in transitional seasons; indoor hu-
+midity:
+; concentration of CO2:
+;
+), the annual electrical and thermal de-
+mand proﬁles are obtained, and they are shown in Fig. 3. In
+Figs. 3(d)–3(f), positive values of the thermal demand curve
+are used for the cooling demand and negative values for the
+heating demand. The everyday hot water demand proﬁle is
+obtained from [17]. It is assumed to be the same everyday over
+the whole year at the three locations as shown in Figs. 3(g)–3(i),
+respectively, since hot water demand varies little. The curves
+of solar radiation for the selected three sites are also shown in
+Figs. 4(a)–4(c), respectively.
+In this case, the price of natural gas is
+, and
+the price of electricity fed into the grid is 0.457 RMB/kWh. The
+TOU price of electricity supplied to terminal loads is shown in
+Table I[18].
+In this paper, the lifetime of the battery, the ice storage unit,
+the heat storage unit, and the water tank are deﬁned as 3 years,
+10 years, 10 years, and 20 years, respectively. The investment
+costs of the storage devices are converted to the scheduling
+horizon (one year in this case) with the parameters obtained
+from [9], [10] according to their lifetime. The investment cost
+per kWh of the battery, the ice storage unit, and the heat storage
+Fig. 4. (a) Solar radiation at Guangzhou. (b) Solar radiation at Beijing. (c) Solar
+radiation at Harbin.
+TABLE I
+TOU ELECTRICITY PRICE
+unit can be calculated and they are 175.2 RMB/kWh, 21.9
+RMB/kWh, and 32.9 RMB/kWh, respectively. The invest-
+ment
+of the water tank is also determined to be
+.
+First, the uses of storage devices are analyzed and the results
+are shown in Section V-A. Using the obtained annual demand
+proﬁles of three locations, the performance analysis of storage
+devices is revealed, and the selection rules of storage devices
+at different locations are also discussed in Section V-B. Next,
+according to the best combination and optimal capacities of
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+XU et al.: PERFORMANCE ANALYSIS AND COMPARISON ON ENERGY STORAGE DEVICES FOR SMART BUILDING ENERGY MANAGEMENT
+2143
+storage devices obtained from Section V-B, the operating strate-
+gies of storage devices and their contribution to the power grid
+are then shown in Section V-C. Finally, for the problem with
+uncertainties, the scenarios of demand proﬁles and solar gener-
+ation are generated randomly with the forecasted demand pro-
+ﬁles and solar radiation. The solution is obtained by solving the
+problem with the expected cost in all scenarios jointly. Further-
+more, the comparison between one scenario of the forecasted
+demand proﬁles and solar radiation and the multiple scenarios
+in the stochastic formulation is represented in Section V-D.
+A. Usage of Storage Devices
+First, the usage of the water tank is analyzed. We assume
+hot water is stored in the tank and heated by an auxiliary elec-
+tric heater. The investment cost of one
+of water tank con-
+sidering depreciation is 3.4 RMB per day. Producing one
+of hot water (at
+) requires 30 kWh of electrical energy.
+One
+of hot water is produced during lower-price periods
+(0.3515 RMB/kWh) and then consumed during peak-price pe-
+riods (0.8135 RMB/kWh), 10.46 RMB of the cost could be
+saved. However, if the electric heater is supplied by generated
+solar power, 21 RMB is saved. Both the unit investment cost of
+the water tank and the price difference between water produc-
+tion and consumption periods could be deﬁned as independent
+variables. The cost saved is thus a bi-linear function of the two
+independent variables. We can easily ﬁnd that there are cost sav-
+ings by using the water tank as long as the unit investment cost is
+not 30 times more expensive than the differences of peak-valley
+electricity prices. In our case, the unit investment cost is about
+seven times of the peak-valley price difference. Therefore, the
+water tank is very effective in saving building energy cost when
+there is hot water demand in peak-price periods.
+Similarly, the usage of ice storage unit for the HVAC system
+is discussed. We assume that the COP rate of the HVAC system
+is 0.8 when the chiller is in refrigeration mode as well as in
+ice-making mode. Generating one kWh of cooling energy re-
+quires 0.42 kWh of electrical energy in refrigeration mode and
+0.71 kWh of electrical energy in ice-making mode. The unit in-
+vestment cost of the ice storage unit is 0.06 RMB/kWh per day.
+In general, the chiller is in ice-making mode during lower-price
+periods, and the ice storage unit supplies the cooling energy in
+peak-price periods. So 0.032 RMB/kWh of the cost could be
+saved this way. However, the chiller in ice-making mode always
+operates on full power, but the power of the chiller in refrigera-
+tion mode is determined by the cooling load. Hence, the COP of
+the chiller in ice-making mode is generally larger than it in re-
+frigeration mode. Therefore, the cost saved is larger than 0.032
+RMB/kWh in practice. The cost saved is shown as a bi-linear
+function of the price during the ice-making and refrigeration pe-
+riods in Fig. 5. It is found that the ice storage unit is economical
+when used in a building energy system with TOU prices. Using
+the heat storage unit is similar to using the ice storage unit, so
+in this paper, it is omitted.
+The battery is used in two situations for building energy
+savings in general. First, it charges during lower-price periods
+and discharges during peak-price periods. Second, it is charged
+through the generation of solar power and discharged in the
+peak-price periods. The cost-saving function for one unit of
+energy is shown in Fig. 6. It is found that the battery was
+economical when differences of peak-valley electricity prices
+is larger than 0.48 RMB/kWh since the unit investment cost
+Fig. 5. Usage condition of the ice storage unit.
+Fig. 6. Usage condition of battery.
+of the battery is 0.48 RMB/kWh in this paper (assuming the
+battery is ideal and the conversion efﬁciency is 1).
+Secondly, the generation of solar power is “free” as men-
+tioned, and it is economical to use the battery since the invest-
+ment cost of the battery is less than the peak price. However,
+generated solar power can be used to supply electrical loads (in-
+cluding battery charging), as well as be converted into cooling
+energy or hot water. Consider that during the highest solar ra-
+diation periods (12:00–14:00), the electricity price is 0.4883
+RMB/kWh. 0.4883 RMB of the cost can be saved if one kWh of
+generated solar power is supplied to the electrical loads. When
+the same amount of solar power is stored in the battery, in the ice
+storage unit (converted to cooling energy), and in the water tank
+(converted to hot water), 0.3335 RMB, 0.68 RMB, and 0.8135
+RMB of the cost could be saved, respectively, if the stored en-
+ergy is used in peak-price periods. Therefore, usage generated
+solar power is prioritized as follows: producing hot water, pro-
+ducing ice, supplying to the electric loads, and charging the bat-
+tery, all dependent on their capacities. In other word, it is eco-
+nomical to use the battery when there is more solar energy than
+needed for the ﬁrst three requirements.
+B. Allocation of Storage Devices and Energy Efﬁciency
+The focus of this subsection is to discuss the performance
+analysis and selection criteria of the storage devices. The formu-
+lation is approximated as a deterministic model of one scenario
+of the forecasted demand proﬁles and solar radiation without
+considering the uncertainties in demand proﬁles and solar radi-
+ation. With the 2010 weather data, the forecasted demand pro-
+ﬁles and solar radiation are determined. By using the aforemen-
+tioned electrical, thermal, and hot water demands of the three
+locations, the CPLEX solver is applied to solve the problem of
+(1)–(32) with the error gap set as 0.01 for different weather con-
+ditions. The best combination and optimal capacities can be then
+obtained for the three locations, respectively, and the results are
+shown in Table II. This computational time is about 780 seconds
+on average on a Windows PC with 3.2 GHz and 2 GB memory.
+In Guangzhou, there is no extra generated solar power to
+store in daytime because of the high cooling demand year long.
+Therefore, there is no need for an electrical battery. The heat
+storage unit is also not needed since there is no heating demand.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+2144
+IEEE TRANSACTIONS ON SMART GRID, VOL. 3, NO. 4, DECEMBER 2012
+TABLE II
+OPTIMAL COMBINATION OF STORAGE DEVICES AT DIFFERENT LOCATIONS
+TABLE III
+OVERALL COST WITH DIFFERENT COMBINATIONS OF STORAGE DEVICES
+Therefore, the best combination of storage devices is the water
+tank and the ice storage unit. However, in Beijing, there are
+four distinct seasons, and both the ice and heat storage units are
+needed in the building energy system since both cooling and
+heating demand exist. In addition, the solar radiation and de-
+mand proﬁles ﬂuctuate signiﬁcantly during transitional seasons.
+It is possible to use the extra solar power to charge the battery.
+Therefore, the combination of the battery, the water tank, the
+ice storage unit, and the heat storage unit can be used. In Harbin,
+since the heating demand is present most of the year while a little
+cooling energy is needed in the summer, the ice and heat storage
+unit are both needed, but the capacity of the ice storage unit is
+relatively small. Furthermore, solar radiation is so low that not
+enough solar power is available to charge the battery. There-
+fore, the combination of the water tank, the heat storage unit,
+and the ice storage unit is the best choice. In order to summa-
+rize the selection criteria of the storage devices in detail, we test
+the performances in the different combinations over one year,
+and the results are shown in Table III. Note that the ice storage
+unit and the heat storage unit are considered to be an ensemble
+thermal storage unit to analyze their entire efﬁciency.
+In this paper energy efﬁciency is used to analyze the perfor-
+mance of the storage devices. The energy efﬁciency of a speciﬁc
+combination of storage devices is deﬁned as the ratio of overall
+cost savings with the above storage devices to that without these
+devices.
+First, a single storage device is tested. The battery energy ef-
+ﬁciency of Guangzhou, Beijing, and Harbin is only 5.9%, 5.4%,
+and 6.2%, respectively. It is found that the battery is insensitive
+to differences in weather conditions, but is relatively inefﬁcient
+in reducing building energy cost. The energy efﬁciency of the
+thermal storage unit is 15.7%, 9.7%, and 19.9% at Guangzhou,
+Beijing, and Harbin, respectively. When there is heavy cooling
+demand in the summer, the chiller should be set to refrigeration
+mode, so the ice storage unit only can lead to energy savings
+with the TOU prices. However, in the winter, the heating de-
+mand for the HVAC system may be lower in the daytime so that
+the heat supplied by the solar energy may be partially stored
+in the heat storage unit. This is why the energy efﬁciency of
+thermal storage in Guangzhou is less than that in Harbin. It is
+also found that thermal demand has a major impact on selecting
+the thermal storage unit, and its energy efﬁciency is proportional
+to the thermal demand, including cooling and heating energy.
+The water tank has good performance in energy efﬁciency of
+28.1%, 18.9%, and 13.3% in Guangzhou, Beijing, and Harbin,
+respectively. The energy efﬁciency of the water tank in Harbin
+is low since the solar radiation and the temperature of munic-
+ipal water are both low. It is also found that the performance
+difference between the locations is very large. The major fac-
+tors affecting the energy efﬁciency of the water tank are solar
+radiation and weather conditions. The standard deviation of the
+energy efﬁciency between different locations is 38%, thus it is
+relatively sensitive under the different weather conditions. The
+efﬁciency gradually decreases with solar radiation and outdoor
+temperature. Therefore, the water tank is suitable for regions
+with high solar radiation and outdoor temperature.
+Secondly, the performance of a combination of two types of
+storage devices is tested. The energy efﬁciency of the combina-
+tion of the water tank and the thermal storage unit is largest for
+all three possible combinations of two storage devices at the dif-
+ferent locations. The results in Guangzhou and Harbin are the
+same between the combination of the water tank and the thermal
+storage unit and the solution obtained by the proposed method.
+It again indicates that using the battery is not economical at these
+locations due to their corresponding demand proﬁles and solar
+radiation.
+In conclusion, some rules for selecting the type of storage de-
+vices with speciﬁc demand proﬁles and solar radiation are sum-
+marized as follows. The water tank, the ice storage unit, and the
+heat storage unit should be selected in a building energy system
+since they have good performance in building energy savings
+at all locations. The capacity of the water tank should be se-
+lected while considering solar radiation and weather data. The
+water tank is suited for regions with high solar radiation and
+outdoor temperature, such as low latitude regions. The capacity
+of the thermal storage unit should be selected while considering
+thermal demand. And the thermal storage unit is recommended
+for regions with high thermal demand, such as low latitude re-
+gions and high latitude regions. The energy efﬁciency of the
+battery is less than that of other storage devices since its invest-
+ment cost is high and the lifetime is short. But the battery could
+be used to store the excess solar power in regions with highly
+ﬂuctuant solar radiation such as those with distinct seasons. In
+addition, if the battery is used in the building energy system,
+it can help in balancing the ﬂuctuation of generated renewable
+power and also can be used in emergencies.
+It is known that the capacities of storage devices have an
+impact on energy efﬁciency. A tradeoff between the capacity
+and investment cost of the storage device should be made.
+The proposed method has good performance in managing
+this tradeoff with the demand proﬁles and solar radiation.
+The proposed method is very effective for choosing the best
+combination and optimal capacities of storage devices with
+speciﬁc demand proﬁles and solar radiation under different
+weather conditions.
+C. Operating Strategies of Storage Devices and Their
+Contribution to the Power Grid
+The optimal operating strategy of each storage device is pre-
+sented in this subsection. Using the combination and capacities
+from Section V-B, everyday operating strategies of the storage
+devices are obtained by solving the problem with the proposed
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+XU et al.: PERFORMANCE ANALYSIS AND COMPARISON ON ENERGY STORAGE DEVICES FOR SMART BUILDING ENERGY MANAGEMENT
+2145
+Fig. 7. (a) Operating strategy of the ice storage unit. (b) COP of the HVAC
+system.
+method. Since the operating strategies are similar despite dif-
+ferent locations, only one summer day in Beijing is used as an
+example to demonstrate the characteristics of operating strate-
+gies.
+The operating strategy of the HVAC system is shown in
+Fig. 7(a). The chiller of the HVAC system works in ice-making
+mode during lower-price and lower-load periods (such as
+0:00–7:00). During these periods, most of the cooling quantity
+generated by the chiller is stored in the ice storage unit whereas
+the rest is supplied to the loads. Then the cooling quantity
+stored in the ice storage unit is supplied to the loads during
+peak-price periods (such as 7:00–10:00 and 19:00–22:00) to
+reduce the overall cost. The chiller is in refrigeration mode in
+the daytime since the cooling load is large. The chiller is set to
+ice-making mode from 18:00 to 19:00 since the cooling load is
+relatively small so that the COP is low if the chiller switches
+to refrigeration mode. So comparing the COP function and
+energy consumption for both modes, it is found that the chiller
+in ice-making mode is relatively economical in this period. The
+COP of the HVAC system during the whole scheduling horizon
+in this case is in the high efﬁciency interval (0.77–1) as shown
+in Fig. 7(b). It illustrates that the ice storage unit can be used
+not only to save building energy cost, but also to improve the
+efﬁciency of the HVAC system. For the heat storage unit, the
+same conclusion is obtained, so it is omitted here.
+The operating strategy of the solar hot water system is shown
+in Fig. 8. In Fig. 8(a), the auxiliary electric heater operates at full
+capacity to store the hot water in the tank [as shown in Fig. 8(b)]
+during lower-price periods (such as 0:00–7:00). During peak-
+price periods (such as 7:00–11:00 and 19:00–23:00), the auxil-
+iary electric heater is shut down or only used to remain warm.
+However, from 8:00–10:00, the electric heater should be started
+up since solar radiation is too low to produce enough hot water.
+From 13:00–19:00, the electric heater is at full capacity to store
+hot water, and this water is used in the nightly peak-price pe-
+riods.
+Fig. 8. (a) Operating strategy of the auxiliary electric heater. (b) Dynamic
+process of the water tank.
+Fig. 9. Operating strategy of the battery.
+The operating strategy of the battery is shown in Fig. 9. The
+battery is discharging from 7:00 to 8:00 since it is a peak-price
+period and there is initial power energy in the battery. When
+there is excess solar power such as from 15:00 to 19:00, the
+battery is fully charged by solar power. And it is discharged
+during peak-price periods (such as 19:00–22:00). The battery
+is generally charged by generated solar power and discharged
+in nightly peak-price periods.
+By using these operating strategies, the storage devices can
+be used not only to reduce the overall building energy cost, but
+also to adjust the power grid. The impact of storage devices
+on shifting peak and valley is discussed as follows. The differ-
+ence between the power load of the distribution grid with and
+without the above storage devices over the day is used to demon-
+strate their contribution to the power grid, as shown in Fig. 10.
+About 35% of the power load in peak-load periods is shifted
+to valley-load periods with the storage devices. And the differ-
+ence between the power in peak-load periods and in lower-load
+periods is also reduced. Thus, the storage devices have good
+performance in adjusting the power grid. Furthermore, the in-
+vestment cost and installed capacity of the power plant and its
+emission of CO2 can be also reduced.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+2146
+IEEE TRANSACTIONS ON SMART GRID, VOL. 3, NO. 4, DECEMBER 2012
+Fig. 10. Impact of storage devices on the power grid.
+TABLE IV
+THE OPTIMAL SOLUTIONS WITH UNCERTAINTIES AT DIFFERENT LOCATIONS
+D. Stochastic Problem Solved by the Scenario Tree Method
+Through the above analysis, it is found that demand proﬁles
+and solar radiation have a huge impact in the selection of the
+types and capacities of the storage devices. To ﬁnd a good so-
+lution, the uncertainties in demand proﬁles and solar radiation
+should be considered. In this paper, the scenario tree method is
+used to solve the stochastic optimization problem. A set of sce-
+narios of demand proﬁles and solar radiation is used to describe
+their uncertainties. The solution should have good average per-
+formance over all scenarios. In this problem, the major uncer-
+tainties are electrical and thermal demand proﬁles and solar ra-
+diation. To describe their uncertainties, a set of 5 scenarios of
+the demand proﬁles and a set of 5 scenarios of the solar radi-
+ation are randomly generated with the forecasted demand and
+solar radiation, respectively. The demand proﬁles and solar ra-
+diation are both assumed to follow independent normal distri-
+bution, and the scenarios of the demand proﬁles are within 5%
+standard deviation and solar radiation within 20% standard de-
+viation of their forecasted values, respectively. The probability
+of each scenario is assumed to be same in this paper. In other
+words,
+and
+are equal to 1/5 in this case. Note that the
+aforementioned annual demand proﬁles and solar radiation at
+three locations are assumed to be the forecasted ones.
+The above problem is solved with the minimum average cost
+of all scenarios. The error gap is set to be 0.01. The optimal
+average cost and the best combination of storage devices at dif-
+ferent locations are shown in Table IV. The computational time
+is about 27 000 seconds on a Windows PC with 3.2 GHz and 2
+GB memory.
+As seen in Table IV, some differences in the best combination
+and optimal capacities between the solutions obtained in Section
+V-B by the simpliﬁed deterministic problem (with one scenario
+of the forecasted demand proﬁles and solar radiation) and the
+solutions for the stochastic problem (with multiple scenarios)
+were found. For example, the optimal capacities of the battery
+in Harbin determined by the two methods are different. So we
+are interested in comparing the performance of the simpliﬁed
+deterministic problem with the forecasted scenario with that of
+the stochastic problem with multiple scenarios. The best combi-
+TABLE V
+THE PERFORMANCE COMPARISON OF USING ONE FORECASTED SCENARIO
+AND MULTIPLE SCENARIOS AT BEIJING
+nation and the optimal capacities of these two methods at Bei-
+jing are tested in several other scenarios, as shown in Table V. It
+is seen that the performance of the stochastic problem with the
+multiple scenarios is better in the major scenarios, especially in
+the scenarios with larger standard deviation. But, in general, the
+performance of the simpliﬁed deterministic problem with one
+scenario of the forecasted values is still very good and it is only
+less than 7% while the computational time is one over thirty-ﬁve
+in comparison to the multiple scenarios in the stochastic formu-
+lation.
+VI. CONCLUSIONS
+In this paper, we study the performance analysis and compar-
+ison of different energy storage devices in building energy sys-
+tems in a microgrid environment. The building energy system
+operation is formulated as an energy cost minimization problem
+with storage devices and other devices in the system. The un-
+certainties in demand proﬁles and solar radiation are consid-
+ered, and a stochastic optimization problem is formulated. The
+scenario tree method is applied to solve the problem. Numer-
+ical results demonstrate that the proposed method is effective
+in selecting the best combination and optimal capacities of the
+storage devices, and in obtaining the optimal operating strategy
+of each device in the building energy system. It is found that
+thermal storage units and water tanks are effective in saving
+energy cost in all scenarios, but the electrical battery may not
+be economical for use due to its high investment cost and short
+lifetime. Based on the above analysis, rules for selecting storage
+devices at a speciﬁc location can be determined. By comparing
+the simpliﬁed model of one scenario of the demand and solar
+radiation proﬁles to the multiple scenarios in the stochastic for-
+mulation, we found that it would be sufﬁcient in many cases to
+obtain the best combination of storage devices with the fore-
+casted demand and solar radiation efﬁciently without using sto-
+chastic formation.
+ACKNOWLEDGMENT
+The authors would like to thank the editors and reviewers
+for their constructive comments, Dr. Stella M. Oggianu and Dr.
+Craig Walker at United Technologies Research Center for their
+valuable advice, and Mr. Biao Sun, Mr. Jianxiang Shen, and Ms.
+Xiaoyan Xu for their valuable suggestions.
+REFERENCES
+[1] Y. J. Huang, The Impact of Climate Change on the Energy Use of
+the US Residential and Commercial Building Sector.
+Berkeley, CA:
+Lawrence Berkeley National Laboratory, 2006.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply. 
+
+XU et al.: PERFORMANCE ANALYSIS AND COMPARISON ON ENERGY STORAGE DEVICES FOR SMART BUILDING ENERGY MANAGEMENT
+2147
+[2] X. Li, H. Li, and W. Shi, “Ice storage system design based on cooling
+load of design period,” (in Chinese) HV&AC, vol. 37, no. 5, pp. 83–88,
+2007.
+[3] J. E. Braun, “A comparison of chiller-priority storage-priority, and
+optimal control of an ice-storage system,” in ASHRAE, Atlanta, GA,
+1992.
+[4] B. Sun, P. B. Luh, Q. S. Jia, Z. Jiang, F. Wang, and C. Song, “An in-
+tegrated control of shading blinds, natural ventilation, and HVAC sys-
+tems for energy saving and human comfort,” in Proc. 6th Annu. IEEE
+Conf. Autom. Sci. Eng., Toronto, ON, Canada, Aug. 21–24, 2010.
+[5] A. Tzempelikos and A. K. Athienitis, “Investigation of lighting, day-
+lighting and shading design options for new Concordia University engi-
+neering building,” in Proc. eSim2002 Building Simul. Conf., Montreal,
+QC, Canada, 2002, pp. 177–184.
+[6] D. Mooney and B. Kroposki, “Electricity, resources, and building sys-
+tems integration at the National Renewable Energy Laboratory,” in
+Proc. IEEE Power Energy Soc. Gen. Meet., Calgary, AB, Canada, Jul.
+2009, pp. 1–3.
+[7] X. Guan, Z. Xu, and Q. S. Jia, “Energy efﬁcient buildings facilitated by
+microgrid,” IEEE Trans. Smart Grid, vol. 1, no. 3, pp. 243–252, 2010.
+[8] C. Marnay, G. Venkataramanan, M. Stadler, A. S. Siddiqui, R. Fire-
+stone, and B. Chandran, “Optimal technology selection and operation
+of commercial-building microgrids,” IEEE Trans. Power Syst., vol. 23,
+no. 3, pp. 975–982, 2008.
+[9] A. S. Siddiqui, R. M. Firestone, S. Ghosh, M. Stadler, J. L. Edwards,
+and C. Marnay, Distributed Energy Resources Customer Adoption
+Modeling With Combined Heat and Power Applications.
+Berkeley,
+CA: Lawrence Berkeley National Laboratory, 2003.
+[10] A. S. Siddiqui, C. Marnay, R. M. Firestone, and N. Zhou, Dis-
+tributed Generation With Heat Recovery and Storage.
+Berkeley,
+CA: Lawrence Berkeley National Laboratory, 2005.
+[11] Z. Lai, “Simulation of Quasi-Steady State Model for BCHP system,”
+(in Chinese) Master’s thesis, Tsinghua University, Beijing, China,
+2009.
+[12] M. G. Villalva, J. R. Gazoli, and E. R. Filho, “Modeling and circuit-
+based simulation of photovoltaic arrays,” in Proc. Power Electron.
+Conf., (COBEP), 2009, pp. 1244–1254.
+[13] ILOG CPLEX 12.1 User’s Manual [Online]. Available: ftp://ftp.soft-
+ware.ibm.com/software/websphere/ilog/docs/optimization/cplex/
+ps_usrmancplex.pdf
+[14] J. Wang and M. Shahidehpiour, “Security constrained unit commitment
+with volatile wind power generation,” IEEE Trans. Power Syst., vol.
+23, no. 3, pp. 1319–1327, Aug. 2008.
+[15] K. Høyland and S. W. Wallace, “Generating scenario trees for multi-
+stage decision problems,” Manage. Sci., vol. 47, no. 2, pp. 295–307,
+2001.
+[16] DeST software Department of Building Science, Tsinghua University,
+2008 [Online]. Available: http://www.dest com.cn.
+[17] Development Unit of DeST in Tsinghua University, Building Energy Ef-
+ﬁciency Technology and Application in Chin.
+Beijing, China: China
+Architecture & Building Press, 2007, ch. Ch. 4.
+[18] Website of China National Development and Reform Commission
+[Online]. Available: http://www.sdpc.gov.cn/
+Zhanbo Xu received his B.E. degree in electrical
+engineering and automation from Harbin Institute
+of Technology University, China, in 2008. He is
+currently working toward his Ph.D. degree at the
+Systems Engineering Institute, Xi’an Jiaotong Uni-
+versity, China. His research interests include smart
+power grids, buildings energy management and
+automation, and optimization of large-scale systems.
+Xiaohong Guan (M’93–SM’95–F’07) received his
+B.S. and M.S. degrees in control engineering from
+Tsinghua University, Beijing, China, in 1982 and
+1985, respectively, and his Ph.D. degree in electrical
+engineering from the University of Connecticut,
+Storrs, in 1993.
+He was a Senior Consulting Engineer with PG&E
+from 1993 to 1995. He visited the Division of En-
+gineering and Applied Science, Harvard University
+from January 1999 to February 2000. Since 1995
+he has been with the Systems Engineering Institute,
+Xian Jiaotong University, Xian, China and appointed as the Cheung Kong
+Professor of Systems Engineering since 1999, and the Dean of School of
+Electronic and Information Engineering since 2008. Since 2001 he has been the
+Director of the Center for Intelligent and Networked Systems, Tsinghua Uni-
+versity, Beijing, China, and served as the Head of Department of Automation
+from 2003 to 2008. His research interests include complex networked systems
+including smart power grids, planning and scheduling of electrical power and
+manufacturing systems, and electric power markets.
+Qing-Shan Jia (S’02–M’06) received the B.E. de-
+gree in automation in 2002 and the Ph.D. degree in
+control science and engineering in 2006, both from
+Tsinghua University, Beijing, China.
+He is currently an Associate Professor at the
+Center for Intelligent and Networked Systems
+(CFINS), Department of Automation, TNLIST,
+Tsinghua University, Beijing. He was a Visiting
+Scholar at Harvard University in 2006, and a Visiting
+Scholar at the Hong Kong University of Science
+and Technology in 2010. His research interests
+include theories and applications of discrete event dynamic systems (DEDSs)
+and simulation-based performance evaluation and optimization of complex
+systems.
+Jiang Wu (S’07-M’09) received his B.S. degree in
+Electrical Engineering from Xi’an Jiaotong Univer-
+sity, Shaanxi, China in 2002, and his Ph.D. in systems
+engineering from the same university in 2008.
+He is currently a Lecturer at Systems Engineering
+Institute, Xian Jiaotong University. His research
+interests include optimization and simulation for
+renewable generation, smart grids, and electricity
+markets.
+Dai Wang received his B.E. degree in electrical engi-
+neering and automation from Xi’an Jiaotong Univer-
+sity, China, in 2010. He is currently working toward
+his Ph.D. degree at the Systems Engineering Insti-
+tute, Xi’an Jiaotong University, China. His research
+interests include smart grids, demand response, and
+optimization of large-scale systems.
+Siyun Chen received the B.E. degree in Automation
+from North China Electric Power University, China,
+in 2009. He is working toward his Ph.D. degree at the
+Systems Engineering Institute, Xi’an Jiaotong Uni-
+versity, China. His research interests include smart
+grids, energy management and automation, and opti-
+mization of large-scale systems.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:42 UTC from IEEE Xplore.  Restrictions apply.

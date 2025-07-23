@@ -1,0 +1,253 @@
+1.	國外最新NIALM技術發展及應用之資料蒐集及分析
+本工作分項內容預計研析國際 (歐洲、美國及日本等)有關 NIALM 最新發展技術，包括(1)數據採集(2)特徵萃取(3)數據學習和識別(4)實際應用等，以利協助建構完整NIALM核心技術及相關應用服務。以下為世界各國近年最新NIALM學術文獻：
+美國：
+2019 NILM Techniques for Intelligent Home Energy Management and Ambient Assisted Living: A Review[1]：
+NIALM技術開發主要分成四個階段，分別為資料收集、事件偵測、特徵擷取、負載辨識。資料收集的部分為相關電力資料，如電流、電壓、虛功、實功等；事件偵測為設備狀態隨時間之任何變化。表示功率和電流的變化，可透過閥值在先前收集的數據中偵測這種變化；特徵擷取為設備提供負載標籤訊息或特徵，可用於區分個別設備；負載辨識為使用辨識相關演算法，進行分類，以確定那些設備在指定的時間或時間段內運作以及它們的狀態。
+資料收集：
+圖1及圖2為一些資料收集及用電結果人機介面呈現的裝置設備。
+
+資料來源：[1]
+圖1 Neurio在資料收集上之設備
+
+資料來源：[1]
+圖2 Neurio在資料收集上之人機介面
+事件偵測：
+架構如圖3所示，主要分成機率模型以及統計模型，採用Generalized Likelihood Ratio (GLR) 演算方法以及Goodness-of-Fit (GOF)理論；家電設備與環境不需要事先訓練，較適合應用於較高取頻取樣 (2 Hz)。此外，亦使用決策樹 (Decision Tree, DT)以及長短時間記憶體(Long Short-Time Memory, LSTM)模型，準確度高達98.6%以及92.6%。
+
+資料來源：[1]
+圖3 事件偵測演算法架構
+負載辨識：
+負載辨識主要分成以下四種狀態，分別為：
+Type I—On/Off裝置：絕大部分的家電設備，例如：燈炮、烤土司機等
+Type II—有限狀態機(Finite State Machine, FSM)：家電設備狀態以周期性方式顯示，例如：洗衣機、乾衣機以及冰箱等
+Type III—家電設備狀態以非周期性方式顯示，例如：調光器等
+Type IV—家電設備具有恆定的功率，但可以24小時運行，例如：警報器等
+A hybrid model for appliance classification based on time series features[2]：
+該文獻提出一種混合型分類器(Classifier)模型，以電器運轉之時間序列數值作為模型訓練特徵，該文獻提出一個新的名為secondary ensemble structure架構如圖4，該架構可處理分類器之多類別樣本不平衡的問題，並採用隨機森林(Random Forest, RF)作為分類器演算法。
+Secondary Ensemble Structure之輸入參數為電壓、電流、功率等的時間序列(訊號波形)，與傳統之特徵擷取方法不同，時間序列特徵可用於描述設備之特徵。透過與廣泛使用之設備功能比較，可以驗證時間序列功能之有效性。
+Fulcher and Jones提出Hctsa，為一個高度比較之時間序列分析特徵資料庫(如圖5)，提供了超過7000種特徵，包含distribution特徵、correlation特徵、entropy、information theory based特徵以及times series model based等特徵，該文獻係從Hctsa找出最小的redundancy以及最大的關聯性特徵。
+
+資料來源：[2]
+圖4 Secondary Ensemble Structure示意圖
+
+資料來源：[2]
+圖5 Hctsa示意圖
+該文獻實驗所使用的公開資料為extended PLAID資料集，其中包含美國56戶家庭的實地測量資料，數據集中的11種設備採樣了1793個實際用電資料樣本，取樣頻率為30Hz，如圖6所示。表1列出了各電器之訓練樣本數，由此表可看出，不同電器之取樣樣本數相當不平衡。
+
+資料來源：[2]
+圖6 吹風機波形：(a)1秒電流, (b)20個穩定電流, (c)1秒電壓
+表1 PLAID資料集之各電器樣本數
+
+資料來源：[2]
+圖7為該文獻及與SVM (Support Vector Machine)以及ELM (Extreme Learning Machine)的AUC(Area Under the ROC Curve)解析性能比較。與現有的其他方法相比，該文獻方法針對冷氣機、冰箱以及暖爐這些較難以區分的設備具有更好的分類效果；時間序列特徵比實功率、虛功率、及二進制電壓-電流特徵在解析性能上的表現更好；而Random Forest在分類性能之表現比Support Vector Machine(SVM)以Extreme Learning Machine(ELM)好。
+
+
+
+資料來源：[2]
+圖7 RF模型與SVM及ELM之AUC性能比較
+Can non-intrusive load monitoring be used for identifying an appliance’s anomalous behavior?[3]：
+該文獻使用Ruled-based演算法偵測具壓縮機家電設備之異常現象，並且評估NIALM針對異常檢測之可行性，該篇文獻利用4種公開NIALM演算法，在3個公開資料集上進行實驗，分析NIALM準確度與異常檢測結果之間的相關性，接著討論進一步可行步驟以利於使用NIALM進行更有效之異常檢測。
+所使用之公開資料集分別為REDDs 、iAWE 以及Dataport ，總共包含6個家庭住宅，在Dataport中資料取樣頻率為每分鐘取樣一筆用電資料；而在REDD以及iAWE中則為每秒鐘取樣一筆。
+該文獻主要係研究具壓縮機電器(冷氣與冰箱)於異常運轉狀態之特徵，並建立電器異常運轉辨識模型。圖8為冷氣機在三種不同模式下持續10小時的耗電量特徵，（a）正常模式（b）壓縮機工作週期(Duty Cycle)較長的異常模式（c）壓縮機工作週期較頻繁的異常模式。一般而言，造成壓縮機工作週期較長的原因為空氣過濾器堵塞、冰箱內部製冷裝置故障；造成壓縮機工作週期較頻繁的原因為冷媒洩漏、電氣問題（壓縮機或恆溫器中的短路或電線損壞）、及壓縮機損壞。
+
+資料來源：[3]
+圖8 冷氣在三種不同模式下的耗電量特徵
+整個辨識模型之開發分成兩個部分，第一個部分為在智慧電表上應用現有NIALM技術獲取電器設備用電指紋資料；第二個部分為使用異常檢測演算法-UNUM在冷氣以及冰箱上辨識是否用電異常。
+UNUM演算法步驟說明如下：
+訓練階段-建立T天家電歷史耗電之統計模型，透過K-means分群演算法辨識壓縮機狀態之ON與OFF，並計算各狀態(ON/OFF)的平均值、標準差、時間區間，如圖9所示。
+
+資料來源：[3]
+圖9 UNUM演算法訓練階段示意圖
+測試階段-輸入源為家電設備一整天的耗電軌跡；輸出為該家電設備是否耗電異常，主要定義三條規則來判斷是否異常，如下所示：
+･規則 # 1：若家電設備切換ON與OFF狀態頻率極高，則公式如下：
+(式1)
+･規則 # 2：若家電設備維持停留在ON狀態達一定長度之時間，在任何週期之耗電會高於一個一般週期之耗電，則公式如下：
+  (式2)
+･規則 # 3：若家電設備維持停留在ON狀態達一定長度之時間，而且家電設備在OFF狀態的時間也比一般週期時間來的長，這代表家電切換到ON狀態執行一長段時間，一般而言，這並非是異常狀態，則公式如下：
+   (式3)
+圖10為UNUM演算法之異常運轉辨識性能，其中UNUM_S代表以次電表讀值數據來執行UNUM；而UNUM_D為以NIALM解析後之數據來執行UNUM。從實驗結果可以看出，在某些家庭住宅之UNUM_D準確度趨近於UNUM_S，表示驗證該演算法在NILM技術上來檢測家電設備耗電異常具一定程度之可行性。
+
+資料來源：[3]
+圖10 UNUM演算法之異常運轉辨識性能
+A Fusion Load Disaggregation Method Based on Clustering Algorithm and Support Vector Regression Optimization for Low Sampling Data[4]：
+若NIALM技術需要使用到高頻率暫態特徵(如極短時間之用電特徵)，就需要額外安裝資料收集硬體設備，導致成本增加；在目前學術上event-based的方法擷取特徵不適合用在低頻取樣資料，因為重疊性事件易發生、低耗電之家電設備不易被偵測出來(當家中多數家電設備為高耗電)，雖然Factorial hidden Markov models (FHMM)被提出解決此問題，然而此演算法在處理具有多狀態家電設備時會有很高的計算複雜度。一般而言，將各個家電之平均功率作為功率的估計值。由於家電的複雜結構，其功耗呈現出特徵特性，該文獻提出如圖11所示之名為Fusion Load Disaggregation Method演算法作用電解析，該演算法使用DTW(Dynamic Time Warping)估計家電的耗電軌跡，並應用K-median分群演算法，及使用SVR演算法來作電力解析。
+
+資料來源：[4]
+圖11 Fusion Load Disaggregation Method用電解析流程
+每一個家電均有一個特別的耗能模式，在總耗電中擷取每個設備耗電模式並予以標籤；即將總電力作分群，辨識出較高耗電的那一個群組，接著反覆執行上述步驟，直到每個設備都被處理過。
+該文獻使用之K-median分群演算法，在統計和數據挖掘中，K個中位數分群是一種聚類分析演算法。它是K-means分群的一種變體，它不計算每個群集的平均值以確定其質心，而是計算中位數，公式如下所示：
+   (式4)
+其中，Ci為在第i群的總用電讀值，為Ci的中位數，找出最大耗能之家電位於群中位數最大值之那一群，再利用DTW演算法找出該群之最大耗能家電。DTW距離則為計算每一群之時間子序列軌跡與每個家電標籤之軌跡的相似度。DTW是Dynamic Time Warping的簡稱，稱為「動態時間扭曲」或是「動態時間校正」，是一套根基於「動態規劃」（Dynamic Programming，DP）的方法，可以有效地將搜尋比對的時間大幅降低。假設有兩個向量t和r，長度分別是m和n，那麼DTW的目標，就是要找到一組路徑(p1, q1), (p2, q2), ..., (pk, qk)}, 使得經由上述路徑的「點對點」對應距離和為最小，而且此路徑必須滿足下列條件：
+端點關係：(p1, q1) = (1, 1), (pk, qk) = (m, n)。此端點關係代表這是「頭對頭、尾對尾」的比對。
+局部關係：假設最佳路徑上任一點可以表示成(i, j)，那麼其前一點路徑只有三種可能：(i-1, j), (i, j-1), (i-1, j-1)。此局部關係定義了路徑的連續性，而且也規定了t的任一個元素至少對應一個r的元素，反之亦然。
+圖12為該文獻使用SVR作用電解析之計算流程圖，SVR模型參數c與g對預測結果有很大之影響力，c 是一種penalty factor，當c越大，錯誤容忍率越低，overfitting容易發生；反之，當c越小，underfitting則容易發生。另外，參數g作為RBF(Radial Basis Function)的核心(kernel)，當g越大，support vectors越少；反之，當g越小，support vectors越多，而support vectors之數量多寡會影響訓練以及預測的速度。
+
+資料來源：[4]
+圖12 Fusion Load Disaggregation Method之SVR計算流程
+該篇文獻利用基因演算法(Genetic algorithms)來選擇SVR模型參數c與g之最佳化值。在資料的選擇上，使用公開資料集之AMPds (Almanac of Minutely Power dataset)，一戶位於加拿大的家庭住宅，資料訓練時間長達兩年；智慧電表的取樣頻率為每分鐘一筆，電力解析測試的家電包含乾衣機、熱泵、洗碗機以及冰箱。各家電之狀態以及平均功率如表2所示：
+
+
+表2 AMPds資料集內各家電之運轉功率表
+資料來源：[4]
+該篇文獻擷取訓練與測試的時間區間範圍在同一個季節、相似的氣候條件，Time window的長度設定為一天(1440分鐘)；由於測試的所有家電設備功率均大於30瓦，因此noise threshold設定為30W。圖13及表3分別為其定量及定性之用電解析結果。
+
+資料來源：[4]
+圖13 Fusion Load Disaggregation Method之定量解析結果
+表3 Fusion Load Disaggregation Method之定性解析結果
+資料來源：[4]
+該篇文獻與其他文獻技術相比，其優點為準確度較高，計算成本與複雜度比FHMM低；然而其缺點為測試的家電功率均需大於30W，小於30W則辨識不到，此外，條件上需要時間區間範圍在同一個季節以及相似的氣候條件，再加上僅驗證四個電器設備之電力解析準確度，未來還需要驗證更多電器設備。
+亞洲：
+Apparatus and Method for Non-Intrusive Load Monitoring(NILM) (Samsung, 2013)[5]：
+韓國Samsung公司於2013年起加入用電負載解析技術研發的行列，其所提出的第一項專利為一方法與系統，藉由使用者不斷回饋用電負載分析結果，更新電氣指紋資料庫，藉以提升辨識精準度。該系統核心演算法如圖14所示，包括一事件偵測邏輯：偵測系統中因開關或是運轉模式變化造成電力負載變動的事件；一特徵擷取邏輯：擷取事件發生時的電力、電壓、電流變化特徵，或者是電器穩定消耗功率時產生的特有負載特徵；一設備辨識邏輯：將擷取到的特徵與資料庫特徵做比對，決定電器種類與運轉狀態；以及一電力統計邏輯：計算各家電瞬時與累積消耗電量。辨識完成後將由顯示元件呈現分析結果，住戶可以確認或是調整辨識結果，並儲存於資料庫中。
+
+資料來源：[5]
+圖14 Samsung公司NILM核心演算法
+Current Pattern Matching Method for Non-Intrusive Power Load Monitoring and Disaggregation(Tianjin University, 2013)[6]：
+中國天津大學研發出電力解析的演算法，能夠藉由電流諧波特徵辨別電器指紋相似度高的電器。其演算步驟如圖15所示，先於系統中登錄電器，並將每個電器的所有狀態特徵登錄至表格，接著擷取實功、虛功、電壓、電流資訊並分離電流諧波訊號，再由查表方式找出任意時刻產生的實功、虛功可能為何種電器，若遇到不易判別的情況再進一步由電流諧波特徵查表找出電器。藉由查表的方法能大幅降低處理器運算時的負載。
+
+資料來源：[6]
+圖15 天津大學NIALM演算步驟
+Transient Normalization for Appliance Classification, Disaggregation, and Power Estimation in Non-Intrusive Load Monitoring(Samsung, 2013)[7]：
+韓國三星公司研發出藉由邊界偵測開關事件，即時判斷電力負載變化是何種電器所造成的演算法，其系統架構如圖16所示。當總用電發生變化時，事件偵測元件便會被觸發，再透過「開」以及「關」兩種元件區分事件種類。透過匹配相同電器的開關特徵，系統得以計算電器運轉時間以及累計消耗電量。此系統具有高即時度，並且對於處理器要求低。
+
+資料來源：[7]
+圖16 Samsung公司邊界事件偵測系統
+Non-Intrusive Load Monitoring Apparatus and Method (Samsung, 2014)[8]：
+韓國三星公司研發出一項控制器設備與方法流程演算法，能藉由功率因數偵測家電狀態改變事件，其運作流程如圖17所示。包括一資料蒐集邏輯：由感測器蒐集用電初始資料；資料處理邏輯：過濾、正規化初始資料，提取電流諧波特徵。並由視在功率與實功推算出功率因數(Power Factor)；事件偵測邏輯：由功率因數變化偵測家電狀態改變事件；特徵擷取邏輯：擷取事件發生時的電器特徵變化；家電判定邏輯：由資料庫比對，判斷哪個家電產生狀態變化；以及一用電量計算邏輯。
+
+資料來源：[8]
+圖17 Samsung公司事件偵測方法流程
+日本：
+東京電力公司[9]：
+日本地區應用NIALM技術之代表性電業首推東京電力公司。因應電力自由化，東京電力公司轉型為東京電力控股公司，並拆分其發電部門、輸配電部門、零售部門、以及再生能源發電部門為不同的子公司，分別為東京電力燃料及電力株式會社(東京電力フュエル＆パワー株式会社，簡稱東電FP)、東京電力電網株式會社(東京電力パワーグリッド株式会社，簡稱東電PG)、以及東京電力能源夥伴株式會社(東京電力エナジーパートナー株式会社，簡稱東電EP)。東電FP負責火力發電與燃料調度，東電PG負責輸電與配電，東電EP負責售電業務、並跨足家用瓦斯供應。其中，與NIALM技術應用相關的子公司為負責電力零售業的東電EP。
+東京電力能源夥伴株式會社(東電EP)[10]：
+東電EP設立於2015年4月1日，位於東京都中央區。2018年販售電力為2,303億度，約占市場規模27%，為2017年度販售電力的1.5倍，另販售天然氣為177萬噸。為因應外部環境變化，如自由化、少子化、低碳化等因素，所造成的電力販售競爭激化、電力需求減少、低碳要求，東電EP採取事業領域擴大策略。該策略包含天然氣銷售、新能源擴展、節能、節省成本、及減排的商業模式、可再生能源銷售業務模式、以及海外業務推展。並期望2019年的營業額達到4,500億円。
+Informetis[11]：
+公司成立於 2013年4月8日，其前身為Sony 公司的家電電力解析技術部門。2009年Sony公司開始注重於能源領域研究開發，並於隔年將人工智能技術分支出家電電力解析技術流派。2011年Sony 公司的家電電力解析技術部門參與美國 Pecan Street Project 智慧電網實證計畫。2013年Sony 公司將家電電力解析技術部門獨立出來，成立 Informetis公司，公司位於東京都港區高輪。2016年，Informetis公司開始進行電力可視化服務「うちワケ」商業販售。2017年Informetis公司與東電EP合作「遠處亦安心(遠くても安心)」商業應用。2018年Informetis公司與東電EP合資成立Energy Gateway 公司，並隨著業務擴展，本社總部遷至東京都港區芝三田市。
+Informetis公司分為四大部門，包含電力分解事業部、設備系統銷售業務事業部、人工智能實驗室業務事業部、以及技術許可業務。其中，電力分解事業部服務項目分為基本應用服務、數據探勘分解引擎服務(Metis App Engine)、Metis 引擎、以及設備用電解析服務運營管理系統，如表4所示。
+基本應用服務包含電力可視化應用「うちワケ®」、居家監護應用、用戶管理系統，並可提供全方位服務套件。數據探勘分解引擎服務可提供數據探勘API套件、API活用服務套件、以及全方位服務套件。Metis 引擎包含設備用電解析推定技術與電流波形測量傳感器，可提供設備用電分解 API套件、數據探勘API套件、API活用服務套件、以及全方位服務套件。設備用電解析服務運營管理系統包含客戶管理系統、施工管理系統、以及傳感器管理系統，可提供API活用服務套件與全方位服務套件。
+表4 Informetis電力分解事業部服務項目
+資料來源：[11]
+核心技術與相關服務：
+設備用電解析推定技術是一種自動分析家庭配電盤所測量數據，以確定使用哪些設備以及何時使用它們的技術，如圖18與圖19。該技術僅為估計技術，故不能單獨測量家電。特色是以合理價格為使用者提供足夠信息，節省家庭用電並開始節能。目前，該技術準確率定義為擁有並延續性檢查數十個家庭的平均準確率約為每種家用電器的80%，且整個房屋電能測量系統保證在+/-5%以內。
+資料來源：[11]
+圖18 Informetis設備用電分解推定技術
+資料來源：[11]
+圖19 Informetis設備用電分解推定技術-日分析案例
+表5為Informetis公司自行研發之設備用電解析推定技術之專利列表，其為該公司軟體中的核心技術，能用於從電氣設備的電流和電壓信息估計操作條件的信號處理系統、處理方法、以及處理程序。
+表5 Informetis能源分解演算法專利列表
+資料來源：[12]
+物聯網(Internet Of Things, IoT)系統建置技術收集每個傳感器每秒測量的電流波形數據，並在設備用電解析後累積結果，如同每個家用電器每秒的功耗。該數據可與平台上其他傳感器的數據一起進行分析，也可以通過API進行數據採集，如圖20。
+資料來源：[11]
+圖20 Informetis物聯網系統建置技術
+智慧傳感器(Energy Gateway)株式會社：
+2018年2月15日，Informetis公司與東電EP合資成立Energy Gateway，總公司座落於東京都港區。Energy Gateway以電力分析的角度，提供IoT平台與住宅家庭的大數據分析諮詢為主要業務，可協助住宅業者、保全業者、產險業者、及醫療業者等創造新的服務、產品、及商機，使得生活變得更為便利、安全、以及愉悅。
+核心技術與相關服務：
+Energy Gateway研發出體，體積很小的智慧傳感器，長度為8.1公分，寬度為1.77公分，深度為6.66公分，質量為60公克，易於裝設到配電盤中。其LAN接口符合IEEE802.11b/g/n標準，數據傳輸速度最大65Mbps，數據傳輸頻率為2.4GHz(所有11個頻道)，資訊安全規格為WPS, WPA/WPA2。電流互感器(Current Transformer, CT)輸入含4個迴路，附有保險絲，最大功率為3W，輸入電壓為交流電100V~240V，輸入頻率可為50Hz / 60Hz，輸入電流為30mA。操作溫度為-5℃~40℃，操作溼度為45%~85%，如圖21。
+資料來源：[13]
+圖21 Energy Gateway智慧傳感器規格
+應用案例：
+電力可視化：
+當用戶購買Energy Gateway的電力可視化應用服務「うちワケ®」時，該公司會在用戶配電盤安裝一個小型智慧傳感器，將用電數據回傳，並利用合作夥伴Informetis 公司的NIALM技術解析電力數據，以易於理解方式，以手機App提供予用戶適當用電資訊與服務，可隨時查看本月電費單與家用電器電費明細表，及查看當日太陽能發電購買或售出的電量並顯示餘額。
+家用電器電費明細表，如圖22，會顯示每小時的家電使用情況與電費單，並以排名格式顯示大量用電的家用電器，目前可設定11種家電。並根據實際用電量估算得出的家電電費，建議可採取有效的節能措施。再者，外出時可輕鬆看到居家用電情況，最多可設定8種家電，如空調、電鍋、微波爐、洗衣機、吸塵器、高溫家電(如加熱器、烘乾機、熱水壺、電視、 IH爐等)。平均下來，電力可視化的節電效果在普通家庭中約為10%，每年可以節省約1萬日元。
+資料來源：[13]
+圖22 電力可視化應用「うちワケ®」(WakeWake) –用電分析畫面
+另一方面，如果在安裝智慧傳感器後重新安裝發電設備，例如蓄電池或光伏發電系統，則必須添加新的電流傳感器，以測量設備的功率信息，電力可視化「うちワケ®」App亦可以支援查看當日太陽能發電購買或售出的電量，並顯示餘額，如圖23。
+   資料來源：[13]
+圖23 電力可視化應用「うちワケ®」(WakeWake) –PV發電買賣畫面
+住宅建築智慧化設備IENOWA：
+Energy Gateway開發的「ienowa」App，可搭起電力、家電、生活、以及家庭的連結橋梁，提供AI與IoT最新技術的住宅設備服務。
+「ienowa」App可以與不斷變化的家庭生活一同成長，具備可擴展性，可以與其他公司製造的IoT設備相容，如圖24。用戶亦可利用「ienowa」App應用程式，查看每個家電的每月電費，還可以使用指定或兼容的智慧遙控器、熱水器、對講機、空調等進行操作及語音控制。並與淨零耗能住宅(Net Zero Energy House, ZEH)採用的電力表示類別相對應，如太陽能、蓄電池、電力買賣、以及充放電等類別，如圖25。
+
+資料來源：[13]
+圖24 「ienowa」App可以與其他智慧家電設備連結
+
+資料來源：[13]
+圖25 「ienowa」App相關功能
+「hitonowa」應用程式可提供線上客戶服務與後端的電力數據分析與評估，基於科學分析，進行生活舒適度改善的精準行銷活動，如圖26與圖27。
+資料來源：[13]
+圖26 「hitonowa」線上客戶服務功能
+
+資料來源：[13]
+圖27 「hitonowa」後端的電力數據分析與評估
+2020年起， Energy Gateway與AI建築承包商(アイ工務店)株式會社合作IoT方案，將在未來的建案中，直接在配電盤上內建智慧傳感器， Energy Gateway提供用電解析技術、「hitonowa」應用程式、以及「ienowa」App應用程式，為用戶提供舒適的居家生活。
+歐洲：
+Voltage Based Load Monitoring System (Royal Dutch Philips Electronics Ltd., NL, 2012)[14]：
+荷蘭Royal Dutch Philips Electronics公司於2012年研發出一個適用於DC直流電負載的NIALM系統演算法。由於直流電適用於新興的分散式電網，易與家庭再生能源系統連結，近年來逐漸受到重視，故針對DC系統的電力負載分析方法也不該被忽視。此系統由電壓感測器、微控制器與人機介面所組成，如圖28所示，負載辨識方法有兩種，第一種為透過負載運轉時，交流特性所產生的鏈波來判別；第二種為透過負載開關或改變狀態時，電流改變造成的電壓擾動來判別。
+
+資料來源：[14]
+圖28 直流電NIALM系統
+SYSTEM AND METHOD FOR ELECTRIC PATTERNS DISCOVERY (Accenture Global Services Limited, IE, 2013)[15]：
+愛爾蘭資訊顧問公司研發出一個NIALM系統之資料流架構與分析演算法，並定義系統硬體規格，其系統架構如圖29所示。其中控制核心由記憶體與處理器組成，負責資料取用與分析；用戶資料庫用以儲存用戶用電資料；負載特徵資料庫用以儲存各種家電負載或發電元件的電器指紋，供控制核心做NIALM分析。此系統之核心辨識演算法擷取負載開關事件、開啟時間以及穩態參數變動作為特徵，並在擷取過程中，將過度龐大的資料降維度，使得辨識引擎能更佳運用。
+
+資料來源：[15]
+圖29 愛爾蘭資訊顧問公司NIALM系統架構
+DETERMINING AN INDICATION OF A BACKGROUND LEVEL OF UTILITY CONSUMPTION (Intelligent Sustainable Energy Limited, GB, 2013)[16]：
+英國能源大廠(Intelligent Sustainable Energy)研發出一個判斷基本負載耗電量之系統演算法，用以解析住家長時間開啟或待機之電器(如網路數據機等)在總耗電中之比重，其解析流程如圖30所示。首先系統接收由記憶體或感測器回傳的資料，資料經過初步類比數位轉換、濾波後，由運算核心計算即時的移動平均(moving average)以決定用電基線，最後回傳基準值作為參考依據。
+
+資料來源：[16]
+圖30 基本負載耗電量解析流程
+OPERATIONAL STATE DETERMINATION APPARATUS (KONINKLUKE PHILIPS ELECTRONICS N.V., NL, 2013)[17]：
+荷蘭皇家飛利浦公司研發出一個判斷用電負載改變是否是因電器狀態改變而產生的NIALM演算法。此系統架構如圖31，包含感測端的電壓、電流、功率感測器；用以偵測功率是否產生改變的偵測元件；用以偵測功率變動是因電壓或電流而產生的變動參數偵測元件；一變動分類元件，訂定閥值來判斷變動是因雜訊、擾動或是電器狀態改變產生；一電器分類元件，若確定變動是因家電產生，則將實功、虛功特徵與資料庫比對，以決定造成變動的電器為何；最後由電器耗電量分析元件記錄前項分析出家電的耗電量並儲存於記憶體中。
+
+資料來源：[17]
+圖31 用電負載變化判別系統
+同時，該公司利用多個輔助模型提升家電識別度，其系統架構如圖32。此系統核心元件包括資料庫以及一狀態偵測器，其內部的特徵偵測器負責記錄變化，解碼器負責比對特徵。而輔助模型包括從有線網路孔(電腦、印表機)提取登入登出資料、由大樓管理系統提取燈光開關控制紀錄、由網際網路提取溫度及時間日期資料、以及由門禁系統進出判斷空間內人員數量。藉由上述多種輔助模型資料，得以提升NIALM分析結果準確度。
+
+資料來源：[17]
+圖32 多輔助模型NIALM系統
+此外，亦提出一項辨識不同負載集合之方法與系統專利，此系統將負載分為插座型與非插座型分別量測，架構如圖33，辨識資料庫需一天左右的時間進行訓練，記錄住宅中各負載產生的電流線性組成，訓練元件再根據負載狀態變化趨勢，選擇最能判別特徵的取樣頻率。
+
+資料來源：[17]
+圖33 不同負載型NIALM系統
+ENERGY CONSUMPTION MONITORING (Honeywell International Inc., US, 2014)[18]：
+美國消費性電子產品大廠Honeywell於2014年於歐洲提出一項用於分析大廈或社區住宅的NIALM方法與系統的專利，其系統架構如圖34。此系統需於大廈總電進入處設置變壓器，當偵測模組偵測到住宅用電變動時，由訊號發送模組產生一組訊號至接收器，由其統整整棟大廈訊號、時間資料等，最後交由NIALM主機收集電表以及接收器資料進行分析。
+
+資料來源：[18]
+圖34 Honeywell公司大廈NIALM系統
+VIRTUAL SUB-METERING USING  COMBINED CLASSIFIERS (Honeywell International Inc., US, 2014)[19]：
+Honeywell公司提出一個組合式演算法，能提升NILM分析準確度，其演算法流程如圖35。此演算法需要兩種資料的輸入，其一為用電資料(實功與虛功)，取樣率一秒一次；其二為電器種類與狀態資料，由BMS(Building Management System，大樓管理系統)收集。資料蒐集期間系統將持續記錄狀態變化事件，自動產生電器指紋資料庫，約需經過2至3周資料庫才會較為完整。當資料庫建立完成後，系統會結合穩態負載分類(Steady State Load Classification)以及暫態模式分析(Transient Pattern Analysis)兩種方法，產生組合式分類器(Combined Classifier)，透過與資料庫的比對分析用電資料。
+
+資料來源：[19]
+圖35 Honeywell公司NIALM準確度提升演算法
+Method and System for Identifying Energy Consumers (Discovergy GmbH, DE, 2015)[20]：
+德國能源公司Discovergy GmbH研發一種將用電資料轉換為字串之NIALM演算法，將眾多欄位資料壓縮成一字串表示法，得以減少儲存空間並增加運算處理速度。其處理步驟首先依據資料取樣頻率對時間區間資料做微分以取得變化量，再將微分資料正規化、去雜訊，接著將將微分資料以字串方式編碼，如圖36，最後由正規表示式比對資料庫資料，以判別用電來源負載。
+
+資料來源：[20]
+圖36 Discovergy公司用電資料轉換字串方法
+ESTMLATION OF ELECTRIC ENERGY CONSUMPTION OF A GIVEN DEVICE AMONG A SET OF ELECTRICAL DEVICES (ELECTRICITE DE, FR, 2015)[21]：
+法國電力公營事業公司Electricite研發出一種藉由辨識熱水器耗電量來分析家庭儲能效益的方法。此方法將家庭再生能源系統所產生的電力傳送至熱水器，以加熱熱水器的方式將電能轉換為熱能儲存，再由分析熱水器的電力負載趨勢，計算家庭儲能效益。其系統運作流程如圖37。首先以小波轉換去除訊號雜訊，接著標記離峰時段、匹配離峰時段的功率峰值，去除因其他用途造成耗能大於功率峰值的值後，再引入其他增進精確度的演算法，最後記錄熱水器耗電量，以供核心估算住家再生能源除能效益。
+
+資料來源：[21]
+圖37 Electricite公司家庭儲能效益分析系統
+本工作分項預計將持續針對歐洲、美國及日本等國家研析目前最新NIALM技術以及相關應用，以利協助建構完整NIALM核心技術及相關應用服務。
+
+
+
+
+
+
+
+
+參考文獻：
+[1] Ruano, Antonio, et al. "NILM techniques for intelligent home energy management and ambient assisted living: A review." Energies 12.11 (2019): 2203.
+[2] Liu, Hui, Haiping Wu, and Chenming Yu. "A hybrid model for appliance classification based on time series features." Energy and Buildings 196 (2019): 112-123.
+[3] Rashid, Haroon, et al. "Can non-intrusive load monitoring be used for identifying an appliance’s anomalous behaviour?." Applied energy 238 (2019): 796-805.
+[4] Yuan, Quanbo, et al. "A fusion load disaggregation method based on clustering algorithm and support vector regression optimization for low sampling data." Future Internet 11.2 (2019): 51.
+[5] Zeifman et al. ("Nonintrusive appliance load monitoring: Review and outlook"; IEEE Transactions on Consumer Electronics; Volume: 57, Issue: 1; February 2014)
+[6] Alan Marchiori et al., Circuit-Level Load Monitoring for Household Energy Management, <Pervasive computing>, Mar. 31, 2014, p. 40-48.
+[7] Giri, Suman, Po-Hsiang Lai, and Mario Bergés. "Novel techniques for the detection of on and off states of appliances for power estimation in non-intrusive load monitoring." ISARC. Proceedings of the International Symposium on Automation and Robotics in Construction. Vol. 30. IAARC Publications, 2013.
+[8] Zeifman et al. ("Nonintrusive appliance load monitoring: Review and outlook"; IEEE Transactions on Consumer Electronics; Volume: 57, Issue: 1; February 2014)
+[9] 東京電力公司官方網站, https://www.tepco.co.jp/index-j.html
+[10] 東京電力能源夥伴株式會社官方網站, https://www.tepco.co.jp/ep/index-j.html
+[11] Informetis官方網站, https://www.informetis.com/en/
+[12] JUSTIA Patents官方網站, https://patents.justia.com/
+[13] Energy Gateway官方網站, https://www.energy-gateway.co.jp/
+[14] Wang, Ying, Ashish Pandharipande, and Peter Fuhrmann. "Energy data analytics for nonintrusive lighting asset monitoring and energy disaggregation." IEEE Sensors Journal 18.7 (2018): 2934-2943.
+[15] Souilmi, Younes. "System and method for electric patterns discovery." U.S. Patent No. 8,412,491. 2 Apr. 2013.
+[16] Donaldson, James, et al. "Determining an indication of a background level of utility consumption." U.S. Patent Application No. 13/701,126.
+[17] Nesvadba, Jan Alexis Daniel, and Igor Alexandrovich Nagorski. "Method and apparatus for intelligent channel zapping." U.S. Patent No. 9,357,153. 31 May 2016.
+[18] Le Roux, Gaëlle, et al. "Methods and systems for analyzing energy usage." U.S. Patent No. 8,386,086. 26 Feb. 2013.
+[19] Gonzalez, Mario E. Berges, et al. "Methods and apparatuses for monitoring energy consumption and related operations." U.S. Patent No. 9,104,189. 11 Aug. 2015.
+[20] Method and system for identifying energy consumers Verfahren und System zur Identifizierung von Energieverbrauchern Procédé et système permettant d’identifier des consommateurs d’énergie
+[21] Martinez, Borja, et al. "The power of models: Modeling power consumption for IoT devices." IEEE Sensors Journal 15.10 (2015): 5777-5789.

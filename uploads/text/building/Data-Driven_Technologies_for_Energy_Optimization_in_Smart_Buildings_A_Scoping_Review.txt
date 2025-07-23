@@ -1,0 +1,3873 @@
+University of Southern Denmark
+Data-Driven Technologies for Energy Optimization in Smart Buildings: A Scoping Review
+Billanes, Joy Dalmacio; Ma, Zheng Grace; Jørgensen, Bo Nørregaard
+Published in:
+Energies
+DOI:
+10.3390/en18020290
+Publication date:
+2025
+Document version:
+Final published version
+Document license:
+CC BY
+Citation for pulished version (APA):
+Billanes, J. D., Ma, Z. G., & Jørgensen, B. N. (2025). Data-Driven Technologies for Energy Optimization in
+Smart Buildings: A Scoping Review. Energies, 18(2). https://doi.org/10.3390/en18020290
+Go to publication entry in University of Southern Denmark's Research Portal
+Terms of use
+This work is brought to you by the University of Southern Denmark.
+Unless otherwise specified it has been shared according to the terms for self-archiving.
+If no other license is stated, these terms apply:
+            • You may download this work for personal use only.
+            • You may not further distribute the material or use it for any profit-making activity or commercial gain
+            • You may freely distribute the URL identifying this open access version
+If you believe that this document breaches copyright please contact us providing details and we will investigate your claim.
+Please direct all enquiries to puresupport@bib.sdu.dk
+Download date: 23. 7月. 2025
+
+Academic Editor: Constantinos A.
+Balaras
+Received: 18 November 2024
+Revised: 4 January 2025
+Accepted: 6 January 2025
+Published: 10 January 2025
+Citation: Billanes, J.D.; Ma, Z.G.;
+Jørgensen, B.N. Data-Driven
+Technologies for Energy Optimization
+in Smart Buildings: A Scoping Review.
+Energies 2025, 18, 290. https://
+doi.org/10.3390/en18020290
+Copyright: © 2025 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license
+(https://creativecommons.org/
+licenses/by/4.0/).
+Review
+Data-Driven Technologies for Energy Optimization in Smart
+Buildings: A Scoping Review
+Joy Dalmacio Billanes, Zheng Grace Ma *
+and Bo Nørregaard Jørgensen
+SDU Center for Energy Informatics, The Maersk Mc-Kinney Moller Institute, The Faculty of Engineering,
+University of Southern Denmark, 5230 Odense, Denmark; joydbi@mmmi.sdu.dk (J.D.B.);
+bnj@mmmi.sdu.dk (B.N.J.)
+* Correspondence: zma@mmmi.sdu.dk
+Abstract: Data-driven technologies in smart buildings offer significant opportunities to
+enhance energy efficiency, sustainability, and occupant comfort. However, the existing
+literature often lacks a holistic examination of the technological advancements, adoption
+barriers, and business models necessary to realize these benefits. To address this gap,
+this scoping review synthesizes current research on these technologies, identifies factors
+influencing their adoption, and examines supporting business models. Inspired by the
+Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) guidelines,
+a structured search of the literature across four major databases yielded 112 relevant
+studies. The key technologies identified included big data analytics, Artificial Intelligence,
+Machine Learning, the Internet of Things, Wireless Sensor Networks, Edge and Cloud
+Computing, Blockchain, Digital Twins, and Geographic Information Systems. Energy
+optimization is further achieved through integrating renewable energy resources and
+advanced energy management systems, such as Home Energy Management Systems and
+Building Energy Management Systems. Factors influencing adoption are categorized into
+social influences, individual perceptions, cost considerations, security and privacy concerns,
+and data quality issues. The analysis of business models emphasizes the need to align
+technological innovations with market needs, focusing on value propositions like cost
+savings and efficiency improvements. Despite the benefits, challenges such as high initial
+costs, technical complexities, security risks, and user acceptance hinder their widespread
+adoption. This review highlights the importance of addressing these challenges through
+the development of cost-effective, interoperable, secure, and user-centric solutions, offering
+a roadmap for future research and industry applications.
+Keywords: smart buildings; data-driven technologies; energy optimization; artificial
+intelligence; internet of things; energy management systems; technology adoption; business
+models; systematic review
+1. Introduction
+Buildings account for approximately 40% of global energy consumption, largely due
+to essential activities such as lighting, cooling, and heating [1–3]. This substantial energy
+demand poses economic, resource, and environmental challenges, underscoring the need
+for more efficient energy management in building environments [4]. Data-driven technolo-
+gies have emerged as a critical solution for addressing these challenges, enabling smart
+buildings to optimize energy use, improve occupant comfort, and support sustainable
+operations [5–7]. For example, smart buildings equipped with IoT devices can collect gran-
+ular energy data to inform load management and optimize energy efficiency [6]. Studies
+Energies 2025, 18, 290
+https://doi.org/10.3390/en18020290
+
+Energies 2025, 18, 290
+2 of 52
+illustrate diverse applications: multi-sensor data collection for space utilization [4], motion
+sensors in libraries for lighting control [8], and Digital Twins for real-time energy efficiency
+management [9]. These examples highlight the potential for data-driven technologies to
+transform energy consumption dynamics within buildings through tasks like monitoring,
+forecasting, and anomaly detection [10].
+Recent advancements in Machine Learning (ML) and reinforcement learning frame-
+works have enabled the development of highly adaptive Home and Building Energy
+Management Systems (HEMS and BEMS) [11]. These systems optimize energy usage
+through real-time data-driven decision-making approaches, leveraging techniques like fre-
+quent itemset mining, deep reinforcement learning, and advanced optimization algorithms
+to minimize costs and enhance efficiency [12]. By dynamically integrating real-time inputs
+from IoT sensors, such as temperature, occupancy, and energy usage patterns, these systems
+enable smart buildings to autonomously adjust HVAC settings, lighting, and energy loads.
+Such capabilities not only enhance operational efficiency but also contribute to occupant
+comfort and sustainability [13].
+Although the existing literature acknowledges the benefits of data-driven technologies,
+many studies lack a holistic examination of factors influencing technology adoption. For
+instance, there is limited research integrating technical performance with socio-economic
+factors that impact adoption, such as user behavior, regulatory frameworks, and cost
+implications. Additionally, while studies explore individual technologies like IoT or AI,
+they rarely provide insights into how these technologies can be integrated within a unified
+framework to address energy optimization comprehensively. Furthermore, the dynamic
+nature of energy markets and evolving sustainability goals highlight the need for research
+that bridges technological innovation with practical implementation strategies, including
+business models that can scale these solutions effectively. This gap in the literature raises
+the following crucial question:
+What is the current state of data-driven technologies for energy optimization in smart
+buildings considering technological advancements, adoption barriers, and supporting
+business models?
+To address this question, this scoping review aims to perform the following:
+•
+Synthesize current research on data-driven technologies for energy optimization in
+smart buildings.
+•
+Identify the factors influencing the adoption of these technologies.
+•
+Examine supporting business models that facilitate their implementation.
+In total, 33 review articles were found in the literature (as shown in Table A1,
+Appendix A), covering the following key themes:
+•
+Energy Management Systems: emphasize energy-saving, optimization, and con-
+trol mechanisms.
+•
+Building Energy Efficiency: implement strategies for enhancing energy performance.
+•
+User Behavior and Social Factors: emphasize the influence of occupant behavior on
+energy use.
+•
+Data-Driven Approaches: employ the use of advanced analytics and AI for predic-
+tive insights.
+•
+Renewable Energy and Smart Grids: integrate renewables and smart grid interactions.
+Compared to the existing review articles, this review advances the literature by catego-
+rizing and evaluating emerging data-driven technologies, including Artificial Intelligence
+(AI), Machine Learning (ML), Big Data, Blockchain, and Digital Twins. While previous
+reviews discuss AI and ML generally, they rarely address the unique roles and interde-
+pendencies of each technology within an integrated framework. Machine Learning (ML),
+
+Energies 2025, 18, 290
+3 of 52
+a subset of Artificial Intelligence (AI), serves as a critical enabler of intelligent decision-
+making within smart buildings. While AI encompasses the broader capability of machines
+to simulate human intelligence, ML focuses on developing algorithms that allow systems
+to learn from data and improve their performance over time without explicit programming.
+For instance, ML algorithms such as Artificial Neural Networks (ANNs) and Deep Learning
+models can analyze complex data patterns, identify energy consumption anomalies, and
+optimize predictive models for Building Energy Management. In doing so, ML supports
+autonomous decision-making processes, where AI systems can dynamically adjust HVAC
+settings, lighting, and energy loads in response to real-time inputs from IoT sensors, thereby
+enhancing operational efficiency and occupant comfort. Additionally, this paper uniquely
+examines barriers to adoption, such as security, privacy, and costs, as well as the need for
+new business models to support sustainable technology implementation. These aspects
+are essential for realizing the full potential of data-driven systems in energy optimization
+and are underexplored in existing reviews. Overall, this scoping review aims to provide a
+comprehensive view of the current state of data-driven technologies in smart buildings,
+highlight critical adoption barriers, and identify gaps in business model frameworks that
+could facilitate broader implementation.
+The organization of this paper is as follows: Section 2 provides a background on smart
+building technologies, highlighting the primary building types, unique challenges, and
+opportunities influencing technology adoption. Section 3 describes the scoping review
+method and process used in this paper. Section 4 discusses the foundational technologies
+and system integration approaches that enable energy optimization in smart buildings.
+Section 5 explores the influential factors affecting the adoption of data-driven technologies
+and examines the business models that support their implementation. Section 6 presents
+a discussion synthesizing key findings, implications, challenges, and limitations. Finally,
+Section 7 concludes with insights and directions for future research, emphasizing the need
+for enhanced security measures, user-centric designs, and innovative business models to
+advance the smart building domain.
+2. Background
+Smart building technologies are transforming the way energy, comfort, and security
+are managed in various types of buildings. The types of buildings that implement smart
+technologies often determine the specific technologies and functionalities that are priori-
+tized. This section provides an overview of the primary building types within the smart
+building ecosystem and highlights the unique challenges and opportunities that influence
+technology adoption.
+The building can be a residential, commercial, or industrial building, as shown in
+Table 1.
+Residential buildings [14,15] comprise houses [16,17] or homes [18–22] and
+flats [17]. Residential buildings are developed for various purposes, including multi-
+dwelling units [23], passive house design [24], and home-based small businesses [25].
+In residential settings, smart technologies primarily focus on occupant comfort, energy
+efficiency, and security. Their key functionalities often include automated lighting, climate
+control, and security systems, alongside renewable energy integration and energy manage-
+ment systems that allow homeowners to monitor and optimize consumption. Technologies
+such as IoT-enabled sensors and smart thermostats are popular in this sector, balancing
+convenience with energy savings to meet consumer preferences.
+Commercial buildings are structures utilized for business activities, including of-
+fices [17,26–30], school buildings [3,7,17,30,31], public buildings [32,33], libraries [8], retail
+shops [15], and research and development buildings [34]. Other types of commercial
+buildings are airports [28], hotels [17,28], banks [17], restaurants [17], and hospitals [17].
+
+Energies 2025, 18, 290
+4 of 52
+Commercial buildings, including office complexes, retail spaces, and hotels, prioritize
+occupant comfort, efficient space utilization, and optimized energy consumption. Given
+the high energy demands in these environments, smart building solutions often involve
+advanced HVAC control systems, occupancy-based lighting, and Building Management
+Systems (BMS) that integrate multiple functions for centralized management. Data analytics
+and AI-driven predictive maintenance are also commonly used to reduce operational costs
+and improve building performance.
+Government buildings, hospitals, and schools, which fall under institutional categories,
+often prioritize sustainability, occupant well-being, and public safety. Smart building
+technologies in these spaces frequently include energy-efficient HVAC systems, emergency
+response automation, and environmental monitoring to ensure healthy indoor air quality.
+Digital twin technologies are increasingly being explored in these settings for scenario
+planning and efficient resource management.
+Additionally, industrial buildings [15] are structures used for production or manu-
+facturing, such as data centers [35] and warehouses [14]. In industrial facilities such as
+factories and warehouses, the focus shifts to operational efficiency, safety, and resource
+management. Smart technologies for these buildings may include IoT-enabled machinery
+monitoring, energy-intensive process optimization, and robust security and safety sys-
+tems. Technologies in industrial buildings are often integrated with energy management
+and automation systems to optimize production processes while reducing downtime and
+energy use.
+Cognitive buildings incorporate the Internet of Things (IoT) and other related tech-
+nologies to develop an information-driven environment [36]. Similarly, smart buildings
+are equipped with intelligent systems to automatically control building technologies (e.g.,
+heating, lighting, ventilation), aiming to minimize energy usage while ensuring occupant
+comfort and operational efficiency [37]. For example, smart homes [1,38–54], considered
+smart buildings, are equipped with a unified and centrally integrated system that manages
+electrical devices and appliances [40].
+Table 1. Overview of the building types in data driven smart buildings and energy in the literature.
+Buildings
+Sub-Type
+References
+Advanced Buildings
+Cognitive buildings
+[36]
+Smart buildings
+Smart homes
+[1,37–55]
+Residential Buildings
+Home or house
+[16–22]
+Multi-dwelling buildings
+[23]
+Home-based small businesses
+[25]
+Passive house
+[24]
+Flats or apartments
+[17]
+Commercial Buildings
+Offices
+[15,17,26–29]
+University, campus or school
+[3,7,17,30,31]
+Public or government buildings
+[32,33]
+Library buildings
+[8]
+Research and development building
+[34]
+
+Energies 2025, 18, 290
+5 of 52
+Table 1. Cont.
+Buildings
+Sub-Type
+References
+Commercial Buildings
+Airport
+[28]
+Hotels
+[17,28]
+Banks
+[17]
+Restaurants
+[17]
+Hospitals
+[17]
+Retail shops
+[15]
+Industrial Buildings
+Data center
+[35]
+Warehouse
+[14]
+3. Materials and Methods
+This scoping review was conducted to systematically explore the role of data-driven
+technologies in optimizing energy consumption in smart buildings. The methodology
+was inspired by the Preferred Reporting Items for Systematic Reviews and Meta-Analyses
+(PRISMA) guidelines [56], adapted to the broader objectives of a scoping review. The
+review aimed to map existing research, identify key themes and gaps, and provide an
+overview of advancements in data-driven technologies, adoption barriers, and business
+models relevant to smart buildings.
+To ensure a structured and transparent approach, the review incorporated elements
+of the PRISMA framework, including clearly defined eligibility criteria, comprehensive
+database searches, and a systematic study selection process illustrated by a PRISMA
+flow diagram. The selection process involved several stages: (1) identification through
+automated database searches, (2) screening based on titles and abstracts, and (3) full-text
+assessments against predefined criteria (Table A2). Studies were included if they specifically
+addressed data-driven technologies in smart buildings with a focus on energy optimization,
+adoption barriers, or business models. Exclusion criteria included studies lacking primary
+data or robust methodologies, publications not in English, or those with a focus outside
+smart building contexts.
+During the screening stage, duplicates were first removed, and titles and abstracts
+were reviewed independently by two authors. Conflicts were resolved through discussion
+or consultation with a third author. Examples of excluded studies included those focusing
+on generic smart technologies without reference to energy systems (e.g., IoT for healthcare)
+or articles presenting conceptual frameworks without empirical support. The eligibility
+phase involved a detailed examination of full texts for relevance and methodological
+soundness. Reasons for exclusion at this stage included an insufficient focus on data-driven
+energy optimization (e.g., discussions limited to structural engineering) and the lack of a
+peer-reviewed status. The final synthesis included 112 studies.
+While formal quality appraisal and meta-analysis were not performed—consistent
+with the aims of scoping reviews—a narrative synthesis and thematic categorization were
+used to analyze the findings. This approach allowed for the inclusion of diverse evidence
+types and a broad exploration of the research landscape.
+3.1. Protocol and Registration
+A review protocol was developed prior to the commencement of this scoping review
+to ensure methodological rigor, transparency, and consistency. The protocol outlined
+the review’s objectives, eligibility criteria, data sources, search strategies, study selection
+
+Energies 2025, 18, 290
+6 of 52
+process, and data extraction methods. This scoping review was not formally registered in
+any public database, such as PROSPERO, as scoping reviews are currently not eligible for
+registration there. However, to maintain transparency, the protocol was internally reviewed
+and approved by the research team before implementation. Any deviations from the
+initial protocol during the review process were documented and justified within the review.
+The protocol is not publicly available; however, detailed descriptions of the methodology,
+including the eligibility criteria, information sources, search strategy, and data extraction
+process, are provided in the section below to ensure transparency and reproducibility.
+3.2. Eligibility Criteria
+The inclusion and exclusion criteria were carefully defined to align with the research
+question, which aims to explore the role of data-driven technologies in optimizing energy
+consumption within smart buildings, as shown in Figure 1. The criteria prioritized research
+that provided empirical evidence, insights into user experiences, and practical applications
+of these technologies. The focus on peer-reviewed publications ensured the inclusion of
+high-quality research, acknowledging that it might introduce potential bias by excluding
+valuable information from gray literature. The language restriction was due to resource
+constraints, and the publication year timeframe captured the period of significant advance-
+ments in the field. By clearly defining these criteria, this review provides a comprehensive
+and rigorous analysis of the selected literature.
+ 
+Figure 1. Eligibility criteria.
+3.3. Information Sources
+To comprehensively capture relevant studies on data-driven technologies for energy
+optimization in smart buildings, a systematic search was conducted across multiple in-
+formation sources, ensuring a broad and representative coverage of the field. To ensure
+comprehensive coverage, multiple electronic databases were searched, including Scopus,
+Web of Science, IEEE Xplore, and ACM Digital Library. The search included articles pub-
+lished up to February 2024, ensuring that the most recent developments were considered.
+Meanwhile, domain experts were consulted to validate the comprehensiveness of the search
+strategy and identify any potentially overlooked key studies.
+
+Energies 2025, 18, 290
+7 of 52
+3.4. Search Strategy
+A systematic and transparent search strategy was employed to identify the relevant
+literature. The primary objective of the search strategy was to identify a comprehensive
+dataset of peer-reviewed studies that address the intersection of smart building technolo-
+gies, data-driven approaches, and adoption barriers or facilitators. The search also sought
+to include diverse research contexts across building types (residential, commercial, and
+industrial buildings). The search strings were tailored for each database, applying filters
+for language and document type. Domain experts were consulted to confirm the strategy’s
+coverage and relevance. The full search strings and details on how the strategy was refined
+are provided in Appendix B.1. Search strategy.
+3.5. Study Selection
+The selection of studies followed a structured, multi-stage approach designed to
+ensure rigor and transparency. After removing duplicates, two independent reviewers ini-
+tially screened all titles and abstracts against the predefined inclusion and exclusion criteria
+(Table A2). Studies meeting these criteria or considered potentially relevant were then as-
+sessed through a full-text examination. Throughout both the screening and full-text review
+stages, any disagreements were resolved through discussion, and when necessary, a third
+reviewer served as an adjudicator to maintain impartial decision-making. The PRISMA
+flow diagram (Figure 2) below summarizes the selection process, and Appendix B.2, Study
+Selection, provides a comprehensive record of the inclusion decisions and justifications.
+ 
+Figure 2. The PRISMA flow diagram.
+3.6. Data Charting, Management, and Items
+Data extraction and management were conducted systematically to ensure compre-
+hensive and accurate synthesis. All 112 articles, including their abstracts and full texts,
+
+Energies 2025, 18, 290
+8 of 52
+were imported into EndNote 21 for efficient organization, annotation, and retrieval. A
+standardized data extraction form (Table A3, Appendix B.3. Data Charting, Management,
+and Items) was developed to record the study focus, methodologies, key findings, and
+contextual details. The process involved independent charting by two reviewers, iterative
+refinement, and final quality assurance.
+Key data items were systematically charted (Table A4, Appendix B.3. Data Charting,
+Management, and Items), including publication details, study classifications, geographic
+context, targeted building types, technologies, adoption factors, and key findings. These
+elements provided the foundation for categorizing and analyzing the studies to address
+the research objectives and highlight gaps and opportunities for further investigation.
+3.7. Data Synthesis
+The synthesis of the included studies followed a structured process involving cate-
+gorization, thematic analysis, contextual examination, and alignment with the research
+questions to systematically present findings. A total of 112 studies were analyzed and cate-
+gorized into 33 review articles (Table A1, Appendix A) and 79 research articles (Table A5,
+Appendix C). These studies explored diverse aspects of data-driven technologies in build-
+ing and energy systems, providing insights into energy optimization, smart building
+management, and data-driven decision-making processes.
+To further refine the analysis, Table 2 categorizes the studies into three primary
+aspects—energy, building, and data/AI—along with their subcategories. Among the
+included studies, 11 specifically addressed adoption barriers such as high costs, security
+concerns, and technical complexities. Additionally, three studies focused on business mod-
+els, exploring innovative practices for commercialization and the sustainable integration of
+data-driven technologies.
+Table 2. The three aspects and related sub-categories of the reviewed studies.
+Energy Aspect
+Building Aspect
+Data and AI Aspect
+Building energy modeling
+Energy consumption
+Energy cost or saving
+Energy efficiency
+Energy Management system
+Fault detection and diagnose
+Renewable energy
+Smart grid integration
+Building in general
+Commercial building
+Industrial building
+Residential building
+Artificial Intelligence
+Big data
+Blockchain
+Cloud Computing
+Digital Twin and simulation
+Edge computing
+Information system
+Internet of Things
+Machine Learning
+Sensor network
+Thematic analysis identified recurring patterns, including energy optimization strate-
+gies, advancements in technologies such as IoT and AI, and factors influencing adoption.
+Studies addressing business models revealed innovative frameworks that support the
+scaling of these technologies. Contextual examination highlighted research gaps across
+building types, including residential, commercial, and industrial buildings, as well as
+energy systems such as renewable integration and smart grids. Synthesized findings
+were mapped to the research questions to evaluate the role of data-driven technologies,
+identify adoption barriers, and examine trends in supporting business models. This inte-
+gration of findings revealed key contributions to the field and emphasized areas requiring
+further investigation.
+
+Energies 2025, 18, 290
+9 of 52
+4. Fundamental Technologies and System Integration in Smart Buildings
+This section provides a comprehensive overview of the fundamental technologies
+and system integration approaches adopted in smart buildings. It covers data-driven
+technologies, energy resources, energy management systems, and the integration of these
+components to enhance building performance and sustainability.
+4.1. Data-Driven Technologies in Smart Buildings
+Data-driven technologies drive innovation and efficiency across buildings and energy
+systems. These technologies include big data analytics, Artificial Intelligence (AI), Machine
+Learning (ML), the Internet of Things (IoT), Wireless Sensor Networks, Edge and Cloud
+Computing, Blockchain, Digital Twins, Information Systems, and Geographic Information
+Systems (GIS), as shown in Table 3.
+Table 3. Overview of data-driven technologies in smart buildings.
+Data-Driven Technology
+Description/Function
+References
+Big Data Analytics
+Collection, processing, and analysis of large
+complex datasets to identify patterns.
+[28,30,57,58]
+Artificial Intelligence (AI)
+Automates tasks, detects energy anomalies,
+optimizes energy use, predicts patterns, and
+forecasts costs.
+[2,27,29,33,35,38,42,49,51,59]
+Machine Learning
+Subset of AI-enabling systems to learn from
+data, improving prediction and optimization
+over time.
+[3,14,25,41,51,60,61]
+Internet of Things (IoT) and
+Wireless Sensor Networks
+Real-time data collection on energy usage and
+environmental conditions, enabling data
+communication among devices.
+[1,8,14,16,20,21,27,36,37,39,41,
+45,47–49,51,52,62–64]
+Edge and Cloud Computing
+Local data processing to minimize energy
+consumption (Edge computing); cost-effective
+off-site data storage and services (Cloud
+Computing).
+[2,16,36,52,61]
+Blockchain Technologies
+Secure and transparent transactions and trusted
+data sharing across distributed networks.
+[23,62,65]
+Digital Twin Technologies
+Virtual representations of physical systems for
+real-time monitoring and optimization.
+[62,66]
+Information Systems and
+Geographic Information
+Systems (GIS)
+Storage, visualization, analysis, and
+interpretation of data and managing energy
+distribution networks.
+[19,29,32,67]
+4.1.1. Big Data Analytics
+Big data analytics involves the collection, processing, and analysis of large and com-
+plex datasets to extract meaningful insights and identify patterns that inform decision-
+making [57,58]. Characterized by the three Vs—volume, velocity, and variety—big data
+technologies enable the handling of datasets that are too large or complex for traditional
+data-processing applications.
+In the context of smart buildings, methodologies such as data mining, clustering, and
+regression analysis are frequently employed to uncover patterns and relationships within
+energy consumption data. For example, data mining techniques, including association rules
+and decision trees, help identify anomalies and predict future energy demands [28]. These
+tools allow facility managers to gain insights into usage patterns, predict maintenance
+
+Energies 2025, 18, 290
+10 of 52
+needs, and improve operational efficiency. These tools support applications, including
+energy forecasting, anomaly detection, and predictive maintenance.
+In the context of smart buildings, big data analytics play a pivotal role in optimizing
+building operations and enhancing energy efficiency. For instance, Koseleva and Ropaite
+(2017) proposed a big data-based architecture for building management systems (BMS) to
+effectively manage daily operations [57]. By analyzing the vast amounts of data generated
+from sensors and systems within a building, facility managers could gain insights into
+usage patterns, predict maintenance needs, and improve overall operational efficiency.
+The methodologies applied include supervised and unsupervised Machine Learning al-
+gorithms. Supervised learning techniques such as Random Forest and Gradient-Boosted
+Trees are used to forecast energy consumption and identify anomalies in usage patterns.
+Unsupervised learning methods, like k-means clustering, help segment energy usage be-
+haviors across different building zones. Additionally, predictive maintenance models often
+integrate time-series analysis using algorithms like ARIMA (Auto-Regressive Integrated
+Moving Average) and Long Short-Term Memory (LSTM) networks for enhanced fault de-
+tection and maintenance scheduling. These methods ensure proactive energy management
+and system reliability.
+Big data are classified based on their size into small (kilobytes to gigabytes), medium
+(gigabytes to terabytes), and large (terabytes and beyond) datasets (as shown in Table 4).
+This classification guides the choice of tools and frameworks used for data processing. For
+small-to-medium datasets, Python (with libraries like Pandas, NumPy, and Scikit-learn)
+and R are widely employed due to their robust capabilities for data manipulation and
+statistical analysis [58,68]. For large-scale datasets, distributed frameworks like Apache
+Spark and Hadoop are essential, providing the scalability needed to handle high-volume
+data processing in real time [58,67]. These tools support advanced analytics applications
+such as energy consumption forecasting, anomaly detection, and predictive maintenance
+in smart building systems.
+Table 4. Overview of big data in smart buildings.
+Aspect
+Details
+Data Classification
+Small (kilobytes to gigabytes), medium (gigabytes to terabytes), and large
+(terabytes and beyond) datasets.
+Programming Languages
+Python (Pandas, NumPy, Scikit-learn) and R, Java.
+Frameworks/Libraries
+Apache Spark, Hadoop, and TensorFlow.
+Applications
+Anomaly detection, energy consumption forecasting, and predictive maintenance.
+Key Algorithms
+Random Forest, Gradient-Boosted Trees, k-means clustering, ARIMA, and Long
+Short-Term Memory (LSTM).
+Limitations
+Hardware constraints, integration with legacy BMS, and high computational
+requirements for real-time tasks.
+However, integrating data-driven technologies requires significant technical expertise
+and careful planning. A key limitation in this area is the difficulty of ensuring interop-
+erability between new systems and legacy building technologies. Incompatibility often
+arises, requiring substantial customization efforts that increase both costs and complexity.
+Many smart building systems rely on seamless integration, and overcoming these techni-
+cal barriers is essential to achieving widespread adoption. Furthermore, many existing
+BMS lack the hardware capabilities needed to process large-scale datasets in real time,
+necessitating the use of external data infrastructures. This adds complexity in terms of
+data integration, standardization, and compatibility with distributed frameworks [57,67].
+
+Energies 2025, 18, 290
+11 of 52
+Hardware constraints, coupled with high computational requirements, further limit the
+real-time analytics potential of embedded systems.
+In the energy sector, big data analytics is utilized to understand individual and collec-
+tive energy consumption behaviors, leading to strategies that enhance energy efficiency [57].
+For instance, [69] highlights the use of automated data mining methods on whole-building
+electricity data to uncover insights related to energy efficiency opportunities. By identify-
+ing consumption trends and anomalies, stakeholders can implement targeted measures to
+reduce energy waste and promote sustainability.
+Beyond smart buildings and energy, big data analytics has broad applications across
+various industries, including automotive, telecommunications, healthcare, media, travel,
+social media, and more [57]. In the domain of Automatic Test Equipment (ATE), the
+application of big data and advanced analytics has resulted in cost reductions, process
+improvements, faster decision-making, and enhanced customer offerings [58].
+By leveraging big data tools and frameworks tailored to specific use cases, smart
+buildings can achieve real-time monitoring, proactive anomaly detection, and predictive
+maintenance. This integration enhances energy optimization, operational cost reduction,
+and occupant comfort while overcoming traditional limitations.
+4.1.2. Artificial Intelligence and Machine Learning
+Artificial Intelligence (AI) refers to the development of computer systems that are
+capable of performing tasks that typically require human intelligence, such as reasoning,
+learning, and decision-making [42]. Within the broader domain of AI, Machine Learning
+(ML) is a specialized subset that focuses on algorithms allowing systems to learn and
+improve from data without explicit programming [3,14,25,41,51,60,61]. This distinction is
+critical, as AI encompasses a wide array of techniques, while ML focuses on data-driven
+algorithmic learning.
+In smart buildings, AI automates tasks and adapts to user preferences, enhancing
+functionality and convenience. For example, AI algorithms can optimize energy consump-
+tion by adjusting lighting, HVAC systems, and renewable energy integration [2,33,49]. AI
+also supports anomaly detection in energy usage, enabling proactive maintenance and
+energy-saving strategies [38].
+ML techniques further advance these capabilities by predicting future energy con-
+sumption patterns, forecasting costs, and improving the efficiency of energy systems [38].
+Specific ML methods employed in smart buildings include the following:
+•
+Ensemble Learning Methods: techniques like Boosted Trees and Random Forests
+are used to predict and analyze energy performance in individual buildings and
+clusters [2,3].
+•
+Support Vector Machines (SVMs): SVM methods, including Linear, Quadratic, and Cubic
+SVMs, are utilized for energy consumption prediction and anomaly detection [3,29].
+•
+Artificial Neural Networks (ANNs) and Deep Learning: ANNs and Deep Learn-
+ing models, such as Deep Neural Networks (DNNs) and Deep Reinforcement
+Learning, are applied for complex pattern recognition and predictive analytics in
+energy management.
+•
+Deep Neural Networks (DNNs): DNNs build on ANNs by incorporating multiple
+hidden layers and enabling the modeling of complex patterns and relationships in
+high-dimensional datasets. They are especially effective for advanced applications
+like image recognition, non-linear energy demand forecasting, and natural language
+processing [2,41,52,67].
+
+Energies 2025, 18, 290
+12 of 52
+For example, DNNs have been applied in smart building systems to forecast peak
+demand, optimize HVAC operations, and manage energy storage systems, utilizing features
+like temperature, occupancy rates, and historical consumption patterns.
+Detailed methodologies include feature engineering (e.g., selecting relevant data
+inputs like temperature and occupancy), model training on historical data using cross-
+validation techniques, and performance evaluation with metrics such as Mean Absolute
+Error (MAE) and R-squared (R²). These practices ensure that models are robust and
+generalizable to unseen scenarios.
+4.1.3. Internet of Things (IoT) and Wireless Sensor Networks
+The Internet of Things (IoT) refers to a network of interconnected devices and objects that
+communicate and exchange data over the Internet or other communication networks [37,39].
+In smart buildings, IoT technologies play a pivotal role in collecting real-time data on energy
+usage, environmental conditions, and occupant behaviors, enabling more efficient and
+responsive building management systems [1,7,8,14,16,20,21,27,36,37,39,41,45,47–49,51,62,70].
+IoT systems in smart buildings typically consist of various components:
+•
+Sensors and Actuators: These devices detect and measure environmental parameters such
+as temperature, humidity, light levels, and occupancy. Actuators execute physical actions
+based on control signals, such as adjusting thermostats or lighting [18,34,36,39,47,70].
+•
+Controllers and Gateways: microprocessors and microcontrollers (e.g., Arduino, Rasp-
+berry Pi) process data from sensors and manage communication between devices and
+networks [1,40,50].
+•
+Communication Modules: these technologies facilitate data transmission, such as
+Wi-Fi, Zigbee, Bluetooth, and MQTT protocols, ensuring seamless connectivity within
+the IoT ecosystem [15,19,21,46,71].
+Methodologies involve the integration of protocols like MQTT and Zigbee for secure
+and efficient data exchange between devices. Tools such as Arduino and Raspberry Pi are
+used to prototype IoT-based solutions, while cloud platforms like AWS IoT Core support
+data storage and advanced analytics. Wireless Sensor Networks (WSNs) are specialized
+networks that utilize wireless communication to connect multiple sensor nodes for data
+collection and monitoring [36,64,71]. In smart buildings, WSNs enable the deployment of
+distributed sensing capabilities without the need for extensive wiring, reducing installation
+costs and enhancing scalability.
+Applications of IoT and WSNs in smart buildings include the following:
+•
+Energy Monitoring and Management: the real-time tracking of energy consumption
+to identify inefficiencies and optimize usage [18,34,41].
+•
+Environmental Control: the automated adjustment of heating, ventilation, and air condi-
+tioning (HVAC) systems based on occupancy and environmental conditions [47,70].
+•
+Smart Lighting Systems: the dynamic control of lighting based on occupancy and
+natural light availability to reduce energy consumption [8,70].
+•
+By integrating IoT and WSN technologies, smart buildings can achieve enhanced
+operational efficiency, improved occupant comfort, and reduced energy consumption
+through data-driven decision-making and automation.
+4.1.4. Edge and Cloud Computing
+Edge and Cloud Computing complement each other in processing and storing build-
+ing data. Edge computing processes data locally near the source, reducing latency and
+bandwidth usage. This is particularly useful for time-sensitive applications, such as security
+and occupancy-based HVAC adjustments [2,36,61]. In smart buildings, edge computing
+
+Energies 2025, 18, 290
+13 of 52
+enables real-time data analysis and decision-making, which is critical for applications like
+security systems, energy management, and occupant comfort adjustments.
+For example, ref. [61] utilized edge computing with a Raspberry Pi as an edge IoT
+device to perform facial recognition locally, enhancing security while minimizing data trans-
+mission to external servers. Edge computing also contributes to energy savings by reducing
+the energy consumption associated with data transmission and remote processing [2].
+Cloud Computing provides scalable, cost-effective off-site data storage and process-
+ing services over the internet [2,16,52]. In smart buildings, Cloud Computing facilitates
+centralized data management, analytics, and access to advanced computational resources.
+An example is the integration of cloud services in Home Energy Management Systems
+(HEMS). Reference [16] demonstrated the use of Amazon Web Services (AWS IoT Core)
+to manage incoming data messages and deliver data-driven services and applications,
+enhancing the capabilities of HEMS without the need for extensive on-site infrastructure.
+Methodologies for integration often include secure APIs to transfer data from Edge nodes to
+the cloud and the leveraging of cloud-native tools for predictive analytics and visualization.
+By leveraging both Edge and Cloud Computing, smart buildings can optimize perfor-
+mance by processing critical data locally while utilizing cloud resources for more extensive
+data analytics, storage, and services.
+4.1.5. Blockchain Technologies
+Blockchain technology provides a decentralized, secure, and transparent method for
+recording transactions and data sharing across distributed networks. Applications include
+peer-to-peer energy trading and the secure storage of IoT sensor data [23,62,65]. In smart
+buildings, Blockchain can enhance security, trust, and efficiency in energy transactions and
+data management.
+Applications of Blockchain in smart buildings include the following:
+•
+Secure Energy Transactions: peer-to-peer energy trading is facilitated among building
+occupants or between buildings, allowing for the efficient distribution and use of
+renewable energy resources [62,65].
+•
+Data Integrity and Security: the authenticity and immutability of data collected from
+IoT devices and sensors are ensured, enhancing trust among stakeholders [23,62].
+For instance, ref. [62] proposed a Trusted Digital Building Logbook architecture us-
+ing Blockchain and Digital Twin technologies to safeguard privacy and ensure secure
+data transactions. By minimizing information disparities and fostering trustworthy re-
+lationships, Blockchain technology can contribute to more efficient and secure building
+management systems.
+The methodology involves creating smart contracts to automate transactions and
+validate data authenticity. For example, Ethereum-based frameworks are commonly used
+in Blockchain implementations for energy systems, ensuring the tamper-proof recording of
+energy usage or trading activity. Challenges such as computational overhead and scalability
+are addressed using lightweight consensus algorithms like Proof of Authority (PoA) or
+Delegated Proof of Stake (DPoS).
+4.1.6. Digital Twin Technologies
+Digital Twin (DT) technologies involve creating virtual replicas of physical systems
+that integrate real-time sensor data, simulations, and historical information [62,66]. In
+smart buildings, Digital Twins enable the real-time monitoring, predictive maintenance,
+and optimization of building performance.
+Applications of Digital Twins in smart buildings include the following:
+
+Energies 2025, 18, 290
+14 of 52
+•
+Real-Time Monitoring: this provides a comprehensive view of building systems’ status,
+allowing the immediate detection of issues and informed decision-making [62,66].
+Methodologies for real-time monitoring often leverage IoT sensors and data acquisition
+tools to feed accurate and continuous updates into Digital Twin platforms, ensuring
+up-to-date system representations.
+•
+Predictive Maintenance: data analytics are utilized to predict equipment failures
+or maintenance needs, reducing downtime and maintenance costs [66]. Machine
+Learning algorithms such as Long Short-Term Memory (LSTM) networks or ARIMA
+models are commonly used for forecasting failures, enabling proactive interventions.
+•
+Optimization of Building Performance: Different scenarios are simulated to improve
+energy efficiency, occupant comfort, and operational strategies [62]. Simulation tools,
+such as MATLAB Simulink or EnergyPlus, are often integrated with Digital Twins to
+test and refine system responses under varying conditions.
+For example, ref. [66] developed a Digital Twin prototype for HVAC systems, inte-
+grating sensor data and simulations to predict system behavior and optimize performance.
+Similarly, ref. [62] presented an architecture combining Blockchain and Digital Twin tech-
+nologies to enhance data security and building management. This integration ensures that
+the data that are driving decisions are both accurate and tamper-proof, addressing key
+concerns around trust and reliability in data-driven systems.
+4.1.7. Information Systems and Geographic Information Systems (GIS)
+Information Systems (IS) and Geographic Information Systems (GIS) are critical tools
+for storing, visualizing, analyzing, and interpreting data related to smart buildings and
+energy management.
+Geographic Information Systems (GIS) provide spatial analysis capabilities that are
+essential for the following:
+•
+Energy Distribution Management: energy distribution networks are managed by
+performing real-time monitoring, maintenance, and outage response [19]. Advanced
+GIS platforms integrate real-time sensor data with spatial models to enhance the
+accuracy of monitoring and facilitate automated responses during outages.
+•
+Energy Consumption Mapping: visual representations are created of energy consump-
+tion across buildings or regions, facilitating the identification of high-consumption
+areas and opportunities for efficiency improvements [32,67]. These visualizations often
+rely on heatmaps or choropleth maps generated through tools like ArcGIS, which
+allow for the easy identification of energy usage patterns.
+•
+Solar Energy Potential Analysis: the solar energy that rooftops can capture is estimated
+while considering shading effects from nearby structures [67]. Methodologies for this
+analysis frequently include 3D-GIS modeling and LiDAR-based data integration to
+enhance accuracy.
+For instance, ref. [32] used GIS to create maps representing buildings with color-
+coded blocks corresponding to their energy performance grades. Additionally, ref. [67]
+proposed a 3D-GIS approach to predict solar energy potential in urban areas. Such tools
+provide actionable insights for energy planners and policymakers, enabling the optimized
+deployment of solar infrastructure.
+Information Systems such as EnerGis, a GIS designed for modeling energy service
+requirements, provide platforms for integrating various data sources and supporting
+decision-making processes in energy management [29]. These systems often integrate IoT-
+generated data with historical and forecasted datasets, allowing for dynamic simulations
+of energy management scenarios. By incorporating multi-criteria decision-making tools, IS
+and GIS platforms can optimize resource allocation and project planning.
+
+Energies 2025, 18, 290
+15 of 52
+By leveraging IS and GIS technologies, smart buildings and urban planners can
+utilize data-driven decisions to enhance energy efficiency, plan infrastructure, and promote
+sustainable development. These technologies support long-term urban planning efforts
+by aligning sustainability goals with operational strategies, ensuring that energy systems
+meet future demands effectively.
+4.2. Energy Resources and Systems in Smart Buildings
+This subsection presents the energy resources, technologies, and management systems
+employed in smart buildings to enhance energy efficiency and sustainability.
+4.2.1. Renewable Energy Resources and Technologies
+Renewable energy resources and technologies are fundamental to the development of
+sustainable smart buildings. By integrating these resources, smart buildings can generate,
+store, and utilize energy more efficiently, reducing reliance on non-renewable energy
+sources and minimizing environmental impact.
+•
+Solar Photovoltaic (PV) Systems: Solar PV panels convert sunlight directly into
+electricity, providing a clean and renewable energy source for buildings. They are
+widely adopted in smart buildings to reduce grid dependency and lower energy
+costs [21,24,38,43,55,67].
+•
+Solar Thermal Systems with Storage: These systems capture solar energy for heating
+applications, such as water heating and space heating. Incorporating thermal storage
+allows excess heat to be stored for use during periods without sunlight, enhancing
+energy availability and efficiency [24].
+•
+Ground-Source Heat Pump (GSHP) Systems: GSHPs utilize the stable temperatures
+beneath the Earth’s surface to provide heating and cooling for buildings. By exchang-
+ing heat with the ground, these systems offer higher efficiency compared to traditional
+HVAC systems [24].
+•
+Energy Storage Systems (ESS) and Batteries: ESS, including batteries, store excess
+energy generated from renewable sources like solar PV. Stored energy can be used
+during peak demand times or when renewable generation is low, improving energy
+reliability and reducing costs [21,38].
+•
+Electric Vehicles (EVs) and Charging Infrastructure: Integrating EV charging stations
+into smart buildings supports the adoption of electric mobility. EVs can also act as
+mobile energy storage units, and vehicle-to-grid (V2G) technologies enable energy
+exchange between EVs and buildings [38,43].
+•
+Mechanical Ventilation with Heat Recovery (MVHR): MVHR systems improve energy
+efficiency by recovering heat from outgoing stale air and transferring it to incoming
+fresh air. This process reduces the energy required for heating or cooling incoming air,
+enhancing indoor air quality and comfort [24].
+4.2.2. Energy Management and Automation Systems
+Energy management and automation systems are critical components of data-driven
+smart buildings, enabling the efficient monitoring, control, and optimization of energy con-
+sumption. These systems leverage advanced technologies to enhance operational efficiency,
+reduce energy costs, and improve occupant comfort. Table 5 provides an overview of the
+various energy management and automation systems implemented in smart buildings.
+
+Energies 2025, 18, 290
+16 of 52
+Table 5. Overview of the energy management and automation systems in the data-driven smart buildings.
+Technology
+Sub-Types
+References
+Home Energy
+Management and
+Monitoring Systems
+Home Energy Management System
+[16,18,19,34,41,51,52]
+Intelligent Home Energy Management
+System (AIHEMS)
+[72]
+Smart home power management
+[47]
+Home energy monitoring system
+[20]
+IoT-based energy monitoring system
+[50]
+Standby-power management system
+[30]
+Building Energy
+Management and
+Monitoring Systems
+Energy management systems (EMSS)
+[43,49]
+Building Energy Management Systems
+[28,68]
+Building energy monitoring and
+management system
+[71]
+Building management systems (BMS)
+[7]
+Building automation system (BAS)
+[26]
+Smart and
+Automated Systems
+for Homes and
+Offices
+Home automation system
+[21,39]
+Smart home and building automation
+applications
+[46]
+Wireless home automation systems
+[54]
+Smart office system
+[61]
+Smart office lighting control system
+[70]
+Specialized Control
+and Data
+Management
+Systems
+Versatile sensor data acquisition and
+control system (VSDACS)
+[15]
+Building Information Modeling (BIM)-
+based intelligent illumination system
+[8]
+Energy-aware data gathering
+techniques (EDGE)
+[64]
+Home Energy Management and Monitoring Systems
+Home Energy Management Systems (HEMS) are designed to empower homeowners
+with real-time insights into their energy consumption patterns. By providing detailed infor-
+mation on energy usage, HEMS can enable users to make informed decisions to reduce costs
+and improve efficiency. For example, standard HEMS platforms [16,18,19,34,41,51,52] al-
+low users to monitor energy consumption through mobile apps or web interfaces, schedule
+appliance operations during off-peak hours, and receive alerts about unusual energy usage.
+Building on this foundation, Intelligent Home Energy Management Systems (AiHEMS)
+incorporate artificial intelligence to learn from user behaviors and environmental data such
+as temperature, humidity, and occupancy [72]. By dynamically adjusting settings based on
+this information, AiHEMS can optimize energy consumption without compromising com-
+fort. For instance, they might lower the amount of energy spent on heating or cooling when
+the occupants are away from home or adjust lighting based on natural light availability.
+Other specialized systems include Smart Home Power Management solutions [47],
+which automate the control of appliances and electrical systems, often integrating with
+smart grids to manage power consumption more efficiently. Home Energy Monitor-
+ing Systems [20] focus on providing detailed real-time data to help users identify high-
+consumption devices and implement energy-saving measures. IoT-based Energy Mon-
+itoring Systems [50] utilize connected sensors to collect granular data, enabling remote
+
+Energies 2025, 18, 290
+17 of 52
+monitoring and control via smartphones or other devices. Additionally, Standby-Power
+Management Systems [30] aim to reduce energy waste by automatically cutting power to
+devices in standby mode.
+Building Energy Management and Monitoring Systems
+In commercial and large-scale buildings, Building Energy Management Systems
+(BEMS) are crucial for overseeing energy consumption across various systems such as
+heating, ventilation, air conditioning (HVAC), lighting, and security. Energy Management
+Systems (EMS [43,49]) provide centralized control, employing strategies for energy con-
+servation and cost reduction. By integrating data from multiple sources, these systems
+allow facility managers to monitor performance, identify inefficiencies, and implement
+corrective actions.
+Building Energy Management Systems [28,68] take a holistic approach by integrating
+multiple building systems, enabling optimization across different energy domains. These
+systems can adjust HVAC operations based on occupancy patterns or optimize lighting
+levels according to daylight availability, thereby enhancing energy efficiency. Building
+Energy Monitoring and Management Systems [71] focus on detailed monitoring, providing
+tools to manage and optimize consumption effectively.
+Building Management Systems (BMS) [7] facilitate the management of building opera-
+tions, including energy usage, environmental conditions, and safety systems, enhancing
+both efficiency and occupant comfort. These systems often include features like real-time
+monitoring, automated control, and data analytics to support decision-making processes.
+Building Automation Systems (BAS) [26] automate the control of services like HVAC and
+lighting, adjusting settings based on real-time data from sensors and occupancy patterns,
+which can lead to significant energy savings and improved environmental conditions
+within the building.
+Energy management systems (EMS) play a critical role in optimizing energy use
+in smart buildings. These systems leverage advanced technologies like IoT, Machine
+Learning, and Cloud Computing to monitor and control energy consumption. However,
+the scalability of these systems remains a challenge, particularly in larger buildings or
+multi-site deployments. Current EMS solutions often struggle to accommodate the growing
+volume of data generated by expanding sensor networks, highlighting the need for scalable
+architectures and robust processing capabilities.
+Smart and Automated Systems for Homes and Offices
+Automation systems enhance intelligence and convenience in residential and office
+environments, contributing to energy efficiency and user comfort. Home Automation
+Systems [21,39] automate functions such as lighting, climate control, security, and appliance
+management, often allowing control via mobile devices or voice commands. For example,
+a homeowner can remotely adjust the thermostat or turn off the lights using a smartphone
+app, reducing unnecessary energy consumption.
+Smart Home and Building Automation Applications [46] integrate multiple devices
+and systems, providing seamless automation and enhanced user experience. These ap-
+plications can coordinate the operation of various smart devices, enabling scenarios like
+automatically adjusting blinds and lighting depending on when the sun sets. Wireless
+Home Automation Systems [54] utilize wireless communication protocols to connect de-
+vices, simplifying installation and expanding flexibility, which is particularly beneficial in
+retrofit situations where running new wiring is impractical.
+In office settings, smart office systems [61] automate operations, including environ-
+mental controls, lighting, and access systems, improving energy efficiency and employee
+
+Energies 2025, 18, 290
+18 of 52
+productivity. For instance, smart systems can adjust ventilation and temperature based
+on occupancy levels, enhancing comfort while conserving energy. Smart Office Lighting
+Control Systems [70] adjust lighting based on occupancy and daylight availability, reducing
+energy consumption while maintaining a comfortable work environment.
+Specialized Control and Data Management Systems
+Specialized systems offer advanced functionalities for data acquisition and control
+in smart buildings. The Versatile Sensor Data Acquisition and Control System (VSDACS)
+ref. [15] manages data from various utility sensors, such as electricity, water, gas, air flow,
+and solar energy. By providing real-time data processing, storage, and alert generation,
+VSDACS supports decision-making processes and enhances operational efficiency. Facility
+managers can, for example, receive immediate notifications of anomalies like water leaks
+or unusual energy spikes.
+Building Information Modeling (BIM)-based Intelligent Illumination Systems [8] uti-
+lize BIM to optimize lighting controls based on building design and occupancy patterns.
+By integrating design data with real-time occupancy information, these systems can ad-
+just the lighting in different zones of a building, ensuring adequate illumination where
+needed while saving energy in unoccupied areas. Energy-aware data gathering techniques
+(EDGE) [64] focus on optimizing data collection in Wireless Sensor Networks, conserving
+energy in sensor nodes while ensuring accurate and reliable data transmission. This is
+particularly important for battery-powered sensors where energy efficiency extends the
+operational life of devices.
+The integration of these energy management and automation systems in data-driven
+smart buildings significantly enhances energy efficiency, reduces operational costs, and
+promotes sustainability. These systems enable the proactive management of energy con-
+sumption and contribute to the overall performance and environmental impact of smart
+buildings by leveraging advanced technologies and data analytics. The synergy between
+energy management systems and data-driven technologies forms the backbone of modern
+smart buildings, paving the way for more sustainable and intelligent built environments.
+4.2.3. Energy Modeling and Fault Detection
+Accurate energy modeling and effective fault detection are essential for optimizing
+energy usage and maintaining the reliable operation of building systems.
+Building Energy Modeling and Simulation
+Building energy modeling involves creating digital representations of buildings to
+simulate and analyze energy consumption. This process helps in designing energy-efficient
+buildings and retrofitting existing structures. A comprehensive building energy simulation
+program is used to model heating, cooling, lighting, ventilation, and other energy flows
+within a building [14].
+In our discussion, we focus on simulation methods relevant to walls, roofs, and
+indoor air (room temperature). Tools such as EnergyPlus (U.S. Department of Energy.
+https://energyplus.net, accessed 8 December 2024) and TRNSYS (Solar Energy Laboratory,
+University of Wisconsin-Madison. https://sel.me.wisc.edu/trnsys, accessed 8 Decem-
+ber 2024) are widely employed, but each handles these components with the following
+distinct solvers:
+•
+EnergyPlus
+#
+Conduction Transfer Function (CTF) Method for Opaque Walls and Roofs: by
+default, EnergyPlus uses a CTF-based approach for most conventional building
+
+Energies 2025, 18, 290
+19 of 52
+envelopes (walls and roofs). This method balances computational speed with
+acceptable accuracy for standard construction materials.
+#
+Finite Difference Method (FDM) for Advanced Materials: for walls or roofs incor-
+porating complex materials (e.g., Phase Change Materials), EnergyPlus employs
+an FDM approach, allowing a more detailed layer-by-layer temperature profile.
+#
+Moisture Transfer and Room Air: some EnergyPlus modules incorporate addi-
+tional solvers for moisture transfer within walls. Meanwhile, room air (zone)
+temperature is solved with iterative heat balance methods that couple radiative
+and convective processes in the zone air.
+•
+TRNSYS
+#
+Differential-Algebraic Equation (DAE)-Based Approach with Modular Com-
+ponents: TRNSYS is known for its DAE-solving capabilities and its flexible,
+modular setup. However, for building simulations, TRNSYS employs specific
+approaches for each component, including the walls and zone air.
+#
+Component-Level Solvers for Walls: each wall, roof, or other envelope compo-
+nent (often referred to as a “Type” in TRNSYS) has its own solver strategy to
+handle heat conduction and sometimes mass transfer.
+#
+Room/Zone Air: the zone temperature is updated using a separate solver that
+couples convective, radiative, and (if necessary) latent (moisture) heat flows at
+the zone boundary.
+#
+Renewable or Specialized Systems: while TRNSYS can simultaneously solve
+renewable energy systems (e.g., solar thermal) in the same simulation environ-
+ment, this flexibility lies outside the scope of the wall, roof, and room-air solvers
+discussed here.
+Table 6 below summarizes the methodologies and features of EnergyPlus and TRNSYS.
+Table 6. Methodologies and features of EnergyPlus and TRNSYS.
+Tool
+Key Features
+Methodologies
+Applications
+EnergyPlus
+Whole-building energy
+modeling for HVAC, lighting,
+and energy flows
+Finite Difference Method (FDM)
+for thermal analysis; iterative
+solvers for energy balance;
+weather data integration
+Evaluating energy performance
+of design choices, optimizing
+HVAC and lighting systems
+TRNSYS
+Modular simulation
+environment for transient
+systems, including renewable
+energy components
+Component-based architecture;
+Ordinary Differential Equation
+(ODE) solvers for transient
+simulations
+Renewable energy simulation
+(solar PV, thermal); the analysis
+of dynamic system behavior,
+thermal storage systems
+Challenges in building energy modeling include accounting for diverse building
+types, climates, and occupancy behaviors and accurately predicting system interactions.
+For example, variations in weather patterns or unexpected changes in occupant behavior
+can introduce uncertainties into model outputs. To address these challenges, advanced
+tools like DesignBuilder (based on EnergyPlus) and IDA ICE incorporate Monte Carlo
+simulations to quantify uncertainties and provide probabilistic forecasts [73]. It is essential
+to understand how each solver handles heat transfer through walls, roofs, and indoor
+air to ensure modeling accuracy, as different solvers may be more suitable for specific
+configurations or material types. Continuous validation and calibration with real-world
+data enhance the reliability of simulation results, ensuring that models remain applicable
+to practical scenarios [74,75].
+
+Energies 2025, 18, 290
+20 of 52
+In addition to EnergyPlus and TRNSYS, other tools provide specialized functional-
+ities but generally follow a similar philosophy: focusing on envelope heat conduction
+(walls, roofs, windows) and zone-level temperature simulation. This ensures that the
+core building envelope and indoor thermal environment are accurately represented before
+extending to additional features (e.g., advanced HVAC, humidity transfer, and specialized
+renewable systems):
+•
+DesignBuilder: this provides a user-friendly interface for EnergyPlus, supporting
+parametric analyses to optimize energy performance.
+•
+OpenStudio: this integrates with EnergyPlus and enables advanced customizations of
+simulation parameters for specialized projects.
+•
+IDA ICE: this focuses on indoor climate and energy analysis, using modular simula-
+tions and advanced equation solvers for precise calculations.
+•
+IES VE: this combines 3D modeling with dynamic simulations, supporting detailed
+environmental and energy assessments.
+These tools employ various algorithms, including finite element analysis (FEA) for
+thermal modeling, ODE solvers for transient processes, and Monte Carlo simulations
+for uncertainty analysis [73,74]. By leveraging these diverse approaches, engineers and
+architects can select tools that best align with their project requirements, from simple energy
+efficiency assessments to complex renewable energy integrations.
+Fault Detection and Diagnosis (FDD)
+Fault detection and diagnosis (FDD) systems are essential components in smart build-
+ings, serving to promptly identify anomalies or faults within building systems. By enabling
+timely interventions, FDD systems help prevent energy waste, avoid equipment failure, and
+ensure the optimal performance of building operations. These systems continuously moni-
+tor various building services, such as HVAC, lighting, and electrical systems, facilitating
+proactive maintenance and reducing downtime [2,68].
+A critical aspect of modern FDD systems is the incorporation of Artificial Intelli-
+gence (AI)-based anomaly detection techniques. Machine Learning algorithms analyze
+energy consumption patterns and operational data to detect deviations that may indicate
+faults or inefficiencies [2]. These algorithms can operate under the following different
+learning paradigms:
+•
+Supervised Learning involves training models on labeled datasets where known fault
+patterns are identified. The model learns to recognize these patterns and can detect
+similar faults in new, unlabeled data.
+•
+Unsupervised Learning does not require labeled data. Instead, the algorithm identifies
+normal operational patterns and flags any deviations from these patterns as potential
+anomalies, making it effective for detecting new or unexpected faults.
+•
+Semi-Supervised Learning combines elements of both supervised and Unsupervised
+Learning. It utilizes a small amount of labeled data along with a larger set of unlabeled
+data to improve detection accuracy, especially when labeled data are scarce.
+Fault detection approaches are broadly classified into two categories: data-driven
+methods and knowledge-driven methods. Data-driven methods rely on statistical anal-
+ysis and Machine Learning to identify patterns and anomalies directly from operational
+data without the need for explicit models of system behavior [26]. These methods are
+particularly useful when dealing with complex systems where modeling every component
+is impractical.
+On the other hand, knowledge-driven methods utilize expert knowledge, predefined
+rules, and models of expected system behavior to detect deviations indicative of faults [76].
+These methods are effective when the comprehensive understanding and modeling of
+
+Energies 2025, 18, 290
+21 of 52
+the system are feasible, allowing for the precise identification of anomalies based on
+established criteria.
+Implementing robust energy modeling and FDD systems brings several benefits to
+smart buildings:
+•
+Energy Efficiency: By identifying and correcting inefficiencies, FDD systems reduce
+unnecessary energy consumption and lower operational costs. Detecting faults early
+prevents the wastage of energy that occurs when systems operate sub-optimally.
+•
+System Reliability: The early detection of faults prevents minor issues from escalating
+into major equipment failures. This proactive approach extends the lifespan of building
+systems and minimizes disruptions to building operations.
+•
+Occupant Comfort: Maintaining optimal system performance ensures that indoor
+environmental conditions remain within the desired comfort levels. Effective FDD
+contributes to consistent temperature control, air quality, and lighting, enhancing
+occupant satisfaction.
+5. Influential Factors for the Adoption and Business Models of
+Data-Driven Technologies
+5.1. Factors Influencing the Adoption of Data-Driven Technologies
+The successful deployment of data-driven technologies in smart buildings largely
+depends on user acceptance and willingness to adopt these innovations. Failure to un-
+derstand users’ needs, preferences, and expectations is a significant reason why many
+projects do not succeed [77]. Among the most critical barriers is the high initial cost of
+implementation, particularly for retrofitting existing buildings with legacy systems. These
+costs can deter stakeholders from investing in necessary infrastructure upgrades, especially
+when the return on investment is not immediately evident. The literature identifies several
+key factors influencing the adoption of data-driven technologies in smart buildings, which
+can be categorized into social factors, individual perceptions, cost considerations, security
+and privacy concerns, and data quality and relevance. Table 7 summarizes these influential
+factors and their corresponding references.
+Table 7. Literature on influential factors for the adoption of data-driven technologies in smart buildings.
+Influential Factors
+Sub-Types
+References
+Social factors
+Trust
+[78–80]
+Attractiveness of alternatives
+[80]
+Social influence
+[81]
+Behavioral intention
+[80]
+Hedonic motivation
+[80]
+Soft skills
+[33]
+Well-being
+[79]
+Individual perceptions
+Perceived innovation
+[78]
+Perceived usefulness
+[78,82]
+Life-quality expectations
+[83]
+Relative advantage
+[78]
+Risk perception
+[80]
+Perceived value
+[84]
+Perceived ease of use (PEOU)
+[78]
+Compatibility
+[82,85]
+Perceived simplicity
+[82]
+Effort expectancy
+[80]
+Human detachment concern
+[83]
+Perceived connectedness
+[85]
+
+Energies 2025, 18, 290
+22 of 52
+Table 7. Cont.
+Influential Factors
+Sub-Types
+References
+Cost
+Cost
+[83,85]
+Security and Privacy
+Security
+[79]
+Security risks
+[86]
+Privacy risks
+[84]
+Privacy concerns
+[83]
+Safety
+[86]
+Data Quality and Relevance
+Inaccurate or irrelevant data
+[87]
+Inaccurate outcomes
+[87]
+5.1.1. Social Factors
+Social factors significantly influence individuals’ decisions to adopt new technologies,
+particularly in group or societal contexts. These factors encompass trust, social influence,
+behavioral intention, hedonic motivation, soft skills, and well-being.
+Trust plays a crucial role in technological adoption. Users are more likely to embrace
+data-driven technologies when they trust the technology itself and the entities providing
+it [78–80]. Trust can be established through transparent communication, reliable perfor-
+mance, and robust security measures.
+Social influence refers to the impact of others’ opinions and behaviors on an indi-
+vidual’s decision to adopt technology [81]. If peers, family members, or influential fig-
+ures endorse or use a particular technology, individuals may feel more inclined to adopt
+it themselves.
+Behavioral intention is the degree to which an individual plans to use technology,
+influenced by attitudes and subjective norms [80]. Positive behavioral intentions, shaped
+by favorable attitudes and perceived social pressure, often lead to higher adoption rates.
+Hedonic motivation involves the enjoyment or pleasure derived from using technol-
+ogy [80]. When users find technology engaging or entertaining, they are more likely to
+adopt it due to the intrinsic satisfaction it provides.
+Soft skills, such as interpersonal and intrapersonal abilities, can impact technology
+adoption. A lack of soft skills among users may hinder the adoption of data-driven
+technologies [51]. For instance, inadequate communication skills or resistance to change
+can impede the effective implementation of new systems.
+Well-being considerations influence adoption when technologies are perceived to
+enhance users’ quality of life [79]. Technologies that contribute to health, comfort, or
+convenience are more likely to be embraced by users seeking to improve their well-being.
+5.1.2. Individual Perceptions
+Individual perceptions about technology’s attributes significantly affect decisions for
+its adoption. Factors such as perceived usefulness, ease of use, innovation, compatibility,
+perceived value, and risk perception are critical.
+Perceived usefulness and ease of use are foundational elements in technology accep-
+tance models [78,82]. Users are more inclined to adopt technologies that they believe will
+enhance their performance or efficiency and that are easy to learn and operate. For example,
+if a smart home system simplifies household management without requiring extensive
+effort when using it, adoption likelihood increases.
+Perceived innovation reflects the degree to which technology is seen as new or
+novel [78]. Users may be attracted to innovative technologies that offer advanced fea-
+tures or capabilities beyond existing solutions.
+
+Energies 2025, 18, 290
+23 of 52
+Compatibility refers to how well a type of technology aligns with users’ existing
+values, needs, and past experiences [82,85]. Technologies that fit seamlessly into users’
+lifestyles or work practices are more readily adopted. For instance, an energy management
+system that integrates with existing appliances and devices may be more appealing.
+Perceived value involves the overall assessment of technology’s benefits relative to
+its costs [84]. Users weigh the advantages, such as energy savings or convenience, against
+the financial expenses and effort required. A high perceived value enhances the likelihood
+of adoption.
+Risk perception encompasses concerns about potential negative outcomes, such as
+security breaches, privacy violations, or technical failures [80]. High levels of perceived
+risk can deter users from adopting new technologies. Addressing these concerns through
+risk mitigation strategies is essential.
+Effort expectancy is the perceived ease associated with using the technology [80].
+Technologies requiring minimal effort and complexity are more attractive to users who
+may be reluctant to invest significant time and energy into learning new systems.
+Human detachment concerns relate to worries about reduced human interaction or
+over-reliance on technology [83]. Users may fear that automation could lead to isolation or
+diminished personal connections, affecting their willingness to adopt such technologies.
+5.1.3. Cost Considerations
+Cost is a significant factor influencing the adoption of data-driven technologies. High
+initial investment costs, ongoing maintenance expenses, and the perceived affordability
+of technology can either facilitate or hinder adoption [83,85]. The cost of implementing
+Internet of Things (IoT)-enabled HVAC systems can vary significantly depending on
+factors such as the size of the building, the complexity of the system, and regional pricing.
+Estimates suggest that such systems may require substantial upfront investments, especially
+for large-scale commercial buildings [88]. Retrofitting older buildings further increases
+costs due to compatibility issues and the required infrastructure updates.
+Studies indicate that the cost of implementing Internet of Things (IoT) technologies in
+smart homes can be a barrier [85]. Users may hesitate to invest in expensive systems without
+clear evidence of long-term benefits or return on investment. Conversely, advancements in
+technology, increased market competition, and economies of scale can reduce costs over
+time, making data-driven technologies more accessible. However, these expenses must
+be weighed against long-term savings in energy costs, which can range from 20% to 40%
+annually [89], enabling a return on investment within 5 to 10 years, depending on the scale
+of implementation and available subsidies [90].
+The trade-offs between cost and comfort are particularly critical. For instance, adaptive
+HVAC systems dynamically balance energy efficiency with thermal comfort, which is
+assessed using metrics such as the Predicted Mean Vote (PMV) and Predicted Percentage
+Dissatisfied (PPD). Systems must also meet indoor air quality (IAQ) standards, which
+mandate minimum ventilation rates (e.g., 8.5 L per second per occupant in offices per
+the ASHRAE Standard 62.1) [91]. Perceived economic benefits, such as energy savings
+and operational efficiencies, can offset cost concerns. When users recognize that the
+long-term savings outweigh the initial expenses, they may be more willing to adopt the
+technology [83].
+Additionally, regulatory compliance adds complexity to cost considerations. Many
+regions enforce stringent energy codes, such as the EU Energy Performance of Build-
+ings Directive or the U.S. ASHRAE 90.1 standard [92], which mandate minimum energy
+performance levels while ensuring occupant health and comfort. HVAC systems are de-
+
+Energies 2025, 18, 290
+24 of 52
+signed to optimize energy efficiency while adhering to these mandatory constraints, further
+emphasizing the cost–compliance–comfort trade-off.
+5.1.4. Security and Privacy Concerns
+Security and privacy are paramount in the adoption of data-driven technologies. Users
+must feel confident that their personal information is protected and that technology does
+not expose them to undue risks.
+Security risks involve fears of cyber threats, hacking, and unauthorized access to
+systems [86]. Users may worry about the vulnerability of smart building systems to
+cyber-attacks, which could compromise safety or lead to data breaches.
+Privacy risks pertain to concerns about how personal data are collected, stored, and
+used [83,84]. Users are cautious about technologies that may infringe on their privacy by
+sharing sensitive information without consent.
+Safety concerns relate to the potential physical risks associated with technology
+use [86]. For example, malfunctioning automated systems could pose hazards within
+a smart building environment.
+Addressing these concerns requires implementing robust security measures, transpar-
+ent data policies, and compliance with regulations. Enhancing user education about how
+data are protected can build trust and facilitate adoption [79].
+5.1.5. Data Quality and Relevance
+The effectiveness and reliability of data-driven technologies depend on the quality
+and security of the data they utilize. However, increased connectivity and reliance on
+IoT devices expose smart buildings to cybersecurity threats. Unauthorized access or data
+breaches not only compromise sensitive information but also impact trust among users.
+Poor data management practices exacerbate these risks, potentially leading to inaccurate
+insights and reduced satisfaction with the technology [87].
+Inaccurate or irrelevant data can result from faulty sensors, data entry errors, or
+inadequate data processing methods. When users receive incorrect information or insights,
+they may lose confidence in the technology’s usefulness.
+Inaccurate outcomes stemming from poor data can hinder decision-making processes
+and operational efficiency [87]. For instance, in Building Energy Management, inaccurate
+data analytics may lead to suboptimal energy usage recommendations, negating the benefits
+of technology.
+Enhancing data quality involves ensuring accurate data collection, employing reliable
+data processing techniques, and providing transparent analytics. By improving data
+integrity, stakeholders can enhance the perceived usefulness of data-driven technologies,
+encouraging adoption.
+5.2. Business Models Supporting the Adoption of Data-Driven Technologies
+The successful adoption of data-driven technologies in smart buildings is not solely
+dependent on technological advancements but is also significantly influenced by the de-
+velopment of sustainable and effective business models. These business models provide
+frameworks that align technological innovations with market needs, ensuring that the value
+propositions meet the expectations of stakeholders such as building owners, operators,
+occupants, and technology providers. This section examines business models identified in
+the literature that support the adoption of data-driven technologies in smart buildings, fo-
+cusing on their key components and how they facilitate implementation. Table 8 presents an
+overview of business models for data-driven smart buildings and energy, summarizing the
+main elements based on the Business Model Canvas framework for each study reviewed.
+
+Energies 2025, 18, 290
+25 of 52
+Table 8. Business models for data-driven smart buildings and energy.
+Business Model
+Canvas Segment
+Ref. [33]
+Ref. [93]
+Ref. [94]
+Customer Segments
+Government buildings
+Building operators and real
+estate companies
+Property managers,
+residents, and service
+providers
+Value Propositions
+Cost savings and efficiency
+improvements
+Energy efficiency and
+operational performance
+optimization
+Building management
+efficiency, cost reductions,
+enhanced user experience,
+and potential energy savings
+Key Partners
+Government bodies,
+educational institutions, and
+potential AI technology
+providers
+Real estate and facility
+management operators,
+large international
+companies, and research
+institutions
+Technology providers,
+construction companies, IoT
+companies, and real
+estate agencies
+Key Activities
+Researching AI applications in
+energy management,
+understanding barriers, and
+testing hypotheses related to
+AI deployment in government
+buildings
+AI applications
+development and
+integration into existing
+building management
+systems
+Continuous development
+and maintenance and the
+integration of various IoT
+devices and services
+Key Resources
+Intellectual resources (research
+data, AI technologies, and
+expert opinions) and survey
+data from government
+building occupants
+AI technologies, platform
+infrastructure, research
+data, and expertise
+IoT platforms and connected
+devices, expertise in IoT and
+building management, and
+data analytics capabilities
+Cost Structure
+Training and implementing
+AI systems
+N/A
+N/A
+Customer
+Relationships
+N/A
+Co-development
+partnership
+N/A
+Channels
+N/A
+Digital platforms and
+conferences
+Direct installations, online
+platforms for management,
+and possible mobile
+applications
+Revenue Stream
+N/A
+N/A
+N/A
+The literature reveals that while technological innovations in data-driven smart build-
+ings are well-documented, there is limited focus on the corresponding business models
+necessary for their adoption. The studies reviewed highlight the importance of align-
+ing business models with technological advancements to facilitate their implementation
+and adoption.
+5.2.1. Case Studies of Business Models
+The following case studies illustrate different business models supporting the adoption
+of data-driven technologies in smart buildings, demonstrating how they address various
+components of the Business Model Canvas.
+•
+AI in Energy Conservation for Government Buildings
+Ref. [33] investigates the barriers to implementing Artificial Intelligence (AI) for energy
+conservation in government buildings in Sri Lanka. The primary customers are the entities
+
+Energies 2025, 18, 290
+26 of 52
+managing government buildings and the public, who benefit from reduced operational
+costs and enhanced energy efficiency.
+The value proposition emphasizes significant cost savings and efficiency improve-
+ments through AI-driven automation and decision-making systems. By integrating AI,
+government buildings can optimize energy usage, leading to substantial financial savings
+and reduced environmental impact.
+Key partners include government bodies that are responsible for building manage-
+ment, educational institutions like the University of Moratuwa conducting research, and
+AI technology providers offering the necessary tools and expertise. Collaboration among
+these stakeholders is crucial for addressing the barriers to AI adoption.
+Key activities involve researching AI applications in energy management, understand-
+ing the specific challenges faced by government buildings, and testing hypotheses related
+to AI deployment. This study highlights the importance of identifying and mitigating
+factors that hinder adoption, such as a lack of skills, technology acceptance issues, and
+financial constraints.
+Key resources consist of intellectual assets like research data, AI technologies, and
+expert opinions, as well as survey data collected from building occupants. These resources
+are essential for developing tailored AI solutions that meet the unique needs of govern-
+ment buildings.
+The cost structure includes expenses related to training personnel and implementing
+AI systems. Addressing the cost barrier is critical, as financial limitations are a significant
+hindrance to adoption.
+•
+AI-Enabled Platform Business Models in Smart Buildings
+Ref. [93] presents an analysis of AI-enabled platform business models within the
+context of smart buildings. The primary customers are building operators and real estate
+companies seeking to leverage AI for improved management and energy efficiency.
+The value proposition centers on providing enhanced building management solutions
+through AI, leading to better energy efficiency and optimized operational performance.
+The platform-based business model allows for scalability and fosters an ecosystem where
+various stakeholders can collaborate.
+Key partners include real estate and facility management operators, large international
+companies, and research institutions participating in a Finnish national innovation project.
+These partnerships facilitate the pooling of resources and expertise, promoting innovation
+and adoption.
+Key activities involve developing AI applications tailored for smart buildings, integrat-
+ing these solutions into existing building management systems, and fostering collaboration
+within the ecosystem. The focus is on creating scalable and sustainable business models
+that can adapt to evolving technological landscapes. Developing sustainable business
+models is crucial for the adoption of data-driven technologies in smart buildings. Effective
+models align technological innovations with market needs, ensuring that stakeholders
+recognize the value propositions. A significant limitation in this area is a lack of alignment
+among stakeholders, including building owners, technology providers, and end-users.
+Divergent priorities often lead to fragmented efforts, reducing the overall effectiveness of
+these business models. Collaborative frameworks are needed to bridge these gaps and
+ensure cohesive implementation strategies.
+Key resources encompass AI technologies, platform infrastructure that supports inte-
+gration and scalability, research data generated from collaborative projects, and expertise
+from participating institutions.
+Customer relationships are managed through continuous engagement and co-
+development partnerships. By involving customers and partners in the development
+
+Energies 2025, 18, 290
+27 of 52
+process, the business model ensures that the solutions meet market needs and foster
+long-term relationships.
+Channels for delivering value include digital platforms that enable interaction and
+collaboration among ecosystem actors. Academic publications and conferences serve as
+channels for disseminating findings, attracting further participation, and promoting the
+business model.
+•
+IoT-Driven Business Models for Smart Building Management Systems
+Ref. [94] provides an overview of an Internet of Things (IoT)-driven business model
+for smart building management systems. The primary customers are property managers,
+residents, and service providers directly involved with building management.
+The value proposition includes increased efficiency in building management, cost
+reductions, enhanced user experience for residents, and potential energy savings. The
+IoT solutions aim to create smarter, more responsive buildings that meet the needs of
+all stakeholders.
+Key partners involve a broad spectrum of the IoT ecosystem, including technology
+providers, construction companies, IoT companies, real estate agencies, and financial
+institutions. These partnerships are essential for integrating diverse technologies and
+services into comprehensive solutions.
+Key activities focus on the continuous development and maintenance of IoT solutions,
+integrating various devices and services, and fostering innovation to remain competitive.
+The business model emphasizes the importance of staying ahead in a rapidly evolving
+market by adopting the latest technologies and practices.
+Key resources include technological infrastructure such as IoT platforms and connected
+devices, human resources with expertise in IoT and building management, and data
+analytics capabilities that enable the interpretation and utilization of vast amounts of data
+generated by IoT devices.
+Channels for delivering the smart building management system comprise direct in-
+stallations in buildings, online platforms for remote management, and mobile applications
+that provide users with convenient access and control.
+5.2.2. Analysis of Business Model Components
+The case studies reveal several commonalities and differences in how business models
+support the adoption of data-driven technologies in smart buildings.
+Value Propositions: All models emphasize efficiency improvements, cost savings,
+and enhanced user experiences. These value propositions directly address some of the
+influential factors affecting adoption, such as perceived usefulness and value, as discussed
+in Section 4.1.
+Customer Segments: Business models cater to different customer segments, including
+government entities, building operators, real estate companies, property managers, resi-
+dents, and service providers. Understanding the specific needs of these segments is crucial
+for tailoring solutions that meet their expectations.
+Key Partners and Activities: Collaboration with key partners is a recurring theme.
+Engaging with various stakeholders allows for pooling resources, expertise, and technolo-
+gies, which is essential for developing sophisticated solutions like AI and IoT systems. Key
+activities revolve around research and development, the integration of technologies, and
+continuous innovation.
+Key Resources: These include intellectual resources, technological infrastructure,
+and human expertise are vital components. Access to advanced technologies and skilled
+personnel enables the development of effective solutions that can drive adoption.
+
+Energies 2025, 18, 290
+28 of 52
+Cost Structure and Revenue Streams: While the studies highlight the importance
+of cost considerations, detailed information on cost structures and revenue streams is
+often lacking. However, addressing cost barriers through efficient resource utilization and
+demonstrating a clear return on investment is essential for adoption.
+Channels and Customer Relationships: Effective channels for delivering value and
+maintaining customer relationships are integral to business models. Digital platforms,
+direct installations, and mobile applications enhance accessibility and user engagement.
+5.2.3. Implications for Adoption
+The case studies in the literature show that developing robust business models is
+instrumental in facilitating the adoption of data-driven technologies in smart buildings.
+By aligning value propositions with the needs of stakeholders and addressing influential
+factors such as cost, perceived usefulness, and trust, these models can overcome adoption
+barriers. For example, demonstrating tangible benefits like cost savings and efficiency
+improvements can mitigate concerns related to high initial investments. Collaborating with
+reputable partners enhances trust and credibility, which is crucial for technologies that
+involve significant changes to building operations. Moreover, focusing on user experience
+and continuous innovation ensures that technologies remain relevant and user-friendly,
+addressing individual perceptions related to ease of use and perceived value. By providing
+clear value propositions and engaging stakeholders throughout the development process,
+business models can create supportive environments for adoption.
+6. Discussion
+The integration of data-driven technologies and energy optimization strategies in
+smart buildings represents a significant advancement in the pursuit of sustainable and
+efficient built environments. This discussion synthesizes the key findings from the review,
+explores the implications these have for the industry, identifies challenges and limitations,
+and suggests directions for future research.
+6.1. Key Findings
+The review highlights a multifaceted ecosystem where data-driven technologies inter-
+sect with energy systems to enhance building performance and sustainability. Fundamental
+technologies such as big data analytics, Artificial Intelligence (AI), Machine Learning (ML),
+the Internet of Things (IoT), Wireless Sensor Networks (WSNs), Edge and Cloud Com-
+puting, Blockchain, Digital Twins, and Geographic Information Systems (GIS) form the
+backbone of smart building infrastructures.
+Big data analytics enables the processing of vast datasets to uncover patterns that in-
+form decision-making, leading to optimized operations and energy efficiency [28,30,57,58].
+AI and ML contribute to automating tasks, predicting energy consumption patterns,
+and enhancing occupant comfort through intelligent automation [2,3,14,25,27,29,33,35,
+38,41,42,49,51,59–61] IoT, and WSNs facilitate real-time data collection and commu-
+nication among devices, which are essential for responsive energy management sys-
+tems [1,7,8,14,16,20,21,27,36,37,39,41,45,47–49,51,62,70].
+Edge and Cloud Computing provide complementary solutions for data processing,
+with Edge computing enabling real-time analysis at the source and Cloud Computing
+offering scalable storage and advanced analytics [2,16,36,52,61]. Blockchain technologies
+enhance security and trust in energy transactions and data sharing, which is crucial for
+decentralized energy systems [23,62,65]. Digital Twin Technologies create virtual replicas
+of physical systems for real-time monitoring and optimization, leading to predictive main-
+
+Energies 2025, 18, 290
+29 of 52
+tenance and performance enhancement [62,66]. GIS offers spatial analysis capabilities for
+energy distribution management and planning [19,29,32,67].
+The incorporation of renewable energy resources and technologies such as solar
+photovoltaic systems, solar thermal systems, ground-source heat pumps, energy stor-
+age systems, and electric vehicle integration underscores the commitment to sustainabil-
+ity [21,24,38,43,44,55,67]. Energy management and automation systems, including Home
+Energy Management Systems (HEMS), Building Energy Management Systems (BEMS),
+and specialized control systems, enable the efficient monitoring, control, and optimization
+of energy consumption [7,15,16,18–21,26,28,34,39–41,43,46,47,49–52,61,68,70–72].
+Energy modeling and fault detection are critical for optimizing energy usage and
+maintaining system reliability. Building energy modeling assists in designing energy-
+efficient structures, while fault detection and diagnosis (FDD) systems leverage AI and ML
+to identify anomalies, prevent energy waste, and ensure optimal operation [2,14,26,68].
+The adoption of these technologies is influenced by various factors. Social factors
+such as trust, social influence, and behavioral intention play significant roles in technology
+acceptance [33,78–81]. Individual perceptions regarding usefulness, ease of use, inno-
+vation, and risk impact adoption decisions [78,80,82–85]. Cost considerations, security
+and privacy concerns, and data quality and relevance are also critical factors affecting
+adoption [79,83–87].
+Developing effective business models is essential for aligning technological inno-
+vations with market needs. The reviewed studies include business models focusing on
+value propositions like cost savings, efficiency improvements, and enhanced user expe-
+riences, catering to different customer segments, and leveraging key partnerships and
+activities [33,93,94].
+6.2. Implications for the Smart Building Industry
+The convergence of data-driven technologies with energy optimization strategies has
+profound implications for the smart building industry:
+•
+Enhanced Energy Efficiency and Sustainability: Integrating advanced technologies en-
+ables buildings to consume energy more efficiently, reduce greenhouse gas emissions,
+and contribute to sustainability goals. Renewable energy integration and intelligent
+management systems support the transition to low-carbon buildings.
+•
+Improved Operational Performance: Real-time monitoring, predictive analytics, and
+automated control systems enhance operational efficiency. Facility managers can make
+informed decisions, anticipate maintenance needs, and respond proactively to issues,
+reducing downtime and operational costs.
+•
+Occupant Comfort and Well-being: Personalized and adaptive environments enhance
+occupant satisfaction. Technologies that adjust to user preferences and environmental
+conditions improve comfort and productivity, making buildings desirable spaces.
+•
+Market Competitiveness: Buildings equipped with advanced technologies may have a
+competitive edge in the real estate market. Energy-efficient and intelligent buildings can
+attract tenants and buyers who prioritize sustainability and technological sophistication.
+•
+Data-Driven Decision-Making: The abundance of data generated facilitates evidence-
+based decisions in building design, operation, and policymaking. Stakeholders can
+leverage insights to optimize resource allocation and strategic planning.
+6.3. Challenges and Limitations
+Despite these promising advancements, several challenges hinder the widespread
+adoption of data-driven technologies in smart buildings:
+
+Energies 2025, 18, 290
+30 of 52
+1.
+Cost Barriers: High initial investment costs for technology implementation and up-
+grades can deter stakeholders. Return on investment may not be immediately appar-
+ent, especially when retrofitting existing buildings.
+2.
+Technical Complexity and Integration: Integrating diverse technologies requires
+technical expertise and may face interoperability issues. Legacy systems might not be
+compatible with new technologies, necessitating significant modifications.
+3.
+Security and Privacy Risks: Increased connectivity and data exchange expose build-
+ings to cybersecurity threats. Ensuring robust security measures and addressing
+privacy concerns are paramount to maintaining trust among users.
+4.
+Data Quality and Management: Reliable operation depends on accurate and high-
+quality data. Challenges include sensor accuracy, data processing capabilities, and
+managing large volumes of data effectively.
+5.
+User Acceptance and Behavior: Social factors and individual perceptions influence
+adoption. Resistance to change, a lack of awareness, or negative attitudes toward
+technology can impede implementation.
+6.
+Regulatory and Standardization Issues: The absence of standardized protocols and
+regulations can create uncertainties. Compliance with varying regional regulations
+adds complexity to implementation.
+6.4. Future Research Directions
+To address the identified challenges and further advance the field, future research
+should focus on the following topics:
+•
+Cost Reduction Strategies: Studies should investigate ways to lower the costs of
+technology adoption, such as scalable solutions, modular designs, and leveraging
+economies of scale. Research into financing models and incentives can also facili-
+tate adoption.
+•
+Interoperability and Standardization: Studies should develop standardized proto-
+cols and frameworks that enable the seamless integration of diverse technologies.
+Collaboration among industry stakeholders can promote interoperability.
+•
+Enhanced Security Measures: Studies should advance cybersecurity solutions tailored
+for smart buildings, including encryption methods, intrusion detection systems, and
+secure communication protocols. Research into privacy-preserving data analytics can
+mitigate privacy concerns.
+•
+Data Management and Analytics: Studies should improve data processing algorithms
+and storage solutions to handle big data efficiently. This includes emphasizing the
+development of AI and ML models that can operate with limited or imperfect data.
+•
+User-Centric Design: Studies should incorporate user preferences and behaviors
+into technology design and conduct studies on user engagement strategies, training
+programs, and interfaces that enhance usability and acceptance.
+•
+Policy and Regulatory Frameworks: Researchers should engage with policymakers
+to establish regulations that support technological innovation while protecting user
+interests. Research into the impact of regulations on the adoption of technology can
+inform policy development.
+•
+Longitudinal Studies on Impact: Long-term studies should be conducted to assess the
+actual impact of data-driven technologies on energy consumption, operational costs,
+and occupant satisfaction. Empirical evidence can validate the benefits and guide
+future implementation.
+Furthermore, aligning business models with technological advancements is crucial
+for the successful adoption of data-driven technologies. Future efforts should consider
+the following:
+
+Energies 2025, 18, 290
+31 of 52
+•
+Value Proposition Refinement: Studies should clearly articulate the benefits of tech-
+nologies to different stakeholders. Value propositions can also be tailored to address
+specific needs and concerns, such as cost savings for building owners or enhanced
+comfort for occupants.
+•
+Collaborative Ecosystems: Partnerships among technology providers should be fos-
+tered among building managers, researchers, and policymakers. Collaborative ecosys-
+tems can facilitate resource sharing, innovation, and market penetration.
+•
+Flexible and Scalable Models: Business models should be developed that can adapt to
+changing technological landscapes and market conditions. Flexibility in offerings and
+scalability of solutions can cater to a broader range of customers.
+•
+Emphasis on User Experience: User experience should be prioritized in service delivery.
+Providing seamless interfaces, responsive customer support, and continuous updates
+can enhance customer relationships and loyalty.
+•
+Transparent Cost Structures and ROI: Clear information should be offered on costs and
+expected returns. Demonstrating tangible benefits and payback periods can alleviate
+financial concerns and justify investments.
+7. Conclusions
+This review provides a comprehensive examination of the integration of data-driven
+technologies and energy optimization strategies in smart buildings. By analyzing the
+current state of research, this paper identifies the fundamental technologies employed, the
+energy resources and systems utilized, and the factors influencing the adoption of these
+innovations. The findings highlight the pivotal role that data-driven technologies such as
+big data analytics, Artificial Intelligence, Machine Learning, the Internet of Things, and
+others play in enhancing building performance, energy efficiency, and sustainability.
+The incorporation of renewable energy resources and advanced energy management
+systems demonstrates a significant shift toward more sustainable and efficient energy use
+within smart buildings. The utilization of technologies like solar photovoltaic systems,
+energy storage solutions, and intelligent energy management systems not only reduces
+reliance on non-renewable energy sources but also promotes operational efficiency and
+occupant comfort.
+The analysis of the influential factors affecting the adoption of data-driven technologies
+reveals that social factors, individual perceptions, cost considerations, security and privacy
+concerns, and data quality are critical determinants. Understanding these factors is essential
+for stakeholders who aim to implement these technologies successfully. Furthermore,
+the examination of business models underscores the necessity of aligning technological
+advancements with market needs through sustainable and effective frameworks that
+support their adoption.
+Despite the comprehensive approach employed, this review has certain limitations.
+Firstly, the search was limited to four databases and publications in English, which may
+have excluded relevant studies in other languages or from other sources, potentially
+introducing language and publication bias. Secondly, the dynamic nature of the field
+means that new developments may have emerged after the literature search was conducted,
+possibly affecting the currency of the findings. Thirdly, the diversity of methodologies
+and contexts among the included studies poses challenges in synthesizing the results
+uniformly. Some studies lacked detailed methodological information, which may affect the
+interpretation of their findings.
+The implications of the findings are significant for the smart building industry. The
+integration of data-driven technologies in smart buildings offers significant opportunities
+for energy optimization and sustainability. However, the realization of these benefits is
+
+Energies 2025, 18, 290
+32 of 52
+hindered by several key challenges, including high initial costs, technical complexities asso-
+ciated with system integration, cybersecurity risks, and misalignment among stakeholders.
+Addressing these limitations through cost-effective solutions, enhanced interoperability,
+and collaborative business models is essential for the widespread adoption of smart build-
+ing technologies.
+Future research should focus on developing cost-effective solutions, enhancing interop-
+erability and standardization, improving cybersecurity measures, and fostering user-centric
+designs. Additionally, exploring innovative business models that facilitate adoption and
+align with stakeholder needs will be crucial in advancing the field. Furthermore, the
+limitations acknowledged in this study highlight the need for ongoing research and the
+continuous updating of knowledge in this rapidly evolving field.
+Author Contributions: Conceptualization, J.D.B. and B.N.J.; methodology, J.D.B. and Z.G.M.; soft-
+ware, Z.G.M.; validation, J.D.B., Z.G.M. and B.N.J.; formal analysis, J.D.B. and Z.G.M.; investigation,
+J.D.B.; resources, B.N.J.; data curation, J.D.B. and Z.G.M.; writing—original draft preparation, J.D.B.
+and Z.G.M.; writing—review and editing, B.N.J.; visualization, Z.G.M.; supervision, B.N.J.; project
+administration, J.D.B.; funding acquisition, B.N.J. All authors have read and agreed to the published
+version of the manuscript.
+Funding: The work presented in this paper is part of the IEA EBC Annex 81 Data-Driven Smart
+Buildings project, funded by EUDP (case number: 64019-0539), and part of the Project “Data-Driven
+Smart Buildings: data sandbox and competition” (Journal number: 64021-6025) funded by EUDP
+(Energy Technology Development and Demonstration Program).
+Acknowledgments: The authors would like to thank the members of the IEA EBC Annex 81 team for
+their invaluable input and discussions throughout the project.
+Conflicts of Interest: The authors declare no conflicts of interest.
+Appendix A
+Table A1. Thirty-three review articles on smart building and energy.
+Article Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Smart Building Skins for Urban
+Heat Island Mitigation: A Review
+[95]
+Energy efficiency
+Building in general
+N/A
+Smart Home Energy Management
+Systems: A Systematic Review of
+Architecture, Communication, and
+Algorithmic Trends
+[96]
+Energy Management
+system; Energy
+consumption; Energy
+efficiency
+Residential building
+Internet of Things;
+Machine Learning;
+AI
+Examining Energy Efficiency
+Practices in Office Buildings
+through the Lens of LEED,
+BREEAM, and DGNB
+Certifications
+[97]
+Energy efficiency
+Commercial building
+(Office buildings)
+N/A
+An overview of reinforcement
+learning-based approaches for
+smart home energy management
+systems with energy storages
+[98]
+Energy Management
+system; Energy
+consumption; Energy
+efficiency
+Residential building
+Machine Learning
+(Reinforcement
+Learning); AI
+
+Energies 2025, 18, 290
+33 of 52
+Table A1. Cont.
+Article Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Application of Deep Learning and
+Intelligent Sensing Analysis in
+Smart Home
+[99]
+Energy efficiency
+(implied)
+Residential building
+Artificial Intelligence;
+Machine Learning;
+Sensor network
+Systematic review on capacity
+building through renewable
+energy enabled IoT-unmanned
+aerial vehicle for smart
+agroforestry
+[76]
+Renewable energy
+Not directly related
+to buildings
+Internet of Things
+Smart home energy management
+systems in India: a socio-economic
+commitment towards a
+green future
+[77]
+Energy Management
+system; Energy
+efficiency
+Residential building
+N/A
+Optimizing building energy
+consumption in office buildings: A
+review of building automation
+and control systems and factors
+influencing energy savings
+[100]
+Energy consumption;
+Energy efficiency;
+Energy Management
+system
+Commercial building
+(Office buildings)
+N/A
+General Overview and Proof of
+Concept of a Smart Home Energy
+Management System Architecture
+[101]
+Energy Management
+system; Energy
+consumption
+Residential building
+Internet of Things
+A review of data-driven smart
+building-integrated photovoltaic
+systems: Challenges and
+objectives
+[102]
+Renewable energy;
+Energy efficiency
+Building in general
+Big data; Artificial
+Intelligence; Digital
+Twin and simulation
+A review on adaptive thermal
+comfort of office building for
+energy-saving building design
+[103]
+Energy efficiency;
+Energy consumption
+Commercial building
+(Office buildings)
+N/A
+A review of non-residential
+building renovation and
+improvement of energy efficiency:
+Office buildings in Finland,
+Sweden, Norway, Denmark,
+and Germany
+[104]
+Energy efficiency
+Commercial building
+(Office buildings)
+N/A
+Energy Efficiency Improvement
+and Strategies in Malaysian Office
+Buildings (Tropical Climate):
+A Review
+[63]
+Energy efficiency
+Commercial building
+(Office buildings)
+N/A
+A survey of smart home energy
+conservation techniques
+[105]
+Energy consumption;
+Energy efficiency;
+Energy Management
+system
+Residential building
+Internet of Things;
+Artificial Intelligence
+Building Occupants, Their
+Behavior and the Resulting Impact
+on Energy Use in Campus
+Buildings: A Literature Review
+with Focus on Smart
+Building Systems
+[106]
+Energy consumption;
+Energy efficiency
+Building in general;
+Commercial
+buildings
+N/A
+
+Energies 2025, 18, 290
+34 of 52
+Table A1. Cont.
+Article Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Artificial Intelligence Based Smart
+Home Energy Management
+System: A Review
+[107]
+Energy Management
+system; Energy
+efficiency
+Residential building
+Artificial Intelligence
+Performance and energy
+optimization of building
+automation and management
+systems: Towards smart
+sustainable carbon-neutral
+sports facilities
+[108]
+Energy efficiency;
+Energy Management
+system
+Commercial building
+(Sports facilities)
+N/A
+Smart home tracking: A smart
+home architecture for smart
+energy consumption in a residence
+with multiple users
+[109]
+Energy consumption;
+Energy Management
+system
+Residential building
+Internet of Things;
+Information system
+Closed-loop home energy
+management system with
+renewable energy sources in a
+smart grid: A comprehensive
+review
+[110]
+Energy Management
+system; Renewable
+energy; Smart grid
+integration
+Residential building
+N/A
+A review of deep reinforcement
+learning for smart building
+energy management
+[111]
+Energy Management
+system; Energy
+efficiency
+Building in general
+Machine Learning
+(Deep Reinforcement
+Learning); Artificial
+Intelligence
+Smart home energy management:
+state of the art
+[112]
+Energy Management
+system; Energy
+efficiency
+Residential building
+Internet of Things;
+Artificial Intelligence
+Geothermal energy R&D: an
+overview of the US Department of
+Energy’s geothermal technologies
+office
+[113]
+Renewable energy
+Not specifically
+building-related
+N/A
+Smart Home Energy Management
+Systems in Internet of Things
+networks for green cities demands
+and services
+[114]
+Energy Management
+system; Energy
+efficiency
+Residential building
+Internet of Things
+Systematic mapping study on
+energy optimization solutions in
+smart building structure:
+Opportunities and challenges
+[115]
+Energy efficiency;
+Energy consumption
+Building in general
+Internet of Things;
+Artificial Intelligence
+Coordination of smart home
+energy management systems in
+neighborhood areas: A systematic
+review
+[116]
+Energy Management
+system; Energy
+efficiency
+Residential building
+Internet of Things;
+Information system
+A review on intelligent process for
+smart home applications based on
+IoT: coherent taxonomy,
+motivation, open challenges, and
+recommendations
+[117]
+Energy efficiency
+(implied)
+Residential building
+Internet of Things;
+Artificial Intelligence
+
+Energies 2025, 18, 290
+35 of 52
+Table A1. Cont.
+Article Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Home energy management system
+concepts, configurations, and
+technologies for the smart grid
+[118]
+Energy Management
+system; Smart grid
+integration
+Residential building
+Internet of Things
+Analysing Smart-Home Energy
+Management under the Aspects of
+Organic Computing
+[119]
+Energy Management
+system; Energy
+efficiency
+Residential building
+Artificial Intelligence
+An overview of the building
+energy management system
+considering the demand response
+programs, smart strategies and
+smart grid
+[120]
+Energy Management
+system; Energy
+efficiency; Smart grid
+integration
+Building in general
+N/A
+Review on design strategies of
+energy saving office building with
+evaporative cooling in
+tropical region
+[121]
+Energy efficiency
+Commercial building
+(Office buildings)
+N/A
+Atria, Roof-space Solar Collectors
+and Windows for Low-energy
+New and Renovated Office
+Buildings: a Review
+[122]
+Energy efficiency;
+Renewable energy
+Commercial building
+(Office buildings)
+N/A
+Of impacts, agents, and functions:
+An interdisciplinary meta-review
+of smart home energy
+management systems research
+[123]
+Energy Management
+system; Energy
+efficiency
+Residential building
+N/A
+Smart Home Energy
+Management-the Future of Energy
+Conservation: A Review
+[124]
+Energy Management
+system; Energy
+efficiency
+Residential building
+Internet of Things
+Appendix B
+Appendix B.1. Search Strategy
+The search strategy was tailored for each of the selected databases (Scopus, Web of
+Science, IEEE Xplore, and ACM Digital Library) using the following principles:
+•
+Keyword Selection: keywords reflected the review’s focus areas, such as “smart
+buildings”, “energy optimization”, “Big Data”, “Artificial Intelligence”, and “adop-
+tion barriers.”
+•
+Boolean Operators: logical operators (e.g., AND, OR) were used to create structured
+and efficient search strings.
+•
+Filters: language- (English) and document-type (journal articles and conference papers)
+filters were applied to ensure relevance and manageability.
+•
+Database Syntax Adaptation: search strings were adapted to meet the requirements
+and functionalities of each database.
+Domain experts reviewed the search strategy for coverage and scope. Pilot searches
+were conducted to assess the string’s effectiveness and ensure relevant results. Adjustments
+were made based on the test results to improve precision and recall.
+The following primary search string was used:
+(“smart” OR “intelligent” OR “connected” OR “automated” OR “energy” OR “load”
+OR “electricity” OR “district heating”) AND (“building” OR “home” OR “office”) AND
+(“Big Data” OR “data analytics” OR “data mining” OR “predictive analytics” OR “Ar-
+
+Energies 2025, 18, 290
+36 of 52
+tificial Intelligence” OR “AI” OR “machine learning” OR “deep learning” OR “natural
+language processing” OR “Internet of Things” OR “IoT” OR “connected devices” OR
+“sensor networks” OR “digital twin” OR “virtual models” OR “cyber-physical systems”
+OR “blockchain” OR “cloud computing” OR “edge computing”) AND (“adoption” OR
+“implementation” OR “utilization” OR “barrier” OR “challenge” OR “obstacle” OR “in-
+centive” OR “motivation” OR “potential” OR “opportunit*” OR “business” OR “value”
+OR “innovation”).
+Each database’s specific syntax and search functionalities were considered, and search
+filters were applied to include only publications in English and relevant document types
+(articles and conference papers).
+Appendix B.2. Study Selection
+The study selection process followed a structured, multi-step approach to ensure
+transparency, rigor, and alignment with the scoping following review’s objectives:
+(1)
+Identification
+The automated search conducted using AutoResearch (see Search Strategy) yielded a
+total of 410 records from four databases: Scopus, Web of Science, IEEE Xplore, and ACM
+Digital Library. References were exported into reference management software (EndNote),
+where duplicates were identified and removed, resulting in 323 unique records.
+(2)
+Screening
+Titles and abstracts of the remaining records were screened independently by two
+reviewers using the predefined inclusion and exclusion criteria, as shown in Table A2.
+During this phase, 129 records were excluded, leaving 194 studies for full-text assessment.
+(3)
+Eligibility Assessment
+The full texts of 129 studies were retrieved and assessed for eligibility. Twenty-one
+records were excluded due to missing full texts or a lack of relevance to the research scope.
+In total, 61 additional records were excluded after full-text review because they did not
+meet the inclusion criteria (e.g., they focused on unrelated topics or included insufficient
+discussion of data-driven technologies). Among the included articles, 33 were identified
+as review articles, which are distinct in focus and type compared to other research papers.
+These review articles were analyzed separately due to their different objectives and method-
+ologies, providing synthesized insights into overarching themes and research gaps rather
+than case-specific findings. In contrast, primary research papers were examined for specific
+results, methodologies, and contextual details.
+(4)
+Final Inclusion:
+A total of 112 studies were included in the final synthesis. These studies were cate-
+gorized thematically based on energy optimization strategies, building types, and data-
+driven technologies.
+(5)
+Reviewer Consensus:
+The process was conducted collaboratively by two independent reviewers. Discrep-
+ancies between reviewers during the title, abstract, and full-text screening stages were
+resolved through discussion. If agreement could not be reached, a third reviewer was
+consulted to make the final decision.
+
+Energies 2025, 18, 290
+37 of 52
+Table A2. Inclusion criteria and exclusion criteria.
+Inclusion Criteria
+Exclusion Criteria
+-
+Studies focusing on data-driven technologies in
+smart buildings.
+-
+Research discussing energy optimization strategies
+or adoption factors.
+-
+Peer-reviewed journal articles and conference
+papers published in English.
+-
+Studies unrelated to smart buildings or data-driven
+technologies.
+-
+Non-peer-reviewed literature (e.g., editorials,
+opinion pieces, abstracts without full texts).
+-
+Duplicates or inaccessible records.
+The selection process was documented comprehensively, and a PRISMA flow diagram
+(Figure 2) was used to visually illustrate the number of records at each stage of the selection
+process, including the reasons for exclusion.
+Appendix B.3. Data Charting, Management, and Items
+Data extraction and management were conducted meticulously to ensure a compre-
+hensive and accurate synthesis of the literature. All the reviewed articles, including their
+abstracts and full texts, were downloaded and imported into the reference management
+software EndNote. EndNote facilitated the organization, annotation, and retrieval of ar-
+ticles throughout the review process, enabling the efficient handling of a large volume
+of studies.
+A standardized data extraction form was developed to systematically collect the
+relevant information from each included study (as shown in Table A3). The data extraction
+focused on the following key elements:
+•
+Study focus: the main topics and objectives of the study were identified, such as
+specific data-driven technologies implemented in smart buildings, energy optimization
+strategies, or aspects of business models and adoption factors.
+•
+Methodology: the research design and methods used were documented during the
+study, including data collection techniques (e.g., experiments, simulations, case studies,
+surveys), analytical approaches, and any models or frameworks applied.
+•
+Key findings: the principal results, conclusions, and recommendations were extracted
+relating to data-driven technologies, energy optimization, business models, and influ-
+ential factors affecting their adoption in smart buildings.
+Table A3. Overview of the data charting process and management.
+Stage
+Details
+Development of the
+Data Charting Form
+-
+A standardized data charting form was created to capture the following key elements:
+•
+Study Focus: objectives and scope (e.g., specific data-driven technologies, energy
+optimization strategies, or adoption factors).
+•
+Methodology: research design and methods (e.g., case studies, experiments,
+simulations, surveys) and analytical approaches.
+•
+Key Findings: principal results, conclusions, and recommendations related to
+energy optimization, business models, or influential adoption factors.
+•
+Contextual Details: study context (e.g., region, building type, or technology type)
+and publication year.
+-
+The form was piloted on a subset of included studies, and adjustments were made to
+ensure clarity and comprehensiveness.
+
+Energies 2025, 18, 290
+38 of 52
+Table A3. Cont.
+Stage
+Details
+Reviewer Preparation
+-
+Two reviewers were prepared to use the data charting form consistently across studies.
+-
+This preparation focused on achieving alignment in data interpretation and minimizing
+discrepancies.
+Charting Process
+-
+Each study was charted independently by two reviewers using the standardized form.
+-
+Extracted data were compared between reviewers to identify and resolve discrepancies
+through discussion.
+-
+If disagreements persisted, a third reviewer was consulted to make the final decision.
+Iterative Refinement
+-
+The data charting form and process were iteratively refined based on feedback during
+the initial stages to address ambiguities or gaps in data extraction.
+-
+Additional categories were added as needed to capture emerging themes or
+information relevant to the review objectives.
+Data Management
+-
+All charted data were organized and stored in a central database using reference
+management software (e.g., EndNote) and spreadsheet software for analysis.
+-
+Meta-data, including notes on methodological rigor or study limitations, were recorded
+to provide context during synthesis.
+Quality Assurance
+-
+A final round of the review was conducted to ensure the completeness and accuracy of
+the extracted data across all included studies.
+This scoping review identified and extracted key data items from the included studies
+to address research objectives and provide a comprehensive overview of the field. The data
+items shown in Table A4 were systematically charted.
+Table A4. Overview of data items extracted from included studies.
+Category
+Sub-Category
+Details
+Study Characteristics
+Publication Details
+Author(s), year of publication, and journal or
+conference title.
+Type of Study
+Classification of studies as review articles or
+primary research papers.
+Geographical Context
+The region or country where the study was
+conducted or focused.
+Focus of the Study
+Targeted Building Types
+Categorization of buildings (e.g., residential,
+commercial, industrial).
+Data-Driven Technologies
+Types of technologies: the types of technologies
+discussed (e.g., big data analytics, Artificial
+Intelligence, Internet of Things, Digital Twins).
+Integration approaches: integration approaches and
+specific use cases in smart building systems.
+
+Energies 2025, 18, 290
+39 of 52
+Table A4. Cont.
+Category
+Sub-Category
+Details
+Focus of the Study
+Adoption Factors
+Influencing factors: social, technical, and economic
+factors influencing the adoption of data-driven
+technologies.
+Barriers: the identification of barriers (e.g., high
+costs, security concerns, technical complexities).
+Key Findings
+Principal Results
+Principal results and conclusions, including the
+observed benefits and limitations of data-driven
+technologies in energy optimization.
+Research Gaps
+Highlighted research gaps and future directions.
+Methodological Details
+Research Design
+Research design and methods (e.g., case studies,
+experiments, or surveys).
+Analytical Frameworks
+Analytical frameworks and the models employed.
+Appendix C
+Table A5. Overview of reviewed studies for data-driven technologies in buildings and energy systems.
+Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Effective power utilization and
+conservation in smart homes
+using IoT
+[1]
+Energy consumption;
+Energy cost or
+saving; Energy
+efficiency
+Residential building
+Internet of Things
+Anomaly Detection of Energy
+Consumption in Cloud
+Computing and Buildings Using
+Artificial Intelligence as a Tool of
+Sustainability: A Systematic
+Review of Current Trends,
+Applications, and Challenges
+[2]
+Energy consumption;
+Fault detection and
+diagnosis; Energy
+efficiency
+Building in general
+Artificial Intelligence;
+Cloud Computing;
+Machine Learning
+Accuracy of different machine
+learning algorithms and
+added-value of predicting
+aggregated-level energy
+performance of commercial
+buildings
+[3]
+Building energy
+modeling; Energy
+consumption; Energy
+efficiency
+Commercial building
+Machine Learning
+Energy-efficiency-oriented
+occupancy space optimization in
+buildings: A data-driven approach
+based on multi-sensor fusion
+considering
+behavior–environment integration
+[4]
+Energy efficiency
+Building in general
+Sensor network;
+Big data
+An End-to-End Implementation of
+a Service-Oriented Architecture
+for Data-Driven Smart Buildings
+[5]
+Energy Management
+system (implied)
+Building in general
+Information system;
+Big data; Cloud
+Computing
+
+Energies 2025, 18, 290
+40 of 52
+Table A5. Cont.
+Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Facilitating Energy-Efficient
+Operation of Smart Building using
+Data-driven Approaches
+[6]
+Energy efficiency;
+Energy Management
+system
+Building in general
+Big data; Machine
+Learning
+Collaborative data analytics for
+smart buildings: opportunities
+and models
+[7]
+Energy Management
+system (implied)
+Building in general
+Big data; Cloud
+Computing;
+Information system
+Analysis of the opportunities and
+costs of energy saving in lighting
+system of library buildings with
+the aid of building information
+modelling and Internet of things
+[8]
+Energy cost or
+saving; Energy
+efficiency
+Building in general;
+Commercial building
+Digital twin and
+simulation; Internet
+of Things
+Application of Digital Twin
+Technology in Intelligent Building
+Energy Efficiency Management
+System
+[9]
+Energy efficiency;
+Energy Management
+system
+Building in general
+Digital twin and
+simulation
+The Contribution of Data-Driven
+Technologies in Achieving the
+Sustainable Development Goals
+[10]
+Energy efficiency
+(implied)
+Building in general
+(implied)
+Big data
+Simulation and big data
+challenges in tuning building
+energy models
+[14]
+Building energy
+modeling
+Building in general
+Big data; Digital twin
+and simulation
+IoT—An intelligent design and
+implementation of agent based
+versatile sensor data acquisition
+and control system for industries
+and buildings
+[15]
+Energy Management
+system (implied)
+Industrial building;
+Building in general
+Internet of Things;
+Sensor network
+Design and Implementation of a
+Cloud-IoT-Based Home Energy
+Management System
+[16]
+Energy Management
+system
+Residential building
+Internet of Things;
+Cloud Computing
+A comparative analysis of patterns
+of electricity use and flexibility
+potential of domestic and
+non-domestic building archetypes
+through data mining techniques
+[17]
+Energy consumption;
+Energy efficiency
+Residential building;
+Commercial building
+Big data; Machine
+Learning
+IoT-Based Home Energy
+Management System to Minimize
+Energy Consumption Cost in Peak
+Demand Hours
+[18]
+Energy consumption;
+Energy cost or
+saving; Energy
+Management system
+Residential building
+Internet of Things
+Design and Implementation of an
+Internet-of-Things-Enabled Smart
+Meter and Smart Plug for
+Home-Energy-Management
+System
+[19]
+Energy Management
+system; Energy
+consumption
+Residential building
+Internet of Things;
+Sensor network
+Design and Implementation of an
+IoT-Based Home Energy
+Monitoring System
+[20]
+Energy consumption;
+Energy Management
+system
+Residential building
+Internet of Things
+
+Energies 2025, 18, 290
+41 of 52
+Table A5. Cont.
+Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Design and Prototype
+Implementation of a Renewable
+Energy-Powered Home with
+Home Automation System Using
+Internet of Things (IoT)
+[21]
+Renewable energy;
+Energy Management
+system
+Residential building
+Internet of Things
+Implementation of Realtime
+Database for IoT Home
+Automation and Energy
+Monitoring Apps based
+on Android
+[22]
+Energy consumption;
+Energy Management
+system
+Residential building
+Internet of Things;
+Cloud Computing;
+Information system
+Communication challenges and
+blockchain in building energy
+efficiency retrofits: Croatia case
+[23]
+Energy efficiency
+Building in general
+Blockchain
+Data-driven building energy
+modelling—An analysis of the
+potential for generalisation
+through interpretable
+machine learning
+[24]
+Building energy
+modeling
+Building in general
+Machine Learning;
+Big data
+Creating a Dataset Used for
+Applying Machine Learning
+Techniques to Accurately Forecast
+the Energy Cost in Home-Based
+Small Businesses
+[25]
+Energy cost or
+saving; Energy
+consumption
+Residential building
+Machine Learning;
+Big data
+Deploying data driven
+applications in smart buildings:
+Overcoming the initial onboarding
+barrier using machine learning
+[26]
+Energy Management
+system (implied)
+Building in general
+Machine Learning;
+Big data
+Issues concerning IoT adoption for
+energy and comfort management
+in intelligent buildings in India
+[27]
+Energy Management
+system; Energy
+efficiency
+Building in general
+Internet of Things
+Big Data Architecture for Building
+Energy Management Systems
+[28]
+Energy Management
+system
+Building in general
+Big data; Information
+system
+Artificial intelligence
+implementation framework
+development for building
+energy saving
+[29]
+Energy cost or
+saving; Energy
+efficiency
+Building in general
+Artificial Intelligence
+Design and implementation of an
+office standby-power management
+system through physical and
+virtual management by
+user-device habitual pattern
+analysis in energy-Internet of
+Things environments
+[30]
+Energy Management
+system; Energy
+consumption; Energy
+efficiency
+Commercial building
+Internet of Things;
+Sensor network;
+Machine Learning
+Self-updating machine learning
+system for building load
+forecasting-method,
+implementation and case-study on
+COVID-19 impact
+[31]
+Energy consumption;
+Energy Management
+system (implied)
+Building in general
+Machine Learning
+
+Energies 2025, 18, 290
+42 of 52
+Table A5. Cont.
+Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Identifying buildings with rising
+electricity consumption and those
+with high energy-saving potential
+for government’s management by
+data mining approaches
+[32]
+Energy consumption;
+Energy cost or
+saving; Energy
+efficiency
+Building in general
+Big data; Machine
+Learning
+Barriers to use of artificial
+intelligence on energy
+conservation in government
+buildings: Awareness as a
+moderating function of
+technology acceptance
+[33]
+Energy cost or
+saving; Energy
+efficiency
+Building in general
+Artificial Intelligence
+Design and implementation of an
+AI-based & IoT-enabled Home
+Energy Management System: A
+case study in Benguerir—Morocco
+[34]
+Energy Management
+system; Energy
+consumption; Energy
+efficiency
+Residential building
+Artificial Intelligence;
+Internet of Things
+Application of Computer Artificial
+Intelligence Control Technology in
+the Comprehensive Utilization of
+Green Building Energy
+[35]
+Energy efficiency;
+Renewable energy;
+Energy Management
+system
+Building in general
+Artificial Intelligence
+Integration of IoT in building
+energy infrastructure: A critical
+review on challenges
+and solutions
+[36]
+Building energy
+modeling; Energy
+consumption; Energy
+efficiency; Energy
+Management system
+Building in general
+Internet of Things
+Implementation of M2M-IoT
+Smart Building System Using
+Blynk App
+[37]
+Energy Management
+system (implied)
+Building in general
+Internet of Things;
+Information system
+Energy Community Management
+Based on Artificial Intelligence for
+the Implementation of Renewable
+Energy Systems in Smart Homes
+[38]
+Renewable energy;
+Energy Management
+system
+Residential building
+Artificial Intelligence
+Design and Implementation
+RESTful API for IoT Based Smart
+Home Systems
+[39]
+Energy Management
+system (implied)
+Residential building
+Internet of Things;
+Information system
+Design and Implementation of an
+IoT-based Smart Home with the
+Ability to Communicate with the
+Smart Grid
+[40]
+Smart grid
+integration; Energy
+Management system
+Residential building
+Internet of Things
+Design and Implementation of a
+Smart Home Energy Management
+System Using IoT and Machine
+Learning
+[41]
+Energy Management
+system; Energy
+efficiency
+Residential building
+Internet of Things;
+Machine Learning
+Enhancing Smart Home Design
+with AI Models: A Case Study of
+Living Spaces Implementation
+Review
+[42]
+Energy efficiency
+Residential building
+Artificial Intelligence
+
+Energies 2025, 18, 290
+43 of 52
+Table A5. Cont.
+Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Energy Management of Smart
+Homes with Electric Vehicles
+Using Deep Reinforcement
+Learning
+[43]
+Energy Management
+system; Energy
+consumption; Energy
+cost or saving
+Residential building
+Machine Learning
+Real time implementation of
+Demand Side Management
+scheme for IoT enabled PV
+integrated smart residential
+building
+[44]
+Energy Management
+system; Renewable
+energy; Smart grid
+integration
+Residential building
+Internet of Things
+The challenge for energy saving in
+smart homes: Exploring the
+interest for IoT devices acquisition
+in Romania
+[45]
+Energy cost or
+saving; Energy
+efficiency
+Residential building
+Internet of Things
+A Multi-Protocol IoT Gateway and
+WiFi/BLE Sensor Nodes for Smart
+Home and Building Automation:
+Design and Implementation
+[46]
+Energy Management
+system (implied)
+Residential building;
+Building in general
+Internet of Things;
+Sensor network
+The Implementation of Smart
+Home Power Management:
+Integration of Internet of Things
+and Cloud Computing
+[47]
+Energy Management
+system; Energy
+consumption
+Residential building
+Internet of Things;
+Cloud Computing
+Design, development and
+implementation of an iot-based
+intelligent ambient controller for
+lvdc enabled green buildings
+[48]
+Energy efficiency;
+Energy Management
+system
+Building in general
+Internet of Things
+Design and implementation of
+cloud analytics-assisted smart
+power meters considering
+advanced artificial intelligence as
+edge analytics in demand-side
+management for smart homes
+[49]
+Energy consumption;
+Energy Management
+system; Energy
+efficiency
+Residential building
+Artificial Intelligence;
+Cloud Computing;
+Edge computing;
+Internet of Things
+Design and implementation of an
+iot-based energy monitoring
+system for managing smart homes
+[50]
+Energy consumption;
+Energy Management
+system
+Residential building
+Internet of Things;
+Edge computing
+Design and implementation of an
+IoT-oriented energy management
+system based on non-intrusive
+and self-organizing neuro-fuzzy
+classification as an electrical
+energy audit in smart homes
+[51]
+Energy Management
+system; Energy
+consumption; Energy
+efficiency
+Residential building
+Internet of Things;
+Artificial Intelligence;
+Machine Learning
+Design and Implementation of a
+Power Consumption Management
+System for Smart Home Over Fog
+cloud Computing
+[52]
+Energy consumption;
+Energy Management
+system
+Residential building
+Cloud Computing;
+Edge computing;
+Internet of Things
+Implementation of Smart Optimal
+and Automatic Control of
+Electrical Home Appliances (IoT)
+[53]
+Energy consumption;
+Energy Management
+system; Smart grid
+integration
+Residential building
+Internet of Things
+
+Energies 2025, 18, 290
+44 of 52
+Table A5. Cont.
+Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+An IoT Ecosystem for the
+Implementation of Scalable
+Wireless Home Automation
+Systems at Smart City Level
+[54]
+Energy Management
+system (implied);
+Energy efficiency
+(implied)
+Residential building;
+Building in general
+Internet of Things;
+Sensor network;
+Information system
+Design and implementation of a
+cloud-based IoT platform for data
+acquisition and device supply
+management in smart buildings
+[55]
+Energy consumption;
+Energy Management
+system
+Building in general
+Internet of Things;
+Cloud Computing;
+Information system
+Big Data in Building Energy
+Efficiency: Understanding of Big
+Data and Main Challenges
+[57]
+Energy efficiency
+Building in general
+Big data
+Unlocking the potential of “big
+data” and advanced analytics
+in ATE
+[58]
+Not directly related
+Not specified
+Big data; Machine
+Learning
+AI-driven smart homes:
+Challenges and opportunities
+[59]
+Energy consumption
+(implied); Energy
+efficiency (implied)
+Residential building
+Artificial Intelligence;
+Internet of Things
+Practical issues in implementing
+machine-learning models for
+building energy efficiency:
+Moving beyond obstacles
+[60]
+Energy efficiency
+Building in general
+Machine Learning
+Smart Office System with Face
+Detection at the Edge
+[61]
+Not directly related
+Commercial building
+Artificial Intelligence;
+Edge computing
+Trusted DBL: A Blockchain-based
+Digital Twin for Sustainable and
+Interoperable Building
+Performance Evaluation
+[62]
+Energy efficiency;
+Building energy
+modeling
+Building in general
+Blockchain; Digital
+twin and simulation
+The design and implementation of
+energy-aware data gathering
+techniques (EDGE) for in-building
+wireless sensor networks
+[64]
+Energy consumption;
+Energy efficiency
+Building in general
+Sensor network;
+Edge computing
+Blockchain enhanced price
+incentive demand response for
+building user energy network in
+sustainable society
+[65]
+Energy consumption;
+Energy cost or
+saving; Energy
+Management system;
+Smart grid
+integration
+Building in general
+Blockchain;
+Information system
+Unlocking potentials of building
+energy systems’ operational
+efficiency: Application of digital
+twin design for HVAC systems
+[66]
+Energy efficiency;
+Fault detection and
+diagnosis; Energy
+Management system
+Building in general
+Digital twin and
+simulation
+A novel 3D-geographic
+information system and deep
+learning integrated approach for
+high-accuracy building rooftop
+solar energy potential
+characterization of
+high-density cities
+[67]
+Renewable energy;
+Energy efficiency
+Building in general;
+Residential building;
+Commercial building
+Artificial Intelligence;
+Machine Learning;
+Digital twin and
+simulation
+
+Energies 2025, 18, 290
+45 of 52
+Table A5. Cont.
+Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Automated Data Mining Methods
+for Identifying Energy Efficiency
+Opportunities Using
+Whole-Building Electricity Data
+[69]
+Energy efficiency;
+Energy consumption
+Building in general
+Big data; Machine
+Learning
+Design and Implementation of a
+Leader–Follower Smart Office
+Lighting Control System Based on
+IoT Technology
+[70]
+Energy consumption;
+Energy efficiency;
+Energy Management
+system
+Commercial building
+Internet of Things;
+Sensor network;
+Edge computing
+Design and Implementation of
+Building Energy Monitoring and
+Management System based on
+Wireless Sensor Networks
+[71]
+Energy consumption;
+Energy Management
+system
+Building in general
+Sensor network;
+Internet of Things
+Implementation of an adaptive
+intelligent home energy
+management system using a
+wireless ad-hoc and sensor
+network in pervasive
+environments
+[72]
+Energy consumption;
+Energy Management
+system; Energy
+efficiency
+Residential building
+Sensor network;
+Internet of Things;
+Artificial Intelligence
+Artificial intelligence-based fault
+detection and diagnosis methods
+for building energy systems:
+Advantages, challenges and
+the future
+[68]
+Fault detection and
+diagnosis; Energy
+efficiency
+Building in general
+Artificial Intelligence;
+Machine Learning
+Consumer Readiness for Adoption
+of IOT-Smart Homes
+(CRA-IOT-SH) in South
+Africa Gauteng
+[78]
+Energy efficiency
+(implied)
+Residential building
+Internet of Things
+Home, sweet home: How
+well-being shapes the adoption of
+artificial intelligence-powered
+apartments in smart cities
+[79]
+Energy efficiency
+(implied)
+Residential building
+Artificial Intelligence
+Analysis of Affecting Technology
+Adoption Factors for Smart Home
+Services in Jabodetabek, Indonesia
+[80]
+Energy efficiency
+(implied)
+Residential building
+Internet of Things
+Patients’ Behavioral Intentions
+toward Using WSN Based Smart
+Home Healthcare Systems: An
+Empirical Investigation
+[81]
+Not directly related
+Residential building
+Sensor network;
+Internet of Things
+An Empirical Assessment of
+Wireless Communication
+Technology Issues in the
+Smart Home
+[82]
+Energy efficiency
+(implied)
+Residential building
+Sensor network;
+Internet of Things
+Patients’ Adoption of WSN-Based
+Smart Home Healthcare Systems:
+An Integrated Model of
+Facilitators and Barriers
+[83]
+Not directly related
+Residential building
+Sensor network;
+Internet of Things
+A study on the adoption of IoT
+smart home service: using
+Value-based Adoption Model
+[84]
+Energy efficiency
+(implied)
+Residential building
+Internet of Things
+
+Energies 2025, 18, 290
+46 of 52
+Table A5. Cont.
+Title
+Ref.
+Energy Aspect
+Elements
+Building Aspect
+Elements
+Data and AI Aspect
+Elements
+Comprehensive Approaches to
+User Acceptance of Internet of
+Things in a Smart Home
+Environment
+[85]
+Energy efficiency
+(implied)
+Residential building
+Internet of Things
+IoTFuzz: Automated Discovery of
+Violations in Smart Homes With
+Real Environment
+[86]
+Not directly related
+Residential building
+Internet of Things
+Understanding the adoption and
+usage of data analytics and
+simulation among building energy
+management professionals: A
+nationwide survey
+[87]
+Energy Management
+system; Energy
+efficiency
+Building in general
+Big data; Digital twin
+and simulation;
+Information system
+Platform-Based Business Models:
+Insights from an Emerging
+AI-Enabled Smart Building
+Ecosystem
+[93]
+Energy efficiency
+(implied)
+Building in general
+Artificial Intelligence;
+Internet of Things;
+Information system
+Smart-building management
+system: An Internet-of-Things
+(IoT) application business model
+in Vietnam
+[94]
+Energy Management
+system; Energy
+efficiency
+Building in general
+Internet of Things;
+Information system
+References
+1.
+JeyaPadmini, J.; Kashwan, K.R. Effective power utilization and conservation in smart homes using IoT. In Proceedings of the 4th
+IEEE Sponsored International Conference on Computation of Power, Energy, Information and Communication, ICCPEIC 2015,
+Chennai, India, 22–23 April 2015; pp. 195–199. [CrossRef]
+2.
+Alloghani, M.A. Anomaly Detection of Energy Consumption in Cloud Computing and Buildings Using Artificial Intelligence as a
+Tool of Sustainability: A Systematic Review of Current Trends, Applications, and Challenges. Signals Commun. Technol. 2024,
+1802, 177–210.
+3.
+Walker, S.; Khan, W.; Katic, K.; Maassen, W.; Zeiler, W. Accuracy of different machine learning algorithms and added-value of
+predicting aggregated-level energy performance of commercial buildings. Energy Build. 2020, 209, 109705. [CrossRef]
+4.
+Zhou, Y.; Wang, Y.; Li, C.; Ding, L.; Yang, Z. Energy-efficiency oriented occupancy space optimization in buildings: A data-driven
+approach based on multi-sensor fusion considering behavior-environment integration. Energy 2024, 299, 131396. [CrossRef]
+5.
+Chamari, L.; Petrova, E.; Pauwels, P. An End-to-End Implementation of a Service-Oriented Architecture for Data-Driven Smart
+Buildings. IEEE Access 2023, 11, 117261–117281. [CrossRef]
+6.
+Revati, G.; Palak, M.; Shadab, S.; Sheikh, A. Facilitating Energy-Efficient Operation of Smart Building using Data-driven
+Approaches. 2021 North American Power Symposium (NAPS). In Proceedings of the 2021 North American Power Symposium
+(NAPS), College Station, TX, USA, 14–16 November 2021; pp. 1–6. [CrossRef]
+7.
+Lazarova-Molnar, S.; Mohamed, N. Collaborative data analytics for smart buildings: Opportunities and models. Clust. Comput.
+2019, 22, 1065–1077. [CrossRef]
+8.
+Shao, Z.; Li, Y.; Huang, P.; Abed, A.M.; Ali, E.; Elkamchouchi, D.H.; Abbas, M.; Zhang, G. Analysis of the opportunities and costs
+of energy saving in lightning system of library buildings with the aid of building information modelling and Internet of things.
+Fuel 2023, 352, 128918. [CrossRef]
+9.
+Xiong, T.; Cheng, Q.; Yang, C.; Yang, X.; Lin, S. Application of Digital Twin Technology in Intelligent Building Energy Efficiency
+Management System. 2021 International Conference on E-Commerce and E-Management (ICECEM). In Proceedings of the 2021
+International Conference on E-Commerce and E-Management (ICECEM), Dalian, China, 24–26 September 2021; pp. 393–396.
+[CrossRef]
+10.
+Bachmann, N.; Tripathi, S.; Brunner, M.; Jodlbauer, H. The Contribution of Data-Driven Technologies in Achieving the Sustainable
+Development Goals. Sustainability 2022, 14, 2497. [CrossRef]
+
+Energies 2025, 18, 290
+47 of 52
+11.
+Kaewdornhan, N.; Srithapon, C.; Liemthong, R.; Chatthaworn, R. Real-Time Multi-Home Energy Management with EV Charging
+Scheduling Using Multi-Agent Deep Reinforcement Learning Optimization. Energies 2023, 16, 2357. [CrossRef]
+12.
+Poyyamozhi, M.; Murugesan, B.; Rajamanickam, N.; Shorfuzzaman, M.; Aboelmagd, Y. IoT—A Promising Solution to Energy
+Management in Smart Buildings: A Systematic Review, Applications, Barriers, and Future Scope. Buildings 2024, 14, 3446.
+[CrossRef]
+13.
+Zhou, X.; Du, H.; Xue, S.; Ma, Z. Recent advances in data mining and machine learning for enhanced building energy management.
+Energy 2024, 307, 132636. [CrossRef]
+14.
+Sanyal, J.; New, J. Simulation and big data challenges in tuning building energy models. 2013 Workshop on Modeling and
+Simulation of Cyber-Physical Energy Systems (MSCPES). In Proceedings of the 2013 Workshop on Modeling and Simulation of
+Cyber-Physical Energy Systems, MSCPES 2013, Berkeley, CA, USA, 20 May 2013. [CrossRef]
+15.
+Renganathan, A.K.; Kochadai, N.; Chinnaramu, S. IoT—An Intelligent Design and Implementation of Agent Based Versatile
+Sensor Data Acquisition and Control System for Industries and Buildings. Int. J. Eng. Trends Technol. 2020, 68, 46–53. [CrossRef]
+16.
+Condon, F.; Martínez, J.M.; Eltamaly, A.M.; Kim, Y.-C.; Ahmed, M.A. Design and Implementation of a Cloud-IoT-Based Home
+Energy Management System. Sensors 2023, 23, 176. [CrossRef] [PubMed]
+17.
+Yilmaz, S.; Chambers, J.; Li, X.; Patel, M.K. A comparative analysis of patterns of electricity use and flexibility potential of
+domestic and non-domestic building archetypes through data mining techniques. J. Phys. Conf. Ser. 2021, 2042, 012021. [CrossRef]
+18.
+Bhowmic, A.; Modak, M.; Chak, M.J.; Mohammad, N. IoT-Based Home Energy Management System to Minimize Energy
+Consumption Cost in Peak Demand Hours. 2023 10th IEEE International Conference on Power Systems (ICPS). In Proceedings of
+the 2023 10th IEEE International Conference on Power Systems (ICPS), Cox’s Bazar, Bangladesh, 13–15 December 2023; pp. 1–6.
+[CrossRef]
+19.
+Ben Dhaou, I. Design and Implementation of an Internet-of-Things-Enabled Smart Meter and Smart Plug for Home-Energy-
+Management System. Electronics 2023, 12, 4041. [CrossRef]
+20.
+Muhammed, A.-W.O.; Oisamoje, V.; Amhenrior, H.E.; Evbogbai, E.M.J.; Abanihi, V.K.; Bello, L.O.; Obasi, C.C. Design and
+Implementation of an IoT Based Home Energy Monitoring System. In Proceedings of the 5th International Conference on
+Information Technology for Education and Development: Changing the Narratives Through Building a Secure Society with
+Disruptive Technologies, ITED 2022, Abuja, Nigeria, 1–3 November 2022. [CrossRef]
+21.
+Bhattarai, D.; Singh, A.K.; Newpaney, S.; Pyakurel, P. Design and Prototype Implementation of a Renewable Energy-Powered
+Home with Home Automation System Using Internet of Things (IoT). In Green Energy and Technology; Springer: Berlin/Heidelberg,
+Germany, 2020; pp. 489–504.
+22.
+Swahadika, E.; Besari, A.R.A.; Wibowo, I.K. Implementation of Realtime Database for IoT Home Automation and Energy Moni-
+toring Apps based on Android. 2019 International Electronics Symposium (IES). In Proceedings of the IES 2019—International
+Electronics Symposium: The Role of Techno-Intelligence in Creating an Open Energy System Towards Energy Democracy,
+Proceedings, Surabaya, Indonesia, 27–28 September 2019; pp. 170–176. [CrossRef]
+23.
+Ceri´c, A.; Ivi´c, I. Communication challenges and blockchain in building energy efficiency retrofits: Croatia case. Eng. Constr. Arch.
+Manag. 2023, 32, 1–15. [CrossRef]
+24.
+Manfren, M.; James, P.A.; Tronchin, L. Data-driven building energy modelling—An analysis of the potential for generalisation
+through interpretable machine learning. Renew. Sustain. Energy Rev. 2022, 167, 112686. [CrossRef]
+25.
+Agbor, E.A.; Qu, Y. Creating a Dataset Used for Applying Machine Learning Techniques to Accurately Forecast the Energy
+Cost in Home-Based Small Businesses. In Proceedings of the 2022 International Conference on Computational Science and
+Computational Intelligence (CSCI), Las Vegas, NV, USA, 14–16 December 2022; pp. 677–683. [CrossRef]
+26.
+Waterworth, D.; Sethuvenkatraman, S.; Sheng, Q.Z. Deploying data driven applications in smart buildings: Overcoming the
+initial onboarding barrier using machine learning. Energy Build. 2022, 279, 112699. [CrossRef]
+27.
+Thangamani, A.; Ganesh, L.S.; Tanikella, A.; A, M.P. Issues concerning IoT adoption for energy and comfort management in
+intelligent buildings in India. Intell. Build. Int. 2020, 14, 74–94. [CrossRef]
+28.
+Ruiz, M.D.; Gomez-Romero, J.; Fernandez-Basso, C.; Martin-Bautista, M.J. Big Data Architecture for Building Energy Management
+Systems. IEEE Trans. Ind. Inform. 2021, 18, 5738–5747. [CrossRef]
+29.
+Lee, D.; Huang, H.; Lee, W.; Liu, Y. Artificial intelligence implementation framework development for building energy saving.
+Int. J. Energy Res. 2020, 44, 11908–11929. [CrossRef]
+30.
+Park, S.; Park, S.; Kang, B.; Choi, M.-I.; Cho, K.-H.; Park, S. Design and implementation of an office standby–power management
+system through physical and virtual management by user–device habitual pattern analysis in energy–Internet of Things
+environments. Int. J. Distrib. Sens. Netw. 2016, 12, 1550147716673931. [CrossRef]
+31.
+Nguyen, V.H.; Besanger, Y.; Tran, Q.T. Self-updating machine learning system for building load forecasting—Method, implemen-
+tation and case-study on COVID-19 impact. Sustain. Energy Grids Netw. 2022, 32, 100873. [CrossRef]
+
+Energies 2025, 18, 290
+48 of 52
+32.
+Zhou, H.; Tian, X.; Yu, J.; Zhao, Y.; Lin, B.; Chang, C. Identifying buildings with rising electricity-consumption and those with
+high energy-saving potential for government’s management by data mining approaches. Energy Sustain. Dev. 2021, 66, 54–68.
+[CrossRef]
+33.
+Jayaratne, W.; Dasanayaka, S.; Mudalige, D. Barriers to Use of Artificial Intelligence on Energy Conservation in Government
+Buildings: Awareness as a Moderating Function of Technology Acceptance. In Proceedings of the MERCon 2021—7th International
+Multidisciplinary Moratuwa Engineering Research Conference, Proceedings, Moratuwa, Sri Lanka, 27–29 July 2021; pp. 113–118.
+[CrossRef]
+34.
+Rochd, A.; Benazzouz, A.; Abdelmoula, I.A.; Raihani, A.; Ghennioui, A.; Naimi, Z.; Ikken, B. Design and implementation of an
+AI-based & IoT-enabled Home Energy Management System: A case study in Benguerir—Morocco. Energy Rep. 2021, 7, 699–719.
+[CrossRef]
+35.
+Gao, D. Application of Computer Artificial Intelligence Control Technology in the Comprehensive Utilization of Green Building
+Energy. J. Physics Conf. Ser. 2020, 1578, 012027. [CrossRef]
+36.
+Moudgil, V.; Hewage, K.; Hussain, S.A.; Sadiq, R. Integration of IoT in building energy infrastructure: A critical review on
+challenges and solutions. Renew. Sustain. Energy Rev. 2023, 174, 113121. [CrossRef]
+37.
+Djehaiche, R.; Aidel, S.; Saeed, N. Implementation of M2M-IoT Smart Building System Using Blynk App. Lect. Notes Netw. Syst.
+2022, 361, 439–449. [CrossRef]
+38.
+Khayyat, M.M.; Sami, B. Energy Community Management Based on Artificial Intelligence for the Implementation of Renewable
+Energy Systems in Smart Homes. Electronics 2024, 13, 380. [CrossRef]
+39.
+Ramelan, A.; Rahutomo, F.; Kiswanto; Saputra, B.D.; Hasna, D.F.; Priambodo, R.; Ghaus, H.I. Design and Implementation RESTful
+API for IoT Based Smart Home Systems. In Proceedings of the E3S Web of Conferences, Bantul, Indonesia, 9–10 August 2023;
+Volume 465. [CrossRef]
+40.
+Hajjafari, A.; Badiei, R.; Asharioun, H.; Nasiri, R. Design and Implementation of an IoT-based Smart Home with the Ability to
+Communicate with the Smart Grid. In Proceedings of the 2023 17th International Conference on Protection and Automation in
+Power System, IPAPS 2023, Tehran, Iran, 24–25 January 2023; pp. 1–5. [CrossRef]
+41.
+Devi, M.; Muralidharan, S.; Elakiya, R.; Monica, M. Design and Implementation of a Smart Home Energy Management System
+Using IoT and Machine Learning. In Proceedings of the E3S Web of Conferences, Bantul, Indonesia, 9–10 August 2023; Volume 387.
+[CrossRef]
+42.
+Almusaed, A.; Yitmen, I.; Almssad, A. Enhancing Smart Home Design with AI Models: A Case Study of Living Spaces
+Implementation Review. Energies 2023, 16, 2636. [CrossRef]
+43.
+Weiss, X.; Xu, Q.; Nordström, L. Energy Management of Smart Homes with Electric Vehicles Using Deep Reinforcement Learning.
+In Proceedings of the 2022 24th European Conference on Power Electronics and Applications (EPE’22 ECCE Europe), Hanover,
+Germany, 5–9 September 2022; pp. 1–9.
+44.
+Balakumar, P.; Vinopraba, T.; Chandrasekaran, K. Real time implementation of Demand Side Management scheme for IoT enabled
+PV integrated smart residential building. J. Build. Eng. 2022, 52, 104485. [CrossRef]
+45.
+Micu, A.; Micu, A.-E.; Geru, M.; Capatina, A.; Muntean, M.-C. The Challenge for Energy Saving in Smart Homes: Exploring the
+Interest for IoT Devices Acquisition in Romania. Energies 2021, 14, 7589. [CrossRef]
+46.
+Khanchuea, K.; Siripokarpirom, R. A Multi-Protocol IoT Gateway and WiFi/BLE Sensor Nodes for Smart Home and Building
+Automation: Design and Implementation. In Proceedings of the 10th International Conference of Information and Communication
+Technology for Embedded Systems (IC-ICTES), Bangkok, Thailand, 25–27 March 2019. [CrossRef]
+47.
+Hsiao, T.-C.; Chen, T.-L.; Kang, T.-C.; Wu, T.-Y. The Implementation of Smart Home Power Management: Integration of Internet
+of Things and Cloud Computing. In Proceedings of the IEEE Eurasia Conference on Biomedical Engineering, Healthcare and
+Sustainability (IEEE ECBIOS), Okinawa, Japan, 31 May–3 June 2019; pp. 21–23. [CrossRef]
+48.
+Drisya, K.; Asha, T.S. Design, Development and Implementation of an Iot Based Intelligent Ambient Controller for Lvdc Enabled
+Green Buildings. Int. J. Innov. Technol. Explor. Eng. 2019, 8, 187–191. [CrossRef]
+49.
+Chen, Y.-Y.; Lin, Y.-H.; Kung, C.-C.; Chung, M.-H.; Yen, I.-H. Design and Implementation of Cloud Analytics-Assisted Smart
+Power Meters Considering Advanced Artificial Intelligence as Edge Analytics in Demand-Side Management for Smart Homes.
+Sensors 2019, 19, 2047. [CrossRef]
+50.
+Agyeman, M.O.; Al-Waisi, Z.; Hoxha, I. Design and Implementation of an IoT-Based Energy Monitoring System for Managing
+Smart Homes. In Proceedings of the 2019 4th International Conference on Fog and Mobile Edge Computing, FMEC 2019, Rome,
+Italy, 10–13 June 2019; pp. 253–258. [CrossRef]
+51.
+Lin, Y.-H. Design and Implementation of an IoT-Oriented Energy Management System Based on Non-Intrusive and Self-
+Organizing Neuro-Fuzzy Classification as an Electrical Energy Audit in Smart Homes. Appl. Sci. 2018, 8, 2337. [CrossRef]
+52.
+Chen, Y.-D.; Azhari, M.Z.; Leu, J.-S. Design and implementation of a power consumption management system for smart home
+over fog-cloud computing. In Proceedings of the 3rd International Conference on Intelligent Green Building and Smart Grid
+(IGBSG), Yilan, Taiwan, 22–25 April 2018.
+
+Energies 2025, 18, 290
+49 of 52
+53.
+Parsa, A.; Najafabadi, T.A.; Salmasi, F.R. Implementation of smart optimal and automatic control of electrical home appliances
+(IoT). In Proceedings of the Smart Grid Conference, Tehran, Iran, 20–21 December 2017.
+54.
+Lohokare, J.; Dani, R.; Rajurkar, A.; Apte, A. An IoT ecosystem for the implementation of scalable wireless home automation
+systems at smart city level. In Proceedings of the IEEE Region 10 Conference (TENCON), Penang, Malaysia, 5–8 November 2017;
+TENCON IEEE Region 10 Conference Proceedings. 2017; pp. 1503–1508.
+55.
+Jamborsalamati, P.; Fernandez, E.; Hossain, M.J.; Rafi, F.H.M. Design and implementation of a cloud-based IoT platform for
+data acquisition and device supply management in smart buildings. In Proceedings of the 2017 Australasian Universities Power
+Engineering Conference, AUPEC 2017, Melbourne, Australia, 19–22 November 2017. [CrossRef]
+56.
+Tricco, A.C.; Lillie, E.; Zarin, W.; O’Brien, K.K.; Colquhoun, H.; Levac, D.; Moher, D.; Peters, M.D.J.; Horsley, T.; Weeks, L.;
+et al. PRISMA Extension for Scoping Reviews (PRISMA-ScR): Checklist and Explanation. Ann. Intern. Med. 2018, 169, 467–473.
+[CrossRef]
+57.
+Koseleva, N.; Ropaite, G. Big Data in Building Energy Efficiency: Understanding of Big Data and Main Challenges. Procedia Eng.
+2017, 172, 544–549. [CrossRef]
+58.
+Hernandez, C.; Hernandez, L.; Miller, D.L.; Modi, M.; Dlugosz, A. Unlocking the potential of “big data” and advanced analytics
+in ATE. In Proceedings of the 2016 IEEE AUTOTESTCON, Anaheim, CA, USA, 12–15 September 2016; pp. 1–8.
+59.
+Elkhalik, W.A. AI-Driven Smart Homes: Challenges and Opportunities. J. Intell. Syst. Internet Things 2023, 8, 54–62. [CrossRef]
+60.
+Wang, Z.; Liu, J.; Zhang, Y.; Yuan, H.; Zhang, R.; Srinivasan, R.S. Practical issues in implementing machine-learning models for
+building energy efficiency: Moving beyond obstacles. Renew. Sustain. Energy Rev. 2021, 143, 110929. [CrossRef]
+61.
+Prentice, C.T.; Karakonstantis, G. Smart Office System with Face Detection at the Edge. In Proceedings of the 2018 IEEE Smart-
+World, Ubiquitous Intelligence & Computing, Advanced & Trusted Computing, Scalable Computing & Communications, Cloud
+& Big Data Computing, Internet of People and Smart City Innovation (SmartWorld/SCALCOM/UIC/ATC/CBDCom/IOP/SCI),
+Guangzhou, China, 8–12 October 2018; pp. 88–93. [CrossRef]
+62.
+Niavis, H.; Laskari, M.; Fergadiotou, I. Trusted DBL: A Blockchain-based Digital Twin for Sustainable and Interoperable Building
+Performance Evaluation. In Proceedings of the 2022 7th International Conference on Smart and Sustainable Technologies
+(SpliTech), Bol and Split, Croatia, 5–8 July 2022; pp. 1–6. [CrossRef]
+63.
+Jemat, A.; Yussof, S.; Sameon, S.S.; Aris, H.; Ghapar, A.A.; Nazeri, S. Energy Efficiency Improvement and Strategies in Malaysian
+Office Buildings (Tropical Climate): A Review. J. Adv. Res. Appl. Sci. Eng. Technol. 2023, 29, 72–80. [CrossRef]
+64.
+Kwon, Y.; Kim, D.; Toh, C.; Kim, J. The Design and Implementation of Energy-aware Data Gathering Techniques (EDGE) for
+In-building Wireless Sensor Networks. In Proceedings of the 1st International Global Information Infrastructure Symposium,
+Marrakech, Morocco, 2–6 July 2007. [CrossRef]
+65.
+Wen, S.; Xiong, W.; Tan, J.; Chen, S.; Li, Q. Blockchain enhanced price incentive demand response for building user energy
+network in sustainable society. Sustain. Cities Soc. 2021, 68, 102748. [CrossRef]
+66.
+Vering, C.; Mehrfeld, P.; Nürenberg, M.; Coakley, D.; Lauster, M.; Müller, D. Unlocking Potentials of Building Energy Systems’
+Operational Efficiency: Application of Digital Twin Design for HVAC systems. In Proceedings of the Building Simulation
+Conference Proceedings, Rome, Italy, 2–4 September 2019; Volume 2, pp. 1304–1310.
+67.
+Ren, H.; Xu, C.; Ma, Z.; Sun, Y. A novel 3D-geographic information system and deep learning integrated approach for high-
+accuracy building rooftop solar energy potential characterization of high-density cities. Appl. Energy 2021, 306, 117985. [CrossRef]
+68.
+Zhao, Y.; Li, T.; Zhang, X.; Zhang, C. Artificial intelligence-based fault detection and diagnosis methods for building energy
+systems: Advantages, challenges and the future. Renew. Sustain. Energy Rev. 2019, 109, 85–101. [CrossRef]
+69.
+Howard, P.; Reddy, T.A.; Runger, G.; Katipamula, S. Ashrae Automated Data Mining Methods for Identifying Energy Efficiency
+Opportunities Using Whole-Building Electricity Data. In Proceedings of the ASHRAE Winter Conference, Orlando, FL, USA,
+23–27 January 2016; Volume 122, ASHRAE Transactions, 2016. pp. 422–433.
+70.
+Lee, C.-T.; Chen, L.-B.; Chu, H.-M.; Hsieh, C.-J. Design and Implementation of a Leader-Follower Smart Office Lighting Control
+System Based on IoT Technology. IEEE Access 2022, 10, 28066–28079. [CrossRef]
+71.
+Abo-Zahhad, M.; Ahmed, S.M.; Farrag, M.; Ahmed, M.F.A.; Ali, A. Design and implementation of building energy monitoring
+and management system based on wireless sensor networks. In Proceedings of the International Conference on Computer
+Engineering & Systems (ICCES), Cairo, Egypt, 23–24 December 2015; pp. 230–233.
+72.
+Byun, J.; Hong, I.; Kang, B.; Park, S. Implementation of an Adaptive Intelligent Home Energy Management System Using a
+Wireless Ad-Hoc and Sensor Network in Pervasive Environments. In Proceedings of the Proceedings—International Conference
+on Computer Communications and Networks, ICCCN, Maui, HA, USA, 31 July–4 August 2011. [CrossRef]
+73.
+Qiu, K.; Yang, J.; Gao, Z.; Xu, F. A review of Modelica language in building and energy: Development, applications, and future
+prospect. Energy Build. 2024, 308, 113998. [CrossRef]
+74.
+Klein, S.A. TRNSYS-A transient system simulation program. In Engineering Experiment Station Report; University of Wisconsin-
+Madison: Madison, WI, USA, 1988; pp. 12–38.
+
+Energies 2025, 18, 290
+50 of 52
+75.
+Crawley, D.B.; Lawrie, L.K.; Winkelmann, F.C.; Buhl, W.; Huang, Y.; Pedersen, C.O.; Strand, R.K.; Liesen, R.J.; Fisher, D.E.;
+Witte, M.J.; et al. EnergyPlus: Creating a new-generation building energy simulation program. Energy Build. 2001, 33, 319–331.
+[CrossRef]
+76.
+Lalrochunga, D.; Parida, A.; Choudhury, S. Systematic Review on Capacity Building through Renewable Energy enabled IoT-
+Unmanned Aerial Vehicle for Smart Agroforestry. Clean. Circ. Bioecon. 2024, 8, 100094. [CrossRef]
+77.
+George, T.; Selvakumar, A.I. Smart home energy management systems in India: A socio-economic commitment towards a green
+future. Discov. Sustain. 2024, 5, 101. [CrossRef]
+78.
+Julies, B.D.; Zuva, T. Consumer Readiness for Adoption of IOT-Smart Homes (CRA-IOT-SH) in South Africa Gauteng. Lect. Notes
+Netw. Syst. 2022, 501, 695–709. [CrossRef]
+79.
+Meyer-Waarden, L.; Cloarec, J.; Adams, C.; Aliman, D.N.; Wirth, V. Home, sweet home: How well-being shapes the adoption of
+artificial intelligence-powered apartments in smart cities. Syst. D’information Manag. 2022, 26, 55–88. [CrossRef]
+80.
+Gultom, R.N.; Asvial, M. Analysis of Affecting Technology Adoption Factors for Smart Home Services in Jabodetabek, Indonesia.
+In Proceedings of the 2020 International Seminar on Intelligent Technology and Its Applications (ISITIA), Surabaya, Indonesia,
+22–23 July 2020; pp. 326–331. [CrossRef]
+81.
+Alaiad, A.; Zhou, L. Patients’ Behavioral Intentions toward Using WSN Based Smart Home Healthcare Systems: An Empirical
+Investigation. In Proceedings of the 2015 48th Hawaii International Conference on System Sciences, Kauai, HA, USA, 5–8 January
+2015; pp. 824–833. [CrossRef]
+82.
+Arya, R.; Khanduja, M.; Rao, M.S.; Yadav, R.R.; Gehlot, A.; Gupta, K.K. An Empirical Assessment of Wireless Communication
+Technology Issues in the Smart Home. In Proceedings of the 2023 3rd International Conference on Advance Computing and
+Innovative Technologies in Engineering (ICACITE), Greater Noida, India, 12–13 May 2023; pp. 432–436. [CrossRef]
+83.
+Alaiad, A.; Zhou, L. Patients’ Adoption of WSN-Based Smart Home Healthcare Systems: An Integrated Model of Facilitators and
+Barriers. IEEE Trans. Prof. Commun. 2017, 60, 4–23. [CrossRef]
+84.
+Kim, Y.; Park, Y.; Choi, J. A study on the adoption of IoT smart home service: Using Value-based Adoption Model. Total Qual.
+Manag. Bus. Excel. 2017, 28, 1149–1165. [CrossRef]
+85.
+Park, E.; Cho, Y.; Han, J.; Kwon, S.J. Comprehensive Approaches to User Acceptance of Internet of Things in a Smart Home
+Environment. IEEE Internet Things J. 2017, 4, 2342–2350. [CrossRef]
+86.
+Ban, X.; Ding, M.; Liu, S.; Chen, C.; Zhang, J. IoTFuzz: Automated Discovery of Violations in Smart Homes with Real Environment.
+IEEE Internet Things J. 2023, 11, 10183–10196. [CrossRef]
+87.
+Srivastava, C.; Yang, Z.; Jain, R.K. Understanding the adoption and usage of data analytics and simulation among building
+energy management professionals: A nationwide survey. Build. Environ. 2019, 157, 139–164. [CrossRef]
+88.
+Mistry, V. The Role of IoT in Enhancing HVAC Control Systems. J. Biosens. Bioelectron. Res. 2023, 115, 2–5. [CrossRef]
+89.
+Onuh, A.; Feng, H.; Chen, Q.; de Soto, B.G. Investigating energy savings when using iot devices in buildings: A case study in the
+UK. In Proceedings of the EC3 Conference 2022, Rhodes, Greece, 24–26 July 2022; Volume 3, European Council on Computing
+in Construction.
+90.
+Philip, A.; Islam, S.N.; Phillips, N.; Anwar, A. Optimum Energy Management for Air Conditioners in IoT-Enabled Smart Home.
+Sensors 2022, 22, 7102. [CrossRef]
+91.
+ASHRAE Standard 62.1-2007; Ventilation for Acceptable Indoor Air Quality. The American Society of Heating, Refrigerating, and
+Air-Conditioning Engineers (ASHRAE): Atlanta, GA, USA, 2007.
+92.
+Nambiar, C.; Rosenberg, M.; Rosenberg, S. End Use Analysis Of ANSI/ASHRAE/IES Standard 90.1-2019. ASHRAE J. 2023, 65,
+34–42.
+93.
+Xu, Y.; Ahokangas, P.; Turunen, M.; Mäntymäki, M.; Heikkilä, J. Platform-Based Business Models: Insights from an Emerging
+Ai-Enabled Smart Building Ecosystem. Electronics 2019, 8, 1150. [CrossRef]
+94.
+Le, D.N.; Le Tuan, L.; Tuan, M.N.D. Smart-building management system: An Internet-of-Things (IoT) application business model
+in Vietnam. Technol. Forecast. Soc. Change 2019, 141, 22–35. [CrossRef]
+95.
+Talaei, M.; Azari, R. Smart Building Skins for Urban Heat Island Mitigation: A Review. J. Arch. Eng. 2024, 30, 03124005. [CrossRef]
+96.
+Siswipraptini, P.C.; Aziza, R.N.; Siregar, R.R.A.; Ramadhan, A. Smart Home Energy Management Systems: A Systematic Review
+of Architecture, Communication, and Algorithmic Trends. J. Syst. Manag. Sci. 2024, 14, 129–146.
+97.
+Rebelatto, B.G.; Salvia, A.L.; Brandli, L.L.; Filho, W.L. Examining Energy Efficiency Practices in Office Buildings through the Lens
+of LEED, BREEAM, and DGNB Certifications. Sustainability 2024, 16, 4345. [CrossRef]
+98.
+Pinthurat, W.; Surinkaew, T.; Hredzak, B. An overview of reinforcement learning-based approaches for smart home energy
+management systems with energy storages. Renew. Sustain. Energy Rev. 2024, 202, 114648. [CrossRef]
+99.
+Lu, Y.; Zhou, L.; Zhang, A.; Zha, S.; Zhuo, X.; Ge, S. Application of Deep Learning and Intelligent Sensing Analysis in Smart
+Home. Sensors 2024, 24, 953. [CrossRef]
+
+Energies 2025, 18, 290
+51 of 52
+100. Vandenbogaerde, L.; Verbeke, S.; Audenaert, A. Optimizing building energy consumption in office buildings: A review of
+building automation and control systems and factors influencing energy savings. J. Build. Eng. 2023, 76, 107233. [CrossRef]
+101. Motta, L.L.; Ferreira, L.C.B.C.; Cabral, T.W.; Lemes, D.A.M.; Cardoso, G.d.S.; Borchardt, A.; Cardieri, P.; Fraidenraich, G.; de
+Lima, E.R.; Neto, F.B.; et al. General Overview and Proof of Concept of a Smart Home Energy Management System Architecture.
+Electronics 2023, 12, 4453. [CrossRef]
+102. Liu, Z.; Guo, Z.; Chen, Q.; Song, C.; Shang, W.; Yuan, M.; Zhang, H. A review of data-driven smart building-integrated
+photovoltaic systems: Challenges and objectives. Energy 2022, 263, 126082. [CrossRef]
+103. Lamsal, P.; Bajracharya, S.B.; Rijal, H.B. A Review on Adaptive Thermal Comfort of Office Building for Energy-Saving Building
+Design. Energies 2023, 16, 1524. [CrossRef]
+104. Kiviste, M.; Musakka, S.; Ruus, A.; Vinha, J. A review of non-residential building renovation and improvement of energy
+efficiency: Office buildings in Finland, Sweden, Norway, Denmark, and Germany. Energies 2023, 16, 4220. [CrossRef]
+105. Fakhar, M.Z.; Yalcin, E.; Bilge, A. A survey of smart home energy conservation techniques. Expert Syst. Appl. 2022, 213, 118974.
+[CrossRef]
+106. Bäcklund, K.; Molinari, M.; Lundqvist, P.; Palm, B. Building Occupants, Their Behavior and the Resulting Impact on Energy Use
+in Campus Buildings: A Literature Review with Focus on Smart Building Systems. Energies 2023, 16, 6104. [CrossRef]
+107. Kanade, S.; Bhise, A.K. Artificial Intelligence Based Smart Home Energy Management System: A Review. 2022. Available online:
+https://ijsrem.com/download/artificial-intelligence-based-smart-home-energy-management-system-a-review/ (accessed on 20
+November 2024).
+108. Elnour, M.; Fadli, F.; Himeur, Y.; Petri, I.; Rezgui, Y.; Meskin, N.; Ahmad, A.M. Performance and energy optimization of building
+automation and management systems: Towards smart sustainable carbon-neutral sports facilities. Renew. Sustain. Energy Rev.
+2022, 162, 112401. [CrossRef]
+109. Andrade, S.H.M.S.; Contente, G.O.; Rodrigues, L.B.; Lima, L.X.; Vijaykumar, N.L.; Francês, C.R.L. Smart Home Tracking: A
+Smart Home Architecture for Smart Energy Consumption in a Residence with Multiple Users. Wirel. Pers. Commun. 2022, 123,
+3241–3262. [CrossRef]
+110. Ali, A.O.; Elmarghany, M.R.; Abdelsalam, M.M.; Sabry, M.N.; Hamed, A.M. Closed-loop home energy management system with
+renewable energy sources in a smart grid: A comprehensive review. J. Energy Storage 2022, 50, 104609. [CrossRef]
+111. Yu, L.; Qin, S.; Zhang, M.; Shen, C.; Jiang, T.; Guan, X. A Review of Deep Reinforcement Learning for Smart Building Energy
+Management. IEEE Internet Things J. 2021, 8, 12046–12063. [CrossRef]
+112. Ravindran, A. Smart Home Energy Management: State of the Art. 2022. Available online: https://www.politesi.polimi.it/
+handle/10589/191596 (accessed on 22 November 2024).
+113. Hamm, S.G.; Anderson, A.; Blankenship, D.; Boyd, L.W.; Brown, E.A.; Frone, Z.; Hamos, I.; Hughes, H.J.; Kalmuk, M.; Marble,
+A.; et al. Geothermal Energy R&D: An Overview of the U.S. Department of Energy’s Geothermal Technologies Office. J. Energy
+Resour. Technol. 2021, 143, 4049581. [CrossRef]
+114. Aliero, M.S.; Qureshi, K.N.; Pasha, M.F.; Jeon, G. Smart Home Energy Management Systems in Internet of Things networks for
+green cities demands and services. Environ. Technol. Innov. 2021, 22, 101443. [CrossRef]
+115. Aliero, M.S.; Qureshi, K.N.; Pasha, M.F.; Ghani, I.; Yauri, R.A. Systematic Mapping Study on Energy Optimization Solutions in
+Smart Building Structure: Opportunities and Challenges. Wirel. Pers. Commun. 2021, 119, 2017–2053. [CrossRef]
+116. Aliabadi, F.E.; Agbossou, K.; Kelouwani, S.; Henao, N.; Hosseini, S.S. Coordination of Smart Home Energy Management Systems
+in Neighborhood Areas: A Systematic Review. IEEE Access 2021, 9, 36417–36443. [CrossRef]
+117. Zaidan, A.; Zaidan, B. A review on intelligent process for smart home applications based on IoT: Coherent taxonomy, motivation,
+open challenges, and recommendations. Artif. Intell. Rev. 2020, 53, 141–165. [CrossRef]
+118. Zafar, U.; Bayhan, S.; Sanfilippo, A. Home energy management system concepts, configurations, and technologies for the smart
+grid. IEEE Access 2020, 8, 119271–119286. [CrossRef]
+119. Weiss, T. Analysing Smart-Home Energy Management under the Aspects of Organic Computing.
+2020.
+Available
+online: https://www.researchgate.net/publication/342889772_Analysing_Smart-Home_Energy_Management_under_the_
+Aspects_of_Organic_Computing (accessed on 22 November 2024).
+120. Shakeri, M.; Pasupuleti, J.; Amin, N.; Rokonuzzaman, M.; Low, F.W.; Yaw, C.T.; Asim, N.; Samsudin, N.A.; Tiong, S.K.; Hen, C.K.;
+et al. An overview of the building energy management system considering the demand response programs, smart strategies and
+smart grid. Energies 2020, 13, 3299. [CrossRef]
+121. Savero, R.R.; Antaryama, I.G.N.; Soemardiono, B. Review on Design Strategies of Energy Saving Office Building with Evaporative
+Cooling in Tropical Region. IPTEK J. Technol. Sci. 2020, 31, 236. [CrossRef]
+122. Norton, B.; Lo, S.N. Atria, Roof-space Solar Collectors and Windows for Low-energy New and Renovated Office Buildings: A
+Review. SDAR* J. Sustain. Des. Appl. Res. 2020, 8, 4.
+
+Energies 2025, 18, 290
+52 of 52
+123. McIlvennie, C.; Sanguinetti, A.; Pritoni, M. Of impacts, agents, and functions: An interdisciplinary meta-review of smart home
+energy management systems research. Energy Res. Soc. Sci. 2020, 68, 101555. [CrossRef]
+124. Krishnan, Y.; S, A.; Saara, M.; Karn, A. Smart Home Energy Management—The Future of Energy Conservation: A Review. Int. J.
+Eng. Res. 2020, 9, 231–235. [CrossRef]
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

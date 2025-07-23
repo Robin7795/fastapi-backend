@@ -1,0 +1,2738 @@
+Intelligent energy management with IoT framework in smart cities using
+intelligent analysis: An application of machine learning methods for
+complex networks and systems
+Maryam Nikpour a, Parisa Behvand Yousefi b, Hadi Jafarzadeh c, Kasra Danesh d, Roya Shomali e,
+Saeed Asadi f, Ahmad Gholizadeh Lonbar g, Mohsen Ahmadi d,*
+a Architecture Department, Ahvaz Branch, Islamic Azad University, Ahvaz, Iran
+b School of E-Learning, Khaje Nasirodin Toos (K.N.Toosi) University of Technology, Tehran, Iran
+c School of E-Learning, Shiraz University, Shiraz, Iran
+d Department of Electrical Engineering and Computer Science, Florida Atlantic University, Boca Raton, FL, USA
+e Department of Information Systems, Statistics and Management Science, The University of Alabama, Tuscaloosa, USA
+f Department of Civil Engineering, The University of Texas at Arlington, Arlington, TX, USA
+g Department of Civil, Construction, and Environmental Engineering, University of Alabama, Tuscaloosa, AL, USA
+A R T I C L E I N F O
+Handling editor: M. Atiquzzaman
+Keywords:
+mart cities
+Internet of things
+Energy
+Intelligence methods
+A B S T R A C T
+This study addresses the growing challenges of energy consumption and the depletion of energy resources,
+particularly in the context of smart buildings. As the demand for energy increases alongside the need for efficient
+building maintenance, it becomes imperative to explore innovative energy management solutions. We present a
+review of Internet of Things (IoT)-based frameworks aimed at managing smart city energy consumption, the
+pivotal role of IoT devices in addressing these issues due to their compactness, sensing, measurement, and
+computing capabilities. Our review methodology involves a thorough analysis of existing literature on IoT ar-
+chitectures and frameworks for intelligent energy management applications. We focus on systems that not only
+collect and store data but also support intelligent analysis for monitoring, controlling, and enhancing system
+efficiency. Additionally, we examine the potential for these frameworks to serve as platforms for the develop-
+ment of third-party applications, thereby extending their utility and adaptability. The findings from our review
+indicate that IoT-based frameworks offer potential to reduce energy consumption and environmental impact in
+smart buildings. By adopting intelligent mechanisms and solutions, these frameworks facilitate effective energy
+management, leading to improved system efficiency and sustainability. Considering these findings, we recom-
+mend further exploration and adoption of IoT-based wireless sensing systems in smart buildings as a strategic
+approach to energy management. Our review highlights the importance of incorporating intelligent analysis and
+enabling the development of third-party applications within the IoT framework to efficiently meet evolving
+energy demands and maintenance challenges.
+1. Introduction
+The rapid increase in global energy demand, driven by population
+growth and urbanization, presents an urgent challenge for sustainable
+development. As cities expand and energy consumption soars, efficient
+energy management becomes critical to mitigating environmental im-
+pacts and ensuring reliable energy supply. In this context, smart cities
+offer a promising solution, leveraging advanced technologies such as the
+Internet of Things (IoT) to automate energy production, distribution,
+and consumption. However, the existing energy infrastructure is often
+inefficient,
+leading
+to
+significant
+waste
+and
+resource
+depletion.
+Addressing these inefficiencies through intelligent, IoT-based frame-
+works is vital for achieving sustainability and energy resilience in the
+modern urban landscape. Despite the growing need for energy for a
+nation’s economic development, global population growth, as well as for
+society’s way of life, the worldwide energy demand has risen substan-
+tially (Ashraf, 2021a). The use of wide-area monitoring and smart me-
+ters
+has
+enabled
+automation
+in
+electrical
+energy
+production,
+* Corresponding author.
+E-mail address: mahmadi2021@fau.edu (M. Ahmadi).
+Contents lists available at ScienceDirect
+Journal of Network and Computer Applications
+journal homepage: www.elsevier.com/locate/jnca
+https://doi.org/10.1016/j.jnca.2024.104089
+Received 8 June 2024; Received in revised form 3 December 2024; Accepted 5 December 2024
+Journal of Network and Computer Applications 235 (2025) 104089 
+Available online 7 December 2024 
+1084-8045/© 2024 Elsevier Ltd. All rights are reserved, including those for text and data mining, AI training, and similar technologies. 
+
+transmission, distribution, and consumption at multiple levels. By
+measuring the electrical properties of the transmission system and uti-
+lizing universal timestamps, it becomes possible to accurately predict
+measurement precision, identify faults, and isolate them effectively.
+This enhances the reliability of the transmission grid. However, grid
+distribution and usage differ in terms of the level of automation. Ad-
+vancements in the IoT have played a crucial role in further automating
+these processes and controlling systems more efficiently (Ruiz-Zafra
+et al., 2022). Sustainability is the use of energy efficiently while meeting
+the demands of the modern world. Ecological, social, and economic
+concerns can all be addressed through sustainable energy. Sustainable
+energy management may involve utilizing renewable resources in the
+best possible way, leveraging sustainable energy resources, utilizing
+alternative energy resources, integrating IoT solutions, and applying
+green technology. Incorporating new technologies into existing opera-
+tions is the goal of a smart system. Smart systems extract information
+about a city’s utility system and traffic flow using sensors. These systems
+analyze information patterns for forecasting. An IoT system sends data
+through a network without requiring human-to-human interaction.
+Green technology refers to technologies that build environmentally
+friendly products by combining science and technology. In addition to
+purifying water, preserving natural resources, producing clean energy,
+and recycling garbage, green technologies are also used. Interconnected
+digital and mechanical machinery, things, and computer devices also
+use this technology.
+Sustainable energy systems include intelligent grids, intelligent cit-
+ies, and intelligent transportation systems. Implementing a sustainable
+energy system is not limited to large-scale techniques; emailing and
+texting without using paper can also reduce paper consumption. Both of
+these contribute to sustainable energy development. It is a formidable
+task for the government to generate and distribute energy to a growing
+population. Energy consumption has increased due to a growing popu-
+lation, resulting in several environmental and health concerns. There-
+fore, creating and utilizing energy resources effectively is crucial. The
+implementation of a sustainable energy system entails three primary
+phases, according to Goncalves and Santos (Ashraf, 2021a). They are 1)
+to analyze energy management policies at the industrial level; 2) to
+debate ways to implement sustainable energy; and 3) to examine the
+best ways to use sustainable energy once it has been validated by in-
+ternational experts (Ashraf, 2021b). Recent years have seen dramatic
+growth in the number of smart gadgets, which is soon likely to surpass
+billions. This is owing to the proliferation of IoT technologies across all
+industries. In smart networks, there are mainly IoT systems composed of
+networked devices, such as smartphones, sensors, automobiles, and so
+on. As part of sustainable energy management, smart grids are one of the
+solutions. This can be explained in part by introducing smart, autono-
+mous, and bidirectional power grids (Ruiz-Zafra et al., 2022). Threat-
+ening the environment and working against green technology and
+carbon emission reductions, these tactics have a negative effect on the
+environment. They are designed mainly for the benefit of corporations
+and governments. Historically, most energy meters have been analog.
+Errors, operational losses, and theft were common. Most of the time, the
+defect cannot be diagnosed properly, and it cannot be corrected. As a
+result, the smart meter facilitated communication between the meter,
+the grid, and the user (Zhao et al., 2022). The expansion of macro data
+and the evolution of IoT technology play a crucial role in making smart
+cities possible. Using high-end network services, metadata can provide
+valuable insights into large volumes of data collected from a variety of
+sources, and the IoT has enabled sensor integration, radio frequency,
+and Bluetooth detection in the real world. Combining metadata with the
+IoT is an unexplored research area that can be used to reach the smart
+city of the future while presenting new and exciting challenges (Rahimi
+et al., 2020; Songhorabadi et al., 2020, 2023). In smart cities, several
+technologies are used to increase citizen comfort levels in areas such as
+transportation, energy, education, etc. This also includes reducing costs
+and using resources in addition to promoting active and effective citizen
+participation (Das, 2022). A recent technology that plays an important
+role in increasing smart city services is metadata analysis. In smart cities,
+smart buildings, smart healthcare, and smart industrial applications, IoT
+use BD technology to deploy tiny sensors for wireless communication.
+The need for a definition of building energy use grows as more projects
+and technologies address this issue (Mukherjee et al., 2020). It is
+necessary to evaluate how a building functions to determine how much
+energy it consumes. The energy consumption of residential buildings is
+mainly affected by the indoor comfort services provided to individuals,
+whereas the energy consumption of industrial buildings is largely
+determined by industrial machinery and manufacturing infrastructure.
+Integrating and developing systems based on Information and Commu-
+nication Technologies, and, the IoT, facilitates a wide array of applica-
+tions and makes smart buildings a reality (Uzair et al., 2019; Egri and
+V´ancza, 2013). Data and knowledge from the real world are effectively
+absorbed into the digital realm through IoT and communication be-
+tween intelligent objects. Their study evaluates the effectiveness of
+IoT-based frameworks in managing energy within smart cities, specif-
+ically evaluating the impact of these technologies on reducing energy
+consumption and reducing environmental impacts in smart buildings.
+They aim to identify and advocate for solutions that enhance system
+efficiency and sustainability by reviewing IoT architectures and frame-
+works designed for intelligent energy management. This study high-
+lights key challenges, such as the interoperability of IoT devices, data
+security, and the scalability of systems across diverse urban environ-
+ments. Our original contributions include the development of a frame-
+work for integrating third-party applications, enabling adaptive energy
+management in smart cities. We address the gaps in existing literature by
+proposing solutions that not only optimize energy usage but also ensure
+system flexibility and resilience in evolving energy landscapes. It focuses
+on the implementation of advanced algorithms and technologies that are
+capable of autonomously analyzing, predicting, and managing energy
+consumption in smart buildings and cities. Using machine learning,
+artificial intelligence (AI), and the IoT, these mechanisms are capable of
+monitoring and controlling energy consumption to optimize efficiency
+and reduce waste. Incorporating ML into energy management enables
+dynamic adjustments to supply and demand, reducing energy waste
+while ensuring a steady and reliable power supply. As these algorithms
+learn from historical data, they can detect anomalies and automatically
+adjust to changing conditions, such as variations in user behavior or
+environmental factors. Additionally, ML facilitates the integration of
+renewable energy sources by predicting their availability and incorpo-
+rating them into the grid efficiently. In smart buildings, ML systems can
+autonomously control heating, cooling, and lighting based on real-time
+data from sensors, further enhancing energy efficiency. These advanced
+systems minimize human intervention by autonomously monitoring and
+adjusting energy usage, leading to cost reductions and a smaller envi-
+ronmental footprint. Ultimately, ML-powered IoT frameworks foster
+smarter, more sustainable urban energy systems, contributing to overall
+energy efficiency and environmental conservation. These solutions are
+capable of forecasting energy demand, adapting to user behavior, and
+seamlessly integrating renewable energy sources through the integra-
+tion of data from various sensors and devices. As a result of this
+approach, not only do energy systems operate more efficiently, but also
+the environmental impact of energy consumption is minimized. In the
+field of energy management, the solutions are unique in that they are
+capable of learning from data, making informed decisions, and
+dynamically
+adapting
+to
+changing
+conditions
+without
+human
+intervention.
+The availability of smart gadgets with sensing and interaction ca-
+pabilities, as well as recognition technologies, enables the collection of
+unprecedented amounts of actual environmental information. As
+described in this article, we propose an infrastructure for a smart city
+that is based on the concept of the digital city and integrates the IoT to
+control energy consumption. Three different methods were used to
+analyze the data in this study. To examine the various components of the
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+2 
+
+smart grid (where such solutions (and results) can be applied, with a
+focus on smart city energy management), applications in the field of IoT
+and nearby are examined. After reviewing the research literature, a
+generalized set of existing solutions is developed; these include the key
+features identified during the literature review. Our study evaluates the
+effectiveness of IoT-based frameworks in managing energy within smart
+cities, specifically evaluating the impact of these technologies on
+reducing energy consumption and reducing environmental impacts in
+smart buildings. We aim to identify and advocate for solutions that
+enhance system efficiency and sustainability as well as support the
+integration and development of third-party applications to address
+evolving energy demands by reviewing IoT architectures and frame-
+works designed for intelligent energy management.
+This paper makes several key contributions to the field of smart city
+energy management through the application of IoT frameworks.
+• We provide a detailed examination of existing IoT-based frameworks
+for energy management, advancements and identifying gaps in cur-
+rent technologies.
+• Our analysis demonstrates how IoT devices can enhance energy ef-
+ficiency by leveraging intelligent analysis and real-time data
+processing.
+• We explore the potential for IoT frameworks to support third-party
+applications, broadening their utility and adaptability in urban
+settings.
+• Based on our findings, we offer targeted recommendations for future
+research and practical implementation of IoT solutions in smart
+buildings.
+The Introduction section outlines the significance of sustainable
+energy management in smart cities, emphasizing the role of IoT-based
+frameworks in optimizing energy consumption, minimizing environ-
+mental impact, and enhancing system efficiency. The Literature Review
+provides a systematic analysis of recent studies on IoT applications in
+energy management, advancements in IoT architectures, energy opti-
+mization techniques, and machine learning integration while identifying
+critical gaps. The Components of Smart Cities section explores the
+foundational elements of smart cities, including data collection, pro-
+cessing, and application layers, along with key technologies enabling
+their development. The Discussion section critically evaluates the po-
+tential and challenges of IoT-based frameworks, addressing technical,
+economic, and social considerations. The Conclusion summarizes the
+key findings, presents actionable recommendations for future research,
+and highlights the limitations of the study. Finally, the paper offers
+Future Directions to guide researchers and stakeholders in advancing
+IoT-enabled energy management systems.
+2. Literature review
+In our literature review, we applied a systematic approach to ensure
+a rigorous analysis of relevant studies. We began by identifying key
+search terms related to IoT, energy management, smart cities, and sus-
+tainability. Databases such as IEEE Xplore, ScienceDirect, and Google
+Scholar were searched using these terms. Our inclusion criteria focused
+on peer-reviewed articles published in the last decade, prioritizing
+studies that specifically addressed IoT applications in energy manage-
+ment within urban environments. We also considered papers that pro-
+posed practical frameworks or provided empirical data on energy
+efficiency and sustainability in smart buildings. Studies were selected
+based on their relevance, methodological soundness, and contribution to
+the field. To ensure objectivity, the selected literature was analyzed
+using a structured framework that categorized studies by their focus
+areas, including IoT architectures, energy optimization techniques,
+machine learning applications, and sustainability impacts. Justifying
+these choices, our goal was to capture a broad spectrum of current ad-
+vancements while also identifying critical gaps in the existing body of
+research. This process strengthened the rigor of our review by ensuring
+that the most relevant and high-impact studies were included for
+analysis.
+There is a detailed discussion in this section of prior studies on IoT-
+based energy management in smart buildings, exploring various
+frameworks and their contributions to reducing energy consumption,
+with references to key works reported in the field. Zakik et al. (Mancini
+et al., 2020) in a study entitled Machine Learning System based on
+public sector energy efficiency management as a smart city approach.
+The purpose of this paper is to address the question of how Big Data
+operating systems and machine learning can be integrated into an
+intelligent system for managing public sector energy efficiency as an
+integral part of smart city concepts. Wang et al. (Zeki´c-Suˇsac et al.,
+2021) conducted a case study and developed optimization algorithms
+for a home energy management system based on the IoT. To demon-
+strate the value of the proposed technique, the results of multi-objective
+optimization are compared with those of Particle swarm optimization
+(PSO)-based and Bayesian Optimization Algorithm (BOA)-based algo-
+rithms. To evaluate system performance, the simulation results are
+compared with those of a normal home energy management system. In
+their study, Sadeeq et al. (Wang et al., 2021) considered energy man-
+agement within IoT systems. A review of the literature and policy
+analysis related to aggregators of energy management systems and end
+users in affiliate systems is discussed in this article. Silva et al. (Sadeeq
+and Zeebaree, 2021) conducted a study entitled Using Big Data Analysis
+and Smart Web Architecture to Provide Efficient Services and Energy
+Management. To improve the network performance of a proposed smart
+city design, researchers have created an IoT and Web of Things inte-
+grated smart building architecture (smart house). In a study entitled
+Object-Based Energy Management, Shafik et al. (Silva et al., 2020)
+addressed the challenges and solutions associated with smart cities. An
+in-depth analysis of the proper management of the object-based Internet
+in smart cities is presented in this study. In this study, it is demonstrated
+that the IoT has increased energy consumption, and the summary study
+illustrates the latest proposed methods in energy management across
+different belts such as smart homes, smart buildings, and smart grids.
+In addition, Jiang et al. (Shafik et al., 2020) conducted a study on
+IoT-based smart city information system building and cloud computing.
+This study illustrates that this system can share information sharing,
+exchange, and fusion between different sensing subsystems, thereby
+solving the problem of previous information islands and serving the real
+needs of smart cities. According to Golpira et al. (Jiang, 2020), a study
+called Optimized Urban Intelligent Management based on IoT while
+accounting for movable loads and energy savings was conducted. An
+IoT-based energy management framework for IoT-based public distri-
+bution networks is presented in this paper using a complex integer linear
+programming problem. Golpira et al. (Golpîra and Bahramara, 2020)
+conducted a study titled Optimized Urban Intelligent Management
+based on the IoT for Movable Loads and Energy Savings. An IoT-based
+energy management framework is proposed for IoT-based public dis-
+tribution networks in smart cities (SC) by posing a new complex integer
+linear programming problem. Naranjo et al. (2019) investigated City
+Smart Network Architecture using Fog for managing IoT applications.
+According to the simulation results of the selected case study, the
+energy-efficient solution provided by FOCAN impacts the communica-
+tion performance of different objects within smart cities. Sodhro et al.
+(2019)
+proposed
+solutions
+to
+address
+resource
+constraints
+in
+IoT-enabled devices, critical for sustainable smart cities. They intro-
+duced the Hybrid Adaptive Bandwidth and Power Algorithm (HABPA)
+and Delay-tolerant Streaming Algorithm (DSA) to enhance multimedia
+transmission performance. Using the video stream StarWarsIV, their
+analysis focused on metrics like power usage, battery life, delay, stan-
+dard deviation, and packet loss ratio (PLR). HABPA showed better re-
+sults than DSA and a baseline model, reducing power drain by 45%,
+improving battery life by 37%, and achieving a lower PLR of 4.5% and
+standard deviation of 3.5 dB. These findings demonstrate HABPA’s
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+3 
+
+potential to optimize energy efficiency and resource use in IoT devices,
+supporting smarter, more sustainable city operations. Kabalchi et al.
+(Kabalci et al., 2019) examined IoT applications for intelligent grids and
+smart environments. Additionally, the authors discussed obstacles,
+unanswered questions, and future research prospects for IoT-based EI
+applications, as well as several crucial study areas. Creating an Intelli-
+gent and Sustainable Environment Using the IoT was the title of a study
+conducted by Tyagi et al. (Tyagi, 2019). Due to rapid technological
+advancements (in the last two decades), the Internet has improved the
+means/means of human life. Today, smart cities or environments are
+essential for any government, anywhere in the world. An IoT network
+based on blockchain-based secure device management has been pub-
+lished by Gang et al. (Gong et al., 2019). As a result of this article’s
+framework, devices will be able to be managed confidentially and reli-
+ably within a smart city network, and the integrity, controllability,
+compatibility, and validation of each device will be provided, along with
+an analysis of the framework’s efficacy. Their research draws upon these
+foundational works to propose a unique integration strategy that le-
+verages IoT for real-time, adaptive energy management, setting the
+stage for a scalable smart city framework. This strategic approach aims
+to resolve the practical and operational inefficiencies identified in pre-
+vious studies, thereby catalyzing the evolution from theoretical models
+to actionable, impactful urban energy solutions.
+Yu et al. (2019) developed a smart energy management system based
+on IoT in a city. Results show that the IoT-based intelligent city energy
+management system can satisfy the "smart city" construction needs. It
+integrates isolated energy information and measures energy consump-
+tion. Based on this, energy savings in urban energy consumption can be
+identified and evaluated. A study conducted by Javid et al. (Iqbal et al.,
+2018) is titled The General Architecture of the Internet to Control
+Electricity Consumption in Smart Homes. By using the Hadoop
+ecosystem, data is also processed in real-time to maximize productivity
+and minimize processing time. Alavi et al. (2018) published a study
+titled Smart Cities equipped with the IoT: The most advanced and future
+trends. In addition, an IoT-based prototype is presented to illustrate how
+civilian
+infrastructure
+can
+be
+monitored
+in
+real-time
+using
+a
+cost-effective IoT-based prototype. Their final section discusses the
+challenges and future directions of IoT-based smart city applications.
+According to Zhang et al. (Campos et al., 2016) big data analytics can be
+used to develop smart city infrastructure. This study proposes measures,
+including rational planning of city infrastructure, the creation and
+improvement of performance mechanisms, and city management per-
+formance. Based on the results, the proposed system is more scalable and
+efficient than existing systems. In addition, the system performance is
+measured in terms of performance and processing time. Barto et al. (Liu
+et al., 2019) presented SIGINURB, an IoT-based smart city system. A
+hybrid system using cloud data processing analysis for the development
+of smart cities and urban planning is proposed in this study to address
+the challenges associated with smart cities. The purpose of the system is
+to create a variety of applications that provide new services to students,
+employees, companies, and government managers at the University of
+So Paulo, and improve their quality of life. Liu et al. (Ejaz et al., 2017)
+Designed an IoT-based energy management system based on cloud
+computing infrastructure in a smart city. An overview of Internet-based
+energy management in smart cities is provided in this study. then pro-
+pose a framework and software model for an Internet-based system with
+cloud computing. Finally, the researchers suggest a planning scheme
+that is energy efficient. They also demonstrate its effectiveness.
+According to Ejaz et al. (Sato et al., 2019), the increase in car use
+calls for innovative solutions to improve living conditions and trans-
+portation. The IoT connects diverse devices and systems to create
+intelligent cities. As the number and needs of IoT devices continue to
+grow, so does their energy consumption. Therefore, intelligent city so-
+lutions must be able to use energy efficiently and address the associated
+challenges. Extending the lifespan of low-power products through
+intelligent city energy harvesting is becoming increasingly popular.
+Initially, this approach focuses on programming energy-efficient smart
+homes, followed by wireless power distribution in smart cities for the
+IoT. However, a drawback is the high cost of power. In the past decade,
+real-time data sets were applied to traditional regression models
+(Charytoniuk et al., 1998), (Gezer et al., 2015), with forecasts recorded
+afterward. Neural networks were subsequently used for prediction, as
+described in (Fallah et al., 2018). In this project, a simulation route
+mimics multi-layered feedforward networks, and the system’s perfor-
+mance has been reported to be exceptional. In an extensive study on IoT,
+Reka and Dragicevic (2018) found that intelligent grid techniques could
+improve energy efficiency. IoT offers numerous advantages for energy
+management, based on factors such as energy efficiency, security,
+functionality, and sustainability (Mortaji et al., 2017). Asgari et al.
+(2024) analyze sustainable welfare dynamics using GDP threshold ef-
+fects and Granger causality. The study reveals that short-term economic
+growth drives energy consumption under certain GDP thresholds, while
+long-term impacts vary, the need for differentiated economic strategies
+based on GDP levels to achieve sustainability goals.
+In (Zhang et al., 2021) developed a method for analyzing time series
+load data by using auto-regressive integrated moving averages. Using
+forecasting, this effort seeks to reduce the peak-to-average ratio so that
+an intelligent IoT setup can be managed directly. To anticipate
+non-seasonal and seasonal data loads (Alberg and Last, 2017), suggests
+using an Auto-Regressive Integrated Moving Average. In (Ouyang et al.,
+2017) developed a technique for forecasting short-term load. This is a
+data-driven design derived from a belief network with copula stages.
+The deep neural network technique and extreme learning machines are
+interrelated. In (Chen et al., 2019) developed an improved short-term
+prediction model based on deep residual networks. To improve the
+effectiveness of the system, a two-stage ensemble approach was devel-
+oped. In (Ahmad et al., 2017) presented an Accurate and Fast
+Converging Short-Term Load Forecasting setup that includes a predic-
+tor, an optimizer, and a feature selector. It is available for common in-
+dustrial SG applications, including load switching, infrastructure
+maintenance, contract evaluation, energy production planning, and
+power procurement. Short-term load forecasts are required in the elec-
+tric sector of the energy market. Electric utilities use these models as part
+of their daily operations for evaluating contracts, performing infra-
+structure maintenance, planning power production, and shifting loads.
+Time series data may be selected based on various features (Li et al.,
+2017; Priyan and Devi, 2018). All data sets are purged of duplicates
+before being input into the neural network that anticipates the
+contraction of electricity in the next few days. The authors also provide a
+way to overcome numerous hurdles and difficulties in load prediction
+setup (Wazid et al., 2017). To categorize this issue, we discover multiple
+hybrid techniques based on Computational intelligence. As opposed to
+Computational intelligence load prediction techniques, which are
+structured methodological approaches intended for prediction situa-
+tions, the associated technology is a specific model that, along with
+other associated models such as regression and neural networks, is
+grouped into one technological category. Li et al. (Gao et al., 2020)
+developed an IoT-based technique for load prediction. Next, a two-step
+technique of prediction was developed, which provides more accurate
+predictions than conventional methods. In (Murugan and Devi, 2019;
+Senthil Murugan and Usha Devi, 2018) designed a hybrid model for
+analyzing massive amounts of data for use in a variety of studies. In
+(Maaji et al., 2018) developed a method to improve voltage stability
+using machine learning. For optimal results, both Naive Bayes and
+K-Nearest Neighbor classifiers should be used. Rafiei et al. (2018)
+developed a hybrid approach that integrates probabilistic load predic-
+tion with massive learning machines. The proposed system divides
+electricity expansion into a series of well-behaved and productive sub-
+series using wavelet transformation. An optimization strategy based on
+swarms was proposed in (Zeng et al., 2017) to predict short-term load.
+The term Darwinian particle swarm optimization extreme machine
+learning refers to Darwinian Particle Swarm Optimization. With this
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+4 
+
+method, each swarm functions independently, just like in a normal PSO,
+to simulate natural selection. ELMs are among the most prevalent hid-
+den layer feedforward networks. Compared to standard artificial
+learning approaches, they offer greater generalization. By eliminating
+the unnecessary hidden nodes and training difficulties, the selected
+route can give excellent results. In (Das, 2022), the energy renewal of
+current building practices was evaluated as a cornerstone of the Italian
+energy strategy. The primary objective of the system is to conserve en-
+ergy and ensure the effective use of resources through optimized
+ventilation, air conditioning, and heating. The research focuses on
+analyzing energy consumption, Indoor Environmental Quality, and the
+impact of varying airflow rates, utilizing both in situ measurements and
+dynamic simulations. While the system reduces energy usage, it is noted
+that it may increase carbon dioxide levels by up to 42% (Kaur et al.,
+2021). Ya˘g et al. (Ya˘g and Altan, 2022) proposed intelligent energy
+management solutions that employ sophisticated mechanisms, such as
+machine learning and artificial intelligence, to maximize energy effi-
+ciency and sustainability in smart environments. In the study, efficiency
+encompasses multiple dimensions of IoT-based energy management in
+smart cities: optimizing energy utilization to minimize waste, improving
+operational performance to automate and enhance system responsive-
+ness, reducing energy costs through effective demand and peak load
+management, and minimizing environmental impacts by lowering
+emissions associated with energy consumption. Efficiency also covers
+the optimal allocation of resources, ensuring that both technological and
+human assets are utilized effectively to achieve sustainable urban
+development. The related work based on the last study is shown in
+Table 1.
+We explore various studies exploring the integration of IoT tech-
+nologies into energy management systems within smart buildings and
+cities in the literature review. These studies demonstrate the trans-
+formative potential of IoT-based solutions. These works reveal key
+themes, including the implementation of machine learning and big data
+analytics to optimize energy consumption, the creation of sophisticated
+algorithms for energy management in the home and public sector, and
+the development of smart city architecture. Through intelligent analysis
+and real-time data processing, these investigations demonstrated how
+IoT technologies can effectively reduce energy consumption and envi-
+ronmental impact. Literature reveals a trend toward IoT framework
+adoption that facilitates energy management and promotes the devel-
+opment of third-party applications, thus enhancing the adaptability and
+utility of smart systems. Scalable, flexible solutions that can adapt to
+changing
+energy
+demands
+and
+technological
+advancements
+are
+becoming increasingly important. The critical analysis of these studies
+places the research within a broader context of IoT applications. As well
+as the challenges and opportunities that lie ahead, it outlines innovative
+approaches and technological advancements. Comparison and contrast
+of previous research can help us better understand how IoT-based sys-
+tems can address energy consumption and sustainability issues in smart
+environments. IoT capabilities and their impact on smart city infra-
+structure are examined in this study, reinforcing the significance of the
+study and guiding future research. In the study, we utilized an analytical
+approach to assess the effectiveness of IoT-based frameworks for energy
+management in smart cities. The analysis began with descriptive ana-
+lytics to summarize baseline energy usage from IoT device data, fol-
+lowed by predictive analytics using machine learning algorithms like
+regression analysis and neural networks to forecast future energy de-
+mands. We then applied prescriptive analytics with optimization models
+such as linear programming to suggest actionable energy management
+strategies. Simulation models tested the feasibility of these strategies
+under various conditions, while data fusion techniques integrated
+diverse data sources for an energy overview. Additionally, system dy-
+namics models assessed long-term impacts on urban infrastructure, and
+real-time monitoring and control ensured optimal system performance
+by responding immediately to any changes in energy usage. Each
+method played a critical role in providing a thorough understanding of
+Table 1
+Related work comparison.
+Authors
+Goal
+Protocol
+Efficiency
+Surveillance
+environment
+Security
+Speed of
+transmission
+Service
+quality
+Alletto et al.
+(2015)
+Exhibit halls can improve client engagement if an indoor area
+engineering is designed and tried.
+BTLE
+​
+Indoor
+​
+X
+X
+Kaur and
+Maheshwari
+(2016)
+The proposed design involves storing clients’ interactive media
+content in the Cloud and distributing it through the clients’
+informal organization as events.
+PaaS &
+IaaS
+X
+Indoor/Outdoor
+​
+​
+X
+Sun et al. (2014)
+The Smart Building plan was discussed as a creative principal
+motor to address its issues.
+ZigBee
+X
+Indoor/Outdoor
+X
+​
+​
+Basnayake et al.
+(2015)
+A science fiction prototyping (SFP) scenario recommendation
+for smart structures based on morphogenetic plans
+SFP
+X
+Indoor
+​
+​
+​
+Zhang et al.
+(2019)
+Clarifications concerning the AI-based smart building
+automation controller (AIBSBAC) designed and organized
+using AI.
+AIBSBAC
+​
+Indoor/Outdoor
+​
+X
+X
+Verma et al.
+(2019)
+In the future, temperature controls in smart buildings will be
+based on detailed thermal models developed using the IoT
+Bluetooth
+​
+Indoor
+​
+X
+​
+Le et al. (2019)
+Discussion of current state-of-the-art technology development,
+parameter management, and IoT infrastructure needed for
+smart development.
+Wi-Fi
+​
+Indoor/Outdoor
+​
+​
+​
+Theodoridis et al.
+(2013)
+Presented current cutting-edge exercises that play a pivotal role
+in shrewd structuring with innovative programming, boundary
+setting, and the use of IoT.
+Z-WAVE
+X
+Indoor/Outdoor
+X
+​
+X
+Metallidou et al.
+(2020)
+The smart city era was discussed in terms of its main results,
+technical challenges, and socio-economic benefits.
+SFP
+​
+Indoor
+​
+X
+​
+Casado-Vara et al.
+(2020)
+IoT technology may be used to regulate the performance of all
+physical systems in smart buildings to achieve energy
+efficiency.
+LTE
+X
+Indoor/Outdoor
+​
+​
+​
+Debauche et al.
+(2020)
+New matrix referred to as the "Laplacian IoT matrix" has been
+developed that provides information on connected devices and
+smart buildings.
+Wi-Fi
+​
+Indoor/Outdoor
+​
+​
+X
+Pierleoni et al.
+(2019)
+This framework introduces key concepts of IoT as they apply to
+smart homes so that we may understand and use them.
+Bluetooth
+X
+Indoor
+​
+​
+​
+Zhang et al.
+(2020)
+Building a control system based on the IoT architecture
+MQTT
+X
+Indoor
+​
+​
+​
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+5 
+
+the operational efficiencies and strategic decision-making necessary for
+sustainable urban development.
+2.1. Components of smart cities
+The components of a smart city are shown in Fig. 1. A smart city
+application starts with data gathering, then transmits and receives data,
+stores data, and analyzes the data. In several sectors, sensor develop-
+ment has been driven by the requirement to collect data. The second step
+is the transmission of data from the data collection devices to the cloud
+for analysis and storage. There have been many smart-city initiatives
+that have included citywide Wi-Fi networks, 4G and 5G technology, as
+well as local networks that can send and receive data locally or globally.
+In preparation for the fourth step, data analysis, cloud storage is the
+third phase, which incorporates numerous storage options. The analysis
+of data helps in making decisions by finding patterns and conclusions.
+There may be circumstances in which simple analyses, such as
+decision-making and aggregation, are appropriate. Cloud computing
+makes it possible not only to gather, save, and process data, but also to
+analyze it in real-time utilizing deep learning algorithms and machine
+learning algorithms (Songhorabadi et al., 2020) (see Table 2).
+2.2. IoT definition in smart devices
+Intelligent devices will combine sensor data from several sources,
+determine the best course of action based on local and distributed in-
+formation, and then change or manage the environment. By utilizing
+computing resources, storage, and interlayer communications, such as
+cloud computing, cloud storage, and other current Internet technologies,
+objects can operate in the physical realm and provide enhanced robotic
+services. Cloud data transmission speeds provide robot mobility and
+functionality, allowing jobs to be transferred without severe restrictions.
+Robotics
+is
+undergoing
+rapid
+change
+with
+the
+emergence
+of
+communication-oriented robots that utilize wireless connections and
+Fig. 1. Key Components of Smart Cities: This diagram illustrates the inter-
+connected elements that constitute smart cities, including Smart Trans-
+portation, Smart Energy, Smart Services, Smart Industry, Smart Infrastructure,
+Smart Health, Smart Agriculture, Smart Home, Smart Games, and Smart Rec-
+reation, highlighting the holistic approach to urban development.
+Table 2
+Components of smart cities.
+Author
+Year
+Method
+Purpose/Result
+Chen et al. (Chen
+et al., 2023a)
+2023
+smart city quality of
+life (SCQOL)
+Using the five SCQOL
+domains, their impact
+on citizens’ support for
+smart city development
+(SCD), and the three
+identified citizen
+segments, the necessary
+actions can be
+implemented to
+improve SCD for the
+target groups.
+Weber-Lewerenz (
+Weber-Lewerenz
+and Christina,
+2023)
+2023
+digital twins and AI
+model
+By employing digital
+twins and artificial
+intelligence, it is
+possible to create
+advanced fire
+prevention systems that
+utilize specialized
+automated building
+solutions. These systems
+can be customized,
+tested, planned, and
+modified according to
+specific needs, and can
+effectively
+communicate important
+information through
+visual representations.
+It can be said that a
+single image generated
+by these systems can
+convey a vast amount of
+information, equivalent
+to a thousand words.
+Chen et al. (Chen,
+2023)
+2023
+sustainable
+development goals
+(SDGs)
+The availability of green
+spaces, recycling
+initiatives, and
+measures to mitigate air
+pollution are connected
+to happiness. When it
+comes to enhancing
+people’s wellbeing,
+urban infrastructure
+plays a more crucial role
+than technological
+gadgets.
+Savastano et al. (
+Savastano et al.,
+2023)
+2023
+information and
+communications
+technology (ICT)
+According to the results,
+institutions and
+providers of smart
+mobility solutions must
+have a clear
+comprehension and
+effective
+communication of how
+digital services can be
+utilized at different user
+touchpoints and
+communication
+channels to enhance the
+value provided to both
+residents and visitors.
+This is essential to
+improve the overall
+experience of the users.
+Buhalis et al. (
+Buhalis et al.,
+2023)
+2023
+A total of 145 peer-
+reviewed publications
+on smart hospitality
+were collected from
+Web of Science.
+Additionally, eight
+recent reviews on
+smart tourism and
+hospitality were
+Drawing from prior
+systematic reviews of
+smart hospitality and
+literature evaluations,
+this study aims to
+investigate the latest
+trends, issues, and
+themes in this field. It
+consolidates existing
+knowledge, extrapolates
+(continued on next page)
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+6 
+
+links to sensors and other network resources. Robots connected to a
+network are robots that interact with the Internet or a LAN through a
+communication network. There are multiple ways to create networks,
+including wireless, wired, or using protocols such as TCP, UDP, 802.11,
+and more. Numerous new possibilities are being explored with these
+robots, including automation and exploration. The Association of
+Automation and Robotics in Network Robots defines two sub-categories
+of network robots (network-connected): Tele-operated robots are robots
+to which the human user sends commands and receives feedback
+through the network. Such systems are used in research, education, and
+public awareness using valuable resources available to a wide audience.
+With autonomous robots, robots and sensors exchange information
+over a network with minimal human intervention. The sensor network
+expands the effective measurement range of robots and allows them to
+communicate with one another over long distances to coordinate their
+activities. Likewise, the robot can assist in the deployment, mainte-
+nance, and maintenance of the sensor network to extend its life and
+usefulness In both groups of network robots, a common challenge is
+developing a scientific base that can be used to link control and create
+new capabilities. The typical robot is a high-capacity closed system in
+which upgrades or changes in performance and operation (remote or
+local) require extensive knowledge and are usually subject to long
+maintenance periods, and possesses no free communication interfaces,
+and this is usually done to ensure security and control the effectiveness
+of the robot. The concept of the IoT in intelligent robots goes beyond
+network and mass robotics, which integrate heterogeneous intelligent
+robots into a distributed architecture of cloud-and-edge operating sys-
+tems. "IoT in intelligent robots" offers intelligent and advanced robots
+with high and new capabilities by integrating IoT and intelligent robots
+in today’s technology. The development of multi-radio access technol-
+ogy to connect smart devices to the edge has created heterogeneous
+cellular networks that require complex configuration, management, and
+maintenance to support intelligent robots. The use of artificial intelli-
+gence techniques enables IoT-enabled robotic systems to integrate
+seamlessly with IoT capabilities to create optimal solutions for specific
+applications. IoT technologies in robots enable the embedding of in-
+formation in systems and processes, enabling companies to increase
+efficiency, identify new business opportunities, and as a result, IoT-
+based robotic systems are better prepared to meet multiple needs
+within more complex environments (Campos et al., 2016), as exhibited
+in Fig. 3 and Table 4.
+2.3. Smart city IoT devices
+Smart cities are driven by the IoT; it is the technology that enables
+ubiquitous digitization, thus providing the basis for smart cities. Objects
+are being connected to the internet more and more, enabling them to
+transmit data and receive commands. This is known as the IoT. With the
+IoT, you can collect data and use data analytics to provide useful in-
+formation for policy and decision-making. The Internet is expected to
+connect 75 billion devices by 2025 (Songhorabadi et al., 2023), allowing
+even more applications to be created. Using the IoT, sensors in smart
+cities could collect and send data about the condition of a city, which
+could then be analyzed and used for decision-making. In terms of big
+data and intelligent traffic signal systems, the classification of data po-
+sitions is of critical importance. The data in the corners correspond to
+the districts on Google Maps (Das, 2022). The data also includes a time
+column that indicates congestion length. As a result, it will be possible to
+determine the length and location of daily congestion, as well as when
+and where it occurs. It is impossible to overestimate the importance of
+IoT big data management surveys and analytics. Fig. 2 depicts an
+all-encompassing perspective. Among the sections of the IoT are Big
+Data Management, Analytical, Security, Privacy, and Energy Efficiency
+(Uzair et al., 2019). In addition to categorizing and storing data in a
+database, the big data framework must also place special emphasis on
+unstructured data. Scaling big data is another crucial function for
+Table 2 (continued)
+Author
+Year
+Method
+Purpose/Result
+examined to provide a
+analysis of the topic.
+insights, and contributes
+to the progress of smart
+hospitality by serving as
+a valuable resource for
+stimulating academic-
+business discussions and
+inspiring further
+research.
+Kuo et al. (Kuo et al.,
+2023)
+2023
+Internet-of-Things
+(IoT)
+This study will address
+the challenges
+encountered by smart
+public transportation
+systems in areas such as
+network design,
+operational planning,
+scheduling, and
+management.
+Zeng et al. (Zeng
+et al., 2023)
+2023
+the q-rung orthopair
+fuzzy set (q-ROFS),
+TOPSIS model
+The aim of this paper is
+to present a novel
+method for assessing q-
+ROF (Quality of
+Resilient Operation
+Framework) scenarios,
+which involves an
+advanced version of the
+TOPSIS (Technique for
+Order Preference by
+Similarity to Ideal
+Solution) model along
+with specific operators.
+The proposed technique
+is used to evaluate a
+smart city, and the
+results demonstrate the
+feasibility and
+effectiveness of the
+system.
+Verhulsdonck et al. (
+Verhulsdonck
+et al., 2023)
+2023
+A Systematic Review
+This study aims to assist
+smart city planners in
+developing and
+evaluating
+cybersecurity measures
+that incorporate both
+personal privacy and
+engaging features. To
+achieve this objective,
+the research proposes
+using a cybersecurity
+lens, such as the
+McCumber cube model,
+which can provide a
+framework for
+analyzing various
+aspects of cybersecurity.
+Alshamaila et al. (
+Alshamaila et al.,
+2023a)
+2023
+A systematic review
+This study provides an
+in-depth examination of
+each issue and offers
+recommendations for
+further research.
+Twist et al. (
+Alshamaila et al.,
+2023b)
+2023
+A systematic review
+This study’s systematic
+review focuses on
+citizen dissatisfaction
+with smart cities, which
+can be viewed in two
+ways: active and
+passive. Additionally,
+the research examines
+government efforts to
+address and promote
+critical citizen
+engagement.
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+7 
+
+reducing data storage size (see Table 3). Deep learning and analytics are
+two methods of examining massive amounts of IoT data. IoT creates big
+data that is unparalleled in its size, variety, and significance. Structured,
+semi-structured, and unstructured data exist. (Egri and V´ancza, 2013).
+2.4. IoT application in smart city infrastructure
+The IoT can be used in urban infrastructure such as bridges, subway
+lines, railways, streets, etc. The IoT can also be used in the service areas
+of cities and by coordinating different urban systems to do this more
+effectively and efficiently for people.
+3. Communication technologies
+The IoT in intelligent robots requires new communication architec-
+tures and equipment to operate effectively in the real environment,
+which can perform complex computing and information exchange in
+both the internal communication and edge computing in the real envi-
+ronment and can virtualize Give the best way to do it. In this regard,
+communication technology plays an important role in the IoT in robots.
+Various IoT communication protocols are used in intelligent robots
+to facilitate the layer-by-layer exchange of information. Table 5 shows
+the different types of communication technology in "IoT in intelligent
+robots".
+3.1. Advanced IoT solutions for smart grids and smart city
+Smart grids that incorporate IoT provide a fresh perspective on
+power management, which is advantageous to all stakeholders. Smart
+grids can be classified in various ways based on various components
+(aspects). Using the smart grid’s first three elements (production,
+transmission, and distribution) has presented several challenges to
+pioneering research in this area, especially regarding production,
+transmission, and distribution. The harsh environment in which the
+sensors are located is largely to blame for the difficulties. Experimental
+results obtained from the use of standard sensor networks compatible
+with IEEE 802.15.4 show that wireless communication (includes both
+LOS and NLOS scenarios) in intelligent networks due to electromagnetic
+interference, equipment noise, Blockage, etc., closed error rate, and
+variable link capacity is high. Additional limitations are imposed by
+wireless nodes, such as memory limitations, processing limitations, and
+inadequate power sources (see Table 6). With the IoT, people can design
+intelligent solutions and bridge this chasm. The IoT is aimed at creating
+a better and safer society where "everything is a service" (public safety,
+health care, manufacturing, etc.). This section reports on relevant at-
+tempts in the scientific literature. They are mainly devoted to wireless
+sensor networks, home automation, and smart grids; they come under
+the topic of IoT solutions for the smart city.
+As a result of sophisticated software technologies, new designs have
+been presented that emphasize the indoor environment and habitat
+monitoring (See Fig. 4).
+3.2. Smart city
+An intelligent summer home has been considered for the ECOGRID
+EU project. The authors implemented a modular, scalable wireless
+sensor network in their VILLASMART experiment. The energy con-
+sumption of the building was modeled. By incorporating wireless sensor
+Fig. 2. Managing big data through IoT devices.
+Fig. 3. IoT now and IoT in the future through smart robots.
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+8 
+
+network interior and outside studies (air and water temperatures, solar
+radiation sensors, weather conditions, and energy consumption data),
+these thermal models are enhanced, thus providing more accurate pro-
+jections of inside temperatures. Typical capacitance-resistance models
+forecast an inaccuracy of 1.790 ◦C. A 2.4 GHz frequency is used for IEEE
+802.15.4 internal communications. Gray estimation is used to determine
+the model’s parameters. An energy management system connects smart
+devices and software that calculates energy usage. As a result, welfare
+services and consumers stand to gain from this approach. The use of
+demand management systems is another prevalent statistic. In future
+energy systems, these technologies will balance electricity consump-
+tion/production at the customer level. In IoT solutions designed for
+smart homes, the old DSM approach is giving way to cloud-based stra-
+tegies. It is predicted that the cloud-based strategy will perform better
+than a conventional technique in energy management because it offers
+Table 3
+Works related to smart city IoT devices.
+Author
+Year
+Method
+Purpose/Result
+Ahmed et al. (
+Ahmed et al.,
+2023)
+2023
+smart Enterprise
+Management System
+(EMS), Augmented
+Intelligent
+Telemedicine (AITel)
+framework
+The proposed architecture
+for eHealth services is based
+on a smart Enterprise
+Management System (EMS).
+The Augmented Intelligent
+Telemedicine (AITel)
+paradigm, which leverages
+augmented intelligence to
+enhance telemedicine, is
+suggested to achieve an
+accuracy rate of 94.83%.
+Additionally, it is envisioned
+to create a reliable
+ecosystem for resource
+recommendations, thereby
+facilitating the
+establishment of a resilient
+healthcare system for
+remote patients,
+communities, and
+infrastructure.
+Lucic et al. (
+Lucic et al.,
+2023)
+2023
+An Overview
+The purpose of this study is
+to provide an overview of
+the practical applications
+that micro-unmanned aerial
+vehicles (UAVs) can offer to
+smart cities, with a focus on
+intelligent transportation
+systems (ITS). The research
+also identifies potential
+challenges associated with
+UAV operations and
+suggests several feasible
+approaches to managing
+UAV swarms while
+addressing the issue of their
+limited battery capacity.
+Kumar et al. (
+Kumar et al.,
+2023)
+2023
+IoT, V-model
+development lifecycle
+levels
+By identifying the
+challenges encountered in
+different projects and
+categorizing them based on
+the V-model development
+lifecycle, this study provides
+a reference guide for future
+projects. Early recognition
+of these issues can aid
+ongoing and upcoming IoT
+research initiatives in smart
+cities to accelerate testbed
+delivery and reduce
+implementation time.
+Majid et al. (
+Majid, 2023)
+2023
+IoT
+This journal article
+investigates the essential
+features of smart cities and
+the security prerequisites for
+IoT systems that facilitate
+them. It also delves into the
+major privacy and security
+issues associated with the
+application architecture of
+smart cities.
+Patil et al. (
+Patil et al.,
+2023)
+2023
+IoT
+The objective of this article
+is to provide a review of the
+latest research on IoT in
+smart cities, while also
+identifying potential areas
+for further investigation.
+Ali et al. (Ali
+et al., 2023)
+2023
+Generic Middleware for
+Smart City Applications
+(GMSCA), IoT
+The performance and load
+balancing tests are
+employed to assess the
+effectiveness of the GMSCA
+(Global Mobile Satellite
+Communications Antenna)
+system. The results indicate
+Table 3 (continued)
+Author
+Year
+Method
+Purpose/Result
+that the GMSCA operates
+efficiently and is highly
+functional.
+Chithaluru
+et al. (
+Chithaluru
+et al., 2023)
+2023
+Low-energy Adaptive
+Clustering Hierarchy
+(LEACH) and Low-
+energy Adaptive
+Clustering Hierarchy-
+Centralized (LEACH-C),
+IoT
+After analyzing the results, it
+is observed that the
+proposed protocol
+outperforms LEACH and
+LEACH-C, demonstrating an
+average improvement of
+35% in key performance
+metrics such as First Node
+Dies (FND), Last Node Dies
+(LND), the number of
+packets sent to CH & BS,
+network convergence time,
+network overhead, and
+average packet delay.
+Walczak et al. (
+Walczak
+et al., 2023)
+2023
+IoT, structural equation
+modeling
+The unique contribution of
+this study is its proposal that
+the positive relationship
+between the adoption of IoT
+devices and their perceived
+usefulness for individuals
+with disabilities is enhanced
+and moderated by the level
+of empathy towards people
+with disabilities.
+Wen et al. (
+Wen et al.,
+2023)
+2023
+IoT, Edge computing,
+Distributed systems, Big
+data, Self-organized
+Maps
+This study has established a
+framework for processing
+vast amounts of data
+generated by smart city
+health monitoring and
+diagnosis applications
+across geographically
+distributed edge clusters.
+The proposed architecture is
+founded on the Map-Reduce
+methodology for distributed
+processing of large datasets
+and utilizes edge clusters
+located throughout the
+smart city.
+Zeb et al. (Zeb
+et al., 2023)
+2023
+radio frequency (RF)-
+based Energy
+harvesting, IoT devices
+The researchers utilized
+various techniques to ensure
+a continuous energy supply
+for the gadget, preventing it
+from remaining idle. These
+strategies comprise of
+probabilistic charger
+placement, fixed charger
+placement (single/
+multiple), mobile charger
+placement (single/
+multiple), and set covers.
+However, some limitations
+of these approaches include
+casting and charging times.
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+9 
+
+Table 4
+Works related to IoT definition in smart devices.
+Author
+Year
+Method
+Purpose/Result
+Luperto et al. (
+Luperto et al.,
+2023)
+2023
+Internet of Robotics
+Things (IoRT)
+This research proposes a
+method to integrate and
+establish synergy between
+the IoT system and robots,
+and demonstrates how this
+approach can enhance
+long-term care for elderly
+individuals. The study
+shows that the combined
+use of IoT and robots can
+result in improved
+performance and
+effectiveness in providing
+care.
+Prajapati et al. (
+Prajapati et al.,
+2023)
+2023
+IoT
+The deployment of IoT
+devices on farms can enable
+data collection and
+processing at frequent
+intervals, allowing farmers
+to respond promptly to
+emerging problems and
+environmental
+fluctuations. This can
+streamline the farming
+process and lead to
+improved outcomes.
+Pouresmaieli
+et al. (
+Pouresmaieli
+et al., 2023)
+2023
+IoT and sustainability
+challenges
+The study’s results revealed
+that the implementation of
+IoT in mining activities can
+contribute to the economic
+index of sustainability by
+increasing GDP, wealth,
+income, and productivity
+while simultaneously
+reducing total cost,
+operating costs, and
+depreciation costs.
+Kasturi et al. (
+Kasturi et al.,
+2023)
+2023
+IOT-Based Child
+Safety Monitoring
+Robot with User-
+Friendly Mobile App
+The proposed kid safety
+monitoring system in this
+research utilizes low-cost
+and easily accessible
+electrical components,
+resulting in a cost-effective
+IoT-based solution for
+monitoring child safety.
+Ryalat et al. (
+Ryalat et al.,
+2023)
+2023
+cyber-physical
+systems (CPS), IoT
+This study outlines the
+development of a smart
+cyber-physical system that
+aligns with the innovative
+Industry 4.0 framework for
+intelligent factories. The
+system integrates the
+essential industrial,
+computer, information, and
+communication
+technologies of a smart
+factory.
+Meddeb et al. (
+Meddeb et al.,
+2023)
+2023
+Raspberry-PI and IoT
+This study evaluates the
+performance of the
+proposed face recognition
+algorithm and compares it
+with existing approaches.
+The analysis includes a set
+of numerical results for
+comparison purposes.
+Cascalho et al. (
+Cascalho et al.,
+2023)
+2023
+MQTT protocol, IoT
+Integrating IoT and
+robotics into the classroom
+can promote the
+development of students’
+creativity and enable them
+to undertake projects in key
+domains related to IoT and
+robotics knowledge.
+Table 4 (continued)
+Author
+Year
+Method
+Purpose/Result
+Sadiku et al. (
+Sadiku et al.,
+2023)
+2023
+IoT
+The manufacturing
+industry has undergone
+transformations and
+progressed in terms of
+automation,
+computerization,
+connectivity, and
+technological
+sophistication.
+Yadav et al. (
+Yadav et al.,
+2023)
+2023
+Raspberry-Pi, IoT
+The IoT-based construction
+of the robot is intended to
+utilize a camera for
+environmental observation
+and a Raspberry Pi for
+monitoring its condition.
+Table 5
+IoT layers in intelligent robots.
+Layer
+Protocol
+Physical layer
+Devices/tools/objects
+Link layer
+Bluetooth, Wi-Fi, WiMAX, ISA 100.11n, LTE-MTC, GSM, NB-IoT,
+Eddystone
+Internet layer
+IPv6, uIP, NanoIP, 6LoWPAN
+Transfer layer
+CoAP, MQTT, XMPP, AMPP, AMQP, LLAP, DDS, SOAP, UDP,
+TCP, DTLS
+Application
+layer
+REST API, JSON-IPSO Objects, Binary Objects
+Table 6
+Smart grid IoT applications.
+Consumers
+Distribution
+Transfer
+Energy Providers
+and Production
+Automatic and wireless
+size reading (smart
+measurement)
+Monitoring of
+underground
+cabling system
+Transmission
+line control
+Immediate
+monitoring of
+production
+Home (residential)
+supernatural energy
+Control of
+transfer stations
+Power
+monitoring
+Control of power
+plants
+Managing solar panels
+–
+–
+Control of
+alternative
+energy sources
+Predicting future solar
+panels and
+generating wind
+turbines (using
+sensor data such as
+temperature or
+humidity)
+–
+–
+Monitoring the
+creation of a
+residence
+(distributed)
+Fig. 4. IoT application high-level view.
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+10 
+
+centralized optimization. Centralized optimization considers a set of
+factors, so it will consider a set of criteria. This figure demonstrates the
+smart urban management approach used to implement a complete
+framework.
+3.3. Smart city challenges
+To digitize a city, it needs to have a proliferation of sensors in every
+aspect of its operation. Smart cities present enormous challenges in
+building and implementing IoT systems because of such a vast appli-
+cation field. This section focuses on the challenges that IoT system de-
+signers face while deploying smart city applications. Academics have
+been interested in IoT adoption in smart cities because of the technical
+challenges involved. Fig. 5 highlights the several obstacles that Smart
+City IoT system implementations must overcome, such as Security and
+Privacy, Smart Sensors, Networking, and Big Data Analytics (Ejaz et al.,
+2017) (see Table 7).
+3.4. About smart city privacy
+Smart cities are the most secure and private when it comes to security
+and privacy. It would be inconvenient and hazardous for its residents if
+the city’s services were disrupted. Smart cities will only work if
+important municipal facilities are online, so security will not be an issue.
+Smart cities are more vulnerable to cybercrime and cyberwarfare in an
+era when they are a strategy in global politics. This calls for the
+encryption of network data transfers. Citizens’ confidence and partici-
+pation are essential to the success of smart city programs. With sensors
+continuously collecting information about people’s activities, the
+expansion of sensors in smart cities may expose residents’ daily activities
+to undesirable parties. Additionally, organizations and companies using
+the IoT network may collect and exploit citizen data without their
+awareness for eavesdropping or targeted advertising purposes. To allow
+for proper decision-making, solutions will need techniques that ano-
+nymize data collection while keeping the context of the measured job.
+3.5. About smart sensors
+For smart cities to conclude, sensor equipment must communicate
+data, schedule activities, and aggregate data. By developing and
+accepting open protocols, manufacturers can create interoperable
+equipment, which will accelerate the deployment of IoT systems. It is
+also possible to create ’standard’ access point nodes for IoT systems that
+can communicate with devices utilizing a wide range of communication
+protocols and analyze incoming data. As indicated in (Sato et al., 2019),
+several equipment manufacturers have enabled compatibility with
+Fig. 5. Management of big data by IoT devices.
+Table 7
+Works related to smart city privacy.
+Author
+Year
+Method
+Purpose/Result
+Rawat et al. (
+Rawat et al.,
+2023)
+2023
+AI, IoT
+The purpose of this study is to
+emphasize, particularly in the
+context of security, the usage
+and significance of drones for
+intelligent city management.
+Chentouf et al. (
+Chentouf
+et al., 2023)
+2023
+Blockchain,
+Cybersecurity
+The article analyzed the
+potential contribution of
+blockchain features like
+transparency, democratization,
+decentralization, and security
+towards improving smart city
+services. It also reviewed a
+number of blockchain
+applications in smart cities. The
+study aims to showcase how
+blockchain technology can
+enhance security in smart cities
+by implementing an electronic
+voting system through a smart
+contract developed on the
+Ethereum blockchain.
+Siddiqui et al. (
+Siddiqui et al.,
+2023)
+2023
+Software Defined
+Networking (SDN),
+IoT
+To evaluate the practicality of
+the proposed security
+framework for services, this
+research created a use case that
+demonstrates the effectiveness
+of collaborative services in an
+IoT architecture enabled by
+Software-Defined Networking
+(SDN).
+Ro et al. (Ro
+et al., 2023)
+2023
+AHP (analytic
+hierarchy process),
+IoT
+The study found that
+effectiveness, efficiency, and
+sustainability are important
+considerations, while the
+security and privacy of
+technology (Tech 4) were the
+primary concerns for smart city
+collaboration.
+Khanpara et al. (
+Khanpara
+et al., 2023)
+2023
+IoT
+To identify and stop such risks,
+this study investigates several
+security dangers in a smart
+home setting and suggests a
+context-aware security-based
+system.
+Shalender et al.
+(Shalender
+et al., 2023)
+2023
+IoT
+The framework highlights the
+specific areas that require
+specialized focus from the
+industry and proposes solutions
+to effectively address the
+security and privacy issues
+related to data. The research
+also offers crucial
+recommendations for
+businesses, consumers, and
+policymakers and has
+implications for both
+researchers and practitioners.
+Saini et al. (
+Saini et al.,
+2023)
+2023
+IoT
+The primary focus of this
+research is on smart cities,
+exploring what makes them
+intelligent and how they
+function, the challenges
+involved in making cities smart,
+the various types of threats and
+risks they encounter, the
+ongoing initiatives to enhance
+their safety and security, and the
+potential areas for further
+advancement.
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+11 
+
+alternative protocols. Reliability and durability are also concerns with
+intelligent sensors. The IoT system’s reliability and robustness are
+determined by its dependability and precision. The IoT is at the heart of
+smart cities, and since it’s so crucial, the system must provide a seamless
+experience for its citizens. Users’ requests for service must be handled
+promptly
+and
+accurately.
+Every
+citizen
+should
+have
+access
+to
+high-quality services in the smart city (see Table 8).
+4. A smart compact energy meter (SCEM) based on IoT
+SCEMs based on IoT is designed to increase the performance, reli-
+ability, and features of existing systems by implementing an active
+customer strategy. The best SCEMs collect all data related to energy.
+Power quality is addressed, as well as the possibilities for improving
+DSM Remote control, easy updates, compact size, and low-cost devices
+are disadvantages of the conventional system. As shown in Table 1, the
+IoT system described in the paper compares with the hardware setup
+discussed in the literature.
+4.1. Objective
+An innovative method categorizes the available load in the locality as
+primary or secondary to view the power consumption pattern in the area
+and automate the control of the load. It is considered a major load to
+have lights, a fan, and a USB charger, whereas a secondary load is to
+have an air conditioner. A Blynk application signal is sent to the
+controller to control the main and secondary loads.
+4.2. Architecture of commercial building energy management system
+(CBEMS)
+The CBEMS includes a PZEM-004T sensor and an ESP8266 wireless
+module for providing real-time information regarding power con-
+sumption, reactive power consumption, power factor, voltage, current,
+and RMS values. In the load and wireless modules are ESP32 Micro-
+controller Units and ESP8266. The ESP32 microcontroller family fea-
+tures built-in Wi-Fi and dual-mode Bluetooth and is low-cost and low-
+power. This antenna switch module includes an antenna switch, an RF
+balun, a low-noise receive amplifier, filters, and a power-management
+module. Microchip with a TCP/IP stack and microcontroller, ESP8266
+is a low-cost Wi-Fi microchip. This device allows microcontrollers to
+connect to wireless networks and establish TCP/IP communications
+without requiring additional hardware. Data is transmitted via Wi-Fi
+from the Wi-Fi modules to a Raspberry Pi 4B + connected with a hot-
+spot, which then forwards it via cloud Message Queuing Telemetry
+Transport (MQTT) to the Blynk application of an authorized customer.
+Before sending a report to Blynk, the Raspberry Pi Controller calculates
+energy usage information and tariffs. Fig. 6 illustrates the CBEMS
+architecture.
+Blynk resends information from customers to microchip modules
+through Blynk. When the virtual button on the User Interface of the
+Blynk program is set to 1/0, the relay turns the load on/off. The
+controller will turn off the secondary load even if the client switches it
+on to keep the Time of Use tariff within the nominal range. Fig. 7 shows
+the SCEM graphically.
+4.3. Smart devices/smart tools
+Connected to production and transmission lines, intelligent objects
+may include appliances, lights, or sensors. These objects can sense data,
+activate data, process data, and communicate between data. Objects that
+sense and activate data must perform A/D and D/A conversions. These
+devices perform measurements periodically and send sensed data (either
+wirelessly or wirelessly) to the hub. In addition, if protocols allow,
+sensed data can be sent directly to the cloud. Smart devices should send
+the sensed data after processing the primary data. Remote data
+Table 8
+Works related to smart sensors.
+Author
+Year
+Method
+Purpose/Result
+Chi et al. (Chi
+et al., 2014)
+2014
+wireless sensor networks
+(WSN), complex
+programmable logic
+device (CPLD)
+The efficiency of the
+proposed system has been
+validated, and the
+practical implementation
+of the IoT in monitoring
+aquatic environments has
+yielded favorable
+outcomes.
+Sehrawat et al. (
+Sehrawat
+et al., 2019)
+2019
+IoT
+This article describes
+numerous sensor-based
+IoT applications as well as
+a number of IoT sensors.
+This article also clarifies
+which sort of sensor is
+needed for which IoT
+application by studying
+various sensor
+applications.
+Ullo et al. (Ullo
+et al., 2021)
+2021
+AI, IoT
+The article provides a
+detailed analysis,
+evaluation, and
+comparison of specific
+types of sensors and their
+technologies. They also
+suggest IoT advancements
+that could assist
+researchers, farmers, and
+policymakers in their
+remote sensing and
+agricultural research and
+implementations.
+Martins et al. (
+Martins et al.,
+2023)
+2023
+IoT sensors
+The "online lab" is an
+intriguing and useful
+resource, especially in the
+current pandemic
+situation. Additionally, it
+offers students the
+opportunity to work with
+tangible hardware, which
+can aid in enhancing their
+skills and understanding of
+IoT sensor devices.
+Basith et al. (
+Basith et al.,
+2023)
+2023
+IoT-cloud supported
+This research makes a
+valuable contribution to
+crisis management efforts
+by repurposing pandemic
+waste for energy
+harvesting and sensing
+applications. It also serves
+to mitigate the problem of
+microplastic pollution in
+the environment, as well
+as control the spread of the
+coronavirus through
+promoting proper hand
+washing practices.
+Khan et al. (
+Khan and
+Shah, 2023)
+2023
+The Analytical
+Hierarchy Process (AHP)
+and the Multi-Objective
+Optimization on the
+basis of Ratio Analysis
+(MOORA) technique.
+Smart cars equipped with
+sensors can detect
+emergencies and help
+prevent accidents that
+may result in injuries or
+fatalities. These sensors
+can also be used to
+monitor and manage
+activities for enhanced
+efficiency.
+Mohammed
+et al. (
+Mohammed
+et al., 2023)
+2023
+GUI cross platform
+mobile application, IoT
+The proposed system
+leverages the latest IoT
+microcontroller and
+hardware, which enhances
+the precision and speed of
+the entire system.
+(continued on next page)
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+12 
+
+activation is also possible. According to DSM, household appliances can
+be divided into three categories: fixed appliances, flexible appliances,
+and tools that are naturally dual-use. It’s not possible to manage rigid
+devices, such as lights, televisions, computers, or hair dryers, which
+relate to initial loads or other non-preventative activities. A flexible
+appliance is designed to handle regular loads or preventive maintenance
+(such as heating or cooling) and may be operated automatically. Dual-
+purpose instruments are certainly versatile (such as a washing ma-
+chine, dishwasher, or dryer), but they can also be flexible at times.
+Clients may not be concerned with the exact time the washing machine
+operates unless the time is set within a certain time limit. These devices
+usually provide loads. The smart power grid allows smart devices (both
+flexible and dual-function) to measure and control their energy con-
+sumption in real-time(see Table 9).
+5. Architectural design of the system
+An intelligent building provides its users with individualized services
+based on the information it contains about its contents, whether it is an
+office, a residence, an industrial facility, or a recreation area. Buildings
+not only need to be efficient but also habitable and productive since they
+affect people’s quality of life and work. As a result of the installation of
+building sensors and actuators, the associated cost must be balanced by
+the economic advantage of energy savings. It is neither possible nor
+practical to control the entire building. The final energy management
+framework should include actual sensor data on such inputs, in addition
+to patterns derived from data monitoring. It can therefore adapt to
+changing architectural situations as well as to new situations that
+weren’t considered in the original model. This platform is comprised of
+three layers, which makes it suitable for a variety of smart environ-
+ments, including those related to smart buildings. An IoT-based smart
+building is depicted in Fig. 8 as a three-layer framework.
+Data Sensing or Perception Layer - During the first layer, data is
+collected from sensors. Users can request information about appliances
+operating states, such as temperature and humidity, through this data
+source. A network gateway saves the information in a BD cloud.
+Data Processing or Network Layer – The data is organized and
+processed in this layer. For comfort-related concerns, such as HVAC,
+lighting, and temperature controls, individual user data is necessary.
+Data Reproduction or Application Layer - The third layer repli-
+cates data as a record of individual interactions between occupants and
+equipment. Finally, the collected data is used to improve the efficiency
+and functionality of the device. This leads to improved services for
+citizens.
+In the last decade, Cloud Computing, Information Systems, and
+Emerging Technologies have generated amounts of data, and the mini-
+aturization and output of IoT devices have increased. This information,
+however, is useless without the ability to analyze it. To extract infor-
+mation and make decisions, "Big Data Analysis" requires multiple levels
+of concentration. Humans have been able to collect relevant data using
+several analytical methods that integrate BD and IoT. In some ways, BD
+could be seen as the older sibling of IoT. As a result of all this smart
+technology, millions upon millions of data points are generated (IoT
+sensors), ushering in the age of intelligent buildings. Building upkeep
+and efficiency can be improved by using sensors that monitor temper-
+ature, motion, light, and humidity. Using the analyzed data from the
+cloud service, the motion sensor can also determine whether a resident
+was offering a "safe" meaning. A voltage stabilizer will also allow the
+mounted cloud server to operate automatically. The building’s Wi-Fi
+connection allows users to connect via their phones to the network. By
+installing cameras to monitor the environment remotely from a phone or
+other device, intelligent technologies can be used to construct a safer
+building. Furthermore, the security cameras are linked to other intelli-
+gent equipment for efficient monitoring of the building based on
+Table 8 (continued)
+Author
+Year
+Method
+Purpose/Result
+Chen et al. (
+Chen et al.,
+2023b)
+2023
+DNN splitting
+framework called
+NNFacet, IoT
+Extensive research
+indicates that NNFacet
+outperforms four baseline
+techniques in terms of
+system longevity, latency,
+and classification
+accuracy.
+Uppal et al. (
+Uppal et al.,
+2023)
+2023
+ML techniques
+The results indicate that
+machine learning
+techniques applied to
+sensors can accurately
+predict faults in smart
+offices, with Random
+Forest being the most
+effective method,
+achieving a maximum
+accuracy of 94.27%. Deep
+learning has the potential
+to produce even more
+precise results by utilizing
+larger datasets in the
+future.
+Fig. 6. A description of the overall architecture of an energy management
+system for commercial buildings.
+Fig. 7. A graphical view of the Smart Compact Energy Meter.
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+13 
+
+occupancy. Through their smart devices, residents can interact with the
+security system. It may be connected to the lighting system, buzzers,
+alarms, police station, etc. A security system responds when an intruder
+or unusual movement is detected. There is no doubt that this intelligent
+defense is much more dependable and effective than an emergency
+siren. Additionally, homeowners will receive a maintenance plan to
+ensure that all equipment is functioning and operating efficiently (see
+Fig. 8).
+To monitor the well-being of elderly people living alone at home,
+intelligent building systems have been developed. In an intelligent
+building, an occupant’s general physical activity, physiological pro-
+cesses, and environmental elements can all be monitored simulta-
+neously. Inconspicuous, inconspicuous, and non-invasive, this device is
+strategically positioned throughout the structure. Providing continuous
+monitoring in smart buildings may be possible with just one local
+gateway server. Windows is used to run the software for analysis and
+decision-making algorithms. Access to wellness-related information is
+possible thanks to the Internet.
+6. Discussion
+The findings of this study illustrate the potential of IoT-based
+frameworks to transform energy management in smart cities and
+buildings. Through an analysis of existing literature, it is evident that IoT
+technologies can improve energy efficiency, reduce environmental im-
+pacts, and optimize operational performance. Smart cities, equipped
+with IoT, ML, and AI, are capable of dynamically monitoring, predicting,
+and managing energy consumption patterns. This capability allows cit-
+ies to meet increasing energy demands while minimizing waste and
+environmental harm. IoT-based energy management systems offer key
+advantages, such as the ability to process real-time data from sensors,
+smart meters, and appliances autonomously. With the integration of ML
+algorithms, these systems can predict energy requirements, optimize
+resource distribution, and adapt to changing consumption patterns
+without human intervention. This results in enhanced energy efficiency,
+reduced carbon emissions, and lower operational costs. Furthermore,
+the inclusion of renewable energy sources, such as solar and wind, into
+IoT-enabled grids supports sustainable urban energy systems. Despite
+these advancements, the implementation of IoT frameworks still faces
+technical, social, and economic barriers. Technically, interoperability
+among devices, data security, and network reliability are persistent
+challenges. Socially, concerns regarding user privacy, data ownership,
+and equitable access to IoT systems remain unaddressed. Economically,
+the high cost of deploying and maintaining IoT infrastructures, partic-
+ularly in resource-constrained regions, limits widespread adoption. The
+literature also reveals gaps in assessing the scalability and long-term
+impacts of IoT-based systems. Existing studies often lack standardized
+Table 9
+Works related to Smart devices.
+Author
+Year
+Method
+Purpose/Result
+Harwood et al. (Harwood
+et al., 2014)
+2014
+–
+Smart-device participation,
+but not use, was found to be a
+predictor of sadness and
+stress, indicating that the
+kind of use, as opposed to the
+amount of use, is what
+mattered.
+Lazar et al. (Lazar et al.,
+2015)
+2015
+–
+The recommendations
+comprise strategies for
+eliminating barriers,
+promoting adoption, and
+advocating for the
+consideration of using these
+devices for short-term
+treatments, in addition to
+their typical long-term use.
+Silverio-Fern´andez et al. (
+Silverio-Fern´andez
+et al., 2018)
+2018
+IoT
+The objective of this research
+is to introduce a precise and
+flexible concept of a smart
+device, which can serve as a
+foundation for future studies
+in this field.
+Massoomi et al. (
+Massoomi et al., 2019)
+2019
+An review
+"In this review, Theyconsider
+commonly utilized devices,
+evaluate the precision and
+dependability of the data
+generated by them, and
+explore any potential clinical
+applications for the gathered
+information."
+Alter (Alter, 2020)
+2020
+–
+"The objective of this article is
+to study the concept of
+smartness and to illustrate
+how to employ this
+understanding of smartness
+when describing, analyzing,
+and designing devices and
+systems."
+Fazio et al. (De Fazio
+et al., 2023)
+2023
+bio-vital
+markers,
+"The main aim of this review
+is to provide a survey of
+wearable technologies and
+sensor systems that are
+capable of monitoring
+patients’ physiological
+parameters during post-
+operative rehabilitation and
+athletes’ training.
+Additionally, They aim to
+provide evidence that these
+technologies are effective for
+use in healthcare settings."
+Suh et al. (Suh et al.,
+2023)
+2023
+visual
+analogue
+scale (VAS),
+Individuals suffering from
+tinnitus may benefit from
+tinnitus retraining therapy
+(TRT) using smart devices as
+an effective alternative. Since
+conventional one-on-one
+counseling can be time-
+consuming and expensive,
+smart-TRT may offer a more
+cost-effective solution with
+comparable treatment
+outcomes.
+Fig. 8. Architecture of the system (Lv, 2022).
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+14 
+
+evaluation metrics, making it difficult to compare the performance of
+different frameworks. Additionally, there is a need to explore how policy
+interventions and public awareness can support the adoption of these
+technologies. Addressing these gaps is essential for advancing IoT-based
+energy management. Future research should focus on developing uni-
+versally accepted protocols for device interoperability, robust data se-
+curity frameworks, and cost-efficient solutions to make IoT technologies
+accessible across diverse regions. Policies to reduce the digital divide
+and promote inclusive adoption should also be prioritized. By tackling
+these challenges, IoT frameworks can fully realize their potential to
+create efficient, sustainable, and resilient energy systems in smart cities.
+7. Conclusion
+The Internet of Things has exhibited remarkable growth, expanding
+its applications beyond early focus areas such as smart homes to sectors
+including agriculture, industry, government, and business. Among
+these, smart construction emerges as a critical domain where IoT can
+enhance energy and operational efficiency. This study provides a review
+of IoT frameworks for energy management, highlighting their potential
+to reduce energy consumption and environmental impacts in smart
+buildings. IoT-equipped smart buildings demonstrate enhanced opera-
+tional efficiency, safety, and the capacity to address critical needs such
+as comfort, accessibility, security, and energy efficiency. This paper
+presents an IoT-based framework for energy management in smart cities
+as a key contribution, that primarily focuses on a descriptive analysis wit
+evaluation of the framework’s performance. It integrates various com-
+ponents of the Internet of Things architecture in order to support
+intelligent energy management applications, emphasizing the collec-
+tion, storage, and intelligent analysis of data. Moreover, it facilitates the
+development of third-party applications, thereby extending its utility
+and adaptability.
+The key findings of our analysis underscore the growing significance
+of IoT-based frameworks in addressing contemporary energy manage-
+ment challenges. While intuitive, these findings highlight critical aspects
+for the effective integration of IoT into energy systems.
+• IoT-based frameworks demonstrate potential in improving energy
+efficiency and reducing environmental impacts, offering intelligent
+solutions to optimize resource usage in smart cities and buildings.
+• The escalating demand for energy underscores the need for innova-
+tive strategies that not only enhance building maintenance efficiency
+but also adapt to the increasing complexity of energy systems.
+• There is a pressing need to delve deeper into IoT-based wireless
+sensing systems, particularly their application in smart buildings.
+Emphasizing intelligent analysis and fostering third-party applica-
+tion development within the IoT ecosystem can address evolving
+energy demands and operational challenge.
+For future research, we recommend.
+• A study of AI-based energy management systems in smart cities is
+being conducted.
+• Using IoT to manage secure, blockchain-based devices in smart
+cities.
+• IoT applications in smart grids and environments as an energy
+Internet.
+• Analyzing
+the
+management
+of
+IoT
+applications
+in
+smart
+environments.
+• Identifying factors that facilitate the development of smart city in-
+formation systems through the use of IoT and cloud computing.
+• Implementing IoT-based smart applications in smart cities.
+It is hoped that these directions will serve as a blueprint for re-
+searchers, planners, architects, and stakeholders who wish to integrate
+smart sensing technologies into future building designs in order to
+achieve greater environmental and energy efficiency.
+Limitation.
+While this study presents a review of IoT-based frameworks for en-
+ergy management in smart buildings and cities, several limitations
+should be acknowledged. One key limitation is the reliance on existing
+literature and secondary data sources, which may not capture the latest
+advancements in IoT technologies or the evolving energy management
+needs in real-world applications. As IoT systems and machine learning
+algorithms develop rapidly, the frameworks reviewed in this study
+might become outdated, potentially limiting the study’s applicability to
+future developments. Another limitation arises from the diverse range of
+IoT architectures and energy management systems reviewed. Although
+this breadth provides a wide perspective, it also poses challenges in
+comparing different frameworks that use varying technologies, pro-
+tocols, and objectives. This diversity makes it difficult to establish a
+unified model or set of best practices applicable across all smart cities
+and buildings. The variation in technical specifications, geographical
+locations, and energy consumption patterns further complicates a
+standardized approach to intelligent energy management. Additionally,
+the study focuses primarily on technical aspects, such as data collection,
+storage, and intelligent analysis, while underemphasizing the social and
+policy dimensions that are critical for the large-scale adoption of IoT-
+based energy management systems. Factors such as regulatory pol-
+icies, public awareness, user acceptance, and ethical considerations
+related to data privacy and security are important but not thoroughly
+explored. Furthermore, the study does not extensively address the eco-
+nomic feasibility of implementing IoT systems on a large scale. The cost
+of deploying smart sensors, managing data networks, and maintaining
+infrastructure could be prohibitive for many cities, particularly those in
+developing regions. Future research should include cost-benefit analyses
+and investigate financial models that can support the widespread
+adoption of IoT-based solutions in energy management. Lastly, the study
+primarily focuses on urban areas, potentially limiting its relevance for
+rural or less technologically advanced regions where IoT infrastructure
+and energy management systems are less developed.
+Funding statement
+In this paper, the authors did not receive funding from any institution
+or company and declared that they do not have any conflict of interest.
+CRediT authorship contribution statement
+Maryam Nikpour: Writing – review & editing, Validation, Super-
+vision, Methodology, Investigation. Parisa Behvand Yousefi: Valida-
+tion, Resources, Methodology, Investigation. Hadi Jafarzadeh: Writing
+– review & editing, Resources, Investigation, Formal analysis. Kasra
+Danesh: Validation, Investigation, Funding acquisition, Formal anal-
+ysis. Roya Shomali: Writing – review & editing, Software, Resources,
+Data curation. Saeed Asadi: Investigation, Resources, Validation,
+Writing – review & editing. Ahmad Gholizadeh Lonbar: Writing –
+review & editing. Mohsen Ahmadi: Writing – original draft, Visuali-
+zation, Resources, Methodology, Investigation.
+Declaration of competing interest
+The authors declare that they have no known competing financial
+interests or personal relationships that could have appeared to influence
+the work reported in this paper.
+Data availability
+No data was used for the research described in the article.
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+15 
+
+References
+Ahmad, A., Javaid, N., Guizani, M., Alrajeh, N., Khan, Z.A., 2017. ”An accurate and fast
+converging short-term load forecasting model for industrial applications in a smart
+grid”. IEEE Trans. Ind. Inf. 13 (5), 2587–2596.
+Syed, Ahmed, Kumar, Thouheed, Kim, Vinoth, Yoon, Jung, 2023. AITel: eHealth
+augmented intelligence based telemedicine resource recommendation framework for
+IoT devices in smart cities. IEEE Internet Things J. 10 (21), 18461–18468.
+Alavi, A.H., Jiao, P., Buttlar, W.G., Lajnef, N., 2018. Internet of Things-enabled smart
+cities: state-of-the-art and future trends. Measurement 129, 589–606.
+Alberg, D., Last, M., 2017. ”Short-term load forecasting in smart meters with sliding
+window based ARIMA algorithms”. Intell Inform Database Syst Lecture Notes
+Comput Sci 299–307.
+Ali, Zulfiqar, et al., 2023. A generic internet of things (IoT) middleware for smart city
+applications. Sustainability 15 (1), 743.
+Alletto, S., Cucchiara, R., Del Fiore, G., Mainetti, L., Mighali, V., Patrono, L., Serra, G.,
+2015. "An indoor location-aware system for an IoT-based smart museum". IEEE
+Internet Things J. 3 (2), 244–253.
+Alshamaila, Yazn, et al., 2023a. Effective use of smart cities in crisis cases: a systematic
+review of the literature. Int. J. Disaster Risk Reduc., 103521
+Alshamaila, Yazn, et al., 2023b. Effective use of smart cities in crisis cases: a systematic
+review of the literature. Int. J. Disaster Risk Reduc., 103521
+Alter, Steven, 2020. Making sense of smartness in the context of smart devices and smart
+systems. Inf. Syst. Front 22 (2), 381–393.
+Asgari, F., Ghoreishi, S.G.A., Khajavi, M., Foozoni, A., Ala, A., Lonbar, A.G., 2024. Data
+analysis of decision support for sustainable welfare in the presence of GDP threshold
+effects: a case study of interactive data exploration. arXiv preprint arXiv:
+2407.09711.
+Ashraf, Shahzad, 2021a. A proactive role of IoT devices in building smart cities. Internet
+of Things and Cyber-Physical Systems 1, 8–13.
+Ashraf, Shahzad, 2021b. A proactive role of IoT devices in building smart cities. Internet
+of Things and Cyber-Physical Systems 1, 8–13.
+Basith, Sayyid Abdul, Chandrasekhar, Arunkumar, 2023. COVID-19 clinical waste reuse:
+a triboelectric touch sensor for IoT-cloud supported smart hand sanitizer dispenser.
+Nano Energy, 108183.
+Basnayake, B., Amarasinghe, Y., Attalage, R., Udayanga, T., Jayasekara, A., 2015.
+"Artificial intelligence based smart building automation controller for energy
+efficiency improvements in existing buildings". Int. J. Adv. Autom. Sci. Technol. 40
+(40).
+Buhalis, Dimitrios, O’Connor, Peter, Leung, Rosanna, 2023. Smart hospitality: from
+smart cities and smart tourism towards agile business ecosystems in networked
+destinations. Int. J. Contemp. Hospit. Manag. 35 (1), 369–393.
+Campos, L.B., Cugnasca, C.E., Hirakawa, A.R., Martini, J.S.C., 2016. Towards an IoT-
+based system for smart city. In: 2016 IEEE International Symposium on Consumer
+Electronics (ISCE), pp. 129–130.
+Casado-Vara, R., Martín del Rey, A., Alonso, R.S., Trabelsi, S., Corchado, J.M., 2020.
+A new stability criterion for IoT systems in smart buildings: temperature case study.
+Mathematics 8 (9), 1412.
+Cascalho, Jos´e, et al., 2023. Communication in educational robots: from coordination to
+IoT systems. Optimization, Learning Algorithms and Applications: Second
+International Conference, OL2A 2022, P´ovoa de Varzim, Portugal, October 24-25,
+2022, Proceedings. Cham: Springer International Publishing.
+Charytoniuk, W., Chen, M.S., Van Olinda, P., 1998. ”Nonparametric regression based
+short-term load forecasting”. IEEE Trans. Power Syst. 13 (3), 725–730.
+Chen, Chong-Wen, 2023. "Can smart cities bring happiness to promote sustainable
+development? Contexts and clues of subjective well-being and urban livability.".
+Developments in the Built Environment 13, 100108.
+Chen, K., Chen, K., Wang, Q., He, Z., Hu, J., He, J., 2019. ”Short-term load forecasting
+with deep residual networks”. IEEE Trans. Smart Grid 10 (4), 3943–3952.
+Chen, Zhaoyu, Chan, Irene Cheng Chu, 2023a. "Smart cities and quality of life: a
+quantitative analysis of citizens’ support for smart city development.". Inf. Technol.
+People 36 (1), 263–285.
+Chen, Jiale, et al., 2023b. NNFacet: splitting neural network for concurrent smart
+sensors. IEEE Trans. Mobile Comput.
+Chentouf, Fatima Zahrae, Bouchkaren, Said, 2023. Security and privacy in smart city: a
+secure e-voting system based on blockchain. Int. J. Electr. Comput. Eng. 13 (2),
+1848.
+Chi, Qingping, et al., 2014. A reconfigurable smart sensor interface for industrial WSN in
+IoT environment. IEEE Trans. Ind. Inf. 10 (2), 1417–1425.
+Chithaluru, Premkumar, et al., 2023. Energy-balanced neuro-fuzzy dynamic clustering
+scheme for green & sustainable IoT based smart cities. Sustain. Cities Soc., 104366
+Das, Anirban, 2022. Sandip Chakraborty, and Suchetana Chakraborty. "Where do all my
+smart home data go? Context-aware data generation and forwarding for edge-based
+microservices over shared IoT infrastructure.". Future Generat. Comput. Syst. 134,
+204–218.
+De Fazio, Roberto, et al., 2023. Wearable sensors and smart devices to monitor
+rehabilitation parameters and sports performance: an overview. Sensors 23 (4),
+1856.
+Egri, P., V´ancza, J., 2013. Efficient mechanism for aggregate demand prediction in the
+smart grid”Multiagent Syst Technol Lecture Notes. Comput Sci 250–263.
+Ejaz, W., Naeem, M., Shahid, A., Anpalagan, A., Jo, M., 2017. ”Efficient energy
+management for the internet of things in smart cities”. IEEE Commun. Mag. 55 (1),
+84–91.
+Fallah, S., Deo, R., Shojafar, M., Conti, M., Shamshirband, S., 2018. ”Computational
+intelligence approaches for energy load forecasting in smart energy management
+grids: state of the art, future challenges, and research directions”. Energies 11 (3),
+596. https://doi.org/10.3390/en11030596.
+Debauche, O., Mahmoudi, S., Moussaoui, Y., 2020, November. Internet of things
+learning: a practical case for smart building automation. In 2020 5th International
+Conference on Cloud Computing and Artificial Intelligence: Technologies and Applications
+(CloudTech). IEEE, Vancouver, pp. 1–8.
+Gao, J., Wang, H., Shen, H., 2020. May. Smartly handling renewable energy instability in
+supporting a cloud datacenter. 2020 IEEE international parallel and distributed
+processing symposium (IPDPS). IEEE, pp. 769–778.
+Gezer, G., Tuna, G., Kogias, D., Gulez, K., Gungor, V.C., 2015. ”PI-controlled ANN-based
+energy consumption forecasting for smart grids”. In: Proceedings of the 12th
+International Conference on Informatics in Control, Automation and Robotics.
+Golpîra, H., Bahramara, S., 2020. Internet-of-things-based optimal smart city energy
+management considering shiftable loads and energy storage. J. Clean. Prod. 264,
+121620.
+Gong, S., Tcydenova, E., Jo, J., Lee, Y., Park, J.H., 2019. Blockchain-based secure device
+management framework for an internet of things network in a smart city.
+Sustainability 11 (14), 3889.
+Harwood, Joshua, et al., 2014. Constantly connected–The effects of smart-devices on
+mental health. Comput. Hum. Behav. 34, 267–272.
+Iqbal, J., Khan, M., Talha, M., Farman, H., Jan, B., Muhammad, A., Khattak, H.A., 2018.
+A generic internet of things architecture for controlling electrical energy
+consumption in smart homes. Sustain. Cities Soc. 43, 443–450.
+Jiang, D., 2020. The construction of smart city information system based on the Internet
+of Things and cloud computing. Comput. Commun. 150, 158–166.
+Kabalci, Y., Kabalci, E., Padmanaban, S., Holm-Nielsen, J.B., Blaabjerg, F., 2019. Internet
+of things applications as energy internet in smart grids and smart environments.
+Electronics 8 (9), 972.
+Kasturi, Kalyan, et al., 2023. Low-cost, IOT-based child safety monitoring robot with
+user-friendly mobile app. Smart Sensors Measurement and Instrumentation: Select
+Proceedings of CISCON 2021. Springer Nature Singapore, Singapore, pp. 503–511.
+Kaur, M.J., Maheshwari, P., 2016. "Building smart cities applications using IoT and
+cloud-based architectures". 2016 International Conference on Industrial Informatics
+and Computer Systems, CIICS, IEEE 1–5.
+Kaur, M., Singh, D., Kumar, V., Gupta, B.B., Abd El-Latif, A.A., 2021. ”Secure and energy
+efficient based E-health care framework for green internet of things”. IEEE Trans
+Green Commun Netw 5 (3), 1223–1231.
+Khan, Habib Ullah, Shah, Nazir, 2023. Assessing the role of AI-based smart sensors in
+smart cities using AHP and MOORA. Sensors 23 (1), 494.
+Khanpara, Pimal, et al., 2023. A context-aware internet of things-driven security scheme
+for smart homes. Security and Privacy 6.1, e269.
+Kumar, Vijay, et al., 2023. "Challenges in the design and implementation of IoT testbeds
+in smart-cities. A Systematic Review.". arXiv preprint arXiv:2302.11009.
+Kuo, Yong-Hong, Leung, Janny MY., Yan, Yimo, 2023. Public transport for smart cities:
+recent innovations and future challenges. Eur. J. Oper. Res. 306 (3), 1001–1026.
+Lazar, Amanda, et al., 2015. Why we use and abandon smart devices. Proceedings of the
+2015 ACM international joint conference on pervasive and ubiquitous computing.
+Le, D.N., Le Tuan, L., Tuan, M.N.D., 2019. Smart-building management system: an
+Internet-of-Things (IoT) application business model in Vietnam. Technol. Forecast.
+Soc. Change 141, 22–35.
+Li, L., Ota, K., Dong, M., 2017. ”When weather matters: IoT-based electrical load
+forecasting for smart grid”. IEEE Commun. Mag. 55 (10), 46–51.
+Liu, Y., Yang, C., Jiang, L., Xie, S., Zhang, Y., 2019. Intelligent edge computing for IoT-
+based energy management in smart cities. IEEE Network 33, 111–117.
+Lucic, Michael C., et al., 2023. Leveraging UAVs to enable dynamic and smart aerial
+infrastructure for ITS and smart cities: an overview. Drones 7 (2), 79.
+Luperto, Matteo, et al., 2023. Seeking at-home long-term autonomy of assistive mobile
+robots through the integration with an IoT-based monitoring system. Robot.
+Autonom. Syst. 161, 104346.
+Lv, Z., 2022. Practical application of internet of things in the creation of intelligent
+services and environments. Frontiers in the Internet of Things 1, 912388.
+Maaji, S.S., Cosma, G., Taherkhani, A., Alani, A.A., Mcginnity, T.M., 2018. ”On-line
+voltage stability monitoring using an Ensemble AdaBoost classifier”. 2018 4th
+International Conference on Information Management (ICIM).
+Majid, Azizi, 2023. Security and privacy concerns over IoT devices attacks in smart cities
+(2022). J. Comput. Commun. 11 (1), 26–42.
+Mancini, F., Nardecchia, F., Groppi, D., Ruperto, F., Romeo, C., 2020. ”Indoor
+environmental quality analysis for optimizing energy consumptions varying air
+ventilation rates”. Sustainability 12 (2), 482.
+Martins, Hugo, Gupta, Nishu, Manuel Jos´e Cabral dos Santos Reis, 2023. Teaching IoT
+smart sensors programming for a smarter world: a tool to enable the creation of a
+remote lab. Human-Machine Interaction and IoT Applications for a Smarter World.
+CRC Press, pp. 235–252.
+Massoomi, Michael R., Handberg, Eileen M., 2019. Increasing and evolving role of smart
+devices in modern medicine. Eur. Cardiol. 14 (3), 181.
+Meddeb, Houda, Abdellaoui, Zouhaira, Houaidi, Firas, 2023. Development of
+surveillance robot based on face recognition using Raspberry-PI and IOT.
+Microprocess. Microsyst. 96, 104728.
+Metallidou, C.K., Psannis, K.E., Egyptiadou, E.A., 2020. Energy efficiency in smart
+buildings: IoT approaches. IEEE Access 8, 63679–63699.
+Mohammed, Bzhar Ghafour, Hasan, Dler Salih, 2023. Smart healthcare monitoring
+system using IoT. iJIM 17.01, 141.
+Mortaji, H., Ow, S.H., Moghavvemi, M., Almurib, H.A.F., 2017. ”Load shedding and
+smart-direct load control using internet of things in smart grid demand response
+management”. IEEE Trans. Ind. Appl. 53 (6), 5155–5163.
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+16 
+
+Mukherjee, P. Mukherjee, Dey, N., De, D., Panigrahi, B.K., 2020. ”Lightweight
+sustainable intelligent load forecasting platform for smart grid applications”.
+Sustainable Comput Inf Syst 25, 100356.
+Murugan, N.S., Devi, G.U., 2019. ”Feature extraction using LR-PCA hybridization on
+twitter data and classification accuracy using machine learning algorithms”. Clust
+Comput 22 (S6), 13965–13974.
+Naranjo, P.G.V., Pooranian, Z., Shojafar, M., Conti, M., Buyya, R., 2019. FOCAN: a Fog-
+supported smart city network architecture for management of applications in the
+Internet of Everything environments. J. Parallel Distr. Comput. 132, 274–283.
+Ouyang, T., He, Y., Li, H., Sun, Z., Baek, S., 2017. A deep learning framework for short-
+term power load forecasting. arXiv preprint arXiv 1711–11519.
+Patil, Prajwal, et al., 2023. Smart Cities Using IOT Devices. Int. J. Prog. Res. Eng, Manag.
+Sci. (IJPREMS) 3 (2), 26–29.
+Pierleoni, P., Conti, M., Belli, A., Palma, L., Incipini, L., Sabbatini, L., Valenti, S.,
+Mercuri, M., Concetti, R., 2019. "Iot solution based on MQTT protocol for real-time
+building monitoring". 2019 IEEE 23rd International Symposium on Consumer
+Technologies, ISCT, IEEE 57–62.
+Pouresmaieli, Mahdi, Ataei, Mohammad, Taran, Amirhossein, 2023. Future mining based
+on internet of things (IoT) and sustainability challenges. Int. J. Sustain. Dev. World
+Ecol. 30 (2), 211–228.
+Prajapati, Jigna Bhupendra, et al., 2023. "Smart farming ingredients: IoT sensors,
+software, connectivity, data analytics, robots, drones, GIS-GPS." applying drone
+Technologies and Robotics for agricultural sustainability. IGI Global 31–49.
+Priyan, M.K., Devi, G.U., 2018. ”Energy efficient node selection algorithm based on node
+performance index and random waypoint mobility model in internet of vehicles”.
+Clust Comput 21 (1), 213–227.
+Rafiei, M., Niknam, T., Aghaei, J., Shafie-Khah, M., Catalao, J.P.S., 2018. ”Probabilistic
+load forecasting using an improved wavelet neural network trained by generalized
+extreme learning machine”. IEEE Trans. Smart Grid 9 (6), 6961–6971.
+Rahimi, M., Songhorabadi, M., Kashani, M.H., 2020. Fog-based smart homes: a
+systematic review. J. Netw. Comput. Appl. 153, 102531.
+Rawat, Bhupesh, et al., 2023. AI based drones for security concerns in smart cities.
+APTISI Transactions on Management (ATM) 7.2, 125–130.
+Reka, S.S., Dragicevic, T., 2018. ”Future effectual role of energy delivery: a
+comprehensive review of Internet of Things and smart grid”. Renew. Sustain. Energy
+Rev. 91, 90–108.
+Ro, Yuna, et al., 2023. Determining priority in smart city technologies and services for
+international development cooperation. J. Comput. Inf. Syst. 1–13.
+Ruiz-Zafra, Angel, Benghazi, Kawtar, Noguera, Manuel, 2022. IFC+: towards the
+integration of IoT into early stages of building design. Autom. ConStruct. 136,
+104129.
+Ryalat, Mutaz, ElMoaqet, Hisham, AlFaouri, Marwa, 2023. Design of a smart factory
+based on cyber-physical systems and internet of things towards industry 4.0. Appl.
+Sci. 13 (4), 2156.
+Sadeeq, M.A., Zeebaree, S., 2021. Energy management for internet of things via
+distributed systems. Journal of Applied Science and Technology Trends 2 (2), 59–71.
+Sadiku, Matthew NO., Ajayi-Majebi, Abayomi J., Adebo, Philip O., 2023. Smart
+Manufacturing." Emerging Technologies In Manufacturing. Springer International
+Publishing, Cham, pp. 49–66.
+Saini, Sameeka, et al., 2023. Challenges and opportunities in secure smart cities for
+enhancing the security and privacy. Enabling Technologies for Effective Planning
+and Management in Sustainable Smart Cities 1–27.
+Sato, M., Fukuyama, Y., Iizaka, T., Matsui, T., 2019. ”Total optimization of energy
+networks in a smart city by multi-swarm differential evolutionary particle swarm
+optimization”. IEEE Trans Sustainable Energy 10 (4), 2186–2200.
+Savastano, Marco, et al., 2023. "How smart is mobility in smart cities? An analysis of
+citizens’ value perceptions through ICT applications.". Cities 132, 104071.
+Sehrawat, Deepti, Gill, Nasib Singh, 2019. Smart sensors: analysis of different types of
+IoT sensors. 2019 3rd International Conference on Trends in Electronics and
+Informatics (ICOEI). IEEE.
+Senthil Murugan, N., Usha Devi, G., 2018. ”Detecting streaming of twitter spam using
+hybrid method”. Wireless Pers. Commun. 103 (2), 1353–1374.
+Shafik, W., Matinkhah, S.M., Ghasemzadeh, M., 2020. Internet of things-based energy
+management, challenges, and solutions in smart cities. Journal of Communications
+Technology, Electronics and Computer Science 27, 1–11.
+Shalender, Kumar, Yadav, Rajesh Kumar, 2023. Security and privacy challenges and
+solutions in IoT data analytics. IoT and Big Data Analytics for Smart Cities. Chapman
+and Hall/CRC 43–55.
+Siddiqui, Shahbaz, et al., 2023. Smart contract-based security architecture for
+collaborative services in municipal smart cities. J. Syst. Architect. 135, 102802.
+Silva, B.N., Khan, M., Han, K., 2020. Integration of Big Data analytics embedded smart
+city architecture with RESTful web of things for efficient service provision and
+energy management. Future Generat. Comput. Syst. 107, 975–987.
+Silverio-Fern´andez, Manuel, Renukappa, Suresh, Suresh, Subashini, 2018. What is a
+smart device?-a conceptualisation within the paradigm of the internet of things.
+Visualization in Engineering 6 (1), 1–10.
+Sodhro, A.H., Pirbhulal, S., Luo, Z., De Albuquerque, V.H.C., 2019. Towards an optimal
+resource management for IoT based Green and sustainable smart cities. J. Clean.
+Prod. 220, 1167–1179.
+Songhorabadi, M., Rahimi, M., Farid, A.M.M., Kashani, M.H., 2020. Fog computing
+approaches in smart cities: a state-of-the-art review. arXiv preprint arXiv:
+2011.14732.
+Songhorabadi, M., Rahimi, M., MoghadamFarid, A., Kashani, M.H., 2023. Fog computing
+approaches in IoT-enabled smart cities. J. Netw. Comput. Appl. 211, 103557.
+Suh, Myung-Whan, et al., 2023. The treatment outcome of smart device–based tinnitus
+retraining therapy: prospective cohort study. JMIR mHealth and uHealth 11,
+e38986.
+Sun, Y., Wu, T.-Y., Zhao, G., Guizani, M., 2014. "Efficient rule engine for smart building
+systems". IEEE Trans. Comput. 64 (6), 1658–1669.
+Theodoridis, E., Mylonas, G., Chatzigiannakis, I., 2013. "Developing an IoT smart city
+framework"IISA 2013. IEEE 1–6.
+Tyagi, A.K., 2019. Building a smart and sustainable environment using Internet of
+Things. In: Proceedings of International Conference on Sustainable Computing in
+Science, Technology and Management (SUSCOM). Amity University Rajasthan,
+Jaipur-India.
+Ullo, Silvia Liberata, Sinha, Ganesh Ram, 2021. Advances in IoT and smart sensors for
+remote sensing and agriculture applications. Rem. Sens. 13 (13), 2585.
+Uppal, Mudita, et al., 2023. Fault prediction recommender model for IoT enabled sensors
+based workplace. Sustainability 15 (2), 1060.
+Uzair, Beg, M.O., Mujtaba, H., Majeed’Weec, H., 2019. Web energy efficient computing”.
+Sustainable Comput Inf Syst 22, 230–243.
+Verhulsdonck, Gustav, et al., 2023. Smart cities, playable cities, and cybersecurity: a
+systematic review. Int. J. Hum. Comput. Interact. 39 (2), 378–390.
+Verma, A., Prakash, S., Srivastava, V., Kumar, A., Mukhopadhyay, S.C., 2019. "Sensing,
+controlling, and IoT infrastructure in smart building: a review". IEEE Sens. J. 19 (20),
+9036–9046.
+Walczak, Renata, et al., 2023. Acceptance of IoT edge-computing-based sensors in smart
+cities for universal design purposes. Energies 16 (3), 1024.
+Wang, X., Mao, X., Khodaei, H., 2021. A multi-objective home energy management
+system based on internet of things and optimization algorithms. J. Build. Eng. 33,
+101603.
+Wazid, M., Das, A.K., Kumar, N., Rodrigues, J.J.P.C., 2017. ”Secure three-factor user
+authentication scheme for renewable-energy-based smart grid environment”. IEEE
+Trans. Ind. Inf. 13 (6), 3144–3153.
+Weber-Lewerenz, Christina, Bianca, 2023. "Technological dream or safety traumata?: fire
+protection in smart cities–digitization and AI ensure burning ideas and a new culture
+of thinking in construction 4.0." Impact of digital Twins in smart cities development. IGI
+Global 174–196.
+Wen, W., Demirbaga, U., Singh, A., Jindal, A., Batth, R.S., Zhang, P., Aujla, G.S., 2023.
+Health monitoring and diagnosis for geo-distributed edge ecosystem in smart city.
+IEEE Internet Things J. 10 (21), 18571–18578.
+Yadav, Neelam, et al., 2023. Fire neutralizing ROBOT with night vision camera under IoT
+framework. International Conference on Cyber Security, Privacy and Networking
+(ICSPN 2022). Cham: Springer International Publishing.
+Ya˘g, ˙I., Altan, A., 2022. Artificial intelligence-based robust hybrid algorithm design and
+implementation for real-time detection of plant diseases in agricultural
+environments. Biology 11 (12), 1732.
+Yu, M., Yue, G., Song, J., Pang, X., 2019. Research on intelligent city energy management
+based on Internet of things. Cluster Comput. 22 (4), 8291–8300.
+Zeb, Hassan, et al., 2023. Zero energy IoT devices in smart cities using RF energy
+harvesting. Electronics 12 (1), 148.
+Zeki´c-Suˇsac, M., Mitrovi´c, S., Has, A., 2021. Machine learning based system for managing
+energy efficiency of public sector as an approach towards smart cities. Int. J. Inf.
+Manag. 58, 102074.
+Zeng, N., Zhang, H., Liu, W., Liang, J., Alsaadi, F.E., 2017. ”A switching delayed PSO
+optimized extreme learning machine for short-term load forecasting”.
+Neurocomputing 240, 175–182.
+Zeng, Shouzhen, Hu, Yingjie, Llopis-Albert, Carlos, 2023. Stakeholder-inclusive multi-
+criteria development of smart cities. J. Bus. Res. 154, 113281.
+Zhang, X., Pipattanasomporn, M., Chen, T., Rahman, S., 2019. "An IoT-based thermal
+model learning framework for smart buildings". IEEE Internet Things J. 7 (1),
+518–527.
+Zhang, S.V.E., Jackson Samuel, R.D., 2020. ”Fuzzy efficient energy smart home
+management system for renewable energy resources”. Sustainability 12 (8), 3115.
+Zhang, Y., Geng, P., Sivaparthipan, C.B., Muthu, B.A., 2021. ”Big data and artificial
+intelligence based early risk warning system of fire hazard for smart cities”.
+Sustainable Energy Technol Assess 45, 100986.
+Zhao, Wenming, Chen, Jin, Hai, Tao, Mohammed, Muamer N., Yaseen, Zaher Mundher,
+Yang, Xuelan, Zain, Jasni Mohamad, Zhang, Ruihua, Xu, Qiang, 2022. Design of low-
+energy buildings in densely populated urban areas based on IoT. Energy Rep. 8,
+4822–4833.
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+17 
+
+Maryam Nikpour is a Master of Architecture graduate from
+the Islamic Azad University of Ahvaz, Iran, specializing in
+Architectural Engineering. Her expertise spans Urban Plan-
+ning, Sustainable Architecture, Energy Efficiency, and Envi-
+ronmental
+Sustainability.
+Maryam’s
+research
+focuses
+on
+creating sustainable, efficient urban environments. With five
+research items on ResearchGate, she actively contributes to the
+academic community, addressing key challenges in urban
+development and green architecture. Maryam’s dedication to
+sustainability and innovative design solutions positions her as a
+valuable contributor to advancing sustainable practices in ar-
+chitecture and urban development.
+Parisa Behvand Yousefi is affiliated with the School of E-Learning at Khaje Nasirodin
+Toosi (K.N.Toosi) University of Technology in Tehran, Iran. She is involved in innovative
+educational technologies and e-learning methods, contributing to advancing online edu-
+cation and the digital learning environment.
+Hadi Jafarzadeh is affiliated with the School of E-Learning at Shiraz University in Shiraz,
+Iran. He is involved in innovative educational technologies and e-learning methods.
+Kasra Danesh is a distinguished AI Product Manager and
+researcher in AI and ML, currently affiliated with the Depart-
+ment of Electrical Engineering and Computer Science at Florida
+Atlantic University, Boca Raton, Florida, USA. He holds an MSc
+in AI & ML and an MBA, with extensive experience in AI
+product
+management
+and
+creative
+direction.
+Kasra
+has
+contributed
+significantly
+to
+research,
+with
+publications
+focusing on intelligent energy management, AI in dental
+knowledge assessment, and breast tumor detection using ma-
+chine learning. His work integrates innovative machine
+learning methods to address complex networks and systems,
+enhancing the field of intelligent energy management in smart
+cities.
+Roya Shomali is a dedicated Ph.D. student in Operations
+Management at the Culverhouse College of Business, Univer-
+sity of Alabama. With a solid educational background, she
+holds a master’s degree in industrial engineering with a focus
+on Decision Science and Knowledge Engineering from Khar-
+azmi University. Her research interests lie at the intersection of
+operations management, business analytics, and data science.
+Roya
+actively
+contributes
+to
+the
+academic
+community,
+engaging in various research projects and discussions on Data
+Science Central. Her work aims to enhance operational effi-
+ciencies
+and
+decision-making
+processes
+in
+business
+environments.
+Saeed Asadi is a researcher with expertise in civil engineering,
+mechanical engineering, and construction management. He
+holds a master’s degree in construction management from the
+University of Texas at Arlington in 2024, a master’s in me-
+chanical engineering specializing in Energy Conversion from
+Semnan Azad University in 2016, and a Bachelor’s in Heat and
+Fluids from Karaj Azad University (2014). He served as a
+teaching assistant at the University of Texas at Arlington and
+has been a Project Engineer on various projects. Saeed’s aca-
+demic contributions reflect his commitment to advancing en-
+gineering sciences, with several publications addressing topics
+such as AI-driven digital twin systems and energy management
+in smart cities. His research emphasizes optimization tech-
+niques and the integration of machine learning methods in digital twins and smart cities.
+Ahmad Gholizadeh Lonbar is a PhD student in Civil Engi-
+neering, specializing in Construction Management, at the
+University of Alabama. His current research focuses on auto-
+mation in construction through the innovative integration of
+sensors and cameras utilizing computer vision and AI tech-
+nologies. Specifically, His work involves synthesizing data
+from various sources to evaluate and manage heat stress on
+construction sites effectively. He is editor board of several
+journals and conferences.
+Mohsen Ahmadi is a Researcher specializing in Machine
+Learning and Computer Vision in the Department of Electrical
+and Computer Science at FAU. His research interests include
+image processing, optimization, and machine learning, with a
+particular focus on applications in computer vision. He not
+only surpassed the top 2% in 2022 but was also among the top
+1% across all scientific disciplines in 2023. Additionally, he
+ranks in the top 1% of reviewers in Computer Science and
+Cross-Field.
+M. Nikpour et al.
+Journal of Network and Computer Applications 235 (2025) 104089 
+18

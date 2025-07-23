@@ -1,0 +1,1227 @@
+Enhancing smart building performance with waste heat recovery: 
+Supply-side management, demand reduction, and peak shaving via 
+advanced control systems
+Hui Liu a,b,c, Zhe Du c, Tingting Xue b, Tao Jiang c,*
+a Jiangsu Key Laboratory of Intelligent Medical Image Computing, School of Future Technology, Nanjing University of Information Science and Technology, Nanjing, 
+China
+b Cognitive Systems Lab, University of Bremen, Bremen, Germany
+c College of Arts, Xi’an University of Architecture and Technology, Xi’an, China
+A R T I C L E  I N F O
+Keywords:
+Optimal controllers
+Residential building
+Wastewater
+Energy saving
+Smart buildings
+A B S T R A C T
+With the increasing use of smart building technologies in modern infrastructures, a growing focus is on devel­
+oping intelligent energy systems. This study focuses on a crucial part of this transition by investigating the 
+application of a rule-based control method to harness the heat from wastewater to warm the ventilation lines in 
+residential buildings. This research intends to enhance the integration of smart buildings into modern energy 
+systems by prioritizing optimal performance and using creative control methods, mainly robust rule-based 
+control schemes, thereby addressing current gaps and contributing to overall improvement. The proposed sys­
+tem’s effectiveness is assessed and compared with a conventional model without the developed smart strategy 
+from all facets. The system’s performance was assessed using hourly, monthly, seasonal, and annual metrics, with 
+a detailed sensitivity analysis conducted to evaluate the proposed control strategy’s practicality. The findings 
+reveal that the intelligent ventilation system achieves approximately 10% higher efficiency and conserves over 
+1.4 tonnes of CO2 emissions annually. Economically, the model demonstrates its feasibility through a marked 
+reduction in heating costs, decreasing from 54.9 USD/MWh to 30.7 USD/MWh despite an initial investment of 
+29,032 USD. The results also show that the smart integration system maintains elevated supply air temperatures 
+during colder months, enhancing thermal efficiency and reducing reliance on external heat sources. Economic 
+analysis further identifies the energy wheel as the largest cost component, representing 50% of the total in­
+vestment. Monthly variations in heat recovery from wastewater and production via the energy wheel suggest that 
+integrating these elements through a dynamic control system leads to significant operational savings and reduces 
+the need for local district heating. During peak demand periods, radiators serve as the primary heating source. 
+Air-handling units provide necessary ventilation and supplemental heating, allowing for efficient energy dis­
+tribution and management across all seasons.
+1. Introduction
+1.1. The literature survey
+For the past few decades, global energy usage has consistently 
+increased for various primary energy sources such as fossil fuels, nuclear 
+energy, and renewable sources like solar, wind, and hydropower. Fossil 
+fuels, including coal, oil, and natural gas, are the most commonly uti­
+lized energy sources worldwide, accounting for approximately 80 % of 
+global energy usage [1]. Nonetheless, their utilization has led to 
+significant environmental issues, such as air pollution and greenhouse 
+gas (GHG) emissions, resulting in climate change [2]. As the world’s 
+population grows and developing countries increase their industriali­
+zation and urbanization, the need for energy is anticipated to continue to 
+rise. Consequently, governments and energy companies are progres­
+sively investing in renewable energy sources like solar and wind power 
+to lessen carbon emissions, increase cost-effectiveness [3], and mitigate 
+the adverse effects of climate change [4]. However, switching to 
+renewable energy and reducing our reliance on fossil fuels is gradual. In 
+the interim, energy conservation and improved energy efficiency are 
+essential in reducing our environmental impact [5].
+* Correspoding author.
+E-mail address: 474097969@qq.com (T. Jiang). 
+Contents lists available at ScienceDirect
+Energy & Buildings
+journal homepage: www.elsevier.com/locate/enb
+https://doi.org/10.1016/j.enbuild.2024.115070
+Received 30 September 2024; Received in revised form 28 October 2024; Accepted 14 November 2024  
+Energy & Buildings 327 (2025) 115070 
+Available online 16 November 2024 
+0378-7788/© 2024 Published by Elsevier B.V. 
+
+The CO2 emissions rate per energy unit produced is a crucial measure 
+to assess the ecological impact of diverse energy sources like renewable 
+energy, nuclear power, and fossil fuels such as coal, oil, and natural gas 
+[6]. Fossil fuels have a higher CO2 emission rate per produced energy 
+than renewable energy sources, such as solar, wind, and hydropower, 
+because their combustion discharges substantial amounts of carbon di­
+oxide into the atmosphere, exacerbating climate change and other 
+environmental problems [7]. In order to mitigate the impact of climate 
+change and achieve a sustainable energy future, it is essential to reduce 
+the CO2 emission rate per unit of energy produced, which can be 
+accomplished by transitioning to cleaner and sustainable energy sour­
+ces, as well as enhancing energy efficiency in various sectors such as 
+transportation, industry, and buildings [8]. Governments, businesses, 
+and individuals can also play their part in reducing their carbon foot­
+print by adopting demand-side energy management, promoting 
+renewable energy use, and reducing energy usage through behavioral 
+changes [9]. Reducing the CO2 emission rate per unit of energy pro­
+duced will help preserve the environment, ensure energy security, and 
+create a sustainable future for all.
+China is investing heavily in renewable energy sources such as wind 
+and solar power to decrease its reliance on coal and lower its CO2 
+emissions per unit of energy produced [10]. The International Energy 
+Agency reports that in 2020, China set a record by adding 136 GW of 
+renewable energy capacity, accounting for 72 % of the global growth in 
+renewable energy [11]. However, the issue of CO2 emissions per unit of 
+energy produced in China is multifaceted and evolving. It is influenced 
+by various factors such as economic growth, energy demand, and gov­
+ernment policies. The CO2 emission rate varies depending on the type of 
+energy source utilized. In 2021, China’s energy-related CO2 emissions 
+were the highest worldwide, totaling 11.9 gigatons [12]. The average 
+CO2 emission rate for electricity generation in China was around 772 g 
+of CO2 per kWh in 2019 [13]. Coal, which is the primary energy source 
+in China, has a higher CO2 emission rate per unit of energy produced 
+than other energy sources and emitted approximately 10.05 billion 
+metric tons of CO2 in 2019, according to the Global Energy Monitor 
+[14]. Coal-fired power plants in China emit an average of roughly 1050 g 
+of CO2 per kWh. In contrast, renewable energy sources such as solar and 
+wind power have almost zero CO2 emissions during their operation. As a 
+result, China is significantly investing in renewable energy sources to 
+reduce its dependence on coal and lower its CO2 emissions per unit of 
+energy produced [15,16].
+Given the pressing global challenge of rising energy consumption 
+and the corresponding increase in carbon emissions, particularly evident 
+in rapidly industrializing nations like China, there is an urgent need for 
+sustainable solutions [17]. China, being one of the largest contributors 
+to global emissions, faces the dual challenge of continuing its develop­
+ment while mitigating environmental impacts. This necessitates inno­
+vative approaches that not only reduce energy consumption but also 
+harness cleaner energy sources. One such promising approach is the 
+development of near-zero energy buildings in stable distribution sys­
+tems, which aim to significantly lower energy demand and incorporate 
+advanced energy recovery techniques [18]. These buildings leverage 
+renewable energy sources, thus presenting a viable pathway to 
+achieving substantial reductions in carbon emissions while supporting 
+China’s urbanization and growth [19,20].
+The objective of achieving net-zero energy buildings is in line with a 
+considerable decrease in energy usage and necessitates the utilization of 
+renewable energy sources [21]. Enhancing building heat recovery is a 
+highly effective strategy to attain this target [22,23]. The process in­
+volves capturing waste heat from diverse sources within the building, 
+including exhaust air, hot water, or industrial operations, and reusing it 
+for space heating or hot water [24]. This method leads to a sustainable 
+and energy-efficient building, significantly reducing the energy required 
+for heating and cooling. Additionally, enhancing building heat recovery 
+results in economic benefits, such as lower energy bills and decreased 
+maintenance costs. It also improves indoor air quality (IAQ) and occu­
+pant comfort by providing consistent and pleasant temperatures 
+throughout the building [25]. Implementing heat recovery systems in 
+buildings contributes to global climate goals by decreasing greenhouse 
+gas emissions associated with energy consumption. Overall, enhancing 
+heat recovery in buildings is a practical and cost-effective approach 
+towards reaching net-zero energy buildings [26], providing benefits to 
+the environment, the economy, and building inhabitants [27].
+While energy recovery in buildings may not be identical to utilizing 
+renewable resources, it can be equally effective in reducing wasted en­
+ergy and improving energy efficiency. Energy recovery entails capturing 
+and reusing energy that would typically be lost during heating, venti­
+lation, and air conditioning (HVAC) operations, accomplished through 
+heat recovery ventilators (HRVs) or energy recovery ventilators (ERVs) 
+[28]. Conversely, renewable resources are naturally replenished energy 
+sources, such as solar, wind, hydro, and geothermal. Unlike energy re­
+covery in buildings, renewable resources increase the overall energy 
+supply and can offer long-term sustainable solutions for energy needs 
+[29]. Despite differences in the energy sources they provide, both energy 
+recovery in buildings and renewable resources are critical for reducing 
+energy waste and boosting energy efficiency. Combining these 
+Nomenclature
+Abbreviations
+AHU
+Air handling unit
+CRF
+Capital recovery factor
+DH
+District heating
+DHW
+Domestic hot water
+ERV
+Energy recovery ventilator
+EW
+Energy wheel
+EAHP
+Exhaust air heat pump
+GHG
+Greenhouse gas
+HRV
+Heat recovery ventilation
+HVAC
+Heating, ventilation, and air conditioning
+HX
+Heat exchanger
+IAQ
+Indoor air quality
+KPI
+Key performance factor
+LCOH
+Levelized cost of heating
+MVHR
+Mechanical ventilation with heat recovery
+NZEB
+Net-zero energy buildings
+RBC
+Rule-based control
+TRNSYS
+Transient system simulation tool
+WW
+Wastewater
+WWHP
+Wastewater heat pump
+Latin and Greek Letters
+ηHX
+Heat recovery efficiency of heat exchanger [-]
+ηwheel
+Heat recovery efficiency of energy wheel [-]
+εCO2
+Emission index [kg.MWh−1]
+τ
+Working hours [h]
+γ
+Fixed cost coefficient
+CPair
+Specific heat of air [kJ.kg−1◦C−1]
+˙m
+Mass flow rate [kg.s−1]
+˙Q
+Heating demand [W]
+T
+Temperature [◦C]
+Vtank
+Wastewater storage tank volume [m3]
+Tlow
+Wastewater lowest permissible temperature [◦C]
+Z
+Cost [$]
+˙Z
+Cost rate [$.h−1]
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+2 
+
+approaches can help establish a more sustainable and responsible energy 
+future for generations to come.
+Wastewater heat recovery is becoming increasingly crucial in 
+buildings to lower energy usage and expenses [30,31]. This process in­
+volves retrieving and reusing heat generated from activities like show­
+ering, bathing, and washing, which can be redirected for space and 
+water heating to decrease the need for additional energy sources 
+[32,33]. By recuperating heat that would otherwise be lost, buildings 
+can realize considerable energy savings, diminish their carbon footprint, 
+and enhance their sustainability. Furthermore, since wastewater is a 
+reliable thermal energy source, wastewater heat recovery systems can 
+offer a steady and dependable heat source, making them especially 
+valuable in colder climates with high energy requirements. Additionally, 
+wastewater heat recovery systems generate substantial cost savings over 
+time, notwithstanding their high initial installation costs [34]. These 
+systems can also lengthen the lifespan of a building’s heating equipment 
+by reducing the system’s workload and offering cost savings and other 
+benefits to building occupants and owners.
+Supply air temperature is a critical factor affecting both buildings’ 
+heating demand and indoor air quality. The HVAC system delivers the 
+supply air temperature to the occupied areas of the building. If the 
+supply air temperature is too low, the indoor space will feel cold, and 
+occupants will need more heating, resulting in higher heating demand. 
+In addition, freezing is a common problem in cold climate regions due to 
+cold outdoor air entering the ventilation heat recovery exchangers [25]. 
+In contrast, if the supply air temperature is too high, the building may 
+become too warm, causing excessive cooling demand and increased 
+energy usage. Moreover, the supply air temperature significantly im­
+pacts the indoor air quality of buildings. A low supply air temperature 
+can lead to condensation and moisture accumulation in the building’s 
+envelope and indoor surfaces, promoting mold growth and other indoor 
+pollutants [35]. Conversely, high supply air temperatures can cause dry 
+indoor air, leading to respiratory problems and discomfort for building 
+occupants. Therefore, maintaining an optimal supply air temperature 
+range is crucial to ensure occupant comfort and good indoor air quality 
+while reducing heating demand and energy usage [36].
+The cost-effectiveness of building energy systems shows a noticeable 
+improvement as wastewater potential increases to a certain threshold. 
+Several corroborative studies support this finding. For instance, Ber­
+trand et al. [37] proposed methodologies to quantify building-specific 
+energy costs and the potential for energy savings based on in-building 
+wastewater heat recovery systems. Their research indicated that such 
+systems can achieve integrated energy savings of 28 %-41 % in high- 
+efficiency buildings. Golzar and Silviera [38] investigated the influ­
+ence of wastewater heat recovery on centralized energy recovery per­
+formance. They demonstrated that heat loss in the sewage system can 
+lead to 5 % −
+9 % lower heat recovery in centralized district heating 
+systems compared to in-building heat recovery. Additionally, Xu et al. 
+[39] reviewed various heat recovery technologies for building applica­
+tions. They suggested that combining heat recovery with energy- 
+efficient systems is a promising approach to reducing greenhouse gas 
+emissions, thereby enabling residential buildings to meet high perfor­
+mance and comfort standards. By incorporating these corroborative 
+studies, we aim to provide a comprehensive understanding of the prin­
+ciples underpinning our observations. These references validate the 
+relationship between ventilation heat recovery efficiency, levelized 
+heating costs, and the significant role of wastewater temperature in 
+enhancing system cost-effectiveness. The inclusion of this data un­
+derscores the potential of wastewater heat recovery systems to 
+contribute meaningfully to sustainable building practices, ultimately 
+supporting global climate goals.
+1.2. The scientific contribution
+Therefore, the primary objective of this article is to explore a new 
+approach to minimize the total energy loss in multi-residential buildings 
+by recovering waste heat from exhaust air and wastewater. Specifically, 
+we aim to harness the extra heat from wastewater and utilize it to 
+augment the supply air temperature to the building, thereby reducing 
+the overall heating demand of the building. Our approach takes into 
+account the economic and environmental effects of applying this solu­
+tion, and we will conduct a comprehensive analysis to determine the 
+long-term feasibility of this approach. By assessing the installed com­
+ponents and considering their impact on reducing the building’s energy 
+demand, an optimized, sustainable solution that supports both envi­
+ronmental and economic benefits can be achieved [40].
+The innovation of our research lies in the simultaneous integration of 
+wastewater heat recovery and exhaust air heat recovery within a single 
+system. Prior studies have either focused on individual waste energy 
+recovery systems or implemented both systems in buildings but operated 
+them independently. Our approach, however, synergistically combines 
+these two systems to enhance overall efficiency. This integration in­
+creases the supply air temperature, thereby reducing ventilation heat 
+losses. Moreover, our system eliminates the need for energy-intensive 
+devices like exhaust air heat pumps (EAHP) or wastewater heat pumps 
+(WWHP), significantly improving economic feasibility for existing and 
+new building installations. Additionally, we employ a rule-based control 
+(RBC) strategy, which optimizes the operation of the integrated system 
+by ensuring maximum efficiency and adaptability to varying building 
+demands [41]. This innovative approach not only optimizes energy re­
+covery but also offers a practical, cost-effective solution for micro-grid 
+decentralized energy systems in sustainable building design [42].
+2. The smart building energy system
+This study aims to enhance the effectiveness of the ventilation system 
+of a multi-residential building located in the climatic zone of Beijing. To 
+achieve this, the researchers conducted transient simulations using the 
+TRNSYS [43] software to evaluate the performance of the heat recovery 
+systems installed in the building. The evaluation focused on several key 
+factors, including the heating demand, ventilation temperatures, and the 
+economic and environmental impacts of the proposed heat recovery 
+systems. The findings of this study will provide valuable insights into the 
+optimal design and operation of ventilation systems in similar buildings 
+in the region, thereby promoting energy efficiency and reducing 
+greenhouse gas emissions.
+2.1. The studied system
+In Fig. 1, a schematic representation of the investigated system is 
+observed. The suggested heat recovery add-ins aimed at optimizing 
+energy usage and reducing heat waste from major sources such as 
+buildings, ventilated air, and wastewater are illustrated in this config­
+uration. This innovative setup fully tackles the challenge of waste heat. 
+Firstly, a district heating (DH) substation provides a space heating 
+source. Secondly, the released wastewater enters a heat recovery loop 
+after being roughly purified. Urban residential areas typically generate 
+120–180 L of discarded wastewater per person [44], with temperature 
+and flow rates varying based on daily timing and occupant density 
+[45,46]. The warm wastewater feeds into the air preheater, which helps 
+raise the incoming air temperature. Wastewater can be cooled to various 
+temperatures depending on the outdoor air temperature and its flow rate 
+to AHU. The cooled wastewater returns to the bottom of the storage tank 
+(to maintain the temperature stratification) or is discarded to the 
+sewerage. This depends on the wastewater outflow from the building. 
+When the outdoor temperatures are near the desired temperature for the 
+air supply, the air preheater cycle ceases to function. The heat recovery 
+ventilation system provides treated fresh air to the building and effec­
+tively recovers the energy used in the process. The temperature of the 
+supply air has a direct impact on both the heating requirement of the 
+building and the level of indoor thermal comfort perceived by the in­
+habitants. When the external temperatures are low, the heat that is 
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+3 
+
+obtained from the wastewater is utilized to raise the temperature of the 
+incoming air. This, in turn, increases the temperature of the air supplied 
+to the building, leading to enhanced indoor thermal comfort and 
+decreased need for heating the building. The proposed system provides a 
+sustainable and effective solution to reduce waste heat and optimize 
+energy usage in buildings.
+The rule-based control approach is the fundamental element of the 
+intelligent ventilation system, which is responsible for its exceptional 
+energy efficiency and thermal management performance. This approach 
+entails a predetermined set of regulations that dictate the functioning of 
+the crucial elements of the system, such as the energy wheel and the 
+wastewater heat exchanger. The rule-based controller optimizes the use 
+of thermal energy by altering parameters such as flow rates, temperature 
+setpoints, and operational modes depending on real-time environmental 
+data and building conditions. This clever adaptation optimizes heat 
+extraction from wastewater and exhaust air while decreasing the need 
+for external heating sources. The controller focuses on maintaining 
+elevated supply air temperatures throughout colder months, hence 
+improving thermal comfort and decreasing heating demand. The rule- 
+based control technique effectively balances energy input and output 
+Fig. 1. Schematic illustration of the heat recovery systems and improved ventilation.
+Fig. 2. Building heating demand without heat recovery installations and outdoor temperature in Beijing.
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+4 
+
+by continually monitoring and responding to variations in external 
+temperature, indoor heating demand, and wastewater temperature. This 
+ensures consistent performance and leads to significant cost savings 
+throughout the year. This method increases energy efficiency and 
+significantly decreases CO2 emissions, showcasing the environmental 
+and economic feasibility of the intelligent ventilation system.
+2.2. The building case
+The building under study is a six-story residential apartment located 
+in Beijing. The building has a total living area of 2050 m2, including 23 
+apartments, first used in 2007. It is equipped with a mechanical venti­
+lation system with heat recovery (MVHR). The study focuses on the 
+building’s heating requirements, and Fig. 2 provides a detailed break­
+down of the monthly heating demand for the building without any heat 
+recovery systems. The graph also shows the outdoor temperature in 
+Beijing throughout the year. The city experiences a wide range of tem­
+peratures, with the lowest recorded daily temperature of −11.2 ◦C and 
+the lowest hourly temperature of −15 ◦C. In contrast, the highest 
+recorded daily temperature is 30.3 ◦C, with the highest hourly temper­
+ature being 37.4 ◦C. This temperature variation highlights the chal­
+lenges of maintaining a comfortable living environment within the 
+building and the need for an effective heating and cooling system.
+Ensuring an optimal indoor environment and sufficient supply of 
+fresh air to indoors accentuates the significance of the ventilation system 
+in establishing a heat equilibrium within the building. Enhancing the 
+efficiency of the ventilation performance can substantially reduce 
+notable heat losses experienced during the coldest months, as depicted 
+in Fig. 2. The subsequent sections illustrate how harnessing wastewater 
+heat can profoundly impact ventilation losses in the most effective 
+manner.
+3. Method
+3.1. Transient system simulation software
+To evaluate the system’s performance before and after optimization 
+changes and highlight the impact of air preheating in cold winter con­
+ditions, we run yearly dynamic simulations using TRNSYS software. 
+These simulations evaluate the energy demand of the building under 
+study and compare supply temperatures after modifications, showcasing 
+the advantages of heat recovery methods. Table 1 presents an overview 
+of key simulation components in TRNSYS used for simulating and 
+optimizing system performance:
+In the present work, TRNSYS software is predominantly utilized as 
+an equation-solving tool based on common numerical methodologies for 
+validating the components. TRNSYS models each physical piece of 
+thermodynamic equipment using a component that has been created 
+using Fortran source code. A multitude of persons have authored 
+TRNSYS components, verified their accuracy using experimental data, 
+and granted the University of Wisconsin Madison Solar Lab authoriza­
+tion to distribute these components to other TRNSYS users. The source 
+code and description of these components have been uploaded online. 
+Furthermore, the TRNSYS handbook includes a comprehensive compi­
+lation of references for each standard component. Thus, as a result, there 
+is no longer a requirement to validate TRNSYS component models. In the 
+literature, several articles have simulated HVAC systems using TRNSYS 
+but have not validated the components [50–59].
+3.2. Performance indicators
+The performance of the studied system is assessed by examining total 
+energy savings and associated costs. Although the additional compo­
+nents required to capture and utilize recovered wastewater energy 
+contribute to upfront investment costs, these costs may be offset by the 
+energy savings achieved and the associated reduction in environmental 
+impact. To thoroughly evaluate this balance, a parametric study is 
+conducted, analyzing various design parameters of system components 
+to determine their impact on overall energy savings and CO2 emission 
+reduction. This approach allows for a comprehensive understanding of 
+the trade-offs between initial investment and long-term sustainability 
+benefits, ultimately guiding the development of cost-effective and 
+environmentally favorable design solutions. These parameters are the 
+heat recovery efficiencies at the AHU and the wastewater heat 
+exchanger, the storage tank volume, the total living area occupied by a 
+person in the building, and the lowest temperature at which wastewater 
+can be cooled. These parameters identify the system performance, 
+showing the total energy savings per cost and the total CO2 emission.
+The techno-economic-environmental investigation deals with 
+finding the entire system’s performance efficiency, levelized cost of 
+heating (LCOH), total investment cost, and CO2 saving. Therefore, the 
+performance efficiency of the system is defined by equation (1): 
+η = Tsupply,zone −TOutdoor
+Treturn,zone −TOutdoor
+× 100
+(1) 
+where, Tsupply,zone, Treturn,zone, and TOutdoor are the supply and return air 
+temperatures to/from the building and the outdoor temperature, 
+respectively. The economic evaluation uses the particular cost theory to 
+determine the total cost rate, as denoted by Equation (2) [60,61]. 
+˙ZTotal = ˙ZInvestment + ˙ZOperating&Maintenance
+(2) 
+ZInvestment = ZWWTank + ZAHU + ZPump + ZFan + ZAirPrehater + ZControllers
+(3) 
+˙ZCaptialinvestment = (CRF
+τ ) × ZInvestment
+(4) 
+Table 1 
+System components and the corresponding TRNSYS Types used in simulations 
+[47–49].
+System 
+component
+TRNSYS component
+Type 
+No.
+Details
+Rotary heat 
+exchanger
+Energy wheel
+667d
+Simulates temperature and 
+moisture exchange between 
+exhaust and supply air streams. 
+Psychrometric routines assess 
+air properties.
+WW heat 
+exchanger
+Heat exchanger Keep 
+hot side above a 
+minimum
+699
+Models water-to-air heat 
+transfer from wastewater to 
+outdoor air for the HRV. The 
+bypass criterion ensures 
+adequate minimum 
+wastewater temperature for 
+cold air.
+Supply/ 
+exhaust fan
+Fan – Input the 
+flowrate
+744
+Takes in air properties and uses 
+the psychrometrics routines to 
+return the temperature, 
+humidity ratio, relative 
+humidity, and enthalpy values.
+WW tank
+Cylindrical storage 
+tank – No HX
+534
+Utilizes a temperature- 
+stratified tank for building 
+wastewater. Ten vertical nodes 
+maintain temperature 
+stratification, with warm 
+wastewater supplied from the 
+top and cold return/discard 
+connected to the bottom.
+Building
+Simple Building 
+Multi-zone capability 
+with internal controls
+660
+Models a multi-zone building 
+with internal controls for 
+setting indoor temperatures 
+and calculating heating 
+demands. It accounts for 
+ventilation, outdoor 
+infiltration, heat losses, and 
+internal gains at each timestep.
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+5 
+
+˙ZOperating&Maintenance = (γ
+τ) × ZInvestment
+(5) 
+The LCOH is determined by dividing the total cost rate by heating 
+production, serving as a metric to assess the cost-effectiveness of the 
+proposed smart system in dollars per megawatt. The total cost rate 
+( ˙ZTotal) is expressed as the combination of the investment costs and the 
+operating and maintenance costs. Additionally, CRF, τ, and γ represent 
+the capital recovery factor, working hours, and fixed cost coefficient, 
+respectively [62]: 
+LCOH =
+˙ZTotal
+˙QTotal
+(6) 
+˙QTotal = ˙mAir × CP,Air × (Tin,zone −TOutdoor)
+(7) 
+Similarly, ˙QTotal represents the total heating transferred to the building 
+and the evaluation of CO2 saving is conducted to measure the proposed 
+system’s environmental advantages compared to a comparable system 
+lacking a wastewater heat recovery unit [7]. 
+CO2saving =
+(
+˙QTotal,withoutWW −
+˙QTotal,withWW
+)
+× εCO2
+(8) 
+The heat transferred to the building in the proposed smart building with 
+wastewater heat recovery, denoted as ˙QTotal,withWW, contrasts with the 
+heat output of the conventional model lacking such recovery, repre­
+sented as ˙QTotal,withoutww. Additionally, εCO2, equivalent to 550 kg/MWh, 
+symbolizes the emission index of the conventional system in China [13].
+4. Results and Discussions
+After simulating the proposed smart model in TRNSYS, a compre­
+hensive technical, environmental, and economic evaluation is con­
+ducted and compared with the conventional system without the 
+wastewater heat recovery strategy. For this, the key metrics, including 
+the performance efficiency, investment costs, heating costs, and heating 
+generated by the air handling unit and supplied by the radiators, are 
+assessed through the year, season, month, and hour. Additionally, 
+sensitivity assessment is carried out to analyze how the efficiency, in­
+vestment costs, and heating costs are affected when the significant 
+variables, including the energy wheel’s epsilon, wastewater temperature 
+leaving the tank, number of residences, and heat exchanger’s epsilon, 
+are changed.
+Table 2 compares the efficiency, investment, and heating costs of the 
+proposed smart model equipped with the wastewater heat recovery 
+strategy with the conventional system. According to the table, the 
+effectiveness of the conventional ventilation system is 85 %. This in­
+dicates that while 15 % of the energy input is wasted as waste heat, the 
+remaining 85 % is successfully used for heating. However, when com­
+bined with a wastewater heat recovery technique, the suggested intel­
+ligent ventilation system increases efficiency to 95.4 %. The huge rise in 
+numbers demonstrates the successful implementation of the heat 
+recovery system, which effectively absorbs and utilizes thermal energy 
+from wastewater. This results in reduced energy wastage and a notable 
+enhancement in the system’s overall energy efficiency. The table further 
+indicates that the smart model necessitates a more significant initial cost 
+of 29,032 USD when implementing the wastewater heat recovery 
+approach. The increase is due to the additional components and tech­
+nology required to capture and reuse heat from wastewater. Although 
+the initial cost is higher, the investment in the heat recovery system can 
+be rationalized due to its long-term savings and increased efficiency. 
+This is justified due to the substantial decrease in heating costs (from 
+54.9 USD to 30.7 USD per MWh), as indicated in Table 2. To establish a 
+more easily understandable measure of the investment cost, we have 
+standardized the total investment by considering a total area of 2050 m2, 
+which includes 23 flats with four occupants in each apartment. As 
+indicated in the table, the normalized investment costs for the conven­
+tional system are 5.9 USD/m2 and 132 USD/person whle the corre­
+sponding values for the porposed novel system with wasteheat recovery 
+are 14.2 USD/m2 and 315.5 USD/person. Finally, it can be observed that 
+the proposed smart integration results in 1.47 tonnes/year of CO2 saving 
+compared to a similar system without wastewater heat recovery.
+Fig. 3 compares the hourly variation of supply air temperature 
+entering the room from the ventilation system and the time duration 
+curve of space heating demand with and without wastewater heat re­
+covery strategy to look into the effectiveness of the proposed smart 
+integration in detail. According to Fig. 3(a), during the cold hours when 
+the building requires heat, the air supply temperature of the proposed 
+model equipped with wastewater heat recovery has higher values, 
+leading to improved thermal efficiency and reduced primary energy 
+used. Fig. 3(b) demonstrates a consistent reduction of space heating 
+demand across various time points, indicating the reduction of reliance 
+on any external heat source. Significant energy savings are shown by the 
+reduced need for space heating while employing the wastewater heat 
+recovery system. The technology lowers energy use and operating costs 
+by reducing the need for extra heating through heat recovery from 
+wastewater. The benefits of incorporating a wastewater heat recovery 
+method into the smart ventilation system are clearly demonstrated by 
+evaluating the supply air temperature and space heating demand trends. 
+Thanks to better energy efficiency, more thermal comfort, and sub­
+stantial long-term savings, the higher supply air temperatures and lower 
+heating demands make the extra expenditure worthwhile. This decrease 
+in primary energy use highlights the system’s capacity to maximize 
+energy efficiency while preserving pleasant indoor temperatures.
+Thermal energy storage (TES) systems incorporating stratification 
+have notable advantages in maximizing energy efficiency and improving 
+system performance. Stratification is the process of water naturally 
+separating into separate layers based on temperature within the storage 
+tank, with hotter water at the top and cooler water at the bottom. 
+Temperature layering enables the system to extract the necessary water 
+temperature from the relevant layer, reducing the need for extra heating 
+or cooling and optimizing the utilization of stored thermal energy. 
+Stratified TES systems can enhance energy utilization, save operational 
+expenses, and prolong the lifespan of HVAC equipment. In order to 
+reflect the effect of stratification over the tank, Fig. 5 illustrates the 
+hourly variation of the temperature at the 1st and 10th nodes and the 
+average tank temperature. Fig. 4 shows the schematic of the storage 
+tank, inflows and outflows, and the stratification nodes used in the 
+simulation.
+The temperature at Node 1 remains consistently elevated and stable 
+for most of the period, with an initial average of approximately 20 ◦C 
+and subsequent minor fluctuations. This suggests that the uppermost 
+layer of the tank, where hot water is held, can maintain higher tem­
+peratures with great efficiency. Node 10′s temperature shows large 
+variations, from 14.7 ◦C to 18.9 ◦C. The temperature changes observed 
+in the tank’s bottom layer, which contains cooler water, appear more 
+dynamic due to the heat being added and removed from the tank. The 
+average temperature exhibits a pattern that falls within the temperature 
+Table 2 
+The comparison of main metrics with and without wastewater heat recovery 
+strategy.
+System Strategy System metric
+without wastewater 
+heat recovery
+with wastewater heat 
+recovery
+Efficiency (%)
+85 (nominal)
+95.4
+Investment cost (USD)
+12,142
+29,032
+Heat cost (USD/MWh)
+54.9
+30.7
+Normalized investment cost per 
+floor area (USD/m2)
+5.9
+14.2
+Normalized investment cost per 
+person (USD/person)
+132
+315.5
+CO2 saving (Tonnes)
+−
+1.47
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+6 
+
+range of Node 1 and Node 10. The temperature initially begins at 
+approximately 20 ◦C, lowers during intensified heat extraction, and 
+gradually rises when heat is reintroduced into the tank.
+Fig. 6 shows the investment cost of each component and its pro­
+portion in the overall costs. The energy wheel is the system’s most costly 
+component, accounting for around 50 % of the total investment cost. Its 
+effectiveness in lowering total energy use and enhancing the system’s 
+thermal performance justifies its high cost. The tank is the second most 
+expensive component, with an initial cost of 4,000 USD. Because robust 
+substances that can resist thermal expansion and contraction and 
+effectively insulate against heat loss are required, the cost is somewhat 
+expensive. Also, it can be observed that the heat exchanger, with almost 
+a 12 % share of the total investment cost, is a key component from the 
+economic point of view. The figure further illustrates that the cheaper 
+elements, like the fan, valves, and pump, are easily accessible in typical 
+designs and perform necessary but simpler tasks.
+Fig. 7 compares the monthly share of heat generated from the 
+wastewater and recovered via the energy wheel to analyze the impact of 
+each source on improving the air supply temperature. The energy wheel 
+exhibits substantial heat recovery from January to March and October to 
+December. Between May and September, both the energy wheel and 
+wastewater heat recovery systems exhibit minimal or no heat produc­
+tion, indicating reduced heating requirements during the warmer 
+months. The energy wheel frequently outperforms the wastewater sys­
+tem in terms of heat recovery, demonstrating its high efficiency and 
+efficacy in absorbing and reusing heat inside the ventilation system. The 
+figure further reveals that although the wastewater system makes large 
+contributions during peak months, its performance is less effective 
+during transitional and warm months, indicating a higher sensitivity to 
+seasonal fluctuations. This suggests that the effectiveness of wastewater 
+heat recovery is contingent upon the presence of wastewater heat, which 
+may vary in accordance with usage trends. The energy wheel and the 
+wastewater heat recovery systems both show high heat recovery rates in 
+Fig. 3. The comparison of a) hourly changes in supply air temperature entering the room and b) time duration curve of space heating demand with and without 
+wastewater heat recovery strategy.
+Fig. 4. The schematic of the thermal energy storage tank.
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+7 
+
+Fig. 5. The hourly changes in temperature at the first and tenth nodes and the average temperature of the stratified tank over the year.
+Fig. 6. The investment cost of each component in USD.
+Fig. 7. The comparison of the monthly share of heat generated from the wastewater and recovered via the energy wheel.
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+8 
+
+the winter and low production in the summer. This seasonal perfor­
+mance means that the system is very effective when heating is at its 
+highest and uses less energy when it’s warmer outside.
+In order to analyze the share of each source and compare their 
+production in total heating demand, the heat production by the air 
+handling unit and the radiators is illustrated in Fig. 8. Radiators emit 
+substantially greater heat than air-handling units all around the year. In 
+January, radiators generate 16.4 MWh of energy, whereas the AHU 
+generates 8.9 MWh. This pattern remains constant throughout the 
+colder months, indicating that radiators are crucial in supplying primary 
+heating during high demand. The AHU provides additional heating, 
+guarantees sufficient ventilation, and preserves indoor air quality. The 
+reduced contribution of this device, in comparison to radiators, indicates 
+that its primary function is to assist in temperature regulation rather 
+than serving as the major source of warmth. The decrease in heating 
+contributions during the warmer months (May to September) results 
+from effective energy management, which prevents wasteful heating 
+when the ambient temperatures are elevated. The figure shows that 
+combining air AHU and radiators achieves a balanced and effective 
+heating system. During periods of high demand, radiators play a more 
+prominent role, while the AHU assists by ensuring proper ventilation 
+and providing extra heat as necessary.
+Fig. 9 compares the monthly and seasonal variation of heat provided 
+by the air handling unit via wastewater heat recovery and/or energy 
+wheels. The AHU generates the highest amount of heat from December 
+to February, reaching its maximum levels in January (8.9 MWh) and 
+December (8.2 MWh). This increased demand is due to the lower tem­
+peratures outside, necessitating substantial heating to keep the indoor 
+environment comfortable. The heat output of the AHU decreases 
+significantly throughout the summer months, reaching values that are 
+either at or very close to 0 MWh. This suggests a low need for heating 
+due to higher ambient temperatures. The seasonal changes show that the 
+maximum productions of 22.2 MWh and 15.9 MWh correspond to 
+Winter and Autumn because the high heating demands require more 
+input energy to maintain the indoor environment within the comfort 
+zone. The seasonal differences in heat production demonstrate how well 
+the system adjusts to shifting weather patterns and makes sure energy 
+isn’t squandered when it’s not needed.
+Sensitivity analysis is an essential tool for assessing parameters in 
+smart energy systems, providing multiple advantages. Sensitivity anal­
+ysis is a method that involves systematically changing input parameters 
+to determine which variables have the most influence on the 
+performance and efficiency of energy systems. This method improves 
+the comprehension of system behavior, resulting in more resilient and 
+dependable models. It assists in prioritizing research and allocating re­
+sources by emphasizing the crucial elements that impact energy opti­
+mization and sustainability, therefore enhancing decision-making 
+processes. Fig. 10 demonstrates the variation of main metrics, including 
+efficiency, investment cost, and heating price, with key variables like the 
+energy wheel’s epsilon, wastewater temperature leaving the tank, 
+number of residences, and heat exchanger’s epsilon. According to 
+Fig. 10(a), as the epsilon value of the energy wheel goes from 0.7 to 0.9, 
+there is a corresponding improvement in the system’s efficiency. The 
+upward trajectory suggests that increasing epsilon values improves en­
+ergy wheel performance, raising the system’s overall efficiency. The 
+reason for this is probably the enhanced heat transfer capabilities, which 
+lead to a more efficient preheating of the air inlet.
+With the increase in epsilon, the investment cost likewise exhibits a 
+rising trend. The price progressively increases to 14,200 USD at an 
+epsilon of 0.9 from 12,500 USD at an epsilon of 0.7. The greater capital 
+cost necessary for more sophisticated energy wheels with improved 
+performance attributes is reflected in this trend. Similar growing trends 
+are seen in the levelized cost of heating, albeit comparatively small 
+compared to investment and efficiency costs. An epsilon of 0.7 begins at 
+30.7 USD per MWh and rises to 32.3 USD per MWh with an epsilon of 
+0.9. This rise can be ascribed to the greater maintenance costs related to 
+better-efficiency systems and potential investment costs. In summary, 
+raising the energy wheel’s epsilon increases efficiency but also raises 
+investment and heating costs. These patterns emphasize how crucial it is 
+to balance cost-benefit analysis with performance enhancements while 
+developing and refining these systems.
+Fig. 10(b) demonstrates the system’s efficiency is relatively stable for 
+most of the wastewater temperature range exiting the tank, averaging 
+94.7 %. This implies that the system’s efficiency is reasonably steady 
+within the given temperature range, suggesting that variables other than 
+wastewater temperature may significantly impact efficiency. The in­
+vestment cost remains at 13,700 USD for most of the temperature range. 
+There is a gradual decline in temperature starting at 4.55 ◦C, reaching a 
+value of 13,500 USD at 6.3 ◦C, followed by an increase to 14,000 USD at 
+7 ◦C. This trend indicates that the system’s cost-effectiveness improves 
+marginally as the wastewater temperature exiting the tank increases to a 
+certain threshold. However, greater temperatures may need more so­
+phisticated or supplementary components beyond this point, leading to 
+increased investment costs. The figure further shows that the heating 
+cost remains quite stable, with few fluctuations, at approximately 31.9 
+USD per MWh for temperatures up to 4.9 ◦C. There is a small decline, 
+dropping to 31.3 USD per MWh at 6.3 ◦C and then rising to 32.6 USD per 
+MWh at 7 ◦C. This pattern is consistent with the relationship between 
+heating prices and investment costs. As heating prices decrease, there is 
+a minor decrease in investment costs up to a certain point. However, as 
+temperatures rise beyond that point, the costs of investment increase. 
+Based on the trends observed, it can be concluded that the system’s ef­
+ficiency remains consistent with a moderate range of wastewater tem­
+peratures that leave the tank. However, both investment costs and 
+heating prices exhibit slight enhancements before rising again at higher 
+temperatures.
+Fig. 10(c) depicts that the system’s efficiency increases as the num­
+ber of occupies rises. It increases gradually to 95.8 % efficiency with 80 
+dwellings from 92.8 % efficiency with 40 residences. This pattern in­
+dicates that as the system handles higher loads, its efficiency increases 
+with the number of homes. This is probably because of economies of 
+scale and better use of the heat recovery process. As the number of 
+dwellings rises, the investment cost falls. For 40 residences, it starts at 
+16,000 USD and decreases to 12,300 USD for 80 residences. This drop in 
+the system’s per-residence cost can be explained by the fixed costs being 
+spread over more units. Larger systems might also profit from bulk 
+purchasing and more effective labor and material utilization. A growing 
+number of residences leads to a drop in the heating costs. The price starts 
+Fig. 8. The comparison of the monthly share of heat provided by the air 
+handling unit and radiators.
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+9 
+
+at 37.9 USD per MWh for 40 houses and decreases to 28.3 USD per MWh 
+for 80 residences. This decrease corresponds to the declining investment 
+expense and demonstrates enhanced cost-effectiveness as the system 
+caters to more households. Distributing operational costs across more 
+units results in a reduced heating price per home.
+Eventually, Fig. 10(d) shows that the system’s efficiency positively 
+correlates with enhancing the heat exchanger’s efficiency. As the level of 
+effectiveness rises, the system’s efficiency likewise enhances. This is 
+because the heat from the wastewater is transferred more efficiently to 
+the incoming air, resulting in a more effective preheating. This decreases 
+the energy other sources need to reach the desired indoor temperature. 
+In most cases, the investment cost decreases as the heat exchanger be­
+comes more efficient. Increased heat exchange efficiency lessens the 
+load on the system, reducing the need for costly auxiliary equipment. A 
+lower levelized cost of heating is another benefit of a more efficient heat 
+exchanger. This reflects the lower operational expenses linked to sys­
+tems with better efficiency. The total cost per unit of heat delivered 
+decreases due to improved heat recovery, which decreases the demand 
+Fig. 9. The monthly changes in heat provided by the air handling unit per month per season.
+Fig. 10. The sensitivity analysis: a) energy wheel’s epsilon, b) wastewater temperature exiting the tank, c) number of residences, and d) heat exchanger’s epsilon.
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+10 
+
+for additional heating energy. Investing in more effective heat ex­
+changers is economically beneficial, as the figure shows a direct corre­
+lation between better heat exchanger efficiency and reduced heating 
+expenses.
+In order to gain an in-depth knowledge of the performance of the 
+present study, a comparison between the results and those of prior 
+studies that examined the utilization of wastewater heat recovery sys­
+tems in buildings is investigated. Table 3 compares the main indicators: 
+energy saving, CO2 emission reduction, and cost saving. According to 
+the table, Golzar and Silveira [38], Bertrand et al., and Ni et al. [63]
+reported energy savings of 5 %-9%, 28 %-41 %, and 20 % without 
+performing a comprehensive economic and environmental assessment. 
+In comparison, the present work performed a comprehensive techno- 
+economic-environmental evaluation, reporting a 10 % energy saving, 
+an annual CO2 emission reduction of 1.4 tonnes, and a cost saving of 24 
+USD/MWh. This comparison emphasizes that the present system pro­
+vides moderate energy savings compared to the systems developed by 
+Bertrand et al. [37] and Ni et al. [63]. However, the studied system 
+stands out by effectively combining significant reductions in CO2 
+emissions and substantial cost savings. This highlights its superior 
+overall performance in improving energy efficiency and sustainability in 
+building energy management.
+5. Conclusions
+This article introduces a novel HVAC system to revolutionize smart 
+residential buildings. The system consists of a dynamic control frame­
+work for energy use reduction and effectively supplies the energy pro­
+duction/usage/waste through smart component integration. The core of 
+this concept is reusing the wastewater’s huge heat potential for pre­
+heating the inlet air entering the air handling unit. The system’s feasi­
+bility is assessed and compared with the conventional HVAC model 
+comprising an energy wheel from all points of view. The hourly, 
+monthly, seasonal, and annual indicators are assessed, and a sensitivity 
+analysis is done to examine the system’s viability thoroughly. In the 
+following the concluding remarks and highlights are listed in detail: 
+• Energy efficiency improvement: The proposed system demon­
+strated a notable improvement in energy efficiency, increasing from 
+85 % in conventional systems to 95.4 %. This signifies a substantial 
+decrease in primary energy use and a highly efficient thermal energy 
+usage from wastewater.
+• Cost saving: The suggested model’s economic viability is revealed 
+by the large reduction in the system’s heating costs, which decreased 
+from 54.9 USD/MWh to 30.7 USD/MWh. This reduction occurred 
+despite the greater initial costs of 29,032 USD.
+• CO2 emission reduction: The proposed smart ventilation system 
+achieved an annual reduction of 1.47 tonnes of CO2 emissions, 
+demonstrating its capacity to promote sustainability and diminish 
+the carbon footprint of residential buildings.
+• Less reliance on district heating: Throughout the winter, the sys­
+tem sustained elevated supply air temperatures, enhancing thermal 
+efficiency and significantly reducing dependence on external heat 
+sources. This consistent performance led to a substantial and 
+continuous reduction in the building’s overall space heating demand, 
+contributing to energy savings and a more stable indoor climate. By 
+minimizing reliance on additional heating, the system improved 
+operational efficiency and promoted cost savings and environmental 
+benefits through reduced energy consumption.
+• Economic viability: The energy wheel, which accounted for 
+approximately 50 % of the total investment cost, was vital in 
+reducing energy use and enhancing thermal efficiency, hence justi­
+fying its higher price. The additional components, such as the ther­
+mal energy storage tank and heat exchanger, substantially affected 
+the system’s economic and operational efficiency.
+• Seasonal performance: Seasonally, the energy wheel and waste­
+water heat recovery systems performed differently, producing less 
+heat recovery in the summer and more in the winter. Regarding heat 
+reuse efficiency, the energy wheel performed better than the 
+wastewater system in most cases.
+• System integration: Air handling units were integrated with radi­
+ators in a hybrid configuration to create a balanced and efficient 
+heating solution. This approach ensures reliable primary heating and 
+adequate ventilation, while radiators provide supplementary heating 
+during periods of high demand. The hybrid system adapts to varying 
+load requirements, enhancing thermal comfort and energy efficiency 
+by dynamically distributing heat as needed across the building.
+• Sensitivity analysis: The sensitivity study identified several key 
+variables that substantially impact system efficiency. These include 
+the number of households served, the temperature of wastewater 
+exiting the tank, the performance of the heat exchanger, and the 
+epsilon (ε) value of the energy wheel. Optimal system design and 
+operation hinge on balancing these factors to maximize energy re­
+covery and overall system performance. Fine-tuning these variables 
+ensures the system can achieve both efficiency and reliability, 
+adapting effectively to varying operational demands.
+CRediT authorship contribution statement
+Hui Liu: Writing – original draft, Visualization, Methodology, 
+Investigation. Zhe Du: Writing – original draft, Software, Investigation, 
+Formal analysis, Conceptualization. Tingting Xue: Writing – review & 
+editing, Resources, Methodology, Investigation. Tao Jiang: Writing – 
+review & editing, Supervision, Resources, Investigation, Funding 
+acquisition, Formal analysis.
+Declaration of competing interest
+The authors declare that they have no known competing financial 
+interests or personal relationships that could have appeared to influence 
+the work reported in this paper.
+Data availability
+Data will be made available on request. 
+References
+[1] Z. Abilkhassenova, S.A. Memon, A. Ahmad, A. Saurbayeva, J. Kim, Utilizing the 
+Fanger thermal comfort model to evaluate the thermal, energy, economic, and 
+environmental performance of PCM-integrated buildings in various climate zones 
+worldwide, Energy Build. 297 (2023) 113479. https://doi.org/10.1016/j.enbuild. 
+2023.113479.
+[2] E. Maslesa, P.A. Jensen, M. Birkved, Indicators for quantifying environmental 
+building performance: A systematic literature review, J. Build. Eng. 19 (2018) 
+552–560. https://doi.org/10.1016/j.jobe.2018.06.006.
+[3] J. Yang, W. Xu, K. Ma, C. Li, A Three-Stage Multi-Energy Trading Strategy Based on 
+P2P Trading Mode, IEEE Trans. Sustain. Energy. 14 (2023) 233–241, https://doi. 
+org/10.1109/TSTE.2022.3208369.
+[4] E. Sadeghibakhtiar, A. Naeimi, S. Naderi, G. Pignatta, A. Behbahaninia, Size 
+optimization of a stand-alone solar-wind-battery hybrid system for net zero energy 
+Table 3 
+The comparison of the present system with previous studies investigated 
+wastewater heat recovery systems for buildings.
+Study
+Energy 
+saving
+CO2 emission 
+reduction
+Cost saving
+Golzar and Silveira 
+[38]
+5–9 %
+×
+×
+Bertrand et al. [37]
+28–41 %
+×
+×
+Ni et al. [63]
+20 %
+×
+×
+Present work
+10 %
+1.4 tonnes/year
+24 USD/ 
+MWh
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+11 
+
+buildings: A case study, Energy Build. 313 (2024) 114204. https://doi.org/10.10 
+16/j.enbuild.2024.114204.
+[5] H. Yuk, J. Yong Choi, W. Duk Suh, D. Jin, S. Kim, Sustainable energy synergy for 
+historic building: Conservation retrofit solution of hygrothermal control, Energy 
+Build. 317 (2024) 114392. https://doi.org/10.1016/j.enbuild.2024.114392.
+[6] I. Um-e-Habiba, M. Ahmed, H.H. Asif, M. Alhelou, Khalid, A review on enhancing 
+energy efficiency and adaptability through system integration for smart buildings, 
+J. Build. Eng. 89 (2024) 109354. https://doi.org/10.1016/j.jobe.2024.109354.
+[7] C. Zhu, M. Wang, M. Guo, J. Deng, Q. Du, W. Wei, Y. Zhang, A. Mohebbi, An 
+innovative process design and multi-criteria study/optimization of a biomass 
+digestion-supercritical carbon dioxide scenario toward boosting a geothermal- 
+driven cogeneration system for power and heat, Energy 292 (2024) 130408. https 
+://doi.org/10.1016/j.energy.2024.130408.
+[8] R. Galvin, Net-zero-energy buildings or zero-carbon energy systems? How best to 
+decarbonize Germany’s thermally inefficient 1950s-1970s-era apartments, J. Build. 
+Eng. 54 (2022) 104671. https://doi.org/10.1016/j.jobe.2022.104671.
+[9] K. Ma, Y. Yu, B. Yang, J. Yang, Demand-Side Energy Management Considering 
+Price Oscillations for Residential Building Heating and Ventilation Systems, IEEE 
+Trans. Ind. Informatics. 15 (2019) 4742–4752, https://doi.org/10.1109/ 
+TII.2019.2901306.
+[10] T. Jiang, R. Zhang, F. Zhang, G. Shi, C. Wang, Assessing provincial coal reliance for 
+just low-carbon transition in China, Environ. Impact Assess. Rev. 102 (2023) 
+107198. https://doi.org/10.1016/j.eiar.2023.107198.
+[11] I. Renewable, E. Agency, Renewable capacity statistics 2016 Statistiques de 
+capacit´e renouvelable 2016 Estadísticas de capacidad renovable 2016, 2016.
+[12] International Energy Agency (IEA), Global CO2 emissions rebounded to their 
+highest level in history in 2021, Glob. Energy Rev. CO2 Emiss. 2021. (2022) 1–3.
+[13] N. Wu, J.E. Parsons, K.R. Polenske, The impact of future carbon prices on CCS 
+investment for power generation in China, Energy Policy 54 (2013) 160–172. http 
+s://doi.org/10.1016/j.enpol.2012.11.011.
+[14] Global Coal Plant Tracker, (n.d.).
+[15] A. Khan, J. Min, W.U. Hassan Shah, Q. Li, C. Sun, Efficacy of CO2 emission 
+reduction strategies by countries pursuing energy efficiency, nuclear power, and 
+renewable electricity, Energy 300 (2024) 131418. https://doi.org/10.1016/j.energ 
+y.2024.131418.
+[16] T. Zaghdoudi, K. Tissaoui, M.H. Maaloul, Y. Bahou, N. Kammoun, Asymmetric 
+connectedness between oil price, coal and renewable energy consumption in 
+China: Evidence from Fourier NARDL approach, Energy 285 (2023) 129416. https 
+://doi.org/10.1016/j.energy.2023.129416.
+[17] M. Ahsan Kabir, M.M. Hasan, T. Hossain, A. Ahnaf, H. Monir, Sustainable energy 
+transition in Bangladeshi academic buildings: A techno-economic analysis of 
+photovoltaic-based net zero energy systems, Energy Build. 312 (2024) 114205. 
+https://doi.org/10.1016/j.enbuild.2024.114205.
+[18] Q. Meng, X. Tong, S. Hussain, F. Luo, F. Zhou, Y. He, L. Liu, B. Sun, B. Li, Enhancing 
+distribution system stability and efficiency through multi-power supply startup 
+optimization for new energy integration, IET Gener. Transm. Distrib. N/a (2024). 
+https://doi.org/10.1049/gtd2.13299.
+[19] R. Zhang, L. Yin, J. Jia, Y. Yin, Application of ATS-GWIFBM Operator Based on 
+Improved Time Entropy in Green Building Projects, Adv. Civ. Eng. 2019 (2019) 8. 
+https://doi.org/10.1155/2019/3519195.
+[20] T. Bibi, A. Ali, A. Naeem, C. Zhang, N. Ahmad, To Investigate Different Parameters 
+of Economic Sliding Based Seismic Isolation System, J. Earthq. Eng. 28 (2024) 
+659–688, https://doi.org/10.1080/13632469.2023.2217935.
+[21] F.S. Hafez, B. Sa’di, M. Safa-Gamal, Y.H. Taufiq-Yap, M. Alrifaey, 
+M. Seyedmahmoudian, A. Stojcevski, B. Horan, S. Mekhilef, Energy Efficiency in 
+Sustainable Buildings: A Systematic Review with Taxonomy, Challenges, 
+Motivations, Methodological Aspects, Recommendations, and Pathways for Future 
+Research, Energy, Strateg. Rev. 45 (2023) 101013. https://doi.org/10.1016/j.esr. 
+2022.101013.
+[22] A. Kitsopoulou, N. Ziozas, P. Iliadis, E. Bellos, C. Tzivanidis, N. Nikolopoulos, 
+Energy performance analysis of alternative building retrofit interventions for the 
+four climatic zones of Greece, J. Build. Eng. 87 (2024) 109015. https://doi.org/10 
+.1016/j.jobe.2024.109015.
+[23] A. Akgüç, A.Z. Yılmaz, Determining HVAC system retrofit measures to improve 
+cost-optimum energy efficiency level of high-rise residential buildings, J. Build. 
+Eng. 54 (2022) 104631, https://doi.org/10.1016/j.jobe.2022.104631.
+[24] S. Suhendri, M. Hu, Y. Dan, Y. Su, B. Zhao, S. Riffat, Building energy-saving 
+potential of a dual-functional solar heating and radiative cooling system, Energy 
+Build. 303 (2024) 113764. https://doi.org/10.1016/j.enbuild.2023.113764.
+[25] B. Nourozi, Sustainable building ventilation solutions with heat recovery from 
+waste heat, KTH Royal Institute of Technology (2019). https://doi.org/10.13140 
+/RG.2.2.28827.41761.
+[26] P. Li, J. Hu, L. Qiu, Y. Zhao, B.K. Ghosh, A Distributed Economic Dispatch Strategy 
+for Power–Water Networks, IEEE Trans. Control Netw. Syst. 9 (2022) 356–366, 
+https://doi.org/10.1109/TCNS.2021.3104103.
+[27] H. Bayera Madessa, M. Shakerin, E. Helberg Reinskau, M. Rabani, Recent progress 
+in the application of energy technologies in Large-Scale building Blocks: A State-of- 
+the-Art review, Energy Convers. Manag. 305 (2024) 118210. https://doi.org/10 
+.1016/j.enconman.2024.118210.
+[28] B. Nourozi, Advances in Ventilation Heat Recovery An assessment of peak load 
+shaving using renewables Advances in Ventilation Heat Recovery An assessment of 
+peak load shaving using renewables, 2022.
+[29] G. Aruta, F. Ascione, N. Bianco, G.M. Mauro, Sustainability and energy 
+communities: Assessing the potential of building energy retrofit and renewables to 
+lead the local energy transition, Energy 282 (2023) 128377, https://doi.org/ 
+10.1016/j.energy.2023.128377.
+[30] D. Cielo, A. Subiantoro, Net zero energy buildings in New Zealand: Challenges and 
+potentials reviewed against legislative, climatic, technological, and economic 
+factors, J. Build. Eng. 44 (2021) 102970. https://doi.org/10.1016/j.jobe.2021.10 
+2970.
+[31] M. Liangdong, R. Tixiu, Z. Tianjiao, Z. Tianyi, Z. Jili, Experimental study on effect 
+of operating parameters on performance of serially cascaded wastewater source 
+heat pump, J. Build. Eng. 32 (2020) 101458. https://doi.org/10.1016/j.jobe.2020 
+.101458.
+[32] F.M. Meggers, M. Mast, E. Zurich, The missing link for low exergy buildings: low 
+temperature-lift, ultra-high COP heat pumps Building Data Genome Project View 
+project, n.d.
+[33] F. Meggers, H. Leibundgut, The potential of wastewater heat and exergy: 
+Decentralized high-temperature recovery with a heat pump, Energy Build. 43 
+(2011) 879–886. https://doi.org/10.1016/J.ENBUILD.2010.12.008.
+[34] D. Nilsson, T. Karpouzoglou, J. Wallin, P. Blomkvist, F. Golzar, V. Martin, Is on- 
+property heat and greywater recovery a sustainable option? A quantitative and 
+qualitative assessment up to 2050, Energy Policy 182 (2023) 113727. https://doi. 
+org/10.1016/j.enpol.2023.113727.
+[35] E. Kamel, S. Habibi, A.M. Memari, State of the practice review of moisture 
+management in residential buildings through sensors, Structures. 59 (2024) 
+105698. https://doi.org/10.1016/j.istruc.2023.105698.
+[36] D.S. Noaman, S.A. El-Ghafour, Holistic design of energy-efficient temporary 
+houses: Meeting ventilation, heating, cooling, and lighting demands, J. Build. Eng. 
+86 (2024) 108534. https://doi.org/10.1016/j.jobe.2024.108534.
+[37] A. Bertrand, R. Aggoune, F. Mar´echal, In-building waste water heat recovery: An 
+urban-scale method for the characterisation of water streams and the assessment of 
+energy savings and costs, Appl. Energy. 192 (2017) 110–125. https://doi.org/10 
+.1016/j.apenergy.2017.01.096.
+[38] F. Golzar, S. Silveira, Impact of wastewater heat recovery in buildings on the 
+performance of centralized energy recovery – A case study of Stockholm, Appl. 
+Energy. 297 (2021) 117141. https://doi.org/10.1016/j.apenergy.2021.117141.
+[39] Q. Xu, S. Riffat, S. Zhang, Review of heat recovery technologies for building 
+applications, Energies 12 (2019), https://doi.org/10.3390/en12071285.
+[40] Y. Duan, Y. Zhao, J. Hu, An initialization-free distributed algorithm for dynamic 
+economic dispatch problems in microgrid: Modeling, optimization and analysis, 
+Sustain. Energy, Grids Networks. 34 (2023) 101004. https://doi.org/10.1016/j. 
+segan.2023.101004.
+[41] Y.-H. Lan, J.-Y. Zhao, Improving Track Performance by Combining Pad´e- 
+Approximation-Based Preview Repetitive Control and Equivalent-Input- 
+Disturbance, J. Electr. Eng. Technol. 19 (2024) 3781–3794, https://doi.org/ 
+10.1007/s42835-024-01830-x.
+[42] M. Shirkhani, J. Tavoosi, S. Danyali, A.K. Sarvenoee, A. Abdali, 
+A. Mohammadzadeh, C. Zhang, A review on microgrid decentralized energy/ 
+voltage control structures and methods, Energy Rep. 10 (2023) 368–380. htt 
+ps://doi.org/10.1016/j.egyr.2023.06.022.
+[43] TRNSYS : Transient System Simulation Tool, (n.d.).
+[44] C. Seybold, M.F. Brunk, In-house waste water heat recovery, REHVA J. (2013) 
+18–21.
+[45] Z. Wehbi, R. Taher, J. Faraj, M. Ramadan, C. Castelain, M. Khaled, A short review 
+of recent studies on wastewater heat recovery systems: Types and applications, 
+Energy Rep. 8 (2022) 896–907, https://doi.org/10.1016/j.egyr.2022.07.104.
+[46] M. Von Sperling, Wastewater Characteristics, Treatment and Disposal (2015), 
+https://doi.org/10.2166/9781780402086.
+[47] Y. El Fouih, P. Stabat, P. Rivi`ere, P. Hoang, V. Archambault, Adequacy of air-to-air 
+heat recovery ventilation system applied in low energy buildings, Energy Build. 54 
+(2012) 29–39, https://doi.org/10.1016/J.ENBUILD.2012.08.008.
+[48] Klein, s. a., TRNSYS-A transient system simulation program, Univ. Wisconsin- 
+Madison, Eng. Exp. Stn. Rep. (1988) 38.
+[49] F.B. Tilahun, R. Bhandari, M. Mamo, Design optimization of a hybrid solar-biomass 
+plant to sustainably supply energy to industry: Methodology and case study, 
+Energy 220 (2021) 119736, https://doi.org/10.1016/j.energy.2020.119736.
+[50] M. Brum, P. Erickson, B. Jenkins, K. Kornbluth, A comparative study of district and 
+individual energy systems providing electrical-based heating, cooling, and 
+domestic hot water to a low-energy use residential community, Energy Build. 92 
+(2015) 306–312, https://doi.org/10.1016/j.enbuild.2015.01.045.
+[51] B. Tashtoush, A. Alshare, S. Al-Rifai, Hourly dynamic simulation of solar ejector 
+cooling system using TRNSYS for Jordanian climate, Energy Convers. Manag. 100 
+(2015) 288–299, https://doi.org/10.1016/j.enconman.2015.05.010.
+[52] A. Anderson, B. Rezaie, M.A. Rosen, An innovative approach to enhance 
+sustainability of a district cooling system by adjusting cold thermal storage and 
+chiller operation, Energy 214 (2021). https://doi.org/10.1016/j.energy.2020 
+.118949.
+[53] M.S. Saleem, N. Abas, A.R. Kalair, S. Rauf, A. Haider, M.S. Tahir, M. Sagir, Design 
+and optimization of hybrid solar-hydrogen generation system using TRNSYS, Int. J. 
+Hydrogen Energy. (2019), https://doi.org/10.1016/j.ijhydene.2019.05.188.
+[54] F.A. Ghaith, H. Razzaq, Performance of solar powered cooling system using 
+Parabolic Trough Collector in UAE, Sustain. Energy Technol. Assessments. 23 
+(2017) 21–32, https://doi.org/10.1016/j.seta.2017.08.005.
+[55] M. Compton, B. Rezaie, Investigating steam turbine feasibility to improve the 
+sustainability of a biomass boiler using TRNSYS, Sustain. Cities Soc. 43 (2018) 
+86–94, https://doi.org/10.1016/j.scs.2018.08.032.
+[56] A. Behzadi, A. Arabkoohsar, V.S. Peri´c, Innovative hybrid solar-waste designs for 
+cogeneration of heat and power, an effort for achieving maximum efficiency and 
+renewable integration, Appl. Therm. Eng. 190 (2021), https://doi.org/10.1016/j. 
+applthermaleng.2021.116824.
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+12 
+
+[57] M.A. Adesanya, H. Obasekore, A. Rabiu, W.-H. Na, Q.O. Ogunlowo, T. 
+D. Akpenpuun, M.-H. Kim, H.-T. Kim, B.-Y. Kang, H.-W. Lee, Deep reinforcement 
+learning for PID parameter tuning in greenhouse HVAC system energy 
+Optimization: A TRNSYS-Python cosimulation approach, Expert Syst. Appl. 252 
+(2024) 124126. https://doi.org/10.1016/j.eswa.2024.124126.
+[58] N.Y. Çam, M.A. Ezan, Y. Biçer, An integrated transient model in TRNSYS for 
+thermal management of the tomato growth process in a greenhouse with a PV- 
+aided heat pump-assisted HVAC system, Int. J. Thermofluids. 22 (2024) 100592. 
+https://doi.org/10.1016/j.ijft.2024.100592.
+[59] N. Alibabaei, A.S. Fung, K. Raahemifar, Development of Matlab-TRNSYS co- 
+simulator for applying predictive strategy planning models on residential house 
+HVAC system, Energy Build. 128 (2016) 81–98. https://doi.org/10.1016/j. 
+enbuild.2016.05.084.
+[60] P. Shirazi, A. Behzadi, P. Ahmadi, M.A. Rosen, S. Sadrizadeh, Comparison of 
+control strategies for efficient thermal energy storage to decarbonize residential 
+buildings in cold climates: A focus on solar and biomass sources, Renew. Energy. 
+220 (2024) 119681. https://doi.org/10.1016/j.renene.2023.119681.
+[61] A. Chakraborty, S. Ray, Operational cost minimization of a microgrid with 
+optimum battery energy storage system and plug-in-hybrid electric vehicle 
+charging impact using slime mould algorithm, Energy 278 (2023) 127842. https 
+://doi.org/10.1016/j.energy.2023.127842.
+[62] M. Sadi, A. Mohammad Behzadi, A.S. Alsagri, K.H. Chakravarty, A. Arabkoohsar, 
+An innovative green multi-generation system centering around concentrating PVTs 
+and biomass heaters, design and multi-objective optimization, J. Clean. Prod. 340 
+(2022) 130625. https://doi.org/10.1016/j.jclepro.2022.130625.
+[63] L. Ni, J. Tian, C. Shen, J. Zhao, Experimental study of the separation performance 
+of a novel sewage hydrocyclone used in sewage source heat pump, Appl. Therm. 
+Eng. 106 (2016) 1300–1310. https://doi.org/10.1016/j.applthermaleng.2016.06 
+.093.
+H. Liu et al.                                                                                                                                                                                                                                      
+Energy & Buildings 327 (2025) 115070 
+13

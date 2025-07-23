@@ -1,0 +1,379 @@
+Proceedings of the 2016 Winter Simulation Conference 
+T. M. K. Roeder, P. I. Frazier, R. Szechtman, E. Zhou, T. Huschka, and S. E. Chick, eds. 
+ 
+ 
+ 
+SMART BUILDING ENERGY MANAGEMENT SYSTEMS (BEMS) SIMULATION 
+CONCEPTUAL FRAMEWORK 
+ 
+Jintaek Ock 
+Raja R. A. Issa 
+Ian Flood 
+ 
+Rinker School of Construction Management  
+ 
+University of Florida 
+Box 115703 
+Gainesville, FL 32611-5703, USA 
+ 
+ 
+ABSTRACT 
+Continuing growth of energy use by commercial buildings has created a need to develop innovative 
+techniques to reduce and optimize building energy use.  Recently Building Energy Management Systems 
+(BEMS) have gained popularity because of increasing interest in building energy conservation and savings.  
+In this study, a conceptual framework for real-time weather responsive control systems combined with 
+BEMS is proposed to achieve model simulation based Smart BEMS.  The proposed control system is 
+developed using building energy control patterns, which are generated from the combinations of weather 
+data changes.  As a result, building energy use can be adjusted by, for example, using daylighting responsive 
+controls for electrical lighting as well as by adjusting the HVAC operational schedule, in response to 
+weather changes.  To create control logics for model based Smart systems, BIM and Computational Fluid 
+Dynamic (CFD) simulation are used to obtain material properties and to develop air flow operational 
+algorithms, respectively.   
+1 
+INTRODUCTION 
+It is widely recognized that existing buildings often consume more energy than is necessary from the design 
+intent (Mills 2011).  An increase in awareness about critical energy use in the building sector stimulated 
+public and academic attention to the need for improvement of building energy efficiency, and there are 
+various efforts to develop energy efficient buildings.  The primary objective of energy efficient buildings 
+is energy conservation and reduction in building operation process by controlling energy consumption.  
+ 
+Particularly, in the commercial building sector in the U.S., energy for space conditions (heating and 
+cooling) and lighting comprises more than half of total commercial building energy consumption (U.S. 
+Department of Energy 2012).  Therefore, saving electricity for HVAC (Heating, ventilation, and air 
+conditioning) and lighting during the building operation phase, while maintaining occupants’ comfort, can 
+be one of the main strategies for the achievement of energy efficient buildings (Oldewurtel et al. 2012).   
+ 
+As the needs for energy savings and efficient energy use in the building operation stage is escalating, 
+continuous control of building energy consumption, which is implemented by Building Energy 
+Management System (BEMS), is important (Kolokotsa et al. 2009).  The majority of BEMS are primarily 
+applied to manage HVAC and lighting systems so as to achieve optimum indoor environmental quality by 
+minimizing energy costs.  Also, BEMS can be used to monitor energy use, to keep historical energy usage 
+data, and to report buildings’ performance and operation. More specifically, currently developed BEMS are 
+primarily collecting building energy usage patterns, tracking real-time energy use intensity (EUI), and 
+identifying abnormal energy consumption, without integrated building energy control systems.  Moreover,  
+978-1-5090-4486-3/16/$31.00 ©2016 IEEE
+3237
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:44 UTC from IEEE Xplore.  Restrictions apply. 
+
+Ock, Issa, and Flood 
+ 
+most currently used BEMS are sensor and metering based monitoring system, which do not consider 
+detailed building geometric information.  Thus, predicting and analyzing building energy use for efficient 
+building operation strategy are not available using current BEMS.   
+ 
+With consideration of BEMS functional scalability, many recent research studies about building energy 
+performance have actively approached the following representative concepts: 
+ 
+1. Integration with building control system (Wong et al. 2010, Prívara et al. 2011, Široký et al. 2011, 
+Oldewurtel et al. 2012, O'Neill et al. 2014, Heo et al. 2015).  
+2. Building Information Modeling (BIM) based building energy performance (O'Donnell et al. 2013, 
+Dong et al. 2014, Moon and Choi 2014). 
+ 
+ 
+Integrating the BEMS with automatic or manual building control systems can adjust abnormal levels 
+of energy use (e.g. upper level of set point).  For example, if excessive energy use for the air conditioning 
+of a specific room is detected, the integrated automatic or manual control system in the BEMS can adjust 
+the air conditioning system in the affected room.   
+ 
+With the rapid advance of Information and Communication Technology (ICT) automatic building 
+control system have become more popular.  A data communication protocol for the buildings’ automatic 
+control network, the BACnet standard, is used to develop BEMS based automatic control system 
+(O'Donnell et al. 2013).    
+ 
+BIM is also an integral part to develop advanced BEMS since BIM stores the buildings’ geometric 
+information, physical properties and component’s information.  Buildings’ material and equipment (e.g. 
+HVAC) properties can be used for estimating physical based energy performances.  Therefore, BIM based 
+BEMS is, potentially more reliable and accurate than metering based BEMS.   
+ 
+In addition to the described two BEMS concept, the latest research about building energy performance 
+is focused on real-time energy management, not rule-based or historical data based.  Real-time weather data 
+and energy usage pattern will be collected and analyzed, then, an appropriate control system will be applied 
+to dynamically optimize energy flow (Kang et al. 2014).  Although this type of advanced BEMS operation 
+increases its accuracy and reliability for calculating energy performances, the energy use set point is usually 
+underestimated due to occupants’ effects.  The behavior of a building’s occupants have a significant impact 
+on the energy use patterns by disturbing room temperature and heating and cooling loads (Ryan and 
+Sanquist 2012).   
+ 
+Taking into account the latest research directions about BEMS and advanced building energy 
+performance, this study proposes a conceptual framework for model simulation based BEMS.  More 
+specifically, the proposed conceptual BEMS in this study is a real-time building energy simulation based 
+BEMS including occupants’ uncertainty.  In this study, occupants’ uncertain behavior is limited to the status 
+of window’s being open or closed.  
+ 
+2 
+DEVELOPMENT OF CONCEPTUAL FRAMEWORK  
+2.1 
+Language 
+The proposed conceptual framework for smart BEMS in this study, which includes real-time simulation 
+based weather responsive control and occupants’ impact, covers two dominant energy use control in 
+buildings, daylighting and HVAC as shown in Figure 1.  
+ 
+Enclosed in the blue box is the daylight control workflow and in the red box is the heating and cooling 
+control workflow.  Information from BIM is used as geometric parameters for calculating lighting intensity 
+and thermal performance of the room.  And, 1-hour interval, real-time weather data including outdoor 
+temperature and wind characteristics is collected from an on-site weather station or from weather web site.  
+Also, a set point reference energy model is created using EnergyPlus representing design intent or calibrated 
+acceptable energy performance to compare and evaluate current energy use pattern of the building. 
+ 
+3238
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:44 UTC from IEEE Xplore.  Restrictions apply. 
+
+Ock, Issa, and Flood 
+ 
+ 
+Figure 1: Smart BEMS Conceptual Framework. 
+2.2 
+Lighting Controlled BEMS 
+In order to implement lighting control, pre-defined daylight intensity by time variable is generated using a 
+daylighting simulation tool such as Autodesk 3D Max Design, Daysim or Radiance.  These tools are 
+validated with experimental analysis (Reinhart and Breton 2009).  Required data for the daylight intensity 
+database can be collected from the BIM data such as the building’s location, orientation and glazing 
+properties.  Generated hourly changing daylight intensity data is sent to database, called daylight intensity 
+data repository.  The proposed BEMS sends a query every hour to acquire the daylighting intensity pattern 
+of the building.  The selected hour daylighting intensity from repository is transferred, and then compared 
+to current lighting energy usage pattern.  If the space daylighting exceeds the artificial lighting brightness, 
+the lighting control turns off the light in the selected space.  
+ 
+A lighting control simulation test was performed in this study using a simple office space unit BIM 
+model.  The area of the test unit model is 2000 ft2 (40 ft by 50 ft), and it has a north faced curtain wall 
+system.  The hourly averaged transmitted daylighting intensity into the office room was simulated with 
+following assumptions: 
+ 
+1. Sky condition is clear. 
+2. Model location is Gainesville, FL (Latitude: 29.6742° and Longitude: -82.3363°) 
+3. Reference office brightness is set as 2000 lux 
+4. Artificial lighting is installed horizontally with 10 ft. interval (i.e. 3 row) as shown in Figure 2. 
+5. Each row of artificial lighting is separately controlled.    
+ 
+ 
+An hourly daylighting simulation was conducted and the analysis results were generated as visual 
+images and a spreadsheet as shown in Figure 3.  The simulation was performed based on a normal office 
+building schedule, 8 am to 5 pm, at 1 hour intervals on December 3rd, 2015.  The daylighting intensity 
+display image of each hour is generated by averaging 1-hour duration transmitted daylighting intensity.  In 
+addition, spreadsheet type result includes transient daylighting intensity at the simulation starting and 
+ending time.  Figure 3 illustrates the daylighting level of the proposed office space at 9 am, 1 pm, 3 pm, 
+and 5 pm to identify excess lighting levels. 
+3239
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:44 UTC from IEEE Xplore.  Restrictions apply. 
+
+Ock, Issa, and Flood 
+ 
+ 
+Figure 2: Top view of test office unit BIM model implemented 3 rowed ceiling lights. 
+ 
+ 
+As shown in Figure 3, from 1 pm to 3 pm, the illuminance level of the area around the glazing wall and 
+“Row 1” exceeded 2000 lux and the daylighting illuminance level is decreased from 4 pm.  Therefore, the 
+“Row 1” lighting area would have enough illuminance level (> 2000 lux) without turning on “Row 1” 
+ceiling lightings during 2 hours (1 to 3 pm).  This simulation results will be applied to the proposed BEMS 
+to control “Row 1” ceiling lights to turn off from 1 pm to 3 pm.  Then ceiling lights will turn on again from 
+4 pm.  
+ 
+This simple test daylighting simulation is conducted using a simple office room unit model.  In real 
+practice, whole buildings’ lighting simulation is required to apply the BEMS control.  However, running a 
+whole building lighting analysis will require substantial calculation time.  Thus, implementing real-time 
+lighting simulation to the proposed BEMS may not be practical.  Consequently, this study proposes a 
+daylighting intensity data repository concept.  The daylighting illuminance levels for certain (e.g. maximum 
+of 1 year) period are simulated using a BIM model, and the results will be organized by day and time, then 
+it will be saved to the database.  The proposed BEMS will use pre-developed daylighting data whenever 
+starting operation.    
+ 
+The conducted lighting simulation assumed a clear sky condition.  But, in real practice, the sky 
+condition changes, and it is a significant factor affecting daylight intensity.  Therefore, for more accurate 
+lighting control, the effect of sky conditions on daylight intensity needs to be further evaluated.  Developing 
+a coefficient value for varied sky condition would be one of the simplest methods to apply into the proposed 
+BEMS. 
+ 
+ 
+ 
+3240
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:44 UTC from IEEE Xplore.  Restrictions apply. 
+
+Ock, Issa, and Flood 
+ 
+    
+ 
+    
+ 
+Figure 3: The simulation results of daylighting illuminance level at 9am, 1pm, 3pm, and 5pm for test 
+office BIM model. 
+2.3 
+Heating and Cooling Controlled BEMS 
+Analyzing heating and cooling energy use requires a more complex analysis of the combined parametric 
+effects on the buildings’ thermal performances.  The combined effects of real-time weather data, solar 
+radiation intensity, and glazing properties on the thermal performance of a room needs to be carefully 
+evaluated.  Theoretically, thermal performance of the rooms in a building is determined by interactions of 
+conduction, convection, and radiation.  Investigating thermal interaction is not a trivial task.  In order for 
+fast and reliable thermal analysis, Computational Fluid Dynamic (CFD) techniques are used in this study.  
+CFD simulation is a comprehensive tool to analyze thermal performance with consideration of thermal 
+conduction, convection, and radiation.  The results of CFD simulation have been validated in many research 
+(Guardo et al. 2011, Kim et al. 2011, Mingotti et al. 2011, Radosavljevic et al. 2014, Ray et al. 2014).  
+ 
+For reliable CFD simulation in this study, building geometric information as parameters, which are 
+independent of time, and outdoor weather condition including temperature with wind characteristics as time 
+dependent variables are required.  Building geometric parameters are extracted from the BIM data, and 
+hourly changing outdoor weather condition is collected from an on-site weather station or weather website.    
+ 
+Since the proposed BEMS are designed to identify abnormal energy use within a certain time interval, 
+the specified time interval for collecting real-time weather data and the duration of CFD simulation have to 
+be set up.  In this study, real-time weather data will be collected every hour starting from 10 minute before 
+the building schedule.  And, updated weather data for every hour is added to the CFD thermal performance 
+simulation for the next hour.  The conceptual BEMS schedule proposed in this study is shown in Figure 4.  
+In addition to geometric and weather information, solar radiation intensity is one of the significant factors 
+used to determine thermal performance of buildings’ room.  Analysis of the solar radiation effect of a 
+room’s thermal performance requires substantial calculation time.  Therefore, in order to simplify the CFD 
+based thermal simulation process, solar radiation intensity for developing heating and cooling control 
+BEMS is preliminarily calculated using physical fundamentals of solar radiation as shown in Table 1.  The  
+3241
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:44 UTC from IEEE Xplore.  Restrictions apply. 
+
+Ock, Issa, and Flood 
+ 
+ 
+Figure 4: Proposed BEMS operation schedule. 
+Table 1: Hourly solar radiation intensity based on physical fundamentals.   
+Beam radiation (ܫ௕௖) + Sky diffuse radiation (ܫௗ௖) + Ground reflected radiation (ܫ௥௖) 
+ࡿࢀൌࡵ࢈ࢉ൅ࡵࢊࢉ൅ࡵ࢘ࢉ 
+ࡵ࢈ࢉൌ ࡯࢔ࡵࢋି࢑/ ࢙࢏࢔ࢻ∗ࢉ࢕࢙࢏ 
+ܥ௡ = clearness number (assuming the value 
+of 1) 
+ܫ = extraterrestrial solar radiation 
+݇ = atmospheric optical depth 
+ߙ = solar altitude angle 
+݅ = angle of incidence 
+ࡵࢊࢉൌ࡯ሺ࡯࢔ࡵࢋି࢑/ ୱ୧୬ఈሻࢉ࢕࢙૛ሺࢼ/૛ሻ 
+ܥ = sky diffuse factor 
+ߚ = wall angle 
+ࡵ࢘ࢉൌ ࣋࡯࢔ࡵࢋି࢑/ ୱ୧୬ఈሺ࢙࢏࢔ࢻ൅࡯ሻ 
+࢙࢏࢔૛ሺࢼ/૛ሻ 
+ߩ = ground reflection factor (0.2) 
+ 
+proposed BEMS is used to identify hourly thermal change of rooms in buildings, the data of hourly changing 
+solar radiation intensity is also collected.  More specifically, geometric BIM data including optical 
+properties is applied for developing solar radiation intensity.  The developed BIM accommodated solar 
+radiation intensity presents the amount of heat energy.  Consequently, variable solar intensity depending 
+on outdoor and indoor temperature will be analyzed during the CFD simulation process.  The workflow for 
+this process is shown in Figure 5. 
+ 
+ 
+If window is opened by occupants who desire ventilation during the building operation schedule, 
+analyzing thermal performance of the room would be more complicated due to consideration of the 
+additional combined effect of air inflow to the room with a heating or cooling schedule.  In general, air  
+3242
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:44 UTC from IEEE Xplore.  Restrictions apply. 
+
+Ock, Issa, and Flood 
+ 
+ 
+Figure 5: Schematic workflow for CFD process of proposed BEMS. 
+ 
+inflow from outside to the room circulate air flow movement resulting in room temperature change.  
+Fluctuating room temperature results in an abnormal schedule for heating and cooling.  In order to reduce 
+room temperature fluctuation by the occupants’ uncertain behavior, extended CFD simulation is used to 
+control heating and cooling energy consumption for the case of opened windows.  Extended CFD 
+simulation in this study is a separate process because of the occurrence of different boundary condition for 
+thermal analysis caused by the opened windows.  By implementing a separated extended CFD simulation 
+process for uncertain cases, the main CFD simulation process for the proposed BEMS will not disturbed.  
+ 
+In this study, the case of opened windows is detected by installed sensors, the room zonal information 
+from BIM and real-time weather data are imported to extended CFD simulation to create new boundary 
+conditions and run thermal analysis.  Computed thermal performance result of an opened window room 
+would be compared with targeted set point temperature.  If the new result from extended CFD for an opened 
+window room has a certain level of discrepancy with set point, heating and cooling equipment will be turned 
+on to adjust room temperature.   
+3 
+CONCLUSION AND FUTURE RESEARCH 
+The research area of building energy performance management and control is rapidly expanding and 
+advancing due to recent substantial energy conservation efforts in the building sector.  Although several 
+types of BEMS have been implemented in office buildings, the major functions of these types of BEMS are 
+to monitor, collect, store, and report energy usage data without control systems.  Recently developed BEMS 
+have been integrated with automatic or manual control systems to prevent anomaly in energy consumption.  
+Moreover, several types of BEMS integrated with BIM have been proposed by many researchers.  Since  
+3243
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:44 UTC from IEEE Xplore.  Restrictions apply. 
+
+Ock, Issa, and Flood 
+ 
+BIM data can be directly used for developing BEMS, more reliable and accurate evaluation would be 
+enabled.  Moreover, BIM data can be used for developing model predictive control (MPC) or simulation 
+based control.  Recently, as the capability and accuracy of BIM based simulations have significantly 
+improved, developing real-time simulation based BEMS are more attractive.        
+With considering current improvements, this study focused on the feasibility of model simulation based 
+BEMS development and proposed a conceptual framework for smart BEMS.  The proposed advanced 
+BEMS are limited to the features of lighting energy control and cooling and heating energy consumption.  
+For lighting energy control, a daylighting intensity database is pre-constructed, and the data can be used to 
+detect the space where artificial lighting can be turned off if transmitted daylighting intensity is higher than 
+lighting brightness.  In addition, in order to optimally control heating and cooling energy use, occupants’ 
+behaviors are included for developing advanced BEMS.  In this study the occupants’ uncertainty is 
+considered as the desire of opening windows.  If opened windows are detected by installed sensors, the 
+opened room BIM data and real-time weather data are transferred to CFD simulation to create a new 
+boundary condition.  Newly created boundary conditions would be used for analyzing thermal performance 
+of selected room; and the result from the CFD simulation can be compared with reference model to adjust 
+room temperature.  
+REFERENCES 
+Dong, B., et al. (2014). "A BIM-enabled information infrastructure for building energy Fault Detection and 
+Diagnostics." Automation in Construction 44: 197-211. 
+Guardo, A., et al. (2011). "CFD assessment of the performance of lateral ventilation in Double Glazed 
+Façades in Mediterranean climates." Energy and Buildings 43(9): 2539-2547. 
+Heo, Y., et al. (2015). "Scalable methodology for large scale building energy improvement: Relevance of 
+calibration in model-based retrofit analysis." Building and Environment 87: 342-350. 
+Kang, S. J., et al. (2014). "Scheduling-based real time energy flow control strategy for building energy 
+management system." Energy and Buildings 75: 239-248. 
+Kim, Y.-M., et al. (2011). "Effects of double skin envelopes on natural ventilation and heating loads in 
+office buildings." Energy and Buildings 43(9): 2118-2126. 
+Kolokotsa, D., et al. (2009). "Predictive control techniques for energy and indoor environmental quality 
+management in buildings." Building and Environment 44(9): 1850-1863. 
+Mills, E. (2011). "Building commissioning: a golden opportunity for reducing energy costs and greenhouse 
+gas emissions in the United States." Energy Efficiency 4(2): 145-173. 
+Mingotti, N., et al. (2011). "The fluid mechanics of the natural ventilation of a narrow-cavity double-skin 
+facade." Building and Environment 46(4): 807-823. 
+Moon, H. and M. S. Choi (2014). Application of a BIM-based Data Model for the Evaluation of Real-time 
+Building Energy Performance in the Operational Stage. IBPSA Asia Conference. Nagoya, Japan. 
+O'Donnell, J., et al. (2013). "Transforming BIM to BEM: Generation of Building Geometry for the NASA 
+Ames Sustainability Base BIM." Ernest Orlando Lawrence Berkeley National Laboratory LBNL-
+6033E. 
+O'Neill, Z., et al. (2014). "Model-based real-time whole building energy performance monitoring and 
+diagnostics." Journal of Building Performance Simulation 7(2): 83-99. 
+Oldewurtel, F., et al. (2012). "Use of model predictive control and weather forecasts for energy efficient 
+building climate control." Energy and Buildings 45(0): 15-27. 
+Prívara, S., et al. (2011). "Model predictive control of a building heating system: The first experience." 
+Energy and Buildings 43(2–3): 564-572. 
+Radosavljevic, J., et al. (2014). "Estimation of Indoor Temperature for a Direct-Gain Passive Solar 
+Building." Journal of Energy Engineering 140(1): 04013007. 
+Ray, S. D., et al. (2014). "Experimental characterization of full-scale naturally ventilated atrium and 
+validation of CFD simulations." Energy and Buildings 69(0): 285-291. 
+3244
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:44 UTC from IEEE Xplore.  Restrictions apply. 
+
+Ock, Issa, and Flood 
+ 
+Reinhart, C. and P.-F. Breton (2009). "Experimental validation of Autodesk 3Ds Mas Design 2009 and 
+Daysim 3.0." NRC Project #B3241. 
+Ryan, E. M. and T. F. Sanquist (2012). "Validation of building energy modeling tools under idealized and 
+realistic conditions." Energy and Buildings 47: 375-382. 
+Široký, J., et al. (2011). "Experimental analysis of model predictive control for an energy efficient building 
+heating system." Applied Energy 88(9): 3079-3087. 
+U.S. Department of Energy (2012). 2011 Buildings Energy Data Book. U.S. Deparment of Energy. 
+Wong, S. L., et al. (2010). "Artificial neural networks for energy analysis of office buildings with 
+daylighting." Applied Energy 87(2): 551-557. 
+AUTHOR BIOGRAPHIES 
+JINTAEK OCK is a Ph.D. candidate in the Rinker School of Construction Management at the University 
+of Florida. His research interests are building information modeling (BIM), environmental performance 
+analysis and energy simulation. He holds a Master’s degree in building construction. His email address is 
+okjihad@ufl.edu. 
+ 
+RAJA RAYMOND ISSA is a Holland Professor and Director of the Center for Advanced Construction 
+Information Modeling in the Rinker School of Construction Management at the University of Florida. He 
+has over 30 years of industry and academic experience in computer science and construction engineering 
+and management. He received a B.S., M.S. and Ph.D. in Civil Engineering from Mississippi State 
+University and a JD from the University of Memphis where he also did post-graduate work in computer 
+science. His areas of research include construction law, information systems and advanced construction 
+information modeling. His email is raymond-issa@ufl.edu. 
+ 
+IAN FLOOD is Holland Professor in the Rinker School of Construction Management at the University of 
+Florida. He received his Ph.D. from the University of Manchester, UK, on parallel computing techniques 
+applied to the simulation of construction processes. He has published over 140 refereed articles on the 
+subjects of simulation modeling and intelligent computing applied to civil engineering.  His email is 
+flood@ufl.edu.     
+3245
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:44 UTC from IEEE Xplore.  Restrictions apply.

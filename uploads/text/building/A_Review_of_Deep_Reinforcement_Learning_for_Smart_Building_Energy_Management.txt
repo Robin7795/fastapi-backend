@@ -1,0 +1,1864 @@
+12046
+IEEE INTERNET OF THINGS JOURNAL, VOL. 8, NO. 15, AUGUST 1, 2021
+A Review of Deep Reinforcement Learning for
+Smart Building Energy Management
+Liang Yu
+, Member, IEEE, Shuqi Qin
+, Meng Zhang, Chao Shen, Senior Member, IEEE,
+Tao Jiang
+, Fellow, IEEE, and Xiaohong Guan, Fellow, IEEE
+Abstract—Global buildings account for about 30% of the total
+energy consumption and carbon emission, raising severe energy
+and environmental concerns. Therefore, it is signiﬁcant and urgent
+to develop novel smart building energy management (SBEM) tech-
+nologies for the advance of energy efﬁcient and green buildings.
+However, it is a nontrivial task due to the following challenges.
+First, it is generally difﬁcult to develop an explicit building ther-
+mal dynamics model that is both accurate and efﬁcient enough
+for building control. Second, there are many uncertain system
+parameters (e.g., renewable generation output, outdoor temper-
+ature, and the number of occupants). Third, there are many
+spatially and temporally coupled operational constraints. Fourth,
+building energy optimization problems can not be solved in real
+time by traditional methods when they have extremely large
+solution spaces. Fifthly, traditional building energy management
+methods have respective applicable premises, which means that
+they have low versatility when confronted with varying build-
+ing environments. With the rapid development of Internet of
+Things technology and computation capability, artiﬁcial intelli-
+gence technology ﬁnd its signiﬁcant competence in control and
+optimization. As a general artiﬁcial intelligence technology, deep
+reinforcement learning (DRL) is promising to address the above
+challenges. Notably, the recent years have seen the surge of DRL
+for SBEM. However, there lacks a systematic overview of different
+DRL methods for SBEM. To ﬁll the gap, this article provides a
+comprehensive review of DRL for SBEM from the perspective
+of system scale. In particular, we identify the existing unresolved
+issues and point out possible future research directions.
+Manuscript received January 22, 2021; revised March 31, 2021; accepted
+May 4, 2021. Date of publication May 10, 2021; date of current ver-
+sion July 23, 2021. This work was supported in part by the National Key
+Research and Development Program of China under Grant 2019YFB1312 and
+Grant 2018YFA0702200; in part by the National Natural Science Foundation
+of China under Grant 61972214, Grant 61822309, and Grant 61773310;
+in part by the Basic Research Project of Leading Technology of Jiangsu
+Province under Grant BK20202011; in part by the China Postdoctoral Science
+Foundation under Grant 2020M673406; and in part by the 1311 Talent Project
+of Nanjing University of Posts and Telecommunications. (Corresponding
+authors: Liang Yu; Chao Shen; Tao Jiang.)
+Liang Yu is with the College of Automation and College of Artiﬁcial
+Intelligence, Nanjing University of Posts and Telecommunications, Nanjing
+210003, China, and also with the Faculty of Electronic and Information
+Engineering, Xi’an Jiaotong University, Xi’an 710049, China (e-mail:
+liang.yu@njupt.edu.cn).
+Shuqi Qin is with the College of Internet of Things, Nanjing University of
+Posts and Telecommunications, Nanjing 210003, China.
+Meng Zhang and Xiaohong Guan are with the Systems Engineering
+Institute, Ministry of Education Key Laboratory for Intelligent Networks and
+Network Security, Xi’an Jiaotong University, Xi’an 710049, China.
+Chao Shen is with the School of Cyber Science and Engineering, Xi’an
+Jiaotong University, Xi’an 710049, China (e-mail: cshen@sei.xjtu.edu.cn).
+Tao Jiang is with the Wuhan National Laboratory for Optoelectronics,
+School
+of
+Electronic
+Information
+and
+Communications,
+Huazhong
+University of Science and Technology, Wuhan 430074, China (e-mail:
+tao.jiang@ieee.org).
+Digital Object Identiﬁer 10.1109/JIOT.2021.3078462
+Index Terms—Artiﬁcial intelligence, building microgrids, deep
+reinforcement learning (DRL), energy management, Internet of
+Things (IoT), smart buildings, uncertainty.
+I. INTRODUCTION
+B
+UILDINGS account for a large portion of total energy
+consumption and total carbon emission in the world
+[1]–[5]. For example, global buildings consumed 30% of
+total energy and generated 28% of total carbon emission
+in 2019 [6]. Moreover, the energy demand of buildings is
+expected to increase by 50% in the next 30 years [7], [8].
+Under the above background, smart buildings have received
+more and more attention in recent years, which can provide
+sustainable, economical, and comfortable operational environ-
+ments for occupants using many advanced technologies, e.g.,
+Internet of Things (IoT), cloud computing, machine learning,
+and big data analytics [9]–[11]. For supporting the above fea-
+tures, it is signiﬁcant and urgent to develop novel smart build-
+ing energy management (SBEM) technologies [12], which can
+implement the optimal tradeoff among energy consumption,
+carbon emission, energy cost, and user comfort [13]–[18] by
+intelligently scheduling building energy systems.
+Although SBEM has many advantages, the following chal-
+lenges have to be addressed. First, due to the existence of many
+complex and random factors, it is often intractable to develop
+an explicit building thermal dynamics model that is accurate
+and efﬁcient enough for building energy optimization [19].
+Second, there are many uncertain system parameters [20],
+e.g., renewable generation output, electricity price, indoor tem-
+perature, outdoor temperature, CO2 concentration, and the
+number of occupants. Third, there are many temporally and
+spatially coupled operational constraints related to energy
+subsystems [21], [22], e.g., heating, ventilation, and air condi-
+tioning (HVAC) systems, and energy storage systems (ESSs),
+which means that the current system decision will affect the
+future decisions and the decisions among different subsys-
+tems should be coordinated. Fourth, it is difﬁcult to solve
+large-scale building energy optimization problems in real time
+when traditional optimization methods are adopted [23]. To
+be speciﬁc, any time when an optimization is needed, these
+methods have to compute completely or partially all the pos-
+sible solutions and choose the best one. When the solution
+space is very large, the computation process is time consum-
+ing [21]. Finally, it is hard to develop a generalized building
+2327-4662 c⃝2021 IEEE. Personal use is permitted, but republication/redistribution requires IEEE permission.
+See https://www.ieee.org/publications/rights/index.html for more information.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+YU et al.: REVIEW OF DEEP REINFORCEMENT LEARNING FOR SMART BUILDING ENERGY MANAGEMENT
+12047
+energy management method that can be applied in all building
+environments [18]. In existing SBEM methods, most of them
+have strong applicable premises [24], e.g., stochastic program-
+ming and model predictive control (MPC) need the prior or
+forecasting information of uncertain parameters [25], [26], and
+Lyapunov optimization techniques require some strict usage
+conditions [16], [27].
+As a general artiﬁcial intelligence technology, deep rein-
+forcement learning (DRL) [28], [29] is promising to address
+the above challenges and has been applied in many ﬁelds, e.g.,
+games [88], [31], autonomous driving [32]–[35], autonomous
+IoT [36], smart buildings [19], [20], [37], [38], smart city [39],
+wireless networks [40], Internet of energy [41], unmanned
+aerial vehicles [42], smart microgrids [43], edge comput-
+ing [44], and manufacturing systems [45]. In 2017, the
+ﬁrst work that adopts DRL algorithm for SBEM has been
+done [19]. To be speciﬁc, a deep Q-network (DQN) algo-
+rithm has been adopted for the control of building HVAC
+systems and simulation results have showed the effectiveness
+of the designed control algorithm in reducing energy cost
+and maintaining thermal comfort of occupants. Since then,
+many DRL-based methods for SBEM have been proposed
+[20], [21], [46], [47]. In general, DRL-based methods have
+following advantages in dealing with the above-mentioned ﬁve
+challenges.
+1) For Challenge 1: Based on the information interacted
+with actual building environments, DRL agents can learn
+the optimal control policies by trial and error. Therefore,
+DRL can support system operation without knowing
+explicit building thermal dynamics models [19].
+2) For Challenge 2: After the training process is ﬁnished,
+the trained DRL agent will be used for performance
+testing. Given the current state of an actual environment,
+the DRL agent will generate an action via a mapping
+function. Since no forecasting or statistics information
+of building environments is used in the above process,
+DRL can tackle system uncertainties [20], [48].
+3) For Challenge 3: By designing proper reward func-
+tions, building energy subsystems can coordinate with
+each other under the framework of multiagent DRL.
+As a result, spatially-coupled operational constraints
+are guaranteed [21]. Moreover, by choosing reason-
+able actions or designing efﬁcient reward functions,
+temporally-coupled operational constraints related to
+energy subsystems (e.g., HVAC systems and ESSs) can
+be satisﬁed [20].
+4) For Challenge 4: During the testing phase, the computa-
+tional complexity of the DRL algorithm is very low since
+just the forward propagation in deep neural networks
+(DNNs) is involved. Even if a high-dimensional raw
+state is given, the optimal control actions can be deter-
+mined instantly (e.g., few milliseconds) [23], [49], [50].
+5) For Challenge 5: Since simulated or real data is used
+for training agents, the applications of DRL meth-
+ods do not require rigorous mathematical models and
+premise conditions. Moreover, the trained DRL agent
+can still work or even be improved persistently by
+online learning when confronted with varying building
+Fig. 1.
+Classiﬁcation of machine learning.
+environments [23], [51]. Thus, DRL methods have wide
+applicable premises in solving SBEM problems.
+There are many surveys related to DRL in the litera-
+ture, e.g., the applications of DRL in power and electric
+systems, communications and networking, autonomous driv-
+ing, autonomous IoT, cyber security, and multiagent systems
+can be found in [24], [33]–[36], and [52]–[56]. However,
+they do not consider DRL for SBEM. Although there are
+several surveys on building energy systems, the involved meth-
+ods are RL [57]–[60] or other artiﬁcial intelligence methods
+[e.g., MPC and fuzzy logic (FL)] [61]. Based on the above
+observation, we are motivated to conduct a comprehensive
+review on DRL for SBEM. For convenience, we provide the
+comparison between our work and related surveys in Table I.
+It can be observed that our work mainly focuses on DRL for
+SBEM from the perspective of different building system scales
+(i.e., a single building energy subsystem, multiple energy
+subsystems (MESs) in buildings, and building microgrids).
+Moreover, we provide a systematic overview of different DRL
+methods for SBEM. Above all, we identify the existing unre-
+solved issues and point out possible future directions. We
+hope that this article can show some insights in this direc-
+tion and raise the attention of SBEM research community to
+explore and exploit DRL, as another alternative or even a better
+solution for SBEM.
+The remainder of this article is organized as follows. In
+Section II, we give an overview of DRL. In Section III, we
+introduce the background of SBEM, the procedure of solving
+SBEM problems using DRL, and the classiﬁcation of DRL
+methods for SBEM. In next three sections, we discuss DRL
+applications in a single building energy subsystem, MESs of
+buildings, and building microgrids. In Section VII, we identify
+some unsolved issues and point out the future research direc-
+tions. Finally, conclusions and lessons learned are provided in
+Section VIII. For easy understanding, the list of abbreviations
+in alphabetical order is provided in Table II.
+II. OVERVIEW OF DEEP REINFORCEMENT LEARNING
+According to the ways of feedback, machine learning can
+be divided into three types as shown in Fig. 1, i.e., supervised
+learning, unsupervised learning, and reinforcement learning
+(RL) [62]. As for supervised learning, an immediate feedback
+can be obtained by comparing the prediction value with the
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+12048
+IEEE INTERNET OF THINGS JOURNAL, VOL. 8, NO. 15, AUGUST 1, 2021
+TABLE I
+COMPARISON BETWEEN OUR WORK AND RELATED SURVEYS
+Fig. 2.
+Illustration of RL, deep learning, and DRL. (a) RL. (b) Deep neural networks. (c) DRL.
+real value that given by the label data, which will be used to
+improve predictor. In contrast, no feedback can be received
+in unsupervised learning since the input data is not labeled.
+While interacting with an environment, a delayed feedback
+is involved in RL since the action taken at the current state
+will affect future states and actions, and the value of taking
+an action at the current state can not be known immediately
+but be learned gradually. Typically, supervised learning and
+unsupervised learning are used to solve single-stage prob-
+lems (e.g., regression, classiﬁcation, clustering, and dimension
+reduction), but RL is specialized in solving multistage decision
+problems [62]. Under the background of SBEM, supervised
+learning can be used to develop building thermal dynam-
+ics models and reward models. Based on these models, RL
+can reduce the number of interactions with the environment,
+resulting in a high sampling efﬁciency.
+DRL can be regarded as the combination of deep learning
+and RL as shown in Fig. 2. To be speciﬁc, DNNs are used to
+approximate the optimal value functions or optimal policies in
+RL. Therefore, DRL has a powerful representation ability and
+strong decision-making ability under uncertainty [63], [64].
+Since DRL algorithms are mainly based on Markov deci-
+sion process (MDP) framework or its variants (e.g., partially
+observable MDP [36] and Markov game [21]), we ﬁrst give
+the background of MDP. Then, we introduce some terms (e.g.,
+policy, action-value function, experience replay, and target
+network) in RL and DRL, which will be mentioned frequently
+in next several sections.
+A. MDP
+Typically, an MDP is deﬁned by a ﬁve-tuple (S, A, P, R,
+γ ), where S and A denote the sets of state and action, respec-
+tively. P : S × A × S →[0, 1] denotes the state-transition
+probability function P(s′|s, a) (s′, s ∈S, a ∈A), which mod-
+els the uncertainty in the evolution of system states based
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+YU et al.: REVIEW OF DEEP REINFORCEMENT LEARNING FOR SMART BUILDING ENERGY MANAGEMENT
+12049
+TABLE II
+LIST OF ABBREVIATIONS IN ALPHABETICAL ORDER
+on the action taken by the agent. R : S × A →R is the
+reward function and γ ∈[0, 1] is a discount factor. Note
+that MDP provides a mathematical framework for multistage
+optimal decision problems under uncertainty. In other words,
+the decision maker (i.e., the agent) observes a state st and
+takes an action at at each time slot t. Next, the state of the
+system (i.e., the environment) evolves into another one. Then,
+the agent ﬁnds itself in a new state st+1 and receives a reward
+rt+1. In addition, the aim of the agent at time slot t is to
+maximize the expected return it receives over the future [62],
+which is given by ∞
+k=0 γ krt+k+1.
+B. RL
+RL has been widely used in solving MDPs [57], [62]
+[65]–[70]. In an RL process, the agent learns its optimal pol-
+icy π by interacting with the environment, where a policy π
+is a mapping from states to the probabilities of selecting every
+possible action [62]. In particular, the agent observes a state
+and takes an action at slot t. Then, it receives a reward and
+a new state, which are used to update the policy. The above
+process repeats until the policy converges.
+To better illustrate the key idea of RL, Q-learning is intro-
+duced in this section, which is one of the most classic RL
+algorithms that learn a deterministic policy indirectly. In other
+words, Q-function (i.e., action-value function) is learned for
+selecting decisions instead of policy function itself. Let the
+value of taking action a in state s under a policy π be Qπ(s, a),
+which is deﬁned by
+Qπ(s, a) .= Eπ
+ ∞
+
+k=0
+γ krt+k+1(st = s, at = a)
+
+(1)
+where Eπ[·] denotes the expected value of a random variable
+given that the agent follows policy π. Then, the optimal action-
+value function Q∗(s, a) is maxπ Qπ(s, a) and can be calculated
+by the Bellman optimality equation in a recursive manner [20]
+as follows:
+Q∗(s, a) = E
+
+rt+1 + γ max
+a′ Q∗
+st+1, a′
+|st = s, at = a
+	
+=
+
+s′,r
+P
+
+s′, r|s, a
+
+r + γ max
+a′ Q∗
+s′, a′	
+where s′ ∈S, r ∈R, a′ ∈A, and P(s′, r|s, a) denotes a con-
+ditional probability function. To obtain the value of Q∗(s, a),
+the information of P(s′, r|s, a) must be known, which may be
+unavailable in practice. To address this challenge, Q-learning
+algorithm is proposed to approximate Q∗(s, a) as follows:
+Q(st, at) ←Q(st, at) + t
+(2)
+where t = α[rt+1 + γ maxa′ Q(st+1, a′) −Q(st, at)] and
+α is the step size. It is obvious that Q(st, at) = rt+1 +
+γ maxa′ Q(st+1, a′) when t = 0. At this time, Q(st, at) will
+not be updated and the learned action-value function Q directly
+approximates the optimal action-value function Q∗(s, a). Note
+that Q-learning algorithm is effective when state space is
+low-dimensional. To support high-dimensional state space, a
+nonlinear function approximator, such as a neural network can
+be used to represent the action-value function in RL. At this
+time, RL is known to be unstable or even divergent.
+C. DRL
+As the ﬁrst DRL algorithm, DQN can overcome the above-
+mentioned drawback of Q-learning by adopting several tech-
+niques of stabilizing learning process, e.g., experience replay
+and target network [28]. To be speciﬁc, experience replay
+mechanism stores the experience transitions (st, at, st+1, rt+1)
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+12050
+IEEE INTERNET OF THINGS JOURNAL, VOL. 8, NO. 15, AUGUST 1, 2021
+TABLE III
+CLASSIFICATION OF TYPICAL DRL ALGORITHMS
+in a replay memory and draw samples of them uniformly
+at random for training, which brings greater data efﬁciency
+when compared with standard online Q-learning algorithm.
+Moreover, randomizing the samples contributes to the reduc-
+tions of their correlations and the variance of updating DNN
+weights. In addition, target network is adopted to improve the
+stability of training process by copying a separate network
+with longer update period for the computation of target value
+[i.e., rt+1 + γ maxa′ Q(st+1, a′)].
+In addition to DQN, many DRL algorithms have been
+proposed in existing works. Generally speaking, these DRL
+algorithms can be classiﬁed into two types, i.e., model-free
+DRL algorithms and model-based DRL algorithms. In par-
+ticular, model-free DRL algorithms do not need to know
+environment models [i.e., state-transition probability function
+P(s′|s, a) or P(s′, r|s, a)] since they learn policies based on the
+information directly interacted with unknown environments.
+Different from model-free DRL algorithms, model-based DRL
+algorithms need to construct environment models. According
+to the way of learning a policy, model-free DRL methods can
+be further divided into value-based methods and policy-based
+methods. To be speciﬁc, the former learns an approximation
+of optimal value function (i.e., learn a deterministic pol-
+icy indirectly), while the latter learns an approximation of
+optimal policy directly. Typically, value-based methods some-
+times update value function in an “off-policy” (i.e., the policy
+to be evaluated and improved is unrelated to the policy used
+for sampling an action at the next state) manner, which means
+that the previous collected experience transitions in the same
+environment can be used for training and a high data efﬁ-
+ciency can be achieved. In contrast, “on-policy” means that
+all of the updates are made using the data from the trajec-
+tory distribution induced by the current policy [71]. Therefore,
+“on-policy” methods are more stable but less data efﬁcient
+compared with “off-policy” methods. In addition, according
+to the number of agents, DRL algorithms can be divided into
+two types, i.e., single-agent and multiagent DRL algorithms.
+In Table III, typical DRL algorithms and their categories are
+summarized.
+III. DRL-BASED SMART BUILDING ENERGY
+MANAGEMENT
+In this section, we brieﬂy introduce the main research prob-
+lems in the ﬁeld of SBEM. Then, we classify the representative
+DRL algorithms for SBEM by pointing out their respective
+advantages, disadvantages, and application scenarios, which
+contributes to the selection of appropriate DRL algorithms for
+SBEM.
+A. SBEM
+In smart buildings, there are several types of energy equip-
+ments, e.g., photovoltaic panels (PVs), wind turbines (WTs),
+diesel generators (DGs), electric ESSs, thermal ESSs, HVAC
+systems, lighting systems, blind systems, window systems,
+electric water heaters (EWHs), electric vehicles (EVs), wash-
+ing machines (WMs), gas boilers (GBs), and clothes dryers
+(CDs). Since the operations of such equipments have con-
+siderable economic, environmental, and social impacts on
+buildings, it is very necessary to schedule them coordinately.
+Considering that HVAC systems have high power consump-
+tion and can be adjusted ﬂexibly without sacriﬁcing user
+comfort, they are taken as an example to illustrate a typical
+research problem in SBEM ﬁeld. When considering economic
+and social impacts, a comfort-aware energy cost minimization
+problem related to an HVAC system in a N-zone commercial
+building can be formulated by P1 as follows [21]:
+(P1) min
+mi,t,σt
+L
+
+t=1
+E
+
+Ct
+
+mi,t, σt
+
+(3a)
+s.t. Tmin
+i
+≤Ti,t ≤Tmax
+i
+∀i, t, Ki,t > 0
+(3b)
+Ti,t+1 = F
+
+Ti,t, Tz,t|∀z∈Ni, Tout
+t
+, mi,t, ςi,t
+
+(3c)
+Oi,t ≤Omax
+i
+∀i, t, Ki,t > 0
+(3d)
+Oi,t+1 = G
+
+Oj,t|∀j∈N , Ki,t, mi,t, σt
+
+(3e)
+mi,t ∈M
+∀i, t
+(3f)
+σt ∈
+∀t
+(3g)
+where E denotes the expectation operator, which acts on
+random system parameters, e.g., outdoor temperature Tout
+t
+,
+number of occupants Ki,t. Decision variables of P1 are air
+supply rate in each zone mi,t and damper position in air han-
+dling unit (AHU) σt, L is the considered total number of time
+slots. Ct(mi,t, σt) is the energy cost at slot t, Ti,t and Oi,t are
+indoor air temperature and indoor CO2 concentration at slot
+t, respectively. It is obvious that they should be controlled
+within comfortable ranges, which can be captured by (3b) and
+(3d), respectively. The dynamics of Ti,t and Oi,t are repre-
+sented by (3c) and (3e), respectively. Note that ςi,t, Ni, and
+N are thermal disturbance, the set of neighbors related to zone
+i (1 ≤i ≤N), and the set of zones, respectively. The discrete
+solution spaces of mi,t and σt are shown in (3f) and (3g),
+respectively.
+To solve SBEM problem P1 efﬁciently, several chal-
+lenges mentioned in Section I have to be addressed. In
+addition, nonconvexity and nonseparability of the objective
+function increase the difﬁculty of solving P1. When tak-
+ing all challenges into consideration, existing building energy
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+YU et al.: REVIEW OF DEEP REINFORCEMENT LEARNING FOR SMART BUILDING ENERGY MANAGEMENT
+12051
+TABLE IV
+REPRESENTATIVE DRL ALGORITHMS FOR SBEM
+optimization approaches are not applicable. Note that the
+above example is just related to the management of a sin-
+gle building energy subsystem. With the increase of system
+scale, more and more challenges are involved, which will be
+discussed in next four sections.
+B. Procedure of Solving SBEM Problems Using DRL
+To solve SBEM problems using DRL methods, several steps
+can be taken as follows.
+Step 1: Reformulating the original problem (e.g., P1) as an
+MDP problem or a Markov game (i.e., a multiagent extension
+of MDP). Take P1 for example, N + 1 agents are adopted
+for the purpose of scalability, since there are N + 1 deci-
+sion variables and the solution space grows rapidly with the
+increase of zone number. Thus, P1 should be formulated as
+a Markov game and its components (e.g., state, action, and
+reward function) should be designed.
+Step 2: Designing an appropriate DRL-based algorithm for
+the reformulated problem. For instance, in order to solve the
+Markov game related to P1, an HVAC control algorithm has
+been proposed in [21] based on multiagent DRL with attention
+mechanism, which is scalable to the number of agents.
+Step 3: Analyzing the computational complexity of the
+designed DRL-based algorithm in the training and testing
+phases. Note that a trained DRL algorithm has very low com-
+putational complexity in the testing phase since just forward
+propagation in DNNs is involved, e.g., DRL agent can make
+real-time decisions within several milliseconds given a high-
+dimensional environment state. As a result, computational
+complexity analysis of the designed DRL-based algorithm in
+the training phase is the priority. Typical factors that affect
+computational complexity of a DRL-based energy manage-
+ment algorithm in the training phase are summarized as
+follows [20], [89], e.g., the number of hidden layers, the
+number of neurons in each hidden layer, the number of training
+episodes needed for algorithm convergence, the frequency of
+updating weights, and batch size.
+Step 4: Evaluating the performances of the designed DRL-
+based algorithm from different perspectives, e.g., convergence,
+effectiveness, scalability, and robustness.
+C. Representative DRL Algorithms for SBEM
+In this section, we introduce some representative DRL algo-
+rithms for SBEM in Table IV. According to the descriptions in
+Section II-C, these algorithms can be divided into two types,
+i.e., model-free algorithms and model-based algorithms.
+Model-free algorithms do not require explicit building envi-
+ronment models, but they need to collect sufﬁcient experience
+transitions for training, which may result in a long exploration
+time and a high exploration cost. In Table IV, four represen-
+tative model-free DRL algorithms for SBEM are given, i.e.,
+DQN, DDPG, PPO, and A2C/A3C. To be speciﬁc, DQN is
+a valued-based off-policy algorithm and only supports dis-
+crete action space, while DDPG is a policy-based off-policy
+algorithm and only supports continuous action space. Since
+experience replay is adopted by DQN and DDPG, they have
+higher data efﬁciency compared with “on-policy” algorithms.
+However, they tend to overestimate Q-value and generate sub-
+optimal policies. As two representative policy-based off-policy
+algorithms, PPO and A2C/A3C can support both discrete and
+continuous action spaces. Moreover, PPO can support sta-
+ble learning by controlling the similarity between the current
+policy and the old policy. Furthermore, it is robust to hyperpa-
+rameters and network architectures. Although A2C/A3C can
+support reliable and parallel learning on a single multicore
+CPU, it is sensitive to the employed hyperparameters. To show
+the differences among these algorithms clearly, their network
+architectures are illustrated in Fig. 3.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+12052
+IEEE INTERNET OF THINGS JOURNAL, VOL. 8, NO. 15, AUGUST 1, 2021
+Fig. 3.
+Illustration of network architectures of four representative model-free DRL algorithms. (a) DQN. (b) DDPG. (c) PPO. (d) A3C.
+Fig. 4.
+Taxonomy of DRL applications in SBEM.
+Model-based algorithms need to construct models to sim-
+ulate building environments and use them to generate future
+episodes for training. Therefore, model-based algorithms out-
+perform model-free algorithms in terms of sample complexity.
+However, for model-based algorithms, it is often challeng-
+ing to obtain an accurate building environment model. In
+existing works, many model-based DRL methods for SBEM
+have been proposed by constructing a system dynamics model
+with historical operational data [90], [91] or calibrating a
+building environment simulation model with the measured
+data [92]. Four representative model-based DRL algorithms for
+SBEM are provided in Table IV, i.e., MuZero, LSTM-DDPG,
+Differentiable MPC-PPO, and BEM-A3C. To be speciﬁc,
+MuZero is a model-based off-policy algorithm [93], which
+intends to learn a network model with accurate planning
+performance. Since it uses tree-based search methods, MuZero
+may not be good at dealing with continuous action space.
+LSTM-DDPG is also a model-based off-policy algorithm,
+which uses LSTM and historical operational data to learn
+the environment model. Then, the obtained model is used
+to generate a large number of data for training DRL agents
+with DDPG algorithm. Differentiable MPC-PPO is a model-
+based on-policy algorithm, which uses differentiable MPC to
+learn existing controller via imitation learning and improves
+the learned controller via PPO algorithm. BEM-A3C is also
+a model-based on-policy algorithm, which uses EnergyPlus
+software to develop a building energy model (BEM) and uses
+actual operational data to calibrate the model. Finally, the cal-
+ibrated model can be used for training DRL agents via A3C
+algorithm.
+In the next three sections, we will introduce DRL applica-
+tions in SBEM considering different system scales as shown in
+Fig. 4, i.e., a single building energy subsystem, MESs in build-
+ings, and building energy systems in microgrid environment.
+IV. APPLICATIONS OF DRL IN SINGLE BUILDING
+ENERGY SUBSYSTEM
+In existing works, DRL techniques have been adopted to
+optimize the operation cost or energy consumption of a single
+building energy subsystem. Among all single building energy
+subsystems, HVAC and EWH [94]–[96] have very ﬂexible
+power consumption [10]. Therefore, we mainly focus on them in
+this section. To be speciﬁc, model-free DRL methods for HVAC
+control, model-based DRL methods for HVAC control, and
+DRL methods for EWHs are introduced in Sections IV-A–IV-C,
+respectively. At the end of this section, we give a summary of
+existing works and provide some insights.
+A. Model-Free DRL Methods for HVAC Control
+It is well known that the main purpose of an HVAC system
+is to maintain thermal comfort for occupants. To achieve
+this aim, many DRL-based methods have been proposed. For
+example, Morinibu et al. [97] proposed an A2C-based method
+to decrease the nonuniformity of radiation temperature in a
+room by ﬂexibly controlling the wind direction of an HVAC
+system. Simulation results showed that the proposed method
+has better performance than random control and normal con-
+trol. Since the operations of HVAC systems place an economic
+burden on building operators, it is very necessary to minimize
+energy cost while maintaining thermal comfort for occupants.
+Wei et al. [19] proposed a DQN-based HVAC control method
+to save energy cost in ofﬁce buildings while maintaining the
+room temperature requirements. When ﬁve zones are con-
+sidered, energy cost can be reduced by 35.1%. Similarly,
+Nagy et al. [51] and Gupta et al. [98] proposed a model-free
+DRL-based HVAC control method in a residential building
+to save energy cost and reduce the loss of occupant com-
+fort based on D-DNFQI and DQN, respectively. In addition to
+energy cost, energy consumption is also an important metric.
+To minimize energy consumption while maintaining thermal
+comfort, some works have been done in [99] and [100]. Since
+the above-mentioned works use value-based DRL methods,
+they can not deal with continuous actions. To support con-
+tinuous actions, Gao et al. [18] presented a DDPG-based
+HVAC control method to optimize energy consumption and
+thermal comfort in a laboratory by jointly adjusting temper-
+ature set point and humidity. Simulation results showed that
+the proposed method has higher thermal comfort and energy
+efﬁciency than other baselines, e.g., Q-learning and DQN. Due
+to the importance of indoor air quality, Valladares et al. [101]
+proposed a DDQN-based control algorithm to optimize HVAC
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+YU et al.: REVIEW OF DEEP REINFORCEMENT LEARNING FOR SMART BUILDING ENERGY MANAGEMENT
+12053
+Fig. 5.
+Proposed transfer learning framework for multiagent training.
+energy consumption while maintaining thermal comfort and
+indoor air quality comfort for occupants. Although the above-
+mentioned methods are effective, they can not be used for
+coordinating multiple components in HVAC systems.
+To overcome this drawback, Nagarathinam et al. [49]
+proposed a multiagent DRL-based algorithm to minimize
+HVAC energy consumption without sacriﬁcing user comfort
+by adjusting both the building and chiller set points. To be
+speciﬁc, each DDQN-based agent coordinates with others to
+learn an optimal HVAC control policy. Note that the coordina-
+tion is achieved by allocating the same reward for each agent.
+Since a large building may have a few hundreds of AHUs and
+a few tens of chillers, it is time consuming to train all agents
+centrally. To achieve an accelerated learning process, transfer
+learning (i.e., transferring the knowledge from one task to a
+related but different task [102], [103]) is adopted. As shown
+in Fig. 5, the optimal policies obtained by training multiple
+agents on a subset of HVAC systems (including one AHU and
+one chiller) can be used to pretrain multiple agents related to
+other HVAC subsystems due to the problem similarity.
+B. Model-Based DRL Methods for HVAC Control
+Although the above-mentioned works are effective, there are
+two drawbacks in the process of training a DRL agent. First,
+it is impractical to let the DRL agent to explore the state space
+fully in a real building environment since unacceptably high
+cost may be incurred [59], [90], [91]. Second, it may take
+a long time for the DRL agent to learn an optimal policy if
+trained in a real-world environment [90], [91].
+To reduce the number of interactions with a real building
+environment, many model-based DRL control methods have
+been developed [90], [92]. For example, Zhang et al. [92]
+proposed and implemented a BEM-based DRL control frame-
+work for a novel radiant heating system in an existing ofﬁce
+building. The proposed framework consists of four steps as
+shown in Fig. 6, i.e., building energy modeling, model cal-
+ibration, DRL training, and real deployment. To be speciﬁc,
+EnergyPlus software is used to develop a BEM for the ofﬁce
+building. Next, based on the observed data, the BEM can be
+calibrated. Then, the calibrated model is used as the simula-
+tor of environment for training the DRL agent off-line based
+on A3C algorithm. Finally, the learned control policy will be
+Fig. 6.
+BEM-based DRL control framework.
+Fig. 7.
+LSTM-based DRL control framework.
+deployed in building automation system (BAS) for generating
+control signals in real time. Experimental results showed that
+the obtained control strategy can reduce heating demand by
+16.7% compared with the rule-based control strategy.
+In [92], the real-world HVAC operational data in three
+months are used for calibrating BEMs, which will affect model
+accuracy. To overcome this drawback, Zou et al. [90] proposed
+a DRL-based HVAC control framework to minimize energy
+consumption while maintaining thermal comfort levels for
+occupants based on operational data within two years. The
+proposed framework is composed of two parts as shown in
+Fig. 7, i.e., creating DRL training environment and training
+DRL agent based on the created environment. To be speciﬁc,
+LSTM models are built based on BAS historical data, which
+can approximate HVAC operations. Note that the inputs of
+LSTM models are current state and action, while their out-
+puts are next state and reward. After LSTM networks are
+trained, they can be used to create training environment. Next,
+DRL agent interacts with the training environment until it
+converges to an optimal HVAC control policy. Finally, the
+optimal control policy can be deployed for controlling AHUs
+in real time. Moreover, DRL agent contains an actor network
+and a critic network, which are trained using DDPG algo-
+rithm. Algorithmic testing results showed that DRL agents
+can save energy by 27%–30% while maintaining the predicted
+percentage of discomfort at 10%.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+12054
+IEEE INTERNET OF THINGS JOURNAL, VOL. 8, NO. 15, AUGUST 1, 2021
+Fig. 8.
+Differentiable MPC policy-based HVAC control framework.
+Similar to [90], Chen et al. [91] proposed a PPO-based
+approach for HVAC control by utilizing historical data so
+that practical deployment can be achieved. To be speciﬁc, the
+framework of the proposed approach is shown in Fig. 8. First,
+historical data from existing HVAC controllers are used to pre-
+train a differentiable MPC policy based on imitation learning.
+Note that the pretrained policy can encode domain knowledge
+into planning and system dynamics, making it both sample
+efﬁcient and interpretable. Second, the pretrained control pol-
+icy is improved continually in the process of interacting with
+the real building environment using online learning algorithm.
+Since PPO is robust to hyperparameters and network architec-
+tures, it is adopted to improve the pretrained policy. Practical
+experimental results showed that the proposed approach can
+save 16.7% of cooling demand compared with the existing
+controller and track temperature set point better.
+C. DRL Methods for EWH Control
+In an EWH, there are many separate layers of water and
+each layer has a unique temperature in practice, measuring
+the temperature within the EWH using a single sensor will
+lead to sparse observations. Ruelens et al. [95] proposed an
+effective method to tackle sparsely observed control problem
+related to EWHs based on ﬁtted Q-iteration and LSTM. The
+key idea of the proposed method is to store sequences of past
+observations and actions in the state vector so that relevant fea-
+tures for ﬁnding near-optimal control policies can be extracted
+based on RL. Simulation results showed that LSTM has bet-
+ter performance than CNN and DNN when they are used as
+function estimators in RL.
+Since training a DRL agent without knowing system dynam-
+ics of EWHs requires a large number of interactions with the
+actual environment, model-based DRL methods are preferred
+due to their high sample efﬁciency. For example, Kazmi et al.
+proposed a model-based DRL method to optimize the hot
+water production based on Deep PILCO, which can reduce
+energy consumption by about 20% and has been applied
+to a set of 32 houses in the Netherlands. The key idea
+of the proposed method is summarized as follows. First,
+executing actions under the current policy and collecting expe-
+rience transition data for training system dynamics model.
+Next, generating trajectories based on the current policy and
+the obtained dynamics model. Then, trajectories are used to
+Fig. 9.
+Domain randomization-based pretraining method.
+update policy. Finally, the updated policy will be used in next
+loop.
+When prior knowledge about system dynamics is avail-
+able, learning a model from observations could be avoided.
+Peirelinck et al. [96] investigated an energy cost minimization
+problem related to EWHs given a known system dynamics
+model. Since the model expression is very complex, it is
+challenging to ﬁnd the optimal policy for EWH operation.
+Therefore, DRL is used to obtain the optimal policy since
+it merely cares about the input and output of the model.
+To reduce the training time in target domain (i.e., practi-
+cal environment), domain randomization is used as shown in
+Fig. 9. To be speciﬁc, model parameters are randomized in the
+source domain (i.e., training environment). Based on the model
+with uncertain parameters, a generalized policy in the source
+domain is trained. Then, the trained policy is transferred to tar-
+get domain for initializing DNNs. Simulation results showed
+that pretraining is helpful for reducing energy cost by 8.8%.
+Summary: In this section, we review existing works on
+DRL for a single building energy subsystem. For easy read-
+ing, the speciﬁc details including objectives, DRL algorithms,
+and implementation methods are summarized in Table V. It
+can be observed that most existing works focus on HVAC
+control since HVAC systems have the largest energy con-
+sumption among all single building energy subsystems [10].
+Moreover, most of optimization objectives are related to
+energy cost/consumption and thermal comfort. By control-
+ling an HVAC system intelligently based on DRL methods,
+its energy cost can be reduced by 4%–71.2% and energy
+consumption can be decreased by 12.4%–34.5% without sacri-
+ﬁcing thermal comfort. In addition, nearly all model-free DRL
+methods are evaluated by simulations and several model-based
+DRL methods have been deployed in practice.
+V. APPLICATIONS OF DRL IN MULTIPLE ENERGY
+SUBSYSTEMS OF BUILDINGS
+In this section, we will introduce the applications of DRL
+in MESs of residential buildings and commercial buildings,
+respectively. To be speciﬁc, Section V-A focuses on the coor-
+dination of home energy management system, HVAC systems,
+ESSs, EVs, WMs, PVs, and EWHs in residential buildings,
+while Section V-B focuses on the coordination of HVAC
+systems, lighting systems, blind systems, window systems, and
+personal electric devices in commercial buildings. Moreover,
+we give a summary of existing works and provide some
+insights in the last paragraph of this section.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+YU et al.: REVIEW OF DEEP REINFORCEMENT LEARNING FOR SMART BUILDING ENERGY MANAGEMENT
+12055
+TABLE V
+SUMMARY OF EXISTING WORKS ON DRL FOR A SINGLE BUILDING ENERGY SUBSYSTEM
+A. Multiple Energy Subsystems in Residential Buildings
+As the smallest unit in a residential building, smart home
+has many kinds of appliances, e.g., HVAC systems, EVs, ESSs,
+and PVs. To implement the coordination of different appli-
+ances, many DRL-based methods have been proposed to save
+energy cost. For example, Yu et al. proposed a DDPG-based
+home energy management algorithm to minimize energy cost
+for the joint scheduling of HVAC systems and ESSs [20].
+Simulation results showed that the proposed algorithm can
+reduce energy cost by 8.1%–15.21% through the utiliza-
+tion of temporal diversity of dynamic prices [104], [105].
+Similar works can be found in [106] and [107]. To be spe-
+ciﬁc, DDQN and TRPO-based methods have been proposed
+to minimize energy cost of a smart home with the consid-
+eration of occupant satisfaction degree or thermal comfort,
+respectively.
+As for residential buildings, other objectives may be pursued
+when optimizing its energy use, e.g., peak demand [23], trans-
+former capacity violation [22], and revenue of excess renew-
+able energy [108]. For example, Mocanu et al. proposed two
+algorithms to minimize energy cost and peak load of residen-
+tial buildings with the consideration of HVAC systems, EVs,
+and dishwashers (DWs) [23]. Simulation results illustrated that
+the proposed algorithms based on DQN and deep policy gra-
+dient can efﬁciently cope with the inherent uncertainty and
+variability in renewable energy generation and power demand.
+Although the proposed algorithms in [23] are effective, they
+neglect the physical constraints related to residential build-
+ings, e.g., transformer capacity. To deal with this limitation,
+Zhang et al. [22] investigated a multihousehold energy man-
+agement problem for residential units connected to the same
+transformer. Since violating the transformer capacity is harm-
+ful to its lifetime, an efﬁcient approach was designed based
+on cooperative multiagent DRL. Simulation results indicated
+that the energy cost of residential households can be reduced
+by 59.77% without violating the transformer capacity.
+B. Multiple Energy Subsystems in Commercial Buildings
+In existing works, some DRL-based approaches have been
+proposed to reduce energy consumption in commercial build-
+ings [90], [92], [101]. Although some advances have been
+made, these works only consider a single subsystem in build-
+ings (e.g., an HVAC system) without noticing that other sub-
+systems can also affect energy consumption and user comfort
+in terms of thermal, air quality, and illumination conditions.
+In fact, some research results showed that jointly control-
+ling HVAC systems and other building energy subsystems
+(e.g., blind systems, lighting systems, and window systems)
+has great potential of saving energy [109], [110]. For exam-
+ple, HVAC energy consumption can be reduced by 17%–47%
+if window-based natural ventilation is adopted [110]. Based
+on the above observation, Ding et al. proposed a DRL-based
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+12056
+IEEE INTERNET OF THINGS JOURNAL, VOL. 8, NO. 15, AUGUST 1, 2021
+Fig. 10.
+Architecture of the proposed control framework.
+framework as shown in Fig. 10 for efﬁciently controlling four
+building energy subsystems (including HVAC systems, light-
+ing systems, blind systems, and window systems [111]) so that
+the total energy consumed by all subsystems can be minimized
+while still maintaining user comfort. To solve the high-
+dimensional action problem, a branching dueling Q-Network
+(BDQ) algorithm was used. Moreover, a calibrated EnergyPlus
+simulation model was adopted to generate enough data for the
+training of the DRL agent. Simulation results showed that the
+proposed framework can save energy by 14.26% compared
+with the rule-based method while maintaining human comfort
+within a desired range.
+However, the above-mentioned works mainly focus on
+building energy system itself and treat occupants as immovable
+objects, which may decrease the potential of reducing energy
+consumption and be illustrated by the following example.
+Suppose that a space is sparsely occupied by some occu-
+pants. If they are recommended to vacate this space and move
+to another occupied space, their comforts may be not sacri-
+ﬁced while the energy consumption in the vacated space can
+be reduced. Therefore, it is very necessary to investigate the
+potential of saving energy by shaping occupant behavior. To
+this end, Wei et al. [112] designed a DRL-based recommender
+system in commercial buildings, which can learn actions with
+high energy saving potential and distribute recommendations
+to occupants. Based on the feedback from occupants, better
+recommendations can be learned. The system architecture of
+the designed recommender is shown in Fig. 11, which con-
+sists of four layers, i.e., environment layer, system state layer,
+recommender system, and client layer. To be speciﬁc, envi-
+ronment layer measures building environment (e.g., occupant
+locations and energy consumption information) and sends such
+information to system state layer. System state layer contains
+two components, i.e., an empirical state, which maintains the
+current building state, and simulated states, which are used
+to represent the next state after the potential energy sav-
+ing actions are taken. The recommender system layer learns
+the potential of different recommendation actions (includ-
+ing move recommendation, schedule change, reduce personal
+resources, and reduce service in spaces). The client layer
+receives recommendations and allows clients to provide feed-
+back (e.g., accept or reject the recommendation). A four-week
+user study showed that the designed recommender system can
+reduce building energy consumption by 19%–26% compared
+with a passive-only strategy.
+Fig. 11.
+System architecture of the designed recommender.
+Summary: In this section, we review existing works on DRL
+applications in MESs of buildings. For easy understanding,
+the research objects, considered energy subsystems, research
+objectives, DRL algorithms, performance improvement, and
+implementation methods in existing works are summarized
+in Table VI. It can be observed that there is a great poten-
+tial in reducing energy cost of buildings by scheduling MESs
+coordinately, e.g., relative energy cost reduction is up to 59%
+while maintaining comfort of occupants. Compared with the
+optimal HVAC control in Table V, more advanced DRL algo-
+rithms are adopted to deal with more complex problems, e.g.,
+PDDPG, BDQ, and TRPO. In addition, most of DRL methods
+are evaluated by simulations.
+VI. APPLICATIONS OF DRL IN BUILDING MICROGRIDS
+In this section, we review the existing works on DRL-
+based energy optimization for building microgrids. To be
+speciﬁc, Section VI-A introduces DRL-based energy manage-
+ment algorithms for microgrids with uncontrollable building
+loads, while Section VI-B introduces DRL-based microgrid
+optimization algorithms considering the ﬂexibility of building
+loads. Moreover, we summarize the existing works and point
+out some insights at the end of this section.
+A. Microgrid Optimization Without Considering
+Controllable Building Loads
+In existing works, many DRL-based methods have been
+proposed for residential microgrids [113]–[117], where a
+microgrid is a low voltage distribution network comprising
+various distributed generation, storage devices, and responsive
+loads [118]. For example, Francois-Lavet et al. [114] proposed
+a DQN-based control algorithm for a residential microgrid
+with the consideration of battery and hydrogen storage device
+to minimize the levelized energy cost. Similar work can
+be found in [116]. However, power demand is assumed to
+be satisﬁed in [114]. For an isolated residential microgrid,
+load shedding may happen when the total power supply
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+YU et al.: REVIEW OF DEEP REINFORCEMENT LEARNING FOR SMART BUILDING ENERGY MANAGEMENT
+12057
+TABLE VI
+SUMMARY OF EXISTING WORKS ON DRL FOR MULTIENERGY SUBSYSTEMS IN BUILDINGS
+is smaller than the total power demand. At this time,
+nonserved power demand should be penalized. Based on
+this observation, Dominguez-Barbero et al. [115] proposed
+a DQN-based microgrid optimization algorithm to minimize
+the sum of DG generation cost and the penalty of nonserved
+power demand. Different from the above works, Chen and
+Bu [117] investigated a peer-to-peer energy trading problem
+among multiple microgrids. Moreover, a DQN-based energy
+trading strategy was proposed to maximize the utility func-
+tion in a microgrid, which is related to trading proﬁt, retail
+proﬁt, battery wear cost, demand penalty, and virtual penalty.
+Simulation results based on one-year real generation and
+demand data showed the effectiveness of the proposed strategy.
+Although some advances have been made in above efforts, the
+proposed DQN-based methods can not deal with DRL prob-
+lems with continuous actions (e.g., the generation output of
+DGs [43]).
+To support continuous actions, DDPG-based methods could
+be adopted. For example, Lei et al. [43] proposed a FH-DDPG-
+based energy management algorithm for an isolated microgrid
+to minimize the sum of power generation cost and the power
+unbalance penalty. Since model-free-based DRL algorithms
+in existing works have low sample efﬁciency, Shuai et al.
+proposed a model-based DRL algorithm (i.e., MuZero) for the
+online scheduling of a residential microgrid under uncertain-
+ties [113] based on Monte-Carlo tree search (MCTS) strategy
+with a learned network model. Note that the off-line learn-
+ing process of the network model can be depicted by Fig. 12,
+where four components can be identiﬁed, i.e., network train-
+ing, replay buffer, storage, planning, and acting. First, the
+latest network weights are obtained from a storage and used
+for planning implemented by MCTS. Next, an action is sam-
+pled from the search policy, which is proportional to the
+visit count for each action from the root node. Then, the
+environment returns a new state and a reward. At the end
+Fig. 12.
+Training process of the network model.
+of the episode, the trajectory data is stored into a replay
+buffer. When conducting network training, a trajectory data
+will be randomly sampled from the replay buffer and the
+updated network weights will be saved in a storage device.
+It is obvious that network training and trajectory data genera-
+tion are two independent processes, which can be implemented
+in parallel. Once the training process of the network model
+(including three components, i.e., representation, dynamics,
+and prediction) is completed, the learned network model can
+be used as the simulator of the real environment. Based on
+MCTS and the network model, the optimal policy can be
+learned. Note that the proposed algorithm can operate without
+relying on any forecasting information and statistic distribution
+information of the system.
+B. Microgrid Optimization With Controllable Building Loads
+In above-mentioned works, building loads are regarded as
+uncontrollable resources in microgrids. In fact, the energy
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+12058
+IEEE INTERNET OF THINGS JOURNAL, VOL. 8, NO. 15, AUGUST 1, 2021
+TABLE VII
+SUMMARY OF EXISTING WORKS ON DRL FOR MICROGRIDS
+cost of a microgrid could be reduced by scheduling loads
+ﬂexibly. For example, Yang et al. [119] proposed a DDPG-
+based scheduling algorithm for a data center microgrid with
+renewable sources to reduce energy cost by choosing the exe-
+cution time and the quantity of served workloads ﬂexibly.
+Simulation results showed that energy cost can be reduced by
+6.42%. However, the microgrid optimization problem would
+be intractable if the number of controllable resources is large
+due to the increased action space. At this time, multiagent
+DRL may be a good choice, which can coordinate all agents
+effectively. For example, Yang et al. [50] proposed an entropy-
+based collective multiagent DRL algorithm to schedule EVs
+and ESSs in large-scale households. Simulation results based
+on real-world traces showed the effectiveness of the proposed
+algorithm in reducing the operating cost and the peak load.
+Similarly, Lee et al. [120] proposed an MAPPO-based algo-
+rithm to solve the demand response problem in a microgrid
+of residential district. The proposed algorithm intends to train
+multiple household agents centrally. Once an optimal policy
+is learned by each household agent, it can schedule household
+appliances without knowing speciﬁc information about other
+households.
+Summary: In this section, we review existing works on
+DRL applications in building microgrids and summarize the
+details of existing works in Table VII. It can be observed that
+existing works mainly focus on economic impacts of building
+microgrids and the proposed DRL-based methods can indeed
+bring economic beneﬁts for microgrid operators. However,
+most of them neglect the control of building loads and all
+of them are not implemented in practice.
+VII. OPEN ISSUES AND FUTURE RESEARCH DIRECTIONS
+Although recent years have witnessed the rapid development
+of DRL for SBEM, there are still some unsolved issues that
+need better solutions. In this section, we highlight open issues
+and point out future research directions.
+A. Data-Efﬁcient Building Energy Optimization
+As mentioned in Sections IV–VI, most model-free DRL
+methods for SBEM are still not be implemented in practice.
+The main reason for this phenomenon is that DRL agents
+have to interact with the building environment directly so as to
+collect enough data for training, which is a time-consuming
+process. Moreover, in the process of interaction, actions are
+taken by trial and error, resulting in a high exploration cost. For
+example, random selection of an HVAC temperature set point
+may lead to thermal discomfort and high energy consumption.
+When mitigating these issues, there are several opportunities.
+To be speciﬁc, with the development of IoT technologies,
+many sensing equipments can be deployed to collect build-
+ing operational data. Then, the collected data could be used
+to train DRL agents in an ofﬂine way. Moreover, deep meta
+RL [121] could be used to implement fast learning using only
+a few data and training episodes. In addition, the collected
+operational data can be used to learn an environment model
+and consequently model-based DRL methods can be used to
+reduce exploration cost.
+B. Multitimescale Building Energy Optimization
+Most
+existing
+DRL-based
+methods
+focus
+on
+single-
+timescale building energy optimization problems. In fact,
+there are many multitimescale decision problems in the ﬁeld
+of building energy optimization. For example, supply air
+temperature and the ratio of reuse air in a commercial build-
+ing HVAC system can be adjusted once every hour since
+the frequent adjustment can cause damage to HVAC compo-
+nents [122]. In contrast, supply air rate in each zone can be
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+YU et al.: REVIEW OF DEEP REINFORCEMENT LEARNING FOR SMART BUILDING ENERGY MANAGEMENT
+12059
+changed every 10–15 min [123]. When confronted with multi-
+timescale decision problems, existing DRL-based methods are
+not applicable. A possible way is to design energy optimization
+algorithms based on the framework of hierarchical DRL [124],
+which can support multitimescale DRL problems with delayed
+rewards. In hierarchical DRL, actions can be divided into two
+types with different timescales. To be speciﬁc, actions with
+long timescale are ﬁrst taken in the upper level based on
+system state. Then, actions with short timescale are taken in
+the lower level based on system state and the chosen actions
+in the upper level. By coordinating the actions of upper level
+and lower level, hierarchical DRL-based methods can explore
+the environments efﬁciently.
+C. Multiobjective Building Energy Optimization
+As shown in Section III, multiple objectives are pursued by
+SBEM, e.g., energy cost/consumption minimization, carbon
+emission minimization, and comfort maximization. Moreover,
+such objectives are often conﬂicting with each other. A typ-
+ical way of dealing with conﬂicting objectives in existing
+DRL-based methods is to design a synthetic reward function
+as a weighted sum of different objectives. Since the weight
+parameters related to different objectives typically have dif-
+ferent units and/or scales, it is very challenging to decide
+their proper values beforehand. Moreover, the learned policies
+based on the above-mentioned way can not support ﬂexible
+operation of building energy systems, e.g., switching ﬂexi-
+bly between low-energy-cost mode and high-comfort mode.
+To avoid deciding weighted parameters for multiple objec-
+tives and support ﬂexible operations, a possible way is to
+design building energy optimization algorithms based on some
+advanced DRL frameworks (e.g., multiobjective DRL [125]
+and multiobjective meta-DRL [126]).
+D. Multizone Building Energy Optimization
+In existing works on building HVAC systems, the proposed
+DRL-based control methods mainly focus on a single-zone
+building. Wei et al. [19] proposed a heuristic algorithm for
+variable air volume (VAV) HVAC control in a multizone ofﬁce
+building and DRL agent for each zone was trained sepa-
+rately. Although the proposed algorithm was effective when 5
+zones were considered, it was not scalable due to the lack of
+multizone coordination. Hu [47] proposed a MADDPG-based
+method to decide temperature and humidity setpoints in a four-
+zone building. Since the input of each critic in MADDPG
+is the concatenation of state and action information from all
+agents, the scalability of the MADDPG-based method was
+not very high. Yu et al. [21] proposed an MAAC-based VAV
+HVAC control method for a multizone commercial building
+with the consideration of thermal comfort, indoor air quality
+comfort, and random occupancy, which can operate effectively
+when 30 zones were considered. Although the above methods
+are effective when the number of zones is not large, more scal-
+able multiagent DRL algorithms are expected since the number
+of zones in a practical commercial building may exceed one
+hundred or even larger.
+E. Efﬁcient Training of DRL Agents in
+Multibuilding Energy Optimization
+As introduced in Section III, model-based DRL meth-
+ods for building energy optimization are sample efﬁcient.
+However, a large amount of historical data should be required
+when learning building thermal dynamics models. For some
+buildings, especially brand-new buildings, historical data are
+very limited. At this time, how to speed up the train-
+ing of building DRL agents is a very challenging task.
+To improve this situation, a possible way is to combine
+DRL with transfer learning [127]. In the ﬁeld of build-
+ing energy management, the transferred knowledge may be
+building thermal dynamics models [128] or control strate-
+gies [129]. Although some efforts have been made in exist-
+ing works, they mainly focus on transfer learning problems
+with simple scenarios, where a small similarity gap exists
+between source MDP and target MDP related to DRL-based
+SBEM. When the similarity gap is large (e.g., the dimen-
+sions of state spaces and action spaces in two MDPs are
+different), how to design efﬁcient intertask mapping func-
+tion and select proper form of the transferred knowledge is
+very challenging, especially for multiagent DRL-based SBEM
+problems.
+F. DRL-Based Energy Optimization for Building Microgrids
+Due to the high thermal inertia, buildings can be regarded
+as thermal energy storage units. By incorporating building
+thermal dynamics into microgrid scheduling [118] or plan-
+ning [130], the operation cost or total annualized cost can be
+reduced. However, explicit building thermal dynamics mod-
+els are required in the above works. Although DRL-based
+methods can operate without knowing them, several challenges
+have to be addressed. First, both discrete and continuous deci-
+sion variables (e.g., discrete variables are used for describing
+the operational states of WMs, HVAC loads, and distributed
+generators, while continuous variables are used for describing
+the EV charging/discharging power) exist in the optimal oper-
+ation problem related to building microgrids, which means
+that discrete-continuous hybrid actions should be supported
+by the designed DRL-based algorithms. Second, multiagent
+DRL energy management algorithms with complex reward
+components should be designed to efﬁciently promote the
+coordination among the microgrid controller and all build-
+ing energy management systems, since each building has
+their respective objectives (e.g., comfort requirements) and
+also needs to participate in optimizing the objective of the
+microgrid.
+Remarks: The above-mentioned DRL techniques for SBEM
+can be supported by existing IEC energy management stan-
+dards (e.g., ISO/IEC 15067-3-3-2019). For example, ISO/IEC
+15067-3-3-2019 deﬁnes some energy management agents
+and provides their operational modes, e.g., single-agent
+mode, mesh mode, hierarchical mode, and mixed hierarchi-
+cal and mesh mode. Correspondingly, algorithms based on
+single-agent DRL, multiagent DRL, hierarchical DRL, and
+multiagent hierarchical DRL can be adopted and implemented
+by energy management agents.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+12060
+IEEE INTERNET OF THINGS JOURNAL, VOL. 8, NO. 15, AUGUST 1, 2021
+VIII. CONCLUSION AND LESSONS LEARNED
+In this article, we reviewed the DRL applications in
+SBEM with the consideration of different system scales com-
+prehensively. In particular, we summarized the features of
+different DRL methods for SBEM. Moreover, we provided
+some insights, identiﬁed some unsolved issues, and pointed
+out potential directions for future research. A few major
+lessons that we learned from this review are summarized
+as follows. First, nearly all model-free DRL-based building
+energy optimization methods are still not implemented in
+practice due to a long exploration time and a high explo-
+ration cost. Second, model-based DRL approaches for building
+energy optimization are more practical than model-free DRL
+approaches since the former can generate enough training data
+for DRL agents and reduce the number of interactions with
+the real environment. When the amount of historical data
+is not enough in the current environment, transfer learning
+can be used to pretrain a building thermal dynamics model
+or policy based on the large amount of historical data in a
+related, but different building environment. Third, compared
+with some traditional methods, DRL-based energy manage-
+ment methods have the potential of improving some building
+performance metrics (e.g., energy cost, peak load, and occu-
+pant dissatisfaction degree) simultaneously. Finally, although
+some advances have been made in existing works, there are
+still many challenges caused by low data efﬁciency, multiple
+timescales, multiple optimization objectives, multiple zones,
+multiple buildings, and building microgrids.
+REFERENCES
+[1] S. Hu, C. Hore, P. Raftery, and J. O’Donnell, “Environmental
+and energy performance assessment of buildings using scenario
+modelling and fuzzy analytic network process,” Appl. Energy, vol. 255,
+pp. 113788–113799, Dec. 2019.
+[2] S. Hu, E. Corry, M. Horrigan, C. Hore, M. D. Reis, and J. O’Donnell,
+“Building performance evaluation using OpenMath and linked data,”
+Energy Build., vol. 174, pp. 484–494, Sep. 2018.
+[3] J. Park, T. Dougherty, H. Fritz, and Z. Nagy, “Multi-agent deep rein-
+forcement learning for zero energy communities,” Build. Environ.,
+vol. 147, pp. 397–414, Nov. 2019.
+[4] X. Dong, Y. Liu, Z. Xu, J. Wu, J. Liu, and X. Guan, “Optimal schedul-
+ing of distributed hydrogen-based multi-energy systems for building
+energy cost and carbon emission reduction,” in Proc. IEEE 16th Int.
+Conf. Autom. Sci. Eng. (CASE), 2020, pp. 1526–1531.
+[5] E. Haghi, Q. Kong, M. Fowler, K. Raahemifar, and M. Qadrdan,
+“Assessing the potential of surplus clean power in reducing GHG emis-
+sions in the building sector using game theory: A case study of Ontario,
+Canada,” IET Energy Syst. Integr., vol. 1, no. 3, pp. 184–193, 2019.
+[6] (2020).
+The
+Global
+Alliance
+for
+Buildings
+and
+Construction
+(GABC), The Global Status Report 2020. [Online]. Available: https://
+globalabc.org/sites/default/ﬁles/inline-ﬁles/20%20Buildin%20GSR_
+FU%20REPORT.pdf
+[7] S. Sharma, Y. Xu, A. Verma, and B. Panigrahi, “Time-coordinated
+multi-energy management of smart buildings under uncertainties,”
+IEEE Trans. Ind. Informat., vol. 15, no. 8, pp. 4788–4798, Aug. 2019.
+[8] N. Zhou, N. Khanna, W. Feng, J. Ke, and M. Levine, “Scenarios of
+energy efﬁciency and CO2 emissions reduction potential in the build-
+ings sector in China to year 2050,” Nat. Energy, vol. 3, pp. 978–984,
+Oct. 2018.
+[9] B. Qolomany et al., “Leveraging machine learning and big data
+for smart buildings: A comprehensive survey,” IEEE Access, vol. 7,
+pp. 90316–90356, 2019.
+[10] D. Minoli, K. Sohraby, and B. Occhiogrosso, “IoT considerations,
+requirements, and architectures for smart buildings-energy optimization
+and next-generation building management systems,” IEEE Internet
+Things J., vol. 4, no. 1, pp. 269–283, Feb. 2017.
+[11] X. Zhang, M. Pipattanasomporn, T. Chen, and S. Rahman, “An IoT-
+based thermal model learning framework for smart buildings,” IEEE
+Internet Things J., vol. 4, no. 1, pp. 269–283, Feb. 2017.
+[12] W. Feng, Z. Wei, G. Sun, Y. Zhou, H. Zang, and S. Chen, “A
+conditional value-at-risk-based dispatch approach for the energy man-
+agement of smart buildings with HVAC systems,” Elect. Power Syst.
+Res., vol. 188, Nov. 2020, Art. no. 106535.
+[13] B. Yang et al., “Non-invasive (non-contact) measurements of human
+thermal physiology signals and thermal comfort/discomfort poses—A
+review,” Energy Build., vol. 224, pp. 110261–110270, Oct. 2020.
+[14] F. Wang, L. Zhou, H. Ren, X. Liu, S. Talari, and M. Shaﬁe-Khah,
+“Multi-objective optimization model of source-load-storage synergetic
+dispatch for a building energy management system based on TOU
+price demand response,” IEEE Trans. Ind. Appl., vol. 54, no. 2,
+pp. 1017–1028, Mar./Apr. 2018.
+[15] A. Pallante, L. Adacher, M. Botticelli, S. Pizzuti, G. Comodi,
+and A. Monteriu, “Decision support methodologies and day-ahead
+optimization for smart building energy management in a dynamic pric-
+ing scenario,” Energy Build., vol. 216, pp. 109963–109973, Jun. 2020.
+[16] A. Ahmad and J. Khan, “Real-time load scheduling, energy stor-
+age control and comfort management for grid-connected solar inte-
+grated smart buildings,” Appl. Energy, vol. 259, pp. 114208–114226,
+Feb. 2020.
+[17] R. Zhang, T. Jiang, G. Li, X. Li, and H. Chen, “Stochastic optimal
+energy management and pricing for load serving entity with aggre-
+gated TCLs of smart buildings: A Stackelberg game approach,” IEEE
+Trans. Ind. Informat., vol. 17, no. 3, pp. 1821–1830, Mar. 2021, doi:
+10.1109/TII.2020.2993112.
+[18] G. Gao, J. Li, and Y. Wen, “DeepComfort: Energy-efﬁcient thermal
+comfort control in smart buildings via deep reinforcement learning,”
+IEEE Internet Things J., vol. 7, no. 9, pp. 8472–8484, Sep. 2020.
+[19] T. Wei, Y. Wang, and Q. Zhu, “Deep reinforcement learning for
+building HVAC control,” in Proc. DAC, 2017, pp. 1–6.
+[20] L. Yu et al., “Deep reinforcement learning for smart home energy
+management,” IEEE Internet Things J., vol. 7, no. 4, pp. 2751–2762,
+Apr. 2020.
+[21] L. Yu et al., “Multi-agent deep reinforcement learning for HVAC con-
+trol in commercial buildings,” IEEE Trans. Smart Grid, vol. 12, no. 1,
+pp. 407–419, Jan. 2021.
+[22] C. Zhang, S. Kuppannagari, C. Xiong, R. Kannan, and V. Prasanna,
+“A cooperative multi-agent deep reinforcement learning framework
+for real-time residential load scheduling,” in Proc. ACM/IEEE Conf.
+Internet Things Design Implement., 2019, pp. 59–69.
+[23] E. Mocanu et al., “On-line building energy optimization using deep
+reinforcement learning,” IEEE Trans. Smart Grid, vol. 10, no. 4,
+pp. 3698–3708, Jul. 2019.
+[24] Z. Zhang, D. Zhang, and R. Qiu, “Deep reinforcement learning for
+power system: An overview,” CSEE J. Power Energy Syst., vol. 6,
+no. 1, pp. 213–225, 2020.
+[25] Y. Ma, J. Matu˘sko, and F. Borrelli, “Stochastic model predictive con-
+trol for building HVAC systems: Complexity and conservatism,” IEEE
+Trans. Control Syst. Technol., vol. 23, no. 1, pp. 101–116, Jan. 2015.
+[26] X. Guan, Z. Xu, and Q. Jia, “Energy-efﬁcient buildings facilitated
+by microgrid,” IEEE Trans. Smart Grid, vol. 1, no. 3, pp. 243–252,
+Dec. 2010.
+[27] L. Yu, D. Xie, T. Jiang, Y. Zou, and K. Wang, “Distributed real-
+time HVAC control for cost-efﬁcient commercial buildings under smart
+grid environment,” IEEE Internet Things J., vol. 5, no. 1, pp. 44–55,
+Feb. 2018.
+[28] V. Mnih et al. “Human-level control through deep reinforcement
+learning,” Nature, vol. 518, pp. 529–541, Feb. 2015.
+[29] Y. L. (2017). Deep Reinforcement Learning: An Overview. [Online].
+Available: http://arXiv:1701.07274v5
+[30] J. Schrittwieser et al. (2020). Mastering Atari, Go, Chess and
+Shogi by Planning With a Learned Model. [Online]. Available:
+http://arXiv:1911.08265v2
+[31] K. Shao, Z. Tang, Y. Zhu, N. Li, and D. Zhao. (2019). A Survey of
+Deep Reinforcement Learning in Video Games. [Online]. Available:
+https://arxiv.org/pdf/1912.10944.pdf
+[32] J. Chen, B. Yuan and M. Tomizuka. (2019). Model-Free Deep
+Reinforcement Learning for Urban Autonomous Driving. [Online].
+Available: https://arxiv.org/abs/1904.09503v2
+[33] B. Kiran et al., “Deep reinforcement learning for autonomous driving:
+A survey,” IEEE Trans. Intell. Transp. Syst., early access, Feb. 9, 2021,
+doi: 10.1109/TITS.2021.3054625.
+[34] S. Aradi, “Survey of deep reinforcement learning for motion planning
+of autonomous vehicles,” IEEE Trans. Intell. Transp. Syst., early access,
+Sep. 30, 2020, doi: 10.1109/TITS.2020.3024655.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+YU et al.: REVIEW OF DEEP REINFORCEMENT LEARNING FOR SMART BUILDING ENERGY MANAGEMENT
+12061
+[35] A. Haydari and Y. Yilmaz, “Deep reinforcement learning for intelligent
+transportation systems: A survey,” IEEE Trans. Intell. Transp. Syst.,
+early access, Jul. 22, 2020, doi: 10.1109/TITS.2020.3008612.
+[36] L. Lei, Y. Tan, K. Zheng, S. Liu, K. Zhang, and X. Shen, “Deep rein-
+forcement learning for autonomous Internet of Things: Model, appli-
+cations and challenges,” IEEE Commun. Surveys Tuts., vol. 22, no. 3,
+pp. 1722–1760, 3rd Quart., 2020, doi: 10.1109/COMST.2020.2988367.
+[37] S. Lee and D. Choi, “Energy management of smart home with home
+appliances, energy storage system and electric vehicle: A hierarchi-
+cal deep reinforcement learning approach,” Sensors, vol. 20, no. 7,
+pp. 2157–2178, 2019.
+[38] X. Zhang, D. Biagioni, M. Cai, P. Graf, and S. Rahman, “An edge-cloud
+integrated solution for buildings demand response using reinforce-
+ment learning,” IEEE Trans. Smart Grid, vol. 12, no. 1, pp. 420–431,
+Jan. 2021, doi: 10.1109/TSG.2020.3014055.
+[39] M.
+Mohammadi,
+A.
+Al-Fuqaha,
+M.
+Guizani,
+and
+J.-S.
+Oh,
+“Semisupervised deep reinforcement learning in support of IOT
+and smart city services,” IEEE Internet Things J., vol. 5, no. 2,
+pp. 624–635, Apr. 2018.
+[40] Y. Sun, M. Peng, and S. Mao, “Deep reinforcement learning-based
+mode selection and resource management for green fog radio access
+networks,” IEEE Internet Things J., vol. 6, no. 2, pp. 1960–1971,
+Apr. 2019.
+[41] L. Lin, X. Guan, Y. Peng, N. Wang, S. Maharjan, and T. Ohtsuki,
+“Deep reinforcement learning for economic dispatch of virtual power
+plant in Internet of energy,” IEEE Internet Things J., vol. 7, no. 7,
+pp. 6288–6301, Jul. 2020.
+[42] C. Wang, J. Wang, J. Wang, and X. Zhang, “Deep reinforcement
+learning-based autonomous UAV navigation with sparse rewards,”
+IEEE Internet Things J., vol. 7, no. 7, pp. 6180–6190, Jul. 2020.
+[43] L. Lei, Y. Tan, G. Dahlenburg, W. Xiang, and K. Zheng, “Dynamic
+energy dispatch based on deep reinforcement learning in IoT-driven
+smart isolated microgrids,” IEEE Internet Things J., vol. 8, no. 10,
+pp. 7938–7953, May 2021, doi: 10.1109/JIOT.2020.3042007.
+[44] X. Chen, H. Zhang, C. Wu, S. Mao, Y. Ji, and M. Bennis, “Optimized
+computation ofﬂoading performance in virtual edge computing systems
+via deep reinforcement learning,” IEEE Internet Things J., vol. 6, no. 3,
+pp. 4005–4018, Jun. 2019.
+[45] R. Lu, Y. Li, Y. Li, J. Jiang, and Y. Ding, “Multi-agent deep
+reinforcement learning based demand response for discrete man-
+ufacturing systems energy management,” Appl. Energy, vol. 276,
+pp. 115473–115483, Oct. 2020.
+[46] C. Lork et al., “An uncertainty-aware deep reinforcement learning
+framework for residential air conditioning energy management,” Appl.
+Energy, vol. 276, pp. 115426–115438, Oct. 2020.
+[47] W. Hu, Transforming Thermal Comfort Model and Control in the
+Tropics: A Machine-Learning Approach, Nanyang Technol. Univ.,
+Singapore, 2020.
+[48] Y. Hu, W. Li, K. Xu, T. Zahid, F. Qin, and C. Li, “Energy manage-
+ment strategy for a hybrid electric vehicle based on deep reinforcemant
+learning,” Appl. Sci., vol. 8, no. 187, pp. 1–15, 2018.
+[49] S. Nagarathinam, V. Menon, A. Vasan, and A. Sivasubramaniam,
+“MARCO-multi-agent reinforcement learning based control of build-
+ing HVAC systems,” in Proc. 11th ACM Int. Conf. Future Energy Syst.,
+2020, pp. 57–67.
+[50] Y. Yang, J. Hao, Y. Zheng, and C. Yu, “Large-scale home energy man-
+agement using entropy-based collective multiagent deep reinforcement
+learning framework,” in Proc. 28th Int. Joint Conf. Artif. Intell., 2019,
+pp. 630–636.
+[51] A. Nagy, H. Kazmi, F. Cheaib, and J. Driesen. (2018). Deep
+Reinforcement Learning for Optimal Control of Space Heating.
+[Online]. Available: https://arxiv.org/abs/1805.03777
+[52] N. Luong et al., “Applications of deep reinforcement learning in com-
+munications and networking: A survey,” IEEE Commun. Surveys Tuts.,
+vol. 21, no. 4, pp. 3133–3174, 4th Quart., 2019.
+[53] T. Nguyen and V. Reddi. (2020). Deep Reinforcement Learning for
+Cyber Security. [Online]. Available: http://arXiv:1906.05799v2
+[54] T. Nguyen, N. Nguyen, and S. Nahavandi, “Deep reinforcement learn-
+ing for multi-agent systems: A review of challenges, solutions and
+applications,” IEEE Trans. Cybern., vol. 50, no. 9, pp. 3826–3839,
+Sep. 2020.
+[55] D. Zhang, X. Han, and C. Deng, “Review on the research and practice
+of deep learning and reinforcement learning in smart grids,” CSEE J.
+Power Energy Syst., vol. 4, no. 3, pp. 362–370, 2018.
+[56] T. Yang, L. Zhao, W. Li, and A. Zomaya, “Reinforcement learning in
+sustainable energy and electric systems: A survey,” Annu. Rev. Control,
+vol. 49, pp. 145–163, 2020.
+[57] M. Han et al., “A review of reinforcement learning methodologies for
+controlling occupant comfort in buildings,” Sustain. Cities Soc., vol. 51,
+pp. 101748–101762, Nov. 2019.
+[58] J. Leit˜ao, P. Gil, B. Ribeiro, and A. Cardoso, “A survey on home energy
+management,” IEEE Access, vol. 8, pp. 5699–5722, 2020.
+[59] K. Mason and S. Grijalva, “A review of reinforcement learning
+for autonomous building energy management,” Comput. Elect. Eng.,
+vol. 78, pp. 300–312, Sep. 2019.
+[60] Z. Wang and T. Hong, “Reinforcement learning for building con-
+trols: The opportunities and challenges,” Appl. Energy, vol. 269,
+pp. 115036–115056, Jul. 2020.
+[61] B. Rajasekhar et al., “A survey of computational intelligence techniques
+for air-conditioners energy management,” IEEE Trans. Emerg. Topics
+Comput. Intell., vol. 4, no. 4, pp. 555–570, Aug. 2020.
+[62] R. S. Sutton and A. G. Barto, Reinforcement Learning: An Introduction.
+London, U.K.: MIT Press, 2018.
+[63] Z. Wang, T. Hong, and M. Piette, “Data fusion in predicting internal
+heat gains for ofﬁce buildings through a deep learning approach,” Appl.
+Energy, vol. 240, pp. 386–398, Apr. 2019.
+[64] N. Raman, A. Devraj, P. Barooah, and S. Meyn, “Reinforcement learn-
+ing for control of building HVAC systems,” in Proc. Amer. Control
+Conf. (ACC), 2020, pp. 2326–2332.
+[65] X. Deng et al., “Learning automata based conﬁdent information
+coverage
+barriers
+for
+smart
+ocean
+Internet
+of
+Things,”
+IEEE
+Internet Things J., vol. 7, no. 10, pp. 9919–9929, Oct. 2020, doi:
+10.1109/JIOT.2020.2989696.
+[66] J. V´azquez-Canteli and Z. Nagy, “Reinforcement learning for demand
+response: A review of algorithms and modeling techniques,” Appl.
+Energy, vol. 235, pp. 1072–1089, Feb. 2019.
+[67] S. Kim and H. Lim, “Reinforcement learning based energy manage-
+ment algorithm for smart energy buildings,” Energies, vol. 11, no. 8,
+pp. 1–19, 2018.
+[68] M. Ahrarinouri, M. Rastegar, and A. Seif, “Multiagent reinforcement
+learning for energy management in residential buildings,” IEEE Trans.
+Ind. Informat., vol. 17, no. 1, pp. 659–666, Jan. 2021.
+[69] R. Lu, S. Hong, and M. Yu, “Demand response for home energy man-
+agement using reinforcement learning and artiﬁcial neural network,”
+IEEE Trans. Smart Grid, vol. 10, no. 6, pp. 6629–6639, Nov. 2019,
+doi: 10.1109/TSG.2019.2909266.
+[70] F. Ruelens, B. J. Claessens, S. Vandael, B. Schutter, R. Babuˇska, and
+R. Belmans, “Residential demand response of thermostatically con-
+trolled loads using batch reinforcement learning,” IEEE Trans. Smart
+Grid, vol. 8, no. 5, pp. 2149–2159, Sep. 2017.
+[71] S. Gu, T. Lillicrap, Z. Ghahramani, R. E. Turner, B. Sch¨olkopf, and
+S. Levine, “Interpolated policy gradient: Merging on-policy and off-
+policy gradient estimation for deep reinforcement learning,” in Proc.
+NIPS, 2017, pp. 3846–3855.
+[72] H. Hasselt, A. Guez, and D. Silver, “Deep reinforcement learning with
+double Q-learning,” in Proc. AAAI, 2016, pp. 2094–2100.
+[73] Z. Wang, T. Schaul, M. Hessel, H. Hasselt, M. Lanctot, and N. Freitas,
+“Dueling network architectures for deep reinforcement learning,” in
+Proc. ICML, 2016, pp. 1995–2003.
+[74] T. Schaul, J. Quan, I. Antonoglou, and D. Silver, “Prioritized experience
+replay,” in Proc. ICLR, 2016, pp. 1–5.
+[75] M. Bellemare, W. Dabney, and R. Munos, “A distributional perspective
+on reinforcement learning,” in Proc. ICML, 2017, pp. 449–458.
+[76] M. Fortunato et al., “Noisy networks for exploration,” in Proc. ICLR,
+2018, pp. 1–5.
+[77] M. Hessel et al., “RainBow: Combining improvements in deep rein-
+forcement learning,” in Proc. AAAI, 2018, pp. 3215–3222.
+[78] T.
+P.
+Lillicrap
+et
+al.,
+“Continuous
+control
+with
+deep
+rein-
+forcement learning,” in Proc. ICLR, 2016. [Online]. Available:
+https://arxiv.org/abs/1509.02971
+[79] R. Lowe, Y. Wu, A. Tamar, J. Harb, P. Abbeel, and I. Mordatch, “Multi-
+agent actor-critic for mixed cooperative-competitive environments,” in
+Proc. NIPS, 2017, pp. 6379–6390.
+[80] S. Iqbal and F. Sha, “Actor-attention-critic for multi-agent reinforce-
+ment learning,” in Proc. ICML, 2019, pp. 2961–2970.
+[81] T. Haarnoja, A. Zhou, P. Abbeel, and S. Levine, “Soft actor–critic: Off-
+policy maximum entropy deep reinforcement learning with a stochastic
+actor,” in Proc. ICML, 2018, pp. 1856–1865.
+[82] V. Mnih et al., “Asynchronous methods for deep reinforcement learn-
+ing,” in Proc. ICML, 2016, pp. 1928–1937.
+[83] J. Schulman, S. Levine, P. Abbeel, M. Jordan, and P. Moritz, “Trust
+region policy optimization,” in Proc. ICML, 2015, pp. 1889–1897.
+[84] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov.
+(2017). Proximal Policy Optimization Algorithms. [Online]. Available:
+https://arxiv.org/abs/1707.06347
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+12062
+IEEE INTERNET OF THINGS JOURNAL, VOL. 8, NO. 15, AUGUST 1, 2021
+[85] C. Yu, A. Velu, E. Vinitsky, Y. Wang, A. Bayen, and Y. Wu, “The
+surprising effectiveness of MAPPO in cooperative, multi-agent games,”
+in Proc. NIPS, 2017, pp. 18–25.
+[86] Y. Gal, R. McAllister, and C. Rasmussen, “Improving PILCO with
+Bayesian neural network dynamics models,” in Proc. ICML Workshop
+Data Efﬁcient Mach. Learn., 2016, pp. 465–472.
+[87] D. Ha and J. Schmidhuber. (2018). World Models. [Online]. Available:
+https://arxiv.org/abs/1803.10122
+[88] J. Schrittwieser et al. (2020). Mastering Atari, Go, Chess and
+Shogi by Planning With a Learned Model. [Online]. Available:
+http://arXiv:1911.08265v2
+[89] H. Chung, S. Maharjan, Y. Zhang, and F. Eliassen, “Distributed deep
+reinforcement learning for intelligent load scheduling in residential
+smart grids,” IEEE Trans. Ind. Informat., vol. 17, no. 4, pp. 2752–2763,
+Apr. 2021, doi: 10.1109/TII.2020.3007167.
+[90] Z. Zou, X. Yu, and S. Ergan, “Towards optimal control of air han-
+dling units using deep reinforcement learning and recurrent neural
+network,” Build. Environ., vol. 168, Jan. 2020, Art. no. 106535.
+[Online]. Available: https://doi.org/10.1016/j.buildenv.2019.106535
+[91] B. Chen, Z. Cai, and M. Berges, “Gnu-RL: A precocial reinforcement
+learning solution for building HVAC control using a differentiable MPC
+policy,” in Proc. BuildSys, 2019, pp. 316–325.
+[92] Z. Zhang, A. Chong, Y. Pan, C. Zhang, and K. Lam, “Whole building
+energy model for HVAC optimal control: A practical framework based
+on deep reinforcement learning,” Energy Build., vol. 199, pp. 472–490,
+Sep. 2019.
+[93] S. Latif, H. Cuay´ahuitl, F. Pervez, F. Shamshad, H. S. Ali, and
+E. Cambria. (2021). A Survey on Deep Reinforcement Learning for
+Audio-Based Applications. [Online]. Available: https://arxiv.org/pdf/
+2101.00240.pdf
+[94] H. Kazmi, F. Mehmood, S. Lodeweyckx, and J. Driesen, “Gigawatt-
+hour scale savings on a budget of zero: Deep reinforcement learn-
+ing based optimal control of hot water systems,” Energy, vol. 144,
+pp. 159–168, Feb. 2018.
+[95] F. Ruelens, B. J. Claessens, P. Vrancx, F. Spiessens, and G. Deconinck,
+“Direct load control of thermostatically controlled loads based on
+sparse observations using deep reinforcement learning,” CSEE J. Power
+Energy Syst., vol. 5, no. 4, pp. 423–432, 2019.
+[96] T. Peirelinck, C. Hermans, F. Spiessens, and G. Deconinck, “Domain
+randomization for demand response of an electric water heater,” IEEE
+Trans. Smart Grid, vol. 12, no. 2, pp. 1370–1379, Mar. 2021.
+[97] T. Morinibu, T. Noda, and S. Tanaka, “Application of deep reinforce-
+ment learning in residential preconditioning for radiation temperature,”
+in Proc. Int. Congr. Adv. Appl. Informat., 2019, pp. 561–566.
+[98] A. Gupta, Y. Badr, A. Negahban, and R. G. Qiu, “Energy-efﬁcient
+heating control for smart buildings with deep reinforcement learning,”
+J. Build. Eng., vol. 34, Feb. 2021, Art. no. 101739. [Online]. Available:
+https://doi.org/10.1016/j.jobe.2020.101739
+[99] Y. Yoon and H. Moon, “Performance based thermal comfort control
+(PTCC) using deep reinforcement learning for space cooling,” Energy
+Build., vol. 203, pp. 109420–109430, Nov. 2019.
+[100] Y. Sakuma and H. Nishi, “Airﬂow direction control of air conditioners
+using deep reinforcement learning,” in Proc. SICE Int. Symp. Control
+Syst., Tokushima, Japan, 2020, pp. 61–68.
+[101] W. Valladares et al., “Energy optimization associated with thermal com-
+fort and indoor air control via a deep reinforcement learning algorithm,”
+Build. Environ., vol. 155, pp. 105–117, May 2019.
+[102] M. Taylor and P. Stone, “Transfer learning for reinforcement learn-
+ing domains: A survey,” J. Mach. Learn. Res., vol. 10, no. 7,
+pp. 1633–1685, 2009.
+[103] X. Zhang, X. Xin, C. Tripp, D. J. Biagioni, P. Graf, and H. Jiang,
+“Transferable reinforcement learning for smart homes,” in Proc. Int.
+Workshop Reinforcement Learn. Energy Manag. Build., 2020, pp. 1–8.
+[104] Z. Wan, H. Li, and H. He, “Residential energy management with
+deep reinforcement learning,” in Proc. Int. Joint Conf. Neural Netw.
+(IJCNN), 2018, pp. 1–6.
+[105] H. Kumar, P. Mammen, and K. Ramamritham. (2019). Explainable AI
+Reinforcement Learning Agents for Residential Cost Savings. [Online].
+Available: http://arXiv:1910.08719v2
+[106] Y. Liu, D. Zhang, and H. Gooi, “Optimization strategy based on
+deep reinforcement learning for home energy management,” CSEE
+J. Power Energy Syst., vol. 6, no. 3, pp. 572–582, Sep. 2020, doi:
+10.17775/CSEEJPES.2019.02890.
+[107] H. Li, Z. Wan, and H. He, “Real-time residential demand response,”
+IEEE Trans. Smart Grid, vol. 11, no. 5, pp. 4144–4154, Sep. 2020.
+[108] Y. Ye, D. Qiu, X. Wu, G. Strbac, and J. Ward, “Model-free real-
+time autonomous control for a residential multi-energy system using
+deep reinforcement learning,” IEEE Trans. Smart Grid, vol. 11, no. 4,
+pp. 3068–3082, Jul. 2020, doi: 10.1109/TSG.2020.2976771.
+[109] Z. Cheng, Q. Zhao, F. Wang, Y. Jiang, L. Xia, and J. Ding, “Satisfaction
+based Q-learning for integrated lighting and blind control,” Energy
+Build., vol. 127, pp. 43–55, Sep. 2016.
+[110] L. Wang and S. Greenberg, “Window operation and impacts on building
+energy consumption,” Energy Build., vol. 92, pp. 313–321, Apr. 2015.
+[111] X. Ding, W. Du, and A. Cerpa, “OCTOPUS: Deep reinforcement
+learning for holistic smart building control,” in Proc. BuildSys, 2019,
+pp. 326–335.
+[112] P. Wei, S. Xia, R. Chen, J. Qian, C. Li, and X. Jiang, “A deep reinforce-
+ment learning based recommender system for occupant-driven energy
+optimization in commercial buildings,” IEEE Internet Things J., vol. 7,
+no. 7, pp. 6402–6413, Jul. 2020, doi: 10.1109/JIOT.2020.2974848.
+[113] H. Shuai, H. He, and J. Wen. (2020). Online Scheduling of a
+Residential Microgrid Via Monte-Carlo Tree Search and a Learned
+Model. [Online]. Available: http://arXiv:2005.06161v2
+[114] V. Francois-Lavet, D. Taralla, D. Ernst, and R. Fonteneau, “Deep rein-
+forcement learning solutions for energy microgrids management,” in
+Proc. Eur. Workshop Reinforcement Learn., 2016, pp. 1–7.
+[115] D.
+Dominguez-Barbero,
+J.
+Garcia-Gonzalez,
+M.
+A.
+Sanz-Bobi,
+and E. F. Sanchez-ubeda, “Optimising a microgrid system by deep
+reinforcement
+learning
+techniques,”
+Energies,
+vol. 13,
+no.
+11,
+pp. 2830–2847, 2020.
+[116] Y. Ji, J. Wang, J. Xu, X. Feng, and H. Zhang, “Real-time energy man-
+agement of a microgrid using deep reinforcement learning,” Energies,
+vol. 12, no. 12, pp. 2291–2311, 2019.
+[117] T. Chen and S. Bu, “Realistic peer-to-peer energy trading model for
+microgrids using deep reinforcement learning,” in Proc. IEEE PES
+Innov. Smart Grid Technol. Europe (ISGT-Europe), 2019, pp. 1–5.
+[118] G. Liu, M. Starke, B. Xiao, X. Zhang, and K. Tomsovic, “Community
+microgrid scheduling considering building thermal dynamics,” in Proc.
+IEEE Power Energy Soc. Gen. Meeting, 2017, pp. 1–5.
+[119] X. Yang, Y. Wang, H. He, C. Sun, and Y. Zhang, “Deep reinforcement
+learning for economic energy scheduling in data center microgrids,”
+in Proc. IEEE Power Energy Soc. Gen. Meeting (PESGM), 2019,
+pp. 1–5.
+[120] J. Lee, W. Wang, and D. Niyato. (2020). Demand-Side Scheduling
+Based on Deep Actor–Critic Learning for Smart Grids. [Online].
+Available: http://arXiv:2005.01979v1
+[121] R. Huang et al. (2021). Learning and Fast Adaptation for Grid
+Emergency Control via Deep Meta Reinforcement Learning. [Online].
+Available: https://arxiv.org/pdf/2101.05317.pdf
+[122] A. Aswani, N. Master, J. Taneja, A. Krioukov, D. Culler, and
+C. Tomlin, “Energy-efﬁcient building HVAC control using hybrid
+system LBMPC,” IFAC Proc. Vol., vol. 45, no. 17, pp. 496–501,
+2012.
+[123] R.K. Kalaimani, S. Keshav, and C. Rosenberg, “Multiple time-scale
+model predictive control for thermal comfort in buildings,” in Proc.
+e-Energy, 2016, pp. 1–2.
+[124] T.
+Kulkarni,
+K.
+Narasimhan,
+A.
+Saeedi,
+and
+J.
+Tenenbaum,
+“Hierarchical
+deep
+reinforcement
+learning:
+Integrating
+tempo-
+ral abstraction and intrinsic motivation,” in Proc. NIPS, 2016,
+pp. 3675–3683.
+[125] K. Li, T. Zhang, and R. Wang, “Deep reinforcement learning for
+multiobjective optimization,” IEEE Trans. Cybern., early access,
+Mar. 18, 2020, doi: 10.1109/TCYB.2020.2977661.
+[126] X. Chen, A. Ghadirzadeh, M. Bj¨orkman, and P. Jensfelt. (2019).
+Meta-Learning for Multi-Objective Reinforcement Learning. [Online].
+Available: https://arxiv.org/abs/1811.03376
+[127] Z.
+Zhu,
+K.
+Lin,
+and
+J.
+Zhou.
+(2020).
+Transfer
+Learning
+in
+Deep
+Reinforcement
+Learning:
+A
+Survey.
+[Online].
+Available:
+https://arxiv.org/abs/2009.07888
+[128] Z. Jiang and Y. Lee, “Deep transfer learning for thermal dynamics
+modeling in smart buildings,” in Proc. IEEE Int. Conf. Big Data (Big
+Data), 2019, pp. 2033–2037.
+[129] S. Xu, Y. Wang, Y. Wang, Z. O’Neill, and Q. Zhu, “One for many:
+Transfer learning for building HVAC control,” in Proc. BuildSys, 2020,
+pp. 230–239.
+[130] X. Zhang, D. Bian, D. Shi, Z. Wang, and G. Liu, “Community
+microgrid planning considering building thermal dynamics,” in Proc.
+IEEE Sustain. Power Energy Conf., 2019, pp. 1953–1958.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply. 
+
+YU et al.: REVIEW OF DEEP REINFORCEMENT LEARNING FOR SMART BUILDING ENERGY MANAGEMENT
+12063
+Liang Yu (Member, IEEE) received the B.S. and
+M.S. degrees from Yangtze University, Jingzhou,
+China, in 2007 and 2010, respectively, and the Ph.D.
+degree in information and communication engineer-
+ing from the Huazhong University of Science and
+Technology, Wuhan, China, in June 2014.
+He is currently an Associate Professor with the
+College of Automation and College of Artiﬁcial
+Intelligence,
+Nanjing
+University
+of
+Posts
+and
+Telecommunications, Nanjing, China. He is also a
+Postdoctoral Fellow with Xi’an Jiaotong University,
+Xi’an, China. His current research interests include cyber–physical systems,
+cloud-fog computing, distributed optimization, and deep reinforcement
+learning.
+Shuqi Qin is currently pursuing the B.S. degree
+in Internet of Things engineering with the Nanjing
+University
+of
+Posts
+and
+Telecommunications,
+Nanjing, China.
+Her current research interests include smart build-
+ings, multienergy systems, and deep reinforcement
+learning.
+Meng Zhang received the B.S. degree from Xi’an
+Jiaotong University, Xi’an, China, in 2013, and the
+Ph.D. degree from Zhejiang University, Hangzhou,
+China, in 2018.
+He is currently an Associate Professor with the
+School of Cyber Science and Engineering, Xi’an
+Jiaotong University. His current research interests
+include nonlinear control, ﬁltering, cyber–physical
+systems, and smart grid security.
+Chao Shen (Senior Member, IEEE) received the
+B.S. degree in automation and the Ph.D. degree in
+control theory and control engineering from Xi’an
+Jiaotong University, Xi’an, China, in 2007 and 2014,
+respectively.
+He is currently a Full Professor with the School
+of Cyber Science and Engineering, Xi’an Jiaotong
+University, where he serves as the Associate Dean
+with the School of Cyber Science and Engineering.
+He was a Research Scholar with Carnegie Mellon
+University, Pittsburgh, PA, USA, from 2011 to 2013.
+He is also with the Ministry of Education Key Laboratory for Intelligent
+Networks and Network Security, Xi’an Jiaotong University. He has published
+over 70 research papers in international referred journals and conferences. His
+research interests include cyber–physical system security and optimization, AI
+security, and big data.
+Prof. Shen currently serves as an Associate Editor for a number of journals,
+including IEEE TRANSACTIONS ON DEPENDABLE SECURE COMPUTING,
+Journal of Franklin Institute, and Frontiers of Computer Science.
+Tao Jiang (Fellow, IEEE) received the Ph.D. degree
+in information and communication engineering from
+the Huazhong University of Science and Technology,
+Wuhan, China, in April 2004.
+He is currently a Distinguished Professor with
+the Wuhan National Laboratory for Optoelectronics,
+Wuhan, and School of Electronics Information and
+Communications, Huazhong University of Science
+and Technology. From August 2004 to December
+2007, he worked in some universities, such as Brunel
+University, Uxbridge, U.K., and the University of
+Michigan–Dearborn, Dearborn, MI, USA. He has authored or coauthored
+over 300 technical papers in major journals and conferences and nine
+books/chapters in the areas of communications and networks.
+Dr. Jiang served or is serving as symposium technical program commit-
+tee membership of some major IEEE conferences, including INFOCOM,
+GLOBECOM, and ICC. He was invited to serve as the TPC Symposium Chair
+for the IEEE GLOBECOM 2013, IEEEE WCNC 2013, and ICCC 2013. He
+served or is serving as an Associate Editor of some technical journals in com-
+munications, including IEEE NETWORK, IEEE TRANSACTIONS ON SIGNAL
+PROCESSING, IEEE COMMUNICATIONS SURVEYS AND TUTORIALS, IEEE
+TRANSACTIONS ON VEHICULAR TECHNOLOGY, and IEEE INTERNET
+OF THINGS JOURNAL. He is the Associate Editor-in-Chief of China
+Communications.
+Xiaohong Guan (Fellow, IEEE) received the B.S.
+and M.S. degrees in control engineering from
+Tsinghua University, Beijing, China, in 1982 and
+1985, respectively, and the Ph.D. degree in electri-
+cal and systems engineering from the University of
+Connecticut, Mansﬁeld, CT, USA, in 1993.
+He was a Senior Consulting Engineer with
+Paciﬁc
+Gas
+and
+Electric,
+San
+Francisco,
+CA,
+USA, from 1993 to 1995. He visited the Division
+of
+Engineering
+and
+Applied
+Science,
+Harvard
+University, Cambridge, MA, USA, from 1999 to
+2000. From 1985 to 1988 and since 1995, he has been with Xi’an Jiaotong
+University, Xi’an, China, and has been as the Cheung Kong Professor of
+Systems Engineering since 1999, was the Director of the State Key Lab for
+Manufacturing Systems from 1999 to 2009, and the Dean of the School of
+Electronic and Information Engineering from 2008 to 2018, and has been the
+Dean of the Faculty of Electronic and Information Engineering since 2019.
+Since 2001, he has also been with the Center for Intelligent and Networked
+Systems, Tsinghua University, Beijing, and where he served as the Head of the
+Department of Automation from 2003 to 2008. His research interests include
+economics and security of networked systems, optimization-based planning
+and scheduling of power and energy systems, manufacturing systems, cyber–
+physical systems, including smart grid and sensor networks.
+Dr. Guan is serving as the Editor of IEEE TRANSACTIONS ON SMART
+GRID. He is the member of the Chinese Academy of Science.
+Authorized licensed use limited to: Industrial Technology Research Institute. Downloaded on July 22,2025 at 02:36:03 UTC from IEEE Xplore.  Restrictions apply.

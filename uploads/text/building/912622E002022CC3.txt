@@ -1,0 +1,688 @@
+行政院國家科學委員會專題研究計畫  成果報告
+建築物智慧型空調能源管理網路
+計畫類別：個別型計畫
+計畫編號：NSC91-2622-E-002-022-CC3
+執行期間：91 年06 月01 日至92 年05 月31 日
+執行單位：國立臺灣大學機械工程學系暨研究所
+計畫主持人：顏家鈺
+計畫參與人員：黃孝怡、王俊仁
+報告類型：完整報告
+處理方式：本計畫為提升產業技術及人才培育研究計畫，不提供公開查詢
+中
+華
+民
+國92 年8 月25 日
+
+行政院國家科學委員會
+九十一年度提升產業技術及人才培育研究計畫成果摘要報告
+建築物智慧型空調能源管理網路
+計劃編號：NSC91-2622-E-002-022-C33
+執行期限：91 年6 月1 日至92 年5 月31 日
+主持人：顏家鈺教授台灣大學機械工程學研究所教授
+計劃參與人員：黃孝怡台灣大學機械工程學研究所博士班研究生
+計劃參與人員：王俊仁台灣大學機械工程學研究所碩士班研究生
+一.中文內容摘要
+本計畫的目的是在發展一套以網
+路為平台的能源管理系統。由於能源
+管理牽涉到設備與元件各有不同的通
+訊協定與控制工具，因此各自形成不
+同的區域性控制網路，為了將各控制
+網路中的資訊整合並進行分析，本計
+畫發展了一個以代理者( Agent )為基
+礎的能源管理網路。主要的方法是利
+用資料庫技術與行動代理者程式
+( Mobile Agent )作為資訊網路和控制
+網路間資料整合的工具，以串聯整套
+的智慧型能源管理網路。研究的內容
+包括以代理者為基礎的資料庫通訊架
+構、具有資料倉儲和決策支援系統的
+決策核心，以及包括監督管理層、區
+域控制層和設備層階層式的遠端監督
+控制架構。此架構的目的是透過網路
+針對大樓空調電力設備採取適當節能
+策略並進行智慧型分散式控制。智慧
+型分散式控制網路具有以下的特點：
+分散式的智慧型處理、具有資料處理
+分析能力、階層式系統、具有整合與
+擴充能力。
+由研究結果顯示，藉由行動代理
+者的資料傳輸，可以成功地將系統的
+運轉資料儲存到遠端的資料庫系統
+中，經過線上分析處理後，最後以網
+頁介面JSP 輸出；也可以藉由行動代
+理者將監督管理層的資訊，經由區域
+控制層傳至設備層中，以決定設備的
+運轉情形。
+ABSTRACT
+The main purpose of this work is to 
+develop the network platform energy 
+management system. The difference in 
+the plant’s communication protocol and 
+controller in the energy management 
+system often cause the distinction 
+between each local area network. 
+Therefore , we devise the agent-based 
+for energy management network in order 
+to integrate and analyze the information 
+of each network. By using the database
+technology 
+and 
+mobile 
+agent 
+programming 
+to 
+accomplish 
+the 
+integration of information network and 
+control network, we can complete the 
+intelligent energy management system 
+structure.
+
+This thesis includes the agent-based 
+database communication architecture, 
+the data warehouse and decision support 
+system, and the hierarchical remote 
+monitoring 
+system 
+( 
+supervisory 
+management level, local control level, 
+plant level ).
+According to our experimental 
+results , the system’s operation data can 
+be stored in the remote database system 
+successfully, and the result could be 
+demonstrated by JSP homepage after 
+on-line analysis ; the plant’s operation 
+condition can be controlled by mobile 
+agent which could send supervisory 
+management level’s message to plant 
+level.
+二.計劃緣由與目的
+由於天然能源的來源有限，人類
+在不久的將來勢必會面臨天然能源枯
+竭的問題。在能源工程的領域上，從
+以往的節能設備開發、新燃料的發明
+等硬體的研究，延伸到能源管理
+（Energy Management）的研究與實
+現。能源管理最常見的例子表現在電
+力尖峰負載管理上。因為隨著經濟的
+持續發展、高科技電子廠的興建和都
+市高層建築物的增加，台灣的電量需
+求不斷上升，而空調系統所佔的耗電
+比例更是居高不下，尤其是當夏季來
+時，空調負荷增大，容易產生尖峰用
+電量不足的情形。因此在開發新電源
+方案極為困難的情形下，只有將現行
+的設備作更有效率的應用，才能避免
+供電不足的問題。目前台灣現行的政
+策上，台電公司是唯一的電力供應
+者，因此當在尖峰用電時，台電採用
+強制降載來約束使用者的用電量。但
+若從需求面來看，使用者若能夠針對
+自己的系統作有效的能源管理，亦可
+達到節能的目的。
+為了能針對以上的問題，提出一
+套完整的能源管理解決方案，本研究
+特別提出了一個分散式智慧型能源網
+路管理系統架構，主要的目的在設計
+一個可以整合不同協定與設備子系統
+的分散式智慧型控制管理架構。其關
+鍵是利用行動代理者(Mobile Agent)程
+式與Web Server 建立一個子系統間資
+料整合與通訊的架構，並建立一個自
+動化的管理與操作決策中心，透過以
+下的功能來達成能源管理的目標：
+－Mobile Agent 資料通訊傳輸架構。
+－利用Web 和網路資料庫技術進行
+資料的整合。
+－利用資料庫技術來進行即時的監
+控與管理決策，以達到決策自動
+化和遠端監控管理的目的。
+－建立分散式的控制架構並發展控
+制與管理的法則。
+並在三個方向上証實其可行性：
+－建立三層式的監督管理架構。
+－發展系統間有效的通訊架構與資
+料處理流程和資料分析功能。
+－建立一個階梯式分散控制架構。
+三.Agent-Based 能源管理網路
+基本架構
+（1）網路實體架構
+智慧型能源管理網路是以控制網
+路、Internet、Ethernet 結合而成的能源
+網路管理架構，建築物內部的空調、
+
+照明、電梯等牽涉能源管理的系統的
+控制單元和元件本身都可由BACnet
+網路或是由Fieldbus 或其他方式連結
+起來形成控制網路，由區域控制站負
+責監控。當達到一定數目的建築物
+後，再透過Ethernet 的相互連結而形成
+區域性的網路，並且由監督管理中心
+負責管理與監控，因此管理者就可由
+網路得知現今電能的需求、機台使用
+的訊息、或是直接進行遠端的監控和
+管理，而各部分組成和功能說明如下
+(如圖1 所示)：
+監督管理中心：監督管理中心的
+內部核心除了上述的操作系統、資料
+庫、使用者界面外，還多了決策支援
+系統( Decision Support System )，以便
+提供更多管理分析功能，另外還多了
+行動代理者的執行環境，以便進行資
+料連結的動作。而監督管理中心的功
+能包括模組組態管理、效能管理、安
+全管理、管理伺服器、管理資料庫和
+決策支援系統應用程式等。
+區域控制站：建築物控制管理站
+是負責建築物層次的管理與控制單
+位。建築物控制管理站負責建築物內
+各系統的監控與管理，其組成包括伺
+服器和資料庫。建築物控制管理站存
+取來自各系統的能源資料，並定期的
+上傳至監督管理中心，以更新監督管
+理中心中資料庫的資料。區域控制管
+理站並且必須確保建築物內部各系統
+運作的正常，如果發現系統內部有不
+正常的情況，能夠立刻通知監督管理
+中心。透過和設備的連結，搜集各元
+件的資料，並將資料儲存在資料庫中。
+機台設備：在此我們研究的對象
+為空調系統為主，故設備的通訊是由
+適用於BACnet 網路協定所組成，但
+如果是早期沒有網路連線的設備，則
+可以使用數位控制器連上上網代用
+PC 來進行通訊功能。
+（2）分散式智能管理架構
+    Agent-Based 能源管理網路的分散
+式智能如表1 所述：
+－監督級運作管理( Operation 
+Supervision )：包括全系統整體適用
+的智能管理功能，如負載預測、編
+排每日的操作計畫、故障診斷等。
+－監督規則( Rule-Based 
+Supervision )：包括各子系統依據不
+同溫度或負載狀態的設定點與判
+斷法則。
+－基本控制律( Control Law )：如PID
+控制參數等。
+（3）網路平台系統
+    前述的資料庫、服務應用程式與
+通訊程式，必須選擇有效的工具與技
+術平台。其中網路資料庫的部分一般
+多使用Microsoft 所開發的SQL 資料
+庫，主要原因在能與多數系統配合。
+而由於網路技術的發展，服務應用程
+式與通訊程式採取的工具必須具有跨
+平台、穩定、保密性高的特性，而Java
+語言正是兼備這些特點；而網頁的部
+分採用JSP 加上Tomcat 伺服器，行動
+代理者的部分是採用由IBM 發展的
+Aglet 規格。
+四. 行動代理者技術與資料通訊
+（1）簡介
+行動代理者為一種特殊的軟體程
+式，它可在一異質網路系統
+(Heterogeneous Network System )內，從
+一主機遷移至另一主機做溝通、交互
+作用(Interact)，以協助使用者達成某種
+
+目標。事實上行動代理者並非最近才
+出現的名詞，早在80 年代就有遷移式
+處理( Process Migration )的觀念生，到
+了90 年代MIT 更發展了遠端計算
+( Remote Evaluation )的系統。而最近這
+幾年因為網路頻寬不足與穩定度的因
+素，使得行動代理者這領域快速的發
+展。因此如IBM、General Magic 等公
+司都各自發展了一套完整的行動代理
+者系統( Mobile Agent System)，可見其
+受重視的程度。
+行動代理者傳輸模式是由送出端
+( Sender )先建立執行緒，再暫時停止
+執行的動作( Suspend Execution )，接著
+將行動代理者程式碼進行編序，此目
+的是為了將物件( Object )編成位元組
+資料流的式，最後再將此位元組碼封
+包傳送至現行網路架構中。
+至於在接收端方面，當接收端
+( Receiver )收到位元組碼封包時，其程
+序會跟當初發送端過程反向。先將此
+位元組封包解碼且反編序( Deserialize )
+化成物件的型態，最後啟動行動代理
+者本身的執行緒，並在接收端電腦進
+行所賦予的任務。如此就可達到使用
+者透過網路進行遠端監控的動作。
+本研究中的行動代理者是採用
+Java 程式撰寫，並參考IBM 公司的
+Aglet 開發環境架構和Aglet 生命週期
+的程序來設計。使用Java 語言是因為
+其簡單易學、跨平台、純物件導向的
+優勢，加上IBM 的Aglet 也是用Java
+來開發如此更容易上手。至於不直接
+使用IBM 所開發的Aglet 是因為它為
+了讓使用者方便，設計了一套圖形化
+介面( Graphics User Interface )，但因為
+程式碼層層的呼叫與繼承使得修改其
+功能極為困難，加上本研究中行動代
+理者所賦予的責任是資料的傳輸和下
+達控制命令，所以並不需要其圖形介
+面。
+（2）能源管理網路行動代理者程式
+本研究中的行動代理者都是為了
+聯絡上層監控端與下層控制端資訊所
+設計，所以若是依其功能可以劃分為
+以下兩者：
+1. 資料傳輸行動代理者
+( Data_Acquest_Aglet )：主要任務為
+依據系統所規劃的排程，按時地抓
+取控制層的原始數據並上傳至監控
+層裡。而為了避免不同作業平台可
+讀檔案不同而造成介面間的隔閡，
+本設計原則全以最常見的文字文件
+檔(副檔名為txt)做為傳入與輸出格
+式。
+2. 控制命令行動代理者
+( Control_Aglet )：主要任務為將使
+用者所輸入的控制參數由監控層
+下達至控制層端。其本體架構跟資
+料傳輸行動代理者相當類似，但缺
+少排程規劃的問題。且因為所夾帶
+的資料量只剩下一個數值(欲設定
+之參數值)，故在Control_Aglet 本
+體直接新增一成員(control_value)
+紀錄，以節省Aglet 所佔大小。
+除了Data_Acquest_Aglet 核心的
+部份，除此之外還要處理有關編序
+( Serialize)、輸出輸入( I/O)、通訊協定
+( Protocol)等，其全部所須要建構程式
+和功能如表2 所示。
+五. 能源管理與監督控制架構
+（1）局部控制層
+1. 監督式控制簡介
+能源系統的監督式控制主要的目
+的是在考量環境的變化與系統的需求
+
+下，對不同的子系統提出共通性的、
+協調性的控制命令。監督式控制器會
+依據天氣變化、操作計劃能源使用狀
+況，提出一個監督式控制的指令來操
+作系統。
+在本研究中，將系統分為三個控
+制層級，每一層級有不同的控制功
+能，三個層級的控制功能能依序整合
+才能完成一個完整的控制動作，因此
+也稱為階層式的監督控制。在監督管
+理層中，決策核心提供各子系統協調
+控制的參考命令，參考命令會經由行
+動代理者傳輸至區域控制層中，區域
+控制層中的監控軟體根據參考命令與
+本身的判斷法則，決定系統的開啟狀
+態，然後最底層的控制器和設備元件
+會依照局部控制層提出的指令，結合
+本身內建的控制律完成系統的動作。
+2. 區域控制層與設備層架構
+區域控制層的核心是一個區域控
+制伺服器，包括監控軟體和資料庫。
+監控軟體有內建的控制判斷法則，此
+法則會依據監督管理層所提供的參考
+指令作判斷。而本研究中參考指令是
+外部環境的溫度預測值。當監督層的
+參考值由行動代理者週期性的送入監
+督層資料庫時，監控軟體會以週期性
+的方式讀取資料庫中的控制值，再經
+由判斷法則決定系統的狀態。
+（2）監督管理層與決策核心
+監督管理層的主體是決策核
+心。包括兩大部分：
+1. 資料庫數據分析系統：以資料倉
+儲為核心的資料庫數據分析系
+統。（資料表關聯圖如圖2 所示）
+2. 建築物能源決策支援系統：
+整體的線上分析架構如圖3 所
+示，包括以下的模組：
+－資料處理模組：功能為設備運轉
+資料處理、歷史資料分析等。（如
+圖4 及圖5 所示）
+－溫度預測模組：功能為空調負載
+預測。
+－主機負載最佳化決策模組：功能
+包括電力負載管理策略規劃、用
+戶端空調使用舒適度電力節能
+之最佳化控制。（如圖6 所示）
+－設備監控與診斷模組：功能為空調
+設備即時監控與診斷，包括：
+a.空調箱故障診斷(如圖7)。
+b.冷卻程序故障診斷(如圖8) 。
+當使用者進入伺服端JSP 網頁時(利
+用Tomcat 軟體所建立的伺服器)，便會
+啟動JDBC 驅動程式對於SQL Server 
+2000 與Access 資料庫進行資料的擷取
+與運用，而網頁所呈現的種種功能則
+是透過Java 來撰寫。
+六. 遠端分散式監控程序
+本系統的主架構階層與控制方
+式，其分層的功能如表1 所述：其控
+制架構見圖9，遠端的監督管理中心透
+過網路以控制型行動代理者(Control 
+Aglet)傳輸預測資訊給區域控制站，而
+區域控制站以內建的判斷法則決定系
+統的操作狀況，然後透過底部的控制
+器維持系統運作。其判斷法則為if-else
+敘述：
+if ( predictive value＞setpoint value)
+Open_System；
+這樣的控制法主要的目的是在因
+應系統由不同的子系統構成，且不同
+的子系統的操作條件各不相同時，控
+
+制中心可以藉著資訊的傳遞來使得各
+子系統控制站因應本身的需要做不同
+的動作。
+在本研究的架構中，控制電路板
+採用的是腳位控制電路。當行動代理
+者攜帶資訊至下層控制站的資料庫
+後，LabVIEW 程式經過讀取資料庫資
+料後，判斷輸出符合TTL 位準的數位
+訊號給控制電路，以控制元件的性能
+(風扇轉速)。
+系統的性質(溫度值)將會由感測
+器擷取後，存入區域控制層的資料庫
+中，並由資料傳輸行動代理者
+( Data_Acquest Aglet)帶回至監督管理
+中心的資料庫中，如此遠端使用者便
+可以直接由Web 上看到相關的資料。
+本研究以一具有熱負載的冷房作
+為設備層，主要的控制功能是風扇的
+開啟與轉速，擷取系統10 分鐘內溫度
+的情形。，另外當監督管理層接收到
+行動代理者傳回的訊息，利用DTS 將
+溫度值與延遲時間轉入資料庫後，再
+透過JSP 將結果呈現在網頁上(見圖
+10)。
+七.結果與討論
+本研究的內容主要是針對各廠商
+的空調設備，在盡量不改變現有裝置
+的情形下，提供一個網路的線上監控
+管理架構。目前除了老式的空調主機
+外，現今的空調設備都留有連上網路
+的裝置，但因為種種的考量下都只有
+在局部區域網路( Local Area Network )
+連線的範圍。而本研究就是規劃一套
+能源管理網路平台，除了將操作提昇
+至網際網路( Internet Network )的階段
+外，並在線上提供各種服務模組，並
+且藉由資料倉儲分析機台運轉的效
+能，使得對於節能更有貢獻。本研究
+所達成的目標如下：
+(1) 在系統通訊架構上：
+－應用行動代理者( Mobile Agent )：本
+研究開發行動代理者的環境與本
+體，並利用行動代理者來進行上層
+(監督管理中心)與下層(區域控制站)
+間的資料、控制命令的傳遞，。
+－整合不同階層的網路架構：利用間
+接性的文字檔案間的傳遞，將網際
+網路的資訊( Information )能與下層
+的區域網路端分享。
+(2) 在決策核心上：
+◎建立資料庫管理的架構：規劃各種
+資料的性質與關聯。包括預先存入
+的建築物基本資料、各設備的設定
+性資料等，或是需線上更新的機台
+運轉資料、線上交易處理系統
+( OLAP )所需的操作資料等。
+◎更多管理監控工具的開發：參考多
+種不同演算法，並依其邏輯實際撰
+寫程式碼，使用者只需根據自己系
+統輸入特定參數，即可對設備進行
+診斷或是作為決策制定的參考，。
+◎採用線上交易處理與資料倉儲技術
+於能源管理系統：利用資料倉儲中
+Cube 的建立，讓使用者有更多維度
+選擇的查詢，並可直接在線上出分
+析圖表於網頁上，方便管理者的解
+讀。
+(3) 在遠端控制上：
+◎本研究利用一個分散式智能架構完
+成監督式的遠端控制，未來在大系
+統的遠端控制上，階層式的監督控
+制是一項趨勢，本研究則是驗證了
+可行性。
+
+八.參考文獻
+[1] 陳文龍，黃佳文“需求面管理與
+整體資源規劃研究”臺電工程
+月刊,第609 期,1999
+[2] 王宏傑，「資料庫技術應用於智慧
+型能源管理網路之研究」，國立台
+灣大學機械工程學研究所碩士論
+文，2002。
+[3] 謝振傑，「應用於汽車自然空調的
+太陽能光電智慧型能量管理系統
+之研究」，國立台灣大學機械工程
+學系研究所博士論文，2003。
+[4] Myiagi P.E.,Villani E.,Maruyama N. 
+“Modeling of Hybrid Supervisory 
+Systems using UML and Petri 
+Nets”, Proceedings of 8th IEEE 
+International 
+Conference 
+on
+Emerging 
+Technologies 
+and 
+Factory Automation , Volume: 2 , 
+2001 ,pp149-157
+[5]
+I-Hai 
+Lin, 
+P.; 
+Broberg, 
+H.L,“Internet-Based Monitoring 
+and 
+Controls 
+for 
+HVAC 
+Applications”,
+IEEE Industry 
+Applications Magazine , Volume: 
+8 Issue: 1
+[6] Leitao P.,Restivo F.,Putnik C.”A 
+Multi-Agent Based Cell Controller”
+Proceedings of 2001 8th IEEE
+International 
+Conference 
+on 
+Emerging 
+Technologies 
+and 
+Factory 
+Automation
+,Volume: 
+2 ,2001,pp463-469
+[7] 
+Contreras 
+O.C.,De 
+La 
+Rosa, 
+MelendezJ.”Interacting software-
+agents to support a kind of expert 
+supervision systems”, Proceedings. 
+ETFA 
+'99. 
+1999 
+7th 
+IEEE 
+International 
+Conference 
+on
+Emerging 
+Technologies 
+and 
+Factory Automation
+,
+Volume: 
+2 ,1999 ,pp 907-915
+[8] Shi Dongyuan, Lee Yinhong,Duan 
+Xianzhong, 
+Wu 
+Q.H,“Power 
+System Data Warehouse”，IEEE 
+Computer Application in Power 
+Magazine，July 2001 pp49-55
+[9] Chau K.W. Cao Ying ,Anson 
+M. ,Zhang Jianping “Application of 
+data 
+warehouse 
+and 
+Decision 
+Support System in construction 
+management”, 
+Automation 
+in 
+Construction,Vol.12,2002 ,pp.213-
+224
+[10] John M. House, Cheol Parl., 
+George E. Kelly, “Fault diagnosis 
+of an Air-handling Unit Using 
+Artificial 
+Neural 
+Network”, 
+ASHRAE Transactions, v 102, n 1, 
+1996, p 540-549
+[11] John M. House, Cheol Parl., George 
+E. Kelly, “Fault diagnosis of an 
+Air-handling Unit Using Residual 
+and Recursive Parameter”, 
+ASHRAE Transactions, v 102, n 1, 
+1996, p 528-539
+[12] Chia Y.Han , Yunfeng Xiao, CarI J. 
+Ruther “Fault Detection and 
+Diagosis of HVAC Systems”,
+ASHRAE Transactions, v 105, n pt 
+1, 1999, p 568-578
+
+圖1 Agent-based 網路控制管理架構
+圖2 資料表關聯圖
+資料庫
+與
+資料
+倉儲
+使用者
+介面
+   SP
+OLAP
+資料建構模組
+機台操作模組
+機台管理
+分析模組
+冰水主機負載
+最佳化
+冷卻過程故障
+診斷
+空調箱故障診斷
+資料建立與查詢
+Databas
+e
+遠端
+使用者
+運轉時數
+統計分析
+Databas
+e
+Databas
+e
+分散式
+資料庫
+Mobile
+Agent
+Supervisory Management Layer
+Local Control
+Layer
+Facility
+Layer
+設備
+設備
+設備
+溫度預測模組
+當日溫度預測
+圖3 線上分析架構圖
+圖4 冰水主機運轉參數資料圖
+圖5 各主機運轉時數比例圖
+圖6 空調箱故障診斷圖
+
+圖7 冷卻過程故障診斷圖
+圖8 主機負載最佳功能頁面圖
+Ethernet
+C
+M
+Supervisory
+Management 
+Center Server
+Data 
+Agent
+Control 
+Agent
+決策支援系統
+Labview 
+Program
+資料倉儲
+Local 
+Control
+ Station 
+Server
+Sensor
+Fan
+監督預測功能
+ 區域控制邏輯
+控制電路
+冷 房
+圖 9 遠端控制架構圖
+圖10 監督管理層之冷房溫度圖
+表1 分散式智能管理架構
+層級
+實體
+控制方式
+內容
+監督管理層
+監督管理中心
+參考指示
+網頁、程式邏輯
+區域控制層
+區域控制中心
+判斷法則
+LabVIEW、PC
+設備層
+設備、控制器
+控制律
+電路板
+
+表2 
+Data_Acquest_Aglet 程式模型
+類別程式
+說明
+Data_Acquest_Aglet.java
+Aglet 本體：定義Aglet 如何建立(Create)、傳遞
+(Dispatch)、丟棄( Dispose )等，安排時程與到達目的地
+所需進行的任務(task)。
+Context0.java
+設定好Aglet 所需要的環境與參數。
+AgletInputStream.java
+AgletOutputStream.java
+把物件( Object )與位元組資料流( ByteCode )
+做互相轉換
+AgletCodeLoader.java
+AgletLoader.java
+將位元組碼解譯以建立類別程式
+ATPURLConnection.java
+ATPURLStreamHandler.java
+URLStreamHandler.java
+ResponseHandler.java
+借用IBM Aglet 的溝通模式，簡化代理程式傳輸協定
+ATP，並且設定Server Port 以聆聽Client 的回覆
+( Reply )。
+AgletClient.java
+AgletServer.java
+Data_Acquest_Aglet 的監控端與控制端的執行程式

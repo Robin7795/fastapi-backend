@@ -1,0 +1,1273 @@
+冷鏈作業風險評估之研究 
+Assessment of Operational Risks for Cold Chain Logistics 
+ 
+胡寬裕   Kuan-Yu Hu 
+樹德科技大學行銷管理系 
+ 
+Department of Marketing Management, Shu Te University 
+ 
+(Received May 9, 2011; Final Version December 16, 2011) 
+摘要：隨著貿易全球化與消費者對於食品的安全與品質高度重視，複雜與長距離的物流過程，
+對於易腐保鮮商品的品質與安全，形成重大挑戰，促使冷鏈物流 (cold chain logistics; CCL) 受到
+學術界與產業界的重視。CCL 中潛藏許多危害因子與風險，如何在物流過程中確保商品品質，
+事前的風險鑑別與管理，對冷鏈績效為一非常重要議題，而以往非常少研究針對此議題，進行
+探索研究。本研究整合失效模式與效應分析 (dailure mode and effect analysis; FMEA) 與專家系
+統，建立兩階段風險評估模式，第一階段為風險鑑別，運用FMEA 分析工具，系統性鑑別冷鏈
+物流失效模式與其產生效應，進而應用特性要因圖解析失效原因；第二階段為風險推論，將所
+鑑別失效模式，依其發生的嚴重度、發生度與偵測度三項指標，透過本研究建立的風險推論專
+家系統，推論失效模式風險優先指數 (risk priority number; RPN)，以提供一個精確的風險評估模
+式。本研究以生鮮食品冷鏈，進行實際案例探討，研究結果共鑑別出35 項風險失效模式，其中
+溫度失控、延遲配送與資訊整合不佳為最嚴重的失效模式；隨著國際環保趨勢要求，節能與碳
+排放議題亦被鑑別為潛在風險。相較於傳統以質性或量化的風險評估方法，本研究發展風險評
+估專家系統，可提供一個精確與主動的冷鏈物流風險評估，對於資源有限的組織，可以在有限
+的資源下，提供冷鏈物流風險，經濟有效的管理。 
+ 
+關鍵詞：冷鏈物流、風險評估、食品安全、專家系統、失效模式與效應分析 
+本文之通訊作者為胡寬裕，e-mail: kyhu@stu.edu.tw。 
+作者衷心感謝國科會補助經費 (NSC100-2410-H-366-011)，以及兩位匿名評審與主編惠賜寶貴建議，特此
+致謝。 
+管
+理
+與
+系
+統 
+第廿一卷 第一期  民國一○三年一月 
+139-160 頁 
+Journal of Management & Systems 
+Vol. 21, No. 1, January 2014 
+pp. 139-160 
+                                               
+
+140  管理與系統 
+Abstract：With the rapid growth of global trade and increasingly high consumer expectations of food 
+safety and quality, maintaining freshness during long-distance distribution of perishable goods is an 
+important topic.  In recent years, the key drivers of cold chain logistics (CCL) have received 
+increasing attention from both academics and industry managers.  The cold chain is a special type of 
+supply chain that links parties with numerous embedded risks across the entire supply chain.  Risk 
+assessment plays a crucial role in improving the performance of cold chain logistics.  However, very 
+little literature has been devoted to exploring this vital issue.  To address this research gap, the current 
+study integrated failure mode and effects analysis (FMEA) and risk inference expert systems to 
+develop a two stage risk assessment model. The first stage systematically identified potential risks in 
+CCL, employing the FMEA method.  Further applying Ishikawa cause-and-effect diagram analysis 
+causes for every identified failure mode were documented.  The second stage evaluated risk by using 
+a risk inference expert system, developed in this study, to obtain the risk priority number (RPN).  The 
+RPN of a given failure mode was evaluated using three indexes: degree of severity, frequency of 
+occurrence, and chance of detection.  Finally, a fresh food supply chain was used to demonstrate the 
+proposed model.  Thirty-five failure modes were identified in the sample cold chain. The most serious 
+failure modes included: temperature out of control, delivery delay, and poor integration of chain. 
+Notably, the issue of environmental consciousness, related to energy saving and carbon emissions, was 
+also identified in this study.  In contrast to the traditional risk assessment model, the current study 
+provides an accurate proactive method of assessing high-risk events in uncertain environments for 
+CCL.  This approach enables firms to expend resources focusing on high risk events, rather than 
+across the spectrum of potential events, thus achieving increased economic efficiencies.  
+ 
+Keywords: Cold Chain Logistics, Risk Assessment, Food Safety, Expert System, Failure Mode and 
+Effects Analysis 
+1. 導論 
+隨著貿易全球化與消費者對便利性的重視，使得冷藏與調理食品 (pre-meal) 需求快速增加
+，而易腐保鮮商品 (perishables and temperature sensitive products; PTSP) 的長途運輸與配送保鮮
+與安全議題，對於冷鏈物流 (cold chain logistics; CCL) 形成重大挑戰，促使CCL受到學術界與產
+業界的重視。PTSP商品主要包括食品、農漁產品、醫藥品及一些特殊原物料等，物流過程需溫
+度控制條件。根據Datamonitor (2008) 研究資料，2008年全球冷凍食品巿場為1,182億美元，2009
+年巿場規模可達1,284億美元。 
+
+冷鏈作業風險評估之研究  141 
+所謂冷鏈物流，係指產品在生產、儲藏、運輸、銷售，各個活動中，產品始終處於溫度控
+制環境中，以確保產品品質與安全的一項系統工程 (Bogataj, 2005)。相較於常溫物流，冷鏈物流
+系統複雜，需要更多專業人才與知識，且過程中潛藏許多環境、人員、設備、資訊溝通等風險
+因子 (Sanchez-Rodrigues et al., 2010; Tuncel and Alpanm, 2010)，由於未能適當鑑別並加以管理，
+以致造成商品在物流過程中品質變異、損壞與超過保存期限等現象。根據統計，目前約有30%
+生鮮食品，由於物流處理不當造成損壞 (Montanari, 2008)；根據中國食品工業協會統計顯示，在
+中國每年約有1200萬噸水果和1.3億噸蔬菜的損壞，損失總值達100億美元 (賈凱傑、劉秉鐮，民
+97)。 
+鑒於冷鏈物流管理如此重要，近年來，國際間對冷鏈的推動亦展現積極態度，2003年歐洲
+成立國際冷鏈協會 (cool chain association; CCA) 致力於冷鏈產業整合，並建立冷鏈品質指標
+(cool chain quality indicator; CCQI)，進行風險評估與管理，以提升冷鏈效率水準。而在學術界，
+Bogataj et al. (2005) 運用數學模式探討易腐食品運送過程，溫度控制穩定機制；Kuo and Chen 
+(2010) 發展多溫層配送模式，以降低配送本；Abad et al. (2009) 導入RFID科技進行商品追蹤與
+溫度監控，Sanchez-Rodrigues et al. (2010) 評估英國物流作業不確定因素，歸納為延遲、配送條
+件限制、缺乏整合、需求變化與不良的資訊，綜觀以上文獻，目前研究多偏向冷鏈物流效率改
+善為主，甚少針對冷鏈物流風險議題進行探討。 
+失效模式與效應分析 (failure mode and effect analysis; FMEA)，是一種系統化風險分析工具
+，主要協助系統分析，使其在早期發現潛在風險因子及其影響程度，以避免失效之發生或降低
+其發生時產生之影響。本研究整合FMEA 與模糊推論 (Fuzzy Inference)，建立風險推論專家系
+統；從冷鏈系統發生失效模式與產生效應，並以失效模式嚴重度 (degree of severity)、發生度
+(frequency of occurrence) 與偵測度 (chance of detection) 三個風險指標，透過模糊推論系統推論
+出風險優先指數 (risk priority number; RPN)，最後並透過排序RPN，以了解各失效模式，相對風
+險值高低，以作為組織改善風險之依據。歸納本研究目的主要如下： 
+(1) 鑑別冷鏈物流失效模式與其效應， 
+(2) 評估冷鏈物流風險因子與來源， 
+(3) 評估並排序各風險因子風險優先指數， 
+(4) 對學術界與實務界，提出冷鏈物流風險管理建議。 
+本文主要包括5章，在1.導論中說明冷鏈的意義、發展現況與研究目的，2.文獻探討中，針
+對冷鏈相關研究進行回顧，並針對風險評估技術進行分類探討，3.研究方法中，說明風險鑑別步
+驟與本研究所發展模糊風險推論系統，4.結果與分析說明本研究所獲致的結果，並進一步分析結
+果，最後5.結論與建議中，針對研究發現，進行歸納整理，最後提出相關建議並指出後續研究方
+向與限制。 
+
+142  管理與系統 
+2. 文獻探討 
+2.1 冷鏈物流 
+冷鏈是一種商品自生產、儲存、配送到零售商店整個過程中，始終保持於恆定溫度狀態的
+供應鏈體系 (Stringer and Hall, 2007 )，常見於食品與藥品產業物流中。冷鏈為一種特殊供應鏈，
+相較於常溫物流，更需在物流鏈中，維持溫度的控制以確保商品品質的穩定的特性。因此，對
+於物流鏈中潛在風險，許多學者從不同觀點，去鑑別風險，Tang (2006) 將供應鏈風險來源分成
+四類供給管理、需求管理、資訊管理與產品管理；Mason-Jones and Towill (1998) 從物流鏈成員
+觀點，將風險來源區分為供給端、製造過程、需求端與控制系統四類，Sanchez-Rodrigues et al. 
+(2008) 進一步，將物流鏈中不確定因素來源，歸納成五類如圖1所示，其中：(1)托運者 (Shipper)
+：包括原物料供給、生產製造物流過程中的不確定因素；(2)運送者(Carrier)：包括物流中心中各
+種人員、設備、作業流程等因素；(3)顧客：包括訂單訊息、配送要求與限制等因素；(4)控制系
+統：包括資訊系統、監控設備等因素；(5)外部不確定因素：如天災、罷工、政府政策、油價上
+揚等。 
+ 
+ 
+ 
+ 
+ 
+圖1  物流不確定因素來源模式 
+資料來源：Sanchez-Rodrigues et al. (2008) 
+
+冷鏈作業風險評估之研究  143 
+Tuncel and Alpanm (2010) 以流程觀點，運用FMEA評估供應鏈風險，將風險歸納為四個部
+份：(1)供應商風險：包括與供應商關係降低、與供應商談判強度降低、採購商品品質不佳、原
+物料稀少等因素；(2)進貨/出貨風險：包括人為錯誤、車輛、搬運機具故障、交通壅塞等因素；
+(3)製造商風險：缺乏勞工、人員錯誤、技術問題；(4)顧客風險：顧客需求變動、顧客期望快速
+變化、市場占有率流失。Chopra and Manmohan (2004) 認為風險來源可以歸納成五類；(1)環境
+風險: 包括政治、政府政策、總體經濟、社會環境等因素；(2)產業風險: 包括原物料來源、製造
+商與競爭狀況等因素；(3)組織風險: 代理商、信用評等、負債狀況、作業方式等因素；(4)特定
+問題風險: 風險之間關係、目標與限制條件與工作的複雜度等因素；(5)決策者風險:包括決策者
+知識、技術、有限理性與偏誤等。Dahlenburg (2001) 探討零售端，食品冷鏈物流重要因素包括
+：(1)冷鏈的整合；(2)了解供應鏈：分析物流過程中從製造商到消費者的特性，並鑑別事件對產
+品溫度的影響；(3)食品安全：維持配送過程食品溫度；(4)溫度監控；(5)商品種類：不同商品有
+其不同儲存條件與使用設備。Oliva and Revetria (2008) 指出由於人員粗心、不佳的流程與不適
+當設備，進一步，將冷鏈商品風險失效模式，歸納出溫度36.3％、延遲30.8％、商品混雜14.8％
+、倉儲作業不當5.9％、包裝不適當3.3％、遭竊3.1％、受潮0.8％、其他等。國際冷鏈協會於2009
+年7月發行冷鏈品質指標標準 (cool chain quality indicator standard, CCQI)，透過標準的建立，以
+提供物流鏈風險的控管，進而提升品質水準，其間相關因素如圖2所示。 
+ 
+ 
+ 
+圖2  冷鏈管理因素 
+資料來源：http://www.coolchain.org/ 
+
+144  管理與系統 
+從以上研究顯示，冷鏈管理議題逐漸受到學術與實務界重視，而引起冷鏈過程風險因子複
+雜，涉及物流成員、資訊溝通、人員、作業方式、設備、商品與環境等因素。 
+2.2 風險評估 
+冷鏈物流面對不確定環境，使得風險評估活動日益重要，雖然對風險有許多不同定義，然
+一般風險被視為是對於潛在不可預期事件的實現。而對於風險的定義一般歸類為兩大類，第一
+類將風險視為一種損失 (Koivisto et al., 2009) 第二類將風險視為一種發生損失的機率 (Risk 
+Management Standard AS/NZS 4360, 1999; Kartam and Kartam, 2001)，而當事件發生的機率無法量
+測時，則被稱為不確定，須透過主觀意識方法，去評估其風險。 
+風險評估方法與技術，依據研究取得資料內容，主要可被歸納為質性與量化兩種類型 
+(Bennett, 1996)，在量化技術中必須大量依賴數量統計方法，如Monte Carlo simulation 、fault and 
+event tree analysis、sensitivity analysis (Bennett,1996; White,1995)、迴歸分析 (Petrovic, 2006) 等
+，量化風險衝擊與影響性。在許多真實狀況中，由於量化資料很難取得或資料僅侷限於研究問
+題的一小部分，使得資料無法呈現事件原貌或趨勢，再者，數量資料呈現形態並非研究所需型
+式；而質性技術中，大量依賴人類判斷、感覺、經驗去鑑別、分析與了解風險因子與其效應，
+然此人為主觀意識判斷，受到個人偏誤、偏好與專長所影響。然不管是質性或量化方法，皆有
+其優缺點，必須視研究性質而定。 
+失效模式與效應分析 (FMEA) 於1960 年代由美國太空總署 (NASA) 發展出來，是一種用
+於調查與分析產品與製程潛在失效的系統性工具，由於FMEA 具有系統性偵測失效風險，透過
+量化評估活動失效發生的發生度、嚴重度、偵測度，進而產生RPN，如公式(1)，透過風險等級
+分類來決定資源投入的優先順序，並提出適當之改善作業，如此能以最經濟的成本，來獲得最
+佳的改善效益，並且有效防止失敗事件發生，由於其強調預防管理的特性，因此，已廣泛被應
+在工程設計、品質與風險管理中 (Gilchrist, 1993; Ebeling, 2000)。雖然FMEA 擁有許多優點，然
+其RPN 產生方式，仍有一些缺陷，如相同的RPN 值，可能來自不同嚴重度、發生度與偵測度
+的組合，且評估過程視三個風險指標為相同權重；再者當評估資訊是不明確、模糊時，也可能
+導致不適當的風險評估。 
+i
+i
+i
+i
+D
+S
+P
+RPN
+×
+×
+=
+  
+n
+i
+,.......,
+3,2,1
+=
+ 
+人工智慧專家系統，可不受限於傳統統計資料，許多假設限制與容易修改、彈性的優點，
+非常適合於處理資料不精確與面臨不確定性環境問題。從1960年代發展以來，被廣泛應用於工程與預
+測中， Hsu and Shu (2008) 使用模糊推論以不精確資料，評估製程能力，Turan and Yurdusev (2009)
+使用模糊推論去模式化水資源工程系統，Wu et al. (2007) 使用模糊推論進行工程錯誤診斷。從
+(1) 
+
+冷鏈作業風險評估之研究  145 
+以上研究可發現，許多研究應用或發展數量、質性或整合兩種方法，進行風險評估。近年，隨
+著電腦科技進展，整合專家智慧的專家系統，已成為風險預測與評估的一種良好方法。  
+3. 研究方法 
+在研究方法上，本研究採用兩階段風險評估，第一階段為風險鑑別，運用FMEA分析冷鏈物
+流系統失效模式與其產生效應，進而鑑別出風險因子。並將鑑別出風險因子，依三個風險指標
+進行評估，以了解其風險高低，第二階段為風險推論，將第一階段所鑑別風險因子，依其在不
+同指標評估結果，進一步運用風險推論專家系統，推論風險因子風險值，以提供一個精確的風
+險評估，整體研究流程，如圖3，以下分成二個部分，說明本研究所使用研究方法： 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+圖3  研究流程 
+決定失效模式與效應分析 
+發生度 
+決定失效模式 
+列出目前控制措施 
+偵測度 
+嚴重度 
+排序失效模式 
+冷鏈風險管理 
+ 
+模糊化介面 
+解模糊介面 
+模糊推論引擎 
+模
+糊
+推
+論
+機
+ 
+資料庫 
+規則庫 
+模
+糊
+知
+識
+庫 
+產生RPN 
+風
+險
+鑑
+別 
+界定範圍與FMEA 評估專家 
+風
+險
+推
+論 
+
+146  管理與系統 
+3.1 風險鑑別 
+風險評估首要步驟為風險鑑別 (Lai et al., 2002)，本研究應用FMEA，系統性分析冷鏈可能
+失效模式，並對這些失效模式所可能造成的影響，評估其影響性，並解析引起原因。FMEA 依
+據其應用之領域不同，有許多不同執行步驟，學者可依據其研究領域修改應用步驟，本研究綜
+合Pillay and Wang (2003)、Chin et al. (2009) 等有關FMEA 作業的規定及內容，將FMEA 作業
+實施的步驟，具體歸納成下列步驟： 
+(1) 界定研究範圍與風險評估專家 
+在實施冷鏈風險評前，必須界定研究範圍與劃分子系統，以利系統性評估作業，本研究依物
+流程序，將冷鏈系統劃分為若干子系統，並邀請冷鏈物流業界專家與學者，組成風險評估小組
+，以進行後續相關作業。 
+(2) 決定潛在失效模式與效應 
+列舉潛在失效模式是FMEA分析中最重要的步驟，因FMEA是針對失效模式進行解析，而沒
+有列舉到的潛在失效模式無法進行評估，本研究應用失效模式與效應分析表 (表1) 協助，將所
+列舉的失效模式，進一步評估其產生效應。 
+(3)決定失效因子 
+依據上階段分析所得的潛在失效模式與其效應，本研究考慮鏈結的對象包括人員、設備、
+商品、方法、資訊溝通與環境等，配合特性要因圖的使用，列舉失效模式要因，進一步，決定
+失效因子。 
+(4)風險指標評估 
+風險指標包括三項指標，發生度是指在失效模式發生的機率；嚴重度是指失效模式發生的
+影響；偵測度是指失效模式發生前，被察覺出來的機會。在評估尺度上，本研究參考Chin et al.  
+ 
+ 
+ 
+團隊名稱：_____________ 
+編 號：___________ 
+過程/部門：_____________ 
+評估日期：____________ 
+團隊負責人：____________ 
+頁 次：____________ 
+ 
+活動/
+功能 
+潛在失效 
+模式 
+潛在失效
+效應 
+潛在失效原因 
+現行控制方式 
+發
+生
+度 
+嚴
+重
+度 
+偵
+測
+度 
+ 
+RPN
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+表1  失效模式與效應分析表 
+ 
+
+冷鏈作業風險評估之研究  147 
+(2009)、Pillay and Wang (2003) 之分類評估準則，將評估尺度從非常高到非常低，共分為五個等
+級，相關評估指標準則，如表2所示。其中政府法令與攸關生命安全議題，關係重大，因此將其
+列入非常高等級，另偵測度的發現程度，涉及現行作業管制方式，亦即若目前管制方式是嚴謹
+，則相對而言風險事件被偵測的機會較高。 
+ 
+表2  風險指標評估尺度 
+尺度 
+嚴重度 
+發生度 
+偵測度 
+非 
+常 
+高 
+1.人身安全產生重大危害 
+2.不符合政府法規 
+3.商品損壞報廢 
+4.物流系統停擺 
+5.顧客極端不滿意 
+1.MTBF <1 week 
+2.PR＞0.05 
+1.現行管制措施無法檢測 
+失效模式 
+2.可偵測比例0-5％ 
+ 
+高 
+ 
+1.人身安全產生危害 
+2.商品品質重大惡化 
+3.物流系統局部作業停擺 
+，須由外部進行修復 
+4.設施故障MTTR＞3天 
+5.顧客非常不滿意 
+ 
+1.MTBF <1-4 weeks 
+2.PR＞0.01 
+ 
+1.現行管制方法檢出能力 
+非常小 
+2.可偵測比例6-20％ 
+ 
+中 
+等 
+ 
+1.影響商品品質惡化 
+2.物流系統作業局部停擺 
+，可由內部進行修復 
+3.設施故障MTTR 1-3天 
+4.顧客不滿意 
+ 
+1.MTBF<1-6 months 
+2.PR＞0.005 
+ 
+1.現行管制方式有低度檢 
+測能力 
+2.可偵測比例21-50％ 
+ 
+低 
+ 
+1.影響商品品質輕度 
+2.物流系統作業局部受到 
+影響，可由內部進行修復 
+3.設施故障MTTR＜1天 
+4.顧客輕微不滿意 
+ 
+1.MTBF<6-12 
+months 
+2.PR＞0.001 
+ 
+1.現行管制方式有中高度 
+的檢測能力 
+2.可偵測比例51-85％ 
+ 
+非 
+常 
+低 
+ 
+1.影響商品品質微小 
+2.物流系統作業局部受到 
+輕微影響 
+3.設施故障MTTR＜1小時 
+4.顧客可能不會注意。 
+ 
+1.MTBF >1 year 
+2.PR≤0.001 
+ 
+1.現行管制方式有非常高 
+的檢測能力 
+2.可偵測比例86-100％ 
+1.平均故障間隔時間 (mean time between failures; MTBF)  
+2.平均故障排除時間 (mean time to repair; MTTR) 
+3.發生機率 (probability; PR) 
+ 
+
+148  管理與系統 
+模糊推論機制 
+模糊知識庫 
+3.2 風險推論專家系統 
+模糊推論專家系統主要作為風險因子風險值推論機制，系統主要包括四個部分，如圖4，第
+一部分為系統輸入項，包括三項風險評估指標，失效模式發生的嚴重度 (
+iS )、發生度 (
+iP )與偵
+測度 (
+i
+D )，作為模糊推論系統的輸入項；第二部分為知識庫，知識庫主要包含兩個子知識庫，
+(1)規則庫，存放由專家知識形成的推論規則。(2)資料庫，主要存放各集合的歸屬函數；第三部
+分為模糊推論，此部分為系統核心，主要由推論引擎構成，負責將輸入集合，依據知識庫中規
+則與集合、參數定義，推論出適當結論，再透過解模糊，將模糊值轉換為明確值，第四部份為
+產出部分，此部份為經推論引擎推論結果，經解模糊後，以得到RPN。而模糊推論系統運作，
+主要包括以下幾個過程：(1)模糊化；(2)建立模糊規則；(3)模糊推論；(4)解模糊。以下說明各步
+驟做法： 
+(1) 模糊化 
+模糊化是將輸入集合中明確數值，依據歸屬函數轉換為模糊數值。常用的歸屬函數包括三
+角函數、梯形函數與高斯函數，各種歸屬函數，各有其適用之處，而三角函數為最簡單可行模
+式 (Pedrycz and Gomide, 2007)，基於此，本研究歸屬函數採用三角函數。對於每個輸入變數，
+依據其強弱程度不同，分為非常低、低、中等、高、非常高五個等級，各級所屬模糊語意值，
+定義如表3 所示。 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+表3  語意變數歸屬函數定義 
+語意變數 
+非常低 
+低 
+中等 
+高 
+非常高 
+模糊語意值區間 
+【-1 1 3】 
+【1 3 5】 
+【3 5 7】 
+【5 7 9】 
+【7 9 11】 
+產出 
+ 
+風險優
+先指數 
+FMEA 
+投入變數 
+ 
+iS  
+iP  
+i
+D  
+圖4  風險推論專家系統架構 
+模糊化介面 
+模糊推論
+引擎 
+解模糊化介面 
+資料庫 
+規則庫 
+
+冷鏈作業風險評估之研究  149 
+(2) 模糊規則 
+在規則式專家系統中，將專家知識以一系列“If-Then” 規則表示，其中 “If” 是事件的原因
+，亦即模糊推論系統中輸入變數；“Then”指的是結果，亦即模糊推論系統中的輸出結果。透過
+推論引擎觸動 (fire) 所有規則，以進行平行推論 (parallel inference)。在模糊FMEA 方法中，大
+量規則可以提供較佳的預測效果 (Chin et al., 2009)。而本研究輸入變數共分為五個等級，如表3
+，有三個輸入變數（嚴重度、發生度與偵測度），因此將有125 種組合狀況，基於此，本研究產
+生 125 條規則，如公式2 所示，以供系統完整推論。   
+例如： 
+ 
+iR ：If 
+1x  is 
+ij
+A  and 
+2x  is 
+ij
+B  Then y  is 
+ij
+C   
+其中  x : 輸入語意變數、A : 輸入語意值、y : 輸出語意變數、C : 輸出語意值 
+  i =
+n
+,......,
+3,2,1
+ 規則總數；
+m
+j
+,.....,
+3,2,1
+=
+ 語意變數個數 
+(3) 模糊推論  
+模糊推論以模糊邏輯為基礎，為系統的核心，透過整合集合運算元 (operator)，如交集、聯
+集與關係合成運算 (Composition)，將輸入集合轉換成產出集合。而模糊推論相較於傳統數理模
+式，面對不確定環境，可以處理不精確資料、容易修改與彈性優點。常見的模糊推論系統，可
+以分為二類，包括TSK (Takagi-Sugeno-Kang) 函數式模糊規則與Mamdani 語意式模糊規則，由
+於本研究採語意式規則，採用最大-最小合成運算 (max-min operation)，其原理為推論時，對個
+別規則於模糊規則成立時，取最小值運算，而各規則的結論，則採最大值運算，如公式(3)： 
+[
+] [
+])
+(
+)
+(
+)
+(
+)
+(
+)
+(
+)
+(
+)
+(
+2
+2
+2
+1
+1
+1
+0
+2
+1
+2
+1
+y
+u
+x
+u
+x
+u
+y
+u
+x
+u
+x
+u
+y
+u
+C
+B
+A
+C
+B
+A
+C
+∧
+∧
+∨
+∧
+∧
+=
+ 
+其中，
+iA 、
+iB 和
+i
+C 相對應的歸屬函數為
+A
+u 、
+B
+u 和
+C
+u ，而∧是Min 運算、∨是Max 運算，
+推論過程圖示如圖5。 
+ 
+ 
+(2) 
+圖5  模糊推論過程 
+(3) 
+∧
+ 
+∧
+ 
+∨ 
+
+150  管理與系統 
+(4) 解模糊 (Defuzzification) 
+模糊推論系統中最後步驟為解模糊，將由推論系統所獲得模糊值，透過解模糊將其轉換為
+明確值。有許多解模糊的方法，如重心法 (centre of gravity)、最大平均法 (mean of maxima)、中
+心平均法 (modified center average) 等 (Marcelloni and Aksit, 2004)，其中重心法廣為運用在離散
+型資料中，其運作如公式(4)。  
+∑
+∑
+=
+=
+×
+=
+L
+i
+i
+C
+i
+L
+i
+i
+C
+y
+u
+y
+y
+u
+y
+1
+1
+*
+)
+(
+)
+(
+   
+L
+i
+,.....,
+3,2,1
+=
+ 
+C
+u ：歸屬函數 
+ 
+4. 研究結果與分析 
+為驗證研究模式的正確性與探索冷鏈物流風險，本研究以生鮮食品冷鏈進行個案研究，由
+於冷鏈系統複雜，因此本研究依據相關文獻與研究方法，依冷鏈價值創造觀點，將冷鏈依程序
+，分成五個次系統，為製造商、物流中心、零售商店、控制系統與外部環境，如圖6 所示，各
+次系統涵蓋範圍與活動，說明如下： 
+製造商：任何物流風險由產品製造商引起，直接影響物流績效的因子。包括主要活動中進料、
+製造或出貨運輸各項作業與輔助活動中人力資源、採購、基礎設施等。 
+物流中心：任何風險由物流中心產生而直接影響配送過程，物流中心活動包括訂貨、進貨、儲
+存、揀貨、出貨與配送過程等與輔助活動中人力資源、採購、基礎設施等。 
+零售商店：任何風險由零售商店產生，在冷鏈過程中，零售商店負責產品銷售，包括訂單預測
+、配送要求、零售端的卸貨作業與商品儲存、陳列上架等。  
+ 
+(4) 
+圖6  冷鏈物流程序 
+
+冷鏈作業風險評估之研究  151 
+控制系統：任何風險起因於冷鏈中管理機制。包括資訊傳遞、系統管理或流程監控等議題。 
+外部環境：風險起因於外部無法控制因素所引起，包括政治、法律、經濟、社會、文化、科技
+等層面。 
+由於FMEA 是種群體思考決策工具，加上模糊推論系統建立時，需要龐大專家知識進行判
+斷，因此，本研究由業界專家與學者，組成風險評估小組，小組成員涵蓋冷鏈中製造商、物流
+中心與零售商店中，物流、工務、採購部門主管與學者，透過小組多次討論，以進行冷鏈物流
+失效模式與風險來源鑑別與風險程度評估。本研究主要應用歷史資料並考慮生命週期與分配原
+則，其中歷史資料包括各部門每日/月工作紀錄單、保險、各部門工作紀錄單，由於研究個案中
+製造商已通過ISO 140001 國際環境管理系統驗證，因此作業已建立標準程序，本研究列出目前
+個案公司相關控制措施，作為公司偵測或監控風險因子，以避免失效模式發生，以上三個指標
+評估標準，整理如表2 所示。 
+4.1 研究結果 
+本研究透過風險評估小組，系統性鑑別出35 種失效模式，如表4 所示，從表中可發現失效
+模式普遍存在冷鏈過程中，其中物流中心包含12 項失效模式，製造商6 項，零售商6 項、控制
+系統5 項與外部環境6 項，以下針對各次系統失效模式進行說明： 
+(1) 製造商 
+製造商中共鑑別出包括接單錯誤、供應中斷、溫度控制失效與運輸作業錯誤等6 種失效模
+式，如表4 所示，其中以溫度控制失效，風險值7.67，排名第5，顯示在製造端，從原物料進貨
+、製造到成品的製造物流階段中，溫、濕度控制的重要性，其中生鮮原物料的保鮮；除了溫度
+控制因素外，溼度的控制亦為重要因素；其次為不當儲存，風險值6.09，排名第13，由於不同
+原物料儲存條件不同，儲存不當會影響溫度的穩定性，甚至引起商品之間交互污染，因此被鑑
+別為高風險失效模式；另外接單作業錯誤，顯示，訂單源頭管理的重要性，唯有正確無誤的顧
+客需求確認，才有可能產生滿意顧客；另外也鑑別出包括供應中斷、缺少員工則會製造延遲，
+進而可能產生配送延遲，影響配送規劃，進而使成本增加。 
+(2) 物流中心 
+物流中心共鑑別出包括溫度控制失效、不適當儲存、包裝、溫度設定與訂單內容複雜等12
+種失效模式，如表4 所示，其中溫度控制失效，風險值8.81，排名第1，顯示溫度失控因素，成
+為冷鏈物流中心最重要風險因素，突顯溫度控制對於冷鏈的重要性；除了前述溫度失控外，不
+適當的儲存，風險值7.94，排名第3，顯示商品儲存環境的重要性，由於物流中心處理商品種類
+眾多，每種商品儲存條件不盡相同，再者許多商品間，可能會交互感染，因此稍有不慎，可能
+就會發生品質下降，甚至損壞情形；而不適當作業流程，風險值7.33，排名第6，商品在裝卸貨
+
+152  管理與系統 
+過程中，若作業流程設計不當，可能造成商品遠離冷源過久，造成品質下降，甚至損壞情形。
+而不適當溫度設定，風險值6.54，排名第9，商品在冷鏈過程中，在物流中心儲存或配送階段中
+，包括不同商品，期間溫度條件可能不同，因此可能造成溫度設定不適當情形；而隨著消費者
+需求的多樣化與市場競爭激烈，對於物流中心的商品處理，亦構成相當程度的挑戰，因此訂單
+內容複雜失效模式其風險值6.39，排名第11；另外還包括無效率車輛途程規劃，除造成成本上
+升、配送延遲外，亦可能提升商品品質損壞的風險；而面對動態物流環境，銷售與物流功能欠
+缺連結、司機與物流中心溝通不良，除了可能造成配送延遲外，亦可能產生存貨、成本上升。 
+(3) 零售商 
+零售商店中共鑑別出6 項失效模式，從表4 中，可發現溫度監控失效，風險值8.30，排名
+第2，由於零售商店商品上架販賣，商品陳列於開放式貨架上，如此可能造成溫度失控；另外不
+適當儲存，風險值7.82，排名第4，由於零售商店儲存空間侷限，造成許多商品存放無法做到，
+依商品特性進行儲存，因此可能引發品質下降或損壞的風險；另外嚴格的配送時段限制，造成
+許多緊急配送，促使成本上升；作業錯誤與卸貨設施壅塞，可能引起溫度失控與配送延遲現象。 
+(4) 控制系統 
+控制系統中共鑑別出5 種失效模式，包括不同運輸作業模式欠缺標準配適，風險值6.17，
+排名第12，造成原因為冷鏈中欠缺共同標準，以致在冷鏈系統不同階段中，由各自物流主體決
+定作業模式與溫度管控標準，如此管制標準不一，造成效率不佳，甚至全程溫度控制不易；另
+外訂單預測準確度低，風險值6.97，排名第7，由於銷售受到許多不確定因素影響，造成零售端
+預測準確度低，透過長鞭效應 (bullwhip effect)，使得後端的物流中心、製造商，產生更大的訂
+單預測誤差、造成存貨失控、配送延遲等現象；另外冷鏈的資訊溝通不佳，如製造商與物流中
+心、物流中心與零售商溝通不良，顯示冷鏈中資訊即時溝通的重要性，由於資訊未能及時回饋
+，因而造成失效狀況。 
+(5) 外部環境 
+在外部環境中，共鑑別出6 項失效模式，包括油價上升、環境保護要求、物流科技、政府
+法規的限制與要求與道路壅塞。其中油價上漲，風險值6.78，排名第8 名，油價上升造成運輸
+成本高漲，對於耗能的冷鏈配送，構成經營管理上相當大的挑戰；而受到氣候變遷、溫室效應
+影響，環境保護要求，亦成為冷鏈主要風險，世界各主要工業國家於1997 年12 月簽訂京都議
+定書 (Kyoto Protocol)，明定各國對於溫室氣體排放削減管制，各國政府基於對環境保護的要求
+，除了日趨嚴格的有毒物質排放管制，對於CO2 的排放，亦考慮將其納入法規管制，而物流過
+程中，消耗大量能源並且排放許多CO2，將成為冷鏈物流業者，必須正視的議題，此項結果，
+呼應Piecyk and Mckinnon (2010) 針對英國物流專業經理人調查發現，CO2 排放議題將成為未來
+物流重要影響因素；另外物流科技資訊科技對於物流績效有重要的影響，因此適當導入先進物
+
+冷鏈作業風險評估之研究  153 
+流科技，除了可以提升效率外，亦可提供PTST 商品，更佳的保存條件；面對日益嚴重的道路壅
+塞，使得冷鏈系統產生更多不確定風險，因此也被鑑別出。 
+從以上結果，冷鏈過程中，溫度控制、商品儲存管理成為冷鏈最重要因素，凸顯冷鏈中，
+溫度控制的重要性，符合冷鏈從生產者到消費者，嚴格溫度控管理的要求，另外作業流程不當
+、訂單內容複雜、上下游資訊整合不佳、油價上升、環境保護要求，都成為主要失效模式，本
+研究調查結果與Tuncel and Alpanm (2010)、Sanchez-Rodrigues et al. (2010)、Oliva and Revetria 
+(2008) 等調查供應鏈風險，發現包括配送延遲、商品混雜、倉儲作業不當、包裝不適當、受潮
+等風險因子結果相似。較高RPN 值意謂較高的風險，對於管理者而言，應將有限資源，投注於
+高風險失效模式，以進行改善。 
+4.2 結果分析 
+根據研究發現，本研究歸納失效模式所產生效應，主要包括溫度失控、延遲配送、缺乏資
+訊分享、環境保護與成本等，因此本研究針對此效應，進一步分析其原因並提出解決之道： 
+(1) 溫度失控 
+溫度失控意謂配送過程中，商品儲存環境未能維持恆定條件。由於溫度對於商品品質攸關
+重大，尤其是PTST 商品，失控程度輕者商品喪失風味、減低功能，嚴重者產生腐敗，產品完全
+失效。溫度失控引起原因主要為對商品專業知識不足、商品儲存不當、設備故障。由於物流中
+心必須處理商品種類繁多，對於每種商品所需維持的溫度，可能無法充分了解；而商品儲存溫
+度並非是越低越好，必須視商品種類，儲存於適合溫度下，以冰淇淋為例，一般最佳儲存溫度
+為
+o
+c
+15
+−
+至
+o
+c
+25
+−
+，溫度過高會造成冰淇淋溶解，但溫度過低則會造成冰淇淋堅硬，嚴重影響風
+味。 
+商品在物流中心、配送車輛中，因儲存不適當，可能造成儲存空間內空氣循環不當，一端
+溫度可能過高另一端溫度則過低，溫度不均勻現象；而某些特定商品不可存放在一起，例如海
+鮮食品與藥品類，否則可能會產生交互感染、受潮現象，影響商品品質。另外對於商品在配送
+與儲存時溫控設備故障，亦為主要風險因素，雖然定期保養，可以解決部分失效原因，然面對
+溫度監控科技不斷更新，溫度控制技術與設備的更新投資，亦為解決的重要方法。 
+(2) 配送延遲 
+配送延遲意謂配送無法達到原定的時程，對於冷鏈影響層面，可以歸納為三個層面，就物
+流中心而言，配送延遲可能進一步產生漣波效果 (ripple effect)，導致冷鏈中訂單履行週期 (order 
+fulfillment process; OFP) 時間過長，進而影響到冷鏈配送系統的信賴度；就製造商而言，由於產
+品保存期限有限，延遲的配送意謂較長的配送期間，產品的品質可能下降，從統計機率理論，
+
+154  管理與系統 
+其產品失效的機會也增加，而就銷售商而言，可供產品上架陳列的銷售日期也縮短，可能減少
+銷售機會。 
+而引起配送延遲原因，普遍存在冷鏈過程中，包括在外部環境部分中道路壅塞、零售商配
+送限制條件、物流中心作業流程不當等。配送限制條件為配送過程中的限制式，包括嚴格的配
+送時段、緊急的配送等，會影響正常配送。其引起主要原因包括零售商店端有限的卸貨設施，
+使得配送車隊必需排隊進行卸貨作業，引起配送車輛延遲返回物流中心；另外零售端特定的配
+送模式與時段，減少物流中心配送的彈性，而有限的儲存空間，使得物流車輛必須進行密集的
+配送，由於配送條件限制，會產生配送車輛與司機的等待，進而產生漣波效果此舉都使得物流
+成本上升。 
+近來，導入資訊與通訊科技 (information and communication technology; ICT)，如全球定位
+系統 (global positioning system; GPS)、地理資訊系統 (geographic information system; GIS)、智慧
+型車輛系統 (intelligent vehicle system; IVS)、無線射頻辨識系統 (radio frequency identification, 
+RFID)，來強化車輛途程與作業效率。 
+(3) 上下游整合弱 
+冷鏈過程鏈結許多物流組織，主要包括資訊與作業整合兩個層面，就資訊溝通而言，資訊
+整合弱，亦謂整條冷鏈資訊透明度不佳，主要失效效應包括訂單預測不準確、上下游欠缺溝通
+等，造成存貨失控與配送效率不佳與成本上升等現象，分析其原因，歸結來自鏈中欠缺資訊透
+明度與能見度，由於資訊溝通方式或欠缺標準溝通模式，導致溝通效率不佳；就作業層面而言
+，許多作業規範，例如商品保存溫度設定不同，除了造成商品溫度控制標準不一、影響品質外
+，而上下游業者，特定的作業模式，亦造成配送過程銜接不易，影響配送效率。 
+(4) 環境與成本要求 
+受到溫室效應、氣候變遷的影響，國際間體認管制溫室氣體排放的重要性，根據Stern (2006)
+報告指出運輸作業約佔全球溫室氣體排放的14％，其中陸上運輸約佔整體運輸的3/4，由此可發
+現物流活動對於溫室氣體排放的重要性；而近年高漲的油價，將促使業者更加注重節能的投資
+，此舉有助於減少二氧化碳的排放，可預見的未來，環保議題將成為冷鏈物流重要影響因素。  
+
+冷鏈作業風險評估之研究  155 
+表4  風險指標評估尺度 
+次系統 
+潛在失效模式 
+潛在失效效應 
+嚴
+重
+度 
+潛在失效原因 
+發
+生
+度 
+偵測度/現行管制措施 
+偵
+測
+度 
+Fuzzy 
+RPN 
+排名 
+製 
+造 
+商 
+接單錯誤 
+製造錯誤、配送延遲 
+6.7 流程設計不當、缺乏訓練 
+2.5 人員教育訓練、標準作
+業流程 
+2.2 
+3.42 
+34 
+供應中斷 
+配送延遲 
+6.5 顧客關係不佳、供應規劃、進
+貨排程錯誤 
+2.5 與原物料供應商資訊
+分享 
+3.2 
+3.85 
+33 
+缺少員工 
+配送延遲 
+3.8 員工請假、罷工 
+2.0 激勵措施 
+2.5 
+2.69 
+35 
+不當儲存 
+溫度失控、商品交互污染 7.5 專業知識不足、人員疏失 
+4.8 標準作業流程 
+4.3 
+6.09 
+13 
+溫度失控 
+溫度、溼度監控失效 
+8.7 專業知識不足、人員疏失 
+5.2 儀器量測、人員教育訓
+練 
+6.1 
+7.67 
+5 
+運輸作業錯誤 
+成本上升、配送延遲 
+6.2 缺乏訓練、車輛設備維護不確
+實   
+3.5 標準作業流程 
+3.2 
+4.15 
+31 
+物 
+流 
+中 
+心 
+配送車輛故障 
+配送延遲、溫度失控 
+4.8 車輛老舊、保養不確實 
+6.5 車輛投資、定期保養 
+2.1 
+4.08 
+32 
+司機短缺 
+配送延遲、成本上升 
+6.5 罷工、勞動力短缺 
+2.5 激勵措施、勞資關係管
+理 
+2.3 
+4.24 
+30 
+存貨短缺 
+存貨失控 
+7.3 資訊溝通不當 
+2.8 存貨管理 
+2.1 
+4.48 
+27 
+訂單內容複雜 
+配送延遲 
+6.9 顧客需求 
+5.9 促銷活動、訂單預測 
+5.6 
+6.39 
+11 
+不適當作業流程 
+配送延遲、溫度失控 
+7.8 流程設計不佳 
+7.1 作業流程分析 
+5.2 
+7.33 
+6 
+不適當儲存 
+溫度失控、商品交互污染 8.2 商品知識不足、倉儲空間有限 7.2 標準作業規範 
+5.6 
+7.94 
+3 
+不適當包裝 
+溫度失控 
+6.3 商品知識不足 
+4.5 標準包裝作業規範 
+5.6 
+4.29 
+28 
+不適當溫度設定 
+商品損壞 
+8.2 商品知識不足，作業疏失 
+3.5 標準作業規範 
+5.5 
+6.54 
+9 
+溫度失控 
+溫度、溼度監控失效 
+9.3 商品知識不足、設備故障 
+7.6 定期保養、校正 
+6.8 
+8.81 
+1 
+無效率車輛途程規劃 
+配送延遲、成本上升 
+6.6 配送專業技能不足、 
+4.6 車輛途程分析 
+3.2 
+4.52 
+26 
+銷售與物流欠缺連結 
+配送延遲 
+6.7 流程設計不當 
+5.1 銷售資訊與物流活動
+連結 
+4.5 
+5.12 
+24 
+司機與物流中心溝通
+不良 
+配送延遲 
+6.0 司機與物流中心欠缺足夠溝
+通 
+7.3 資訊溝通分享 
+3.8 
+5.89 
+14 
+冷鏈作業風險評估之研究  155 
+
+156  管理與系統 
+表4  風險指標評估尺度(續) 
+次系統 
+潛在失效模式 
+潛在失效效應 
+嚴
+重
+度 
+潛在失效原因 
+發
+生
+度 
+偵測度/現行管制措施 
+偵
+測
+度 
+Fuzzy 
+RPN 
+排名 
+零 
+售 
+商 
+店 
+需求劇烈變動 
+存貨失控 
+8.2 市場高度競爭、不佳顧客關係 3.5 訂單預測、存貨管理 
+2.3 
+5.78 
+17 
+作業錯誤 
+配送延遲、溫度失控 
+4.3 人員疏失、作業方式錯誤 
+4.8 人員教育訓練，標準作
+業流程 
+3.1 
+4.25 
+29 
+卸貨端設施壅塞 
+配送延遲 
+4.5 特定運輸模式或時段 
+5.8 卸貨作業排程 
+3.8 
+4.89 
+25 
+Rigid 
+deliver 
+time 
+window 
+配送延遲、緊急配送 
+6.6 特定運輸模式或時段 
+6.5 資訊溝通 
+4.1 
+5.43 
+20 
+不適當儲存 
+溫度失控 
+8.2 儲存環境不佳、倉儲空間有限 6.5 標準作業規範 
+5.2 
+7.82 
+4 
+溫度控制故障 
+溫度監控失效 
+8.2 商品知識不足、設備故障 
+6.8 標準作業規範 
+5.7 
+8.30 
+2 
+控 
+制 
+系 
+統 
+需求預測準確度低 
+存貨失控 
+7.5 
+預測技術不佳、資訊溝通不當 6.7 
+市場分析、預測技術 
+5.1 
+6.97 
+7 
+資訊系統故障 
+配送延遲、溫度失控 
+7.7 
+系統老舊、欠缺維護 
+2.5 
+定期維護、資訊系統投
+資 
+2.5 
+5.16 
+22 
+運輸作業模式欠缺配
+適 
+溫度失控、配送延遲 
+7.6 
+特定運輸模式、溫度要求，欠
+缺共同標準 
+3.5 
+標準作業規範 
+4.8 
+6.17 
+12 
+製造商與物流中心欠
+缺溝通 
+配送延遲 
+5.4 
+資訊系統不相容、資訊溝通流
+程不當 
+6.7 
+資訊溝通分享 
+3.3 
+5.15 
+23 
+物流中心與零售商欠
+缺溝通 
+配送延遲 
+7.8 
+資訊系統不相容、資訊溝通流
+程不當 
+6.5 
+資訊溝通分享 
+2.8 
+5.56 
+18 
+環 
+境 
+政府法規 
+成本上升 
+8.5 
+經濟、環保、健康議題 
+2.0 
+環境掃瞄、市場分析 
+2.0 
+5.50 
+19 
+道路壅塞 
+配送延遲 
+5.8 
+特定運輸模式或時段 
+5.5 
+車輛途程分析 
+5.5 
+5.84 
+16 
+環境保護要求 
+成本上升 
+8.1 
+高耗能配送模式 
+7.2 
+資本投資、技術研發 
+3.5 
+6.46 
+10 
+天然災害 
+配送延遲、溫度失控 
+8.2 
+颱風、地震預測 
+2.1 
+環境掃瞄、市場分析 
+1.5 
+5.21 
+21 
+油價上升 
+成本上升 
+7.5 
+經濟、環保議題 
+7.1 
+環境掃瞄、市場分析 
+4.5 
+6.78 
+8 
+物流科技落伍 
+溫度失控、配送延遲、成
+本上升 
+8.0 
+溫度控制、資訊科技、運輸、
+搬運等設備落伍 
+3.5 
+資本投資、技術研發 
+4.5 
+5.86 
+15 
+ 
+156  管理與系統 
+
+冷鏈作業風險評估之研究  157 
+5. 結論與建議 
+5.1 結論與建議 
+隨著供應鏈全球化與消費者行為改變，複雜與長距離的物流過程，對於易腐保鮮商品的品質
+與安全，形成重大挑戰，冷鏈物流過程充滿許多潛在風險因子，造成物流系統失效，導致商品
+變異損壞，甚至造成商譽損失。因此，如何進行事前失效預防管理，成為重要的管理議題。 
+本研究結合FMEA 與模糊推論，建立模糊推論專家系統，針對冷鏈中潛在失效模式，進行
+風險值推論。研究結果發現，冷鏈過程中溫度失控為最重要失效模式，顯示冷鏈系統中，如何
+維持溫度的穩定性，成為冷鏈管理首要課題；另外研究結果亦指出，冷鏈物流上下游欠缺作業
+標準、即時、有效資訊溝通，為冷鏈系統重要失效模式，因此建立冷鏈物流的作業標準與資訊
+分享機制，成為提高冷鏈績效的重要議題；而近來受到氣候變遷，國際間著手管制溫室氣體排
+放，因此冷鏈業者必須體認到此趨勢，逐漸將節能減碳議題列入經營管理中。 
+本研究發展模糊推論系統評估風險，由於系統可不受限於傳統統計資料，許多假設限制與
+容易修改、彈性的優點，有別傳統數量模式與主觀經驗的風險評估模式，可提供一個精確與主
+動的冷鏈物流風險評估，對於組織，可以在有限的資源下，提供冷鏈風險，經濟有效的管理。
+針對研究結果與發現，本文最後提出一些建議，以作為改善冷鏈績效的參考： 
+(1) 標準建立 
+合理與效率化的流程，可以減少商品流動時間，減少失溫的機率及電力的耗費；正確的作
+業標準則可以降低錯誤機會，確保商品的信賴度。冷鏈過程可能跨越多個物流夥伴使用多重作
+業模式，若能制定整個冷鏈共同標準，例如擬定上下游間商品交驗方式與標準，制訂相同商品
+保鮮方法與條件，則可提高效率、減少成本。  
+(2) 資訊整合 
+冷鏈中許多商品具有季節性與易腐性，經常發生促銷、囤貨、退貨與報廢等狀況，因此面
+臨產銷不協調、銷售資訊不透明問題，資訊的透明度、即時性、正確性，就顯得特別重要，整
+合上下游或合作業者，提升需求預測的準確性，乃至於更彈性的調節存貨，將能降低風險，適
+度導入資訊科技，建置整合資訊與分享系統，例如冷鏈成員共同導入協同規劃、預測與補貨
+(collaborative planning forecasting and replenishment; CPFR) 模式，可減少銷售預測誤差、降低庫
+存、提高整體冷鏈績效。 
+(3) 溫度控制 
+保持商品鮮度與品質是冷鏈極大考驗，商品從製造商、物流中心到商店上架銷售，長期配
+送，期間溫度控制，對於商品品質造成關鍵性影響。近來許多研究探討導入先進的溫度控制技
+術，如RFID 結合溫度感應裝置，以提供量測、警示、保溫的功能來維持商品品質，日後可以結
+
+158  管理與系統 
+合smart shelf、smart box 與各種sensor，進行各種溫度控管。 
+5.2 研究限制與未來研究方向 
+本研究發展模糊推論專家，透過RPN，以比較各失效模式風險的高低，然RPN 數值是種相
+對的概念，企業在應用RPN 進行風險改善時，應注意RPN 的高低，在不同狀況下，可能意謂
+不同意義，進行改善順序排定時，可考慮改善投入成本與獲致效益，避免過度延伸。本研究以
+專家群組，鑑別出冷鏈潛在風險失效模式與因子，進而針對每個失效模式RPN，進行量化評比
+，由於專家系統風險推論，必須依賴大量資料與相關經驗知識，本研究限於資料的取得，對於
+各項指標的評估，可能無法達到完美，後續研究者可以透過建立數量模式，針對風險因子對於
+冷鏈績效進行探討，以暸解不同風險因子對於冷鏈系統的影響。 
+參考文獻 
+Abad, E., Palacio F., Nuin, M., González de Zárate, A., Juarros, A., Gómez, J. M., and Marco, S., 
+“RFID Smart Tag for Traceability and Cold Chain Monitoring of Foods: Demonstration in an 
+Intercontinental Fresh Fish Logistic Chain”, Journal of Food Engineering, Vol. 93, No. 4, 2009, 
+pp.394-399. 
+Bennett, J. C., Bohoris, G. A., Aspinwall, E. M., and Hall R. C., “Risk Analysis Techniques and Their 
+Application to Software Development”, European Journal of Operational Research, Vol. 95, No. 3, 
+1996, pp.467- 475. 
+Bogataj, M., Bogataj, L., and Vodopivec, R., “Stability of Perishable Goods in Cold Logistic Chains”, 
+International Journal of Production Economics ,Vol. 93-94, No. 1, 2005, pp. 345-356. 
+Cool Chain Association, http://www.coolchain.org/ 
+Chin, K. S., Wang, Y. M., Ka Kwai Poon, G., and Yang, J. B., “Failure Mode and Effects Analysis 
+using a Group-based Evidential Reasoning Approach”, Computers & Operations Research, Vol. 36, 
+No. 6, 2009, pp.1768-1779. 
+Chopra, S. and Sodhi, M. S., “Managing Risk to Avoid Supply-Chain Breakdown”, MIT Sloan 
+Management Review, Vol. 46, No. 1, 2004, pp.53-61. 
+Dahlenburg A., “Customising the Cold Chain for Your Export Product: A Scientific Perspective”, 
+Chain Logistics Conference, 2001, May 8-10. 
+Datamonitor, http://www.datamonitor.com/,2008. 
+Ebeling, C., An Introduction to Reliability and Maintainability Engineering, 3th ed., New York: Tata 
+McGraw-Hill Company Ltd, 2000. 
+
+冷鏈作業風險評估之研究  159 
+Gilchrist, W., “Modeling Failure Mode and Effect Analysis”, International Journal of Quality & 
+Reliability Management, Vol. 10, No. 5, 1993, pp. 16-23. 
+Hsu, B. M. and Shu, M. H., “Fuzzy Inference to Assess Manufacturing Process Capability with 
+Imprecise Data”, European Journal of Operational Research, Vol. 186, No. 2, 2008, pp. 652-670. 
+Lai, K. H., Ngai, E. W. T., and Cheng, T. C. E., “Measures for Evaluating Supply Chain Performance 
+in Transport Logistics”, Transportation Research Part E, Vol. 38, No. 6, 2002, pp. 439-456. 
+Kartam, N. A. and Kartam, S. A., “Risk and its Management in the Kuwaiti Construction Industry: 
+Contractors’ Perspective”, International Journal of Project Management, Vol. 19, No. 6, 2001, pp. 
+325-335. 
+Koivisto, R., Wessberg, N., Eerola, A., Ahlqvist, T., Kivisaari, S., Myllyoja, J., and Halonen, M., 
+“Integrating Future-oriented Technology Analysis and Risk Assessment Mmethodologies”, 
+Technological Forecasting & Social Change,Vol. 76, No. 9, 2009, pp. 1163–1176. 
+Kuo, J. C. and Chen, M. C., “Developing an Advanced Multi-temperature Joint Distribution System 
+for the Food Cold Chain”, Food Control, Vol. 21, No. 4, 2010, pp. 559-566. 
+Marcelloni, F. and Aksit, M., “Fuzzy Logic-based Object-oriented Methods to Reduce Quantization 
+Error and Contextual Bias Problems in Software Development”, Fuzzy Sets and Systems, Vol. 145, 
+No. 1, 2004, pp. 57-80. 
+Mason-Jones, R. and Towill, D., ‘‘Shrinking the Supply Chain Uncertainty Circle’’, Control, 
+September, 1998, pp. 17-22. 
+Montanari R., “Cold Chain Tracking:a Managerial Perspective”, Trends in Food Science & 
+Technology, Vol. 19, No. 8, 2008, pp. 425-431. 
+Oliva, F. and Revetria, R., “A System Dynamic Model to Support Cold Chain Management in Food 
+Supply Chain”, 12th WSEAS International Conference on SYSTEMS, Heraklion, Greece, July 
+22-24, 2008. 
+Pedrycz W. and Gomide F., Fuzzy System Engineering toward Human-centric Computing, John Wiley 
+& Sons, Inc. New Jersey, 2007. 
+Petrovic, D., Xie, Y., and Burnham, K., “Fuzzy Decision Support System for Demand Forecasting with 
+a Learning Mechanism”, Fuzzy Sets and Systems,Vol. 157,No. 12, 2006, pp. 1713-1725. 
+Piecyk, M. I. and Mckinnon, A. C., “Forecasting the Carbon Footprint of Road Freight Transport in 
+2020,” International Journal Production Economics, Vol. 128, No. 1, 2010, pp. 31-42. 
+Pillay, A. and Wang, J., “Modified Failure Mode and Effects Analysis using Approximate Reasoning”, 
+Reliability Engineering and System Safety, Vol. 79, No. 1, 2003, pp. 69-85. 
+
+160  管理與系統 
+Risk Management Standard AS/NZS 4360) Risk Management Standard AS/NZS 4360, Standards 
+Association of Australia, Sydney, 1999. 
+Sanchez-Rodrigues, V., Stantchev, D., Potter, A., Naim, M. M., and Whiteing, A., “ Establishing a 
+Transport Operation Focused Uncertainty Model for the Supply Chain”, International Journal of 
+Physical Distribution & Logistics Management, Vol. 38, No. 5, 2008, pp. 388-411. 
+Sanchez-Rodrigues, V., Potter, A., and Mohamed, M. A., “Evaluating the Causes of Uncertainty in 
+Logistics Operations”, The International Journal of Logistics Management, Vol. 21, No. 1, 2010, 
+pp. 45-64. 
+Stern, N., Stern Review: The Economics of Climate Change, HM Treasure, London.2006. 
+Stringer, M. F. and Hall, M. N., The Breakdowns in Food Safety Group, “A Generic Model of the 
+Integrated Food Supply Chain to Aid the Investigation of Food Safety Breakdowns”, Food Control, 
+Vol. 18, No. 7, 2007, pp. 755–765. 
+Tang, C. S., “Perspectives in Supply Chain Risk Management”, International Journal of Production 
+Economics, Vol. 103, No. 2, 2006, pp. 451-488. 
+Turan, M. E. and Yurdusev, M. A., “River Flow Estimation from Upstream Flow Records by Artificial 
+Intelligence Methods”, Journal of Hydrology, Vol. 369, No. 1-2, 2009, pp. 71-77. 
+Tuncel, G. and Alpanm, G., “Risk Assessment and Management for Supply Chain Networks: A Case 
+Study”, Computers in Industry, Vol. 61, No. 3, 2010, pp. 250-259. 
+White, D., “Application of Systems Thinking to Risk Management: A Review of the Literature”, 
+Management Decision, Vol. 3, No. 10, 1995, pp. 35-45. 
+Wu, J. D., Wang, Y. H., and Bai, M. R., “Development of an Expert System for Fault Diagnosis in 
+Scooter Engine Platform using Fuzzy-logic Inference”, Expert Systems with Applications, Vol. 33, 
+No. 4, 2007, pp. 1063–1075.

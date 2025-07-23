@@ -1,0 +1,706 @@
+Occupancy-Driven Energy Management
+for Smart Building Automation
+Yuvraj Agarwal, Bharathan Balaji, Rajesh Gupta, Jacob Lyles, Michael Wei, Thomas Weng
+Department of Computer Science and Engineering
+University of California, San Diego
+{yuvraj, bbalaji, jlyles, gupta, mwei, tweng}@ cs.ucsd.edu
+Abstract
+Buildings are among the largest consumers of electricity
+in the US. A signiﬁcant portion of this energy use in build-
+ings can be attributed to HVAC systems used to maintain
+comfort for occupants. In most cases these building HVAC
+systems run on ﬁxed schedules and do not employ any ﬁne
+grained control based on detailed occupancy information. In
+this paper we present the design and implementation of a
+presence sensor platform that can be used for accurate occu-
+pancy detection at the level of individual ofﬁces. Our pres-
+ence sensor is low-cost, wireless, and incrementally deploy-
+able within existing buildings. Using a pilot deployment of
+our system across ten ofﬁces over a two week period we
+identify signiﬁcant opportunities for energy savings due to
+periods of vacancy. Our energy measurements show that our
+presence node has an estimated battery lifetime of over ﬁve
+years, while detecting occupancy accurately. Furthermore,
+using a building simulation framework and the occupancy
+information from our testbed, we show potential energy sav-
+ings from 10% to 15% using our system.
+Categories and Subject Descriptors
+C.3 [Special-Purpose and Application-Based Sys-
+tems]: Real-time and Embeded Systems; J.7 [Computers
+in Other Systems]: [Industrial control]
+General Terms
+Design, Management, Human Factors
+Keywords
+Occupancy Detection System, Wireless Sensor Network,
+HVAC Control System
+Permission to make digital or hard copies of all or part of this work for personal or
+classroom use is granted without fee provided that copies are not made or distributed
+for proﬁt or commercial advantage and that copies bear this notice and the full citation
+on the ﬁrst page. To copy otherwise, to republish, to post on servers or to redistribute
+to lists, requires prior speciﬁc permission and/or a fee.
+BuildSys 2010 November 2, 2010, Zurich, Switzerland.
+Copyright c⃝2010 ACM 978-1-4503-0458-0/10/11/02...$10.00
+1
+Introduction
+Buildings are known to be one of the largest consumers
+of electricity; the US Department of Energy estimates that
+buildings consume 70% of the electricty in the US [9]. Re-
+cent efforts have focused on making buildings more en-
+ergy efﬁcient, including research that target speciﬁc areas
+such as HVAC [10][12], lighting [8] and managing IT en-
+ergy consumption [2][1] within buildings. The energy us-
+age in a building can typically be divided amongst several
+subsystems, including plug loads, lighting, and mechani-
+cal equipment used for climate control [14].
+Mechanical
+equipment includes the combined heating, ventilation, and
+air-conditioning (HVAC) loads and constitutes a signiﬁcant
+amount of energy consumption.
+Therefore HVAC systems are a prime target for optimiza-
+tion using dynamic control algorithms that can be imple-
+mented using a deeply coupled network of sensors (to mea-
+sure environmental parameters such as temperature) and ac-
+tuators (to affect the environment such as fans and chillers).
+Traditionally, most HVAC systems use only temperature and
+humidity as the primary inputs in determining cooling re-
+quirements [4]. This limitation can often lead to inefﬁcient
+energy usage. For example, a room might be cooled to 22.9C
+regardless of whether there are any occupants.
+In this paper we show that incorporating additional inputs
+to the HVAC controller is critical for increasing its energy ef-
+ﬁciency. We believe that one of the key inputs to drive HVAC
+systems is ﬁne grained occupancy information.
+Unfortu-
+nately, most occupancy sensors currently installed within
+buildings are fairly coarse-grained and inaccurate. Further-
+more, these occupancy sensors are usually local in scope and
+only control lighting. Passive infrared (PIR) based sensors
+are often used (especially with local lighting) for occupancy;
+however, by itself PIR is limited to movement and does not
+detect actual occupancy in a given area. More advanced sys-
+tems have been deployed, such as using cameras and vision
+algorithms, but these systems suffer from deployability, cost
+and privacy issues. In order to maximize the energy savings
+and spur rapid adoption we believe it is imperative to have
+an occupancy detection system that is accurate, inexpensive
+and easily deployable within existing buildings.
+This paper focuses on an occupancy detection system that
+we have implemented with these goals in mind and its evalu-
+ation in terms of energy savings. We ﬁrst describe the design
+of our low-cost wireless occupancy sensor with an empha-
+1
+
+Jun 14 2010
+Jun 16 2010
+Jun 18 2010
+Jun 20 2010
+Jun 22 2010
+Jun 24 2010
+Jun 26 2010
+50
+100
+150
+200
+Power Usage (kW)
+Plug Load
+Machine Room Load
+Lighting Load
+HVAC Load (Electrical)
+HVAC Load (Thermal)
+Figure 1. Detailed energy-use breakdown of the CSE department building for 2 weeks in June 2010. The HVAC loads
+have been broken down into two categories: ‘electrical’ such as pumps, chillers, fans and ‘thermal’ as denoted by the
+amount of heat taken out from the campus chilled water loop, expressed in KW.
+sis on accurate occupancy detection. We then describe our
+wireless network infrastructure used to collect occupancy in-
+formation. We evaluate our system in terms of accuracy and
+energy-efﬁciency and show that not only is our wireless oc-
+cupancy system low-cost, it can accurately detect the pres-
+ence/absence of occupants in individual ofﬁces. Finally, we
+evaluate our HVAC control system using Energy Plus, and
+quantify how occupancy information provided by our sens-
+ing platform can be used to reduce building energy use by
+10% to 15%, and possibly more depending on the actual
+HVAC system.
+2
+Background
+Using occupancy as a driver for intelligent control of
+HVAC and lighting systems has been explored previously.
+Prior research in HVAC control systems shows that occu-
+pancy information can be used to drive a more optimized
+HVAC schedule [15][20]. However, due to the difﬁculty in
+obtaining real time accurate occupancy data, many of these
+techniques focus on using pre-determined schedules. Many
+modern buildings use passive infrared sensors (PIR) to drive
+lighting; the PIR sensors are connected directly to local light-
+ing ﬁxtures and are rarely used for intelligent HVAC man-
+agement. These PIR sensors are also simple movement sen-
+sors and often cannot actually determine if the room is oc-
+cupied or not. Thus most use a timeout for shutting off the
+lights (30 minutes is common) which can be sub-optimal.
+Other methods for detecting occupancy include using sonar-
+based methods [17] or camera based systems [18] that bring
+up concerns relating to cost, deployment and privacy issues.
+CO2-based occupancy detection has also been examined -
+the main limitation of these systems is that they are very slow
+to detect events such as incoming people [19].
+Many modern buildings already contain a limited number
+of wired sensors as part of a wired control system such as
+BACnet or LonWorks. A major barrier to more widespread
+deployment of sensors, however, is installation costs due to
+the need for additional wiring for each sensor. The advent of
+low-cost wireless sensor networks has enabled wider deploy-
+ment opportunities of a large number of connected sensors
+[11] thus allowing for improved sensing (such as occupancy
+detection) in buildings. Padmanabh et al., for example, in-
+vestigated using microphones and PIR sensors to drive more
+efﬁcient scheduling of conference rooms [16]. Delaney et
+al. used PIR based wireless occupancy sensors to measure
+wasted energy in lighting even when there are no occupants
+[8]. These efforts however neither use occupancy informa-
+tion to drive actual systems nor evaluate accuracy of their
+detection sensor. Erickson et al. proposed a wireless net-
+work of cameras (which have the aforementioned privacy
+and cost issues) to determine real-time occupancy across a
+larger area in a building [10], focusing more towards coarse-
+grained ﬂoor-level occupancy detection.
+Several efforts have looked at using occupancy data in
+the context of a home, as opposed to a mixed-use build-
+ing. Gao et al. sought to use coarse occupancy data (leave
+home, return home) to drive a self-programming home ther-
+mostat [12]; however the focus is on the thermostat self-
+programming algorithms, and not on obtaining accurate oc-
+cupancy. Barbato et al. used PIR sensing to determine oc-
+cupancy in their smart building system; once again the focus
+was on algorithms supporting user proﬁles [5]. In either case,
+the scenario of a home (with a few occupants) as compared
+to a large building (with many occupants) is very different.
+In order to quantify the potential savings that an occu-
+pancy driven HVAC system can have over a traditional sys-
+tem, we needed to measure the total energy used by the
+HVAC system as a fraction of the entire building energy
+use.
+At UC San Diego, we have instrumented the Com-
+puter Science and Engineering (CSE) building with several
+electricity and thermal submeters as part of our campus-
+wide Energy Dashboard effort [3]. The CSE building is a
+typical mixed-use building with people and supporting IT
+infrastructure. Completed in 2005, it is one of the newer
+buildings on the UCSD campus. As a result CSE was de-
+signed with energy efﬁciency in mind and hence uses tech-
+niques such as dynamic window shading, centralized venti-
+lation and cooling/heating thermal requirements driven from
+a campus-wide chilled/hot water loop.
+Figure 1 illustrates the energy use breakdown for the CSE
+building over two weeks in June 2010. We provide the break-
+down of CSE in terms of several subsystems: ‘Machine
+Room Load’ which includes the energy consumed by the
+servers and the server room cooling fans, ‘Plug Load’ which
+mostly includes PCs and IT equipment plugged into the wall
+sockets, ‘Lighting Load’ and ﬁnally the ‘HVAC load’. The
+HVAC related loads are divided into two categories: ‘HVAC
+2
+
+PIR Sensor
+CC2530 SoC Board
+Reed Switch
+Prototype Case 
+Figure 2. Picture of the Synergy occupancy sensor node.
+(Electrical)’ which denotes the electricity used to drive the
+mechanical and air handling equipment such as fans, pumps
+and dampers while the ‘HVAC (Thermal)’ load denotes the
+amount of heat transferred to the campus chilled water loop
+to cool the air. Since the thermal energy to cool (and heat) the
+building is derived from the campus chilled (hot) water loop,
+we convert the thermal load, measured in MMBTUs, into
+KW required to produce equivalent refrigeration using the
+campus central heat-exchanging plant (which has an overall
+efﬁciency of 0.9KW/tonne of refrigeration).
+As can be observed from Figure 1, more than 50% of the
+CSE electrical load is IT related – ‘Plug Load’ and the ‘Ma-
+chine Room Load’. Lighting consumes another 10% to 14%
+of the baseline electrical usage. Interestingly, the HVAC re-
+lated electrical loads (HVAC-Electrical) exhibits large varia-
+tions and consume between 9% to 22% of the baseline elec-
+tricity usage. The ﬁgure shows that this load is managed
+fairly well since during the nights and weekends (low occu-
+pancy) it goes down to less than 25kW as compared to during
+the weekdays (high occupancy) when the load is often close
+to 100kW. However, the ‘HVAC thermal’ load remains be-
+tween 110kW to 175kW even during nights and weekends.
+A large portion of this is due to the cooling load required
+by the machine room servers (close to a constant 60kW) and
+the rise during the weekdays to around 175kW is primarily
+due to the cooling requirement in ofﬁces. This data clearly
+shows that the HVAC system consumes signiﬁcant energy
+and using occupancy information to drive HVAC reduction
+can lead to substantial energy and cost savings.
+3
+Building Occupancy System
+Our design of an occupancy detection system for build-
+ings was based around several key objectives.
+First, we
+wanted to make the system as low cost as possible to spur
+deployment across a building wide scale, and as a result we
+aimed to keep the bill of materials for each node low. Sec-
+ond, we wanted the system to be incrementally deployable
+within existing buildings, without requiring large scale mod-
+iﬁcations such as new wiring. Finally, the occupancy de-
+tection algorithms should be very accurate since it is key
+in minimizing false-positives (which increases energy use),
+and more importantly false-negatives (which may lead to dis-
+comfort) when controlling the HVAC system.
+Synergy Presence Node Design: Based on the above re-
+quirements we chose to build our occupancy platform us-
+ing a combination of sensors: a magnetic reed switch door
+sensor and a PIR sensor module. As we show later in our
+evaluation, using these two sensors enabled highly accurate
+occupancy detection. For deployability reasons, the natu-
+ral choice was to use a wireless solution. We chose the TI
+CC2530 System-on-Chip since it integrates an 8051 micro
+controller core with an 802.15.4 standard compatible radio
+in a small footprint and low-cost package. We have based
+our presence platform on the TI reference design, with some
+changes to accommodate our sensors. For cost reasons we
+used a printed antenna on the PCB itself and brought out
+several GPIOs that connect to the reed switch, which gets
+triggered by a small magnet attached to the door to each in-
+dividual ofﬁce. The board is powered off using three off-the-
+shelf AA 2850 mAH alkaline batteries. The board, batteries
+and the sensors are all placed in a case that we have fabri-
+cated. Figure 2 shows a photo of our prototype and the en-
+closure mounted ﬂush with the door frame. Keeping in mind
+the design goal of making our platform low cost, the total
+bill of material per node (in quantities of 1000) is under 15$
+including the cost of the CC2531 chip, sensors and the cost
+of fabricating the PCB.
+Occupancy Detection Algorithm:
+We use the reed
+switch and the PIR sensors together to improve the accuracy
+of occupancy detection. The reed switch and the PIR sensor
+are both connected to interrupt-enabled GPIO pins on the
+CC2530 micro controller. The reed switch is able to sense
+when the door is open or closed. When the door is open, we
+mark the room as occupied. This is based on the fact that for
+a typical ofﬁce building an open door denotes the occupant
+being in the ofﬁce or being somewhere nearby. Similarly
+when people leave an extended period of time (such as the
+end of the day) they typically close the door to their ofﬁces
+for security reasons.
+When a door close event happens, there are two possibili-
+ties. Either the person closed the door and headed out (room
+unoccupied) or the person just closed the door and is still
+inside the room (room occupied). To disambiguate between
+these two cases we use the PIR sensor to determine if some-
+one walked near the door. If the PIR sensor goes high this
+means that there is still a person in the room and we mark
+the room as occupied. If the PIR sensor does not detect mo-
+tion, then we decide that there is no occupant in the room.
+PIR sensors do exhibit some noise, and the air currents of a
+passing person may cause it to trigger. To compensate we
+have developed a simple algorithm that will ignore the ﬁrst
+six seconds of pulses from the PIR sensor and sample con-
+stantly for two seconds after that. We map the pulses to the
+pulse pattern of a passing occupant compared to no occupant
+to determine if there is a person in the room or not.
+There is one scenario where we will incorrectly declare
+a closed room to be unoccupied.
+If a visitor closes the
+door while the main occupant of a room is sitting still at his
+desk (such as typing on the computer), the PIR sensor will
+likely not detect movement and thus determine to room to be
+empty. To compensate, we turn on the PIR interrupt when-
+ever we mark a room as closed and unoccupied. If we detect
+movement the CC2530 will wake up, poll the PIR and check
+3
+
+SNR (dBm)
+>35 dBm
+25-35 dBm
+15-25 dBm
+5-15 dBm
+1-5 dBm
+<1 dBm
+Base Station
+Node
+Figure 3. Layout of our test deployment.
+the resultant pulse pattern for occupancy. If it passes, we de-
+termine the room to be actually occupied. While we assume
+that an open door means the room is occupied, we have also
+developed an algorithm that does not make that assumption.
+In buildings where open doors do not necessarily mean oc-
+cupied, we revert to determining occupancy by using a 30
+minute timeout, similar to how PIR-only sensors are run.
+Our sensor module shares some similarities with a com-
+mercial sensor manufactured by Honeywell [13], which also
+uses a door sensor coupled with a PIR sensor. However this
+sensor is limited to only interacting with a remote setback de-
+vice over a proprietary wireless protocol and is speciﬁcally
+meant for local control of a home-based HVAC system. It
+also requires signiﬁcantly higher installation costs and is not
+meant for larger commercial buildings.
+Wireless Network and Occupancy Server: We have de-
+signed our wireless network infrastructure as a tiered topol-
+ogy.
+Each of our wireless Synergy presence nodes com-
+municate with their local base station over the 802.15.4 ra-
+dio using the ZigBee protocol. While there are other op-
+tions such as 6LoWPAN, we chose ZigBee because the stack
+is provided by TI free of cost and is certiﬁed by the Zig-
+Bee Alliance. The wall-powered base stations are imple-
+mented as low-power small form factor PCs with a similar
+CC2530 based radio plugged in over USB. The network is
+self-organizing. When a Synergy presence node powers on,
+it automatically connects to the nearest base station with the
+preset parameters (a speciﬁc extended PID and cluster ID).
+Once connected it will send occupancy data to its parent base
+station.
+There can be multiple base stations on a ﬂoor of a large
+building, and each base stations is connected to the building
+backbone network using either Wi-Fi or Ethernet. Although
+the base stations are capable of doing some pre-processing
+with the occupancy data (such as algorithms to control a se-
+ries of actuators in a speciﬁc location), they currently act as
+relays to send the data received from the Synergy presence
+nodes to a central server (a DELL PowerEdge R700). A pro-
+cess on the server then stores the data into a central database.
+We can then analyze the occupancy data in real time to de-
+termine the appropriate actuator actions. For example, in our
+HVAC control system the two options are to run the HVAC
+system to achieve a set point temperature when the particu-
+lar ofﬁce is occupied, or reduce cooling to drift to the setback
+temperature during unoccupied periods.
+We have written an application that does just this, but
+do not currently interface directly with the building HVAC
+7/26/2010
+7/28/2010
+7/30/2010
+8/1/2010
+8/3/2010
+8/5/2010
+Profes
+sor
+Graduate 
+Student 
+Researcher 
+Shared 
+Office 
+Professor 
+Figure 4. Occupancy over ten days for an example set of
+four rooms.
+system to perform actuations based on occupancy since that
+could potentially lead to user annoyances during our experi-
+mentation phase. We are however investigating mechanisms
+that would allow interfacing, on a limited scale of a sin-
+gle ﬂoor, with the MetaSys building management system.
+Meanwhile, we use this occupancy information as inputs to a
+detailed simulation framework that we have built to quantify
+the expected energy savings as described in the next section.
+We have also implemented a website that allows this occu-
+pancy information to be observed in real time using the ﬂoor
+plan of our building. Due to the expected privacy issues that
+may arise, we have currently restricted access to this website
+to the building administrators in case it is needed for emer-
+gency response conditions.
+4
+Results and Evaluation
+In this section we describe the results of our pilot deploy-
+ment of the Synergy presence nodes. We then evaluate our
+system for accuracy and energy consumption. We ﬁnally
+simulate the deployment using EnergyPlus in order to quan-
+tify the potential energy savings of using our Synergy pres-
+ence detection system.
+4.1
+Test Deployment and Results
+We deployed our system across one of the wings of the
+CSE building and collected data for several ofﬁces over two
+weeks. Figure 3 shows the ﬂoor layout with the Synergy
+presence nodes marked. The rooms that were monitored in-
+clude several faculty ofﬁces, two shared student ofﬁces, a
+small workshop laboratory, a computer room, and a small
+conference room. Figure 4 shows the occupancy data col-
+lected for several of those rooms over ten days at the end
+of July. As this data was recorded in the summer, the oc-
+cupancy patterns will be different from the school year, but
+some interesting observations can still be seen. Professors
+tended to be absent for long stretches of time, which sup-
+ports the theory that it is always hard to ﬁnd one’s advisor.
+Shared ofﬁces tended to be occupied for long periods of time,
+as someone was likely to be in it. Almost all the occupants
+would leave their ofﬁces for an hour or more for lunch or
+meetings several days of the week. Throughout each day,
+there were still many periods of vacancy for all of the de-
+ployed rooms. These large periods of unoccupancy suggest
+that occupancy can be an effective driver of HVAC systems.
+4
+
+9:36
+14:24
+19:12
+0:00
+4:48
+9:36
+Synergy 
+Node 
+PIR Only 
+Actual  
+Occupancy 
+Figure 5.
+Graph showing accuracy of our system vs.
+ground truth and the PIR-only node.
+4.2
+Accuracy
+Detailed accurate occupancy information is critical in or-
+der to achieve any occupancy-driven control system. Over
+two days we constantly monitored the hallway to record the
+actual occupancy for each of the rooms. This gives us ground
+truth with which to compare our sensor readings. In order to
+compare our system with commonly deployed PIR sensors,
+we also monitor the room with a PIR-only sensor using a 30
+minute timeout (the sensor will consider the room occupied
+up to 30 minutes after the last detected movement).
+Figure 5 compares the actual occupancy with our Synergy
+presence and the PIR-only sensor node. We notice that our
+sensor node matches the actual occupancy well, with the ex-
+ception of periods where the occupant leaves the room for
+a few minutes but leaves his door open. We also see a few
+instances where the sensor detected an unoccupied room that
+was actually occupied. This happened because a visiting stu-
+dent closed the door of the ofﬁce while the occupant was on
+his computer. It was not until a few minutes later that the
+PIR interrupted the CC2530 and the Synergy sensor node
+detected the occupant.
+The PIR-only sensor is considerably less accurate, mark-
+ing the room as occupied for long periods when the room is
+actually unoccupied. Also for small periods of time, the PIR-
+only sensor actually marks the room as unoccupied when
+there is still an occupant. This can happen when the occu-
+pant remains relatively still (such as typing at a computer)
+for a long period of time. The PIR-only sensor will not detect
+the movement and thus assume that the room is unoccupied
+after 30 minutes of inactivity. Note, the timeout period can
+of course be adjusted, but a trade off occurs between greater
+energy savings and inconveniencing the occupant.
+4.3
+Energy Consumption and RF Range
+To ease deployability our presence nodes are wireless
+and battery powered, which requires careful consideration
+of their energy consumption to ensure long lifetimes. Our
+choice of components, including the CC2531 SoC, the PIR
+and the reed sensor, reﬂect that goal as all of these parts have
+low power consumption. We utilized the deep sleep modes
+supported by the CC2531 micro controller extensively, and
+made sure that the presence nodes operate at low duty cycles
+(we use an interrupt driven architecture as opposed to polling
+the sensors constantly). We measured the current consump-
+tion of our sensor using a FLUKE digital multimeter. In deep
+sleep mode the entire presence node consumes 30uA at 4.5V.
+On detecting any activity, the PIR sensor consumes 350uA.
+Furthermore, if an event is detected, the sensors wakeup the
+CC2531 to process the event and transmit a packet to the base
+station, and the power consumption rises to 29mA for the
+duration of the transmission. Conservatively, if a presence
+sensor has to detect 50 events during each day, we calculate
+a battery lifetime of 7.27 years using our current 2850mAh
+batteries based on these measurements, which exceeds the
+lifetime of the battery itself.
+Since we opt for a low-cost PCB antenna, the radio range
+will be limited compared to a more costly antenna. To deter-
+mine the range, we measured the signal-to-noise ratio (SNR)
+from the node to the base station using the reported values
+from the CC2530 to determine base station coverage. Below
+5 dBm, the connection between the base station and the node
+became unreliable and intermittent. Above 15 dBm, the con-
+nection was stable and maintained a consistent throughput
+of about 7 KB/s. Our analysis shows that a single base sta-
+tion sufﬁces to cover 1/3 of a ﬂoor in the building (Figure 3),
+and therefore we believe three to four base stations will be
+enough to provide coverage to an entire ﬂoor.
+4.4
+Simulation
+In order to demonstrate the beneﬁts of our Synergy pres-
+ence system, we simulate an example building along with
+its HVAC energy consumption. We use EnergyPlus, which
+is the US Dept of Energy’s next-generation building energy
+simulation program [7] that improves on previous simula-
+tors such as BLAST and DOE-2.2 [6]. EnergyPlus allows
+the user to model a building, deﬁne thermal/HVAC zones,
+and incorporate various HVAC systems. The user also spec-
+iﬁes schedules that detail occupancy, control set points, and
+other internal loads that affect heat gain. With the input data
+deﬁned, EnergyPlus can simulate thermal conditions for the
+building and its zones and the HVAC operations required to
+maintain the temperatures in the building.
+4.4.1
+Simulation Parameters
+We model a simple single ﬂoor building that mirrors the
+ﬂoor plan of our deployed wing of the CSE building (the sim-
+ulated building contains several ofﬁces, a conference room,
+some shared labs/ofﬁces, and an outside hallway area). The
+occupancy rates for the ofﬁces and lab rooms in the simula-
+tion come from the occupancy data we collected in our de-
+ployment. We simulate this building for HVAC energy costs
+using both a baseline mode where HVAC is turned on during
+working hours the entire time at 22.9C and our HVAC con-
+trol system that turns on the system when there is occupancy
+and throttles it back when there is no detected occupancy.
+We set a temperature for 22.9C for occupied operation and
+26.1C for the setback. The actual HVAC system we model
+is an idealized air-ﬂow that assumes perfect efﬁciency. We
+simulate this building over four months in the summer using
+a weather ﬁle from a typical warm city.
+4.4.2
+Simulation Results
+Our results are shown in Figure 6. The graph shows that
+the daily HVAC savings using our occupancy system is be-
+tween 10% to 15%. The variations depend on the speciﬁc
+temperature for that day.
+The signiﬁcant energy savings
+5
+
+0.00%
+2.00%
+4.00%
+6.00%
+8.00%
+10.00%
+12.00%
+14.00%
+16.00%
+18.00%
+20.00%
+ 06/01
+ 06/07
+ 06/13
+ 06/19
+ 06/25
+ 07/01
+ 07/07
+ 07/13
+ 07/19
+ 07/25
+ 07/31
+ 08/06
+ 08/12
+ 08/18
+ 08/24
+ 08/30
+ 09/05
+ 09/11
+ 09/17
+ 09/23
+ 09/29
+Percentage Savings on Cooling 
+Date 
+Figure 6. Graph showing energy savings using our occu-
+pancy system over the summer.
+come from the fact that the building can save energy when a
+room is not occupied by lowering cooling. Our control pro-
+cedure was merely to throttle back cooling to 26.1, however
+more aggressive and optimized HVAC operation schemes
+can be implemented that will save even more energy. The ac-
+tual amount of energy savings depends on the building con-
+struction, speciﬁc HVAC system being used, the occupancy
+schedule, and many other factors, but regardless of the spe-
+ciﬁc parameters, our simulations show that the opportunity
+for savings is clearly there. Given that HVAC related loads
+consumes over 400 kW in our CSE building, a 15% reduc-
+tion will lead to an estimated savings of 480 kWh over an 8
+hour day.
+5
+Conclusions and Future Work
+In this paper we have presented the design and imple-
+mentation of a low-cost and incrementally deployable occu-
+pancy detection system using battery operated wireless sen-
+sor nodes. Our evaluation across a ten room initial deploy-
+ment shows that our choice of sensors and occupancy de-
+tection algorithm can detect occupancy accurately. Using
+this occupancy information as input to a simulation model
+of a building, we show that the HVAC energy consumption
+can in fact be reduced from 10% to 15% using our system.
+We also believe that the actual energy savings might even
+be greater with more aggressive control algorithms that can
+utilize the occupancy information provided by our sensors to
+duty-cycle HVAC systems further. Going forward we will
+expand our sensor package to account for people counting,
+not just binary occupancy data. We are also actively looking
+into robust privacy controls.
+6
+Acknowledgments
+We wish to thank Robert Austin, Walter Richardson, and
+John Dilliott at UCSD Physical Plant Services who assisted
+with the energy calculations. We would also like to thank
+Jawon Lee for her assistance in setting up the servers. This
+work is supported by Multiscale Systems Center (MuSyc)
+under the Focus Center Research Program (FCRP) sup-
+ported by DARPA/MARCO and also NSF CCF/SHF Grant
+1018632.
+7
+References
+[1] Y. Agarwal, S. Hodges, R. Chandra, J. Scott, P. Bahl, and R. Gupta.
+Somniloquy: Augmenting Network Interfaces to Reduce PC Energy
+Usage. In Proceedings of USENIX Symposium on Networked Systems
+Design and Implementation (NSDI ’09), 2009.
+[2] Y. Agarwal, S. Savage, and R. Gupta. SleepServer: A Software-Only
+Approach for Reducing the Energy Consumption of PCs within En-
+terprise Environments. In Proceedings of USENIX Annual Technical
+Symposium (USENIX ATC ’10), 2010.
+[3] Y. Agarwal, T. Weng, and R. Gupta. The Energy Dashboard: Improv-
+ing the Visibility of Energy Consumption at a Campus-Wide Scale.
+In First ACM Workshop on Embedded Sensing Systems For Energy-
+Efﬁciency In Buildings, 2009.
+[4] ASHRAE. ASHRAE Standard 90.1-2004.
+[5] A. Barbato, L. Borsani, A. Capone, and S. Melzi. Home energy saving
+through a user proﬁling system based on wireless sensors. Conference
+On Embedded Networked Sensor Systems, pages 49–54, 2009.
+[6] D. Crawley, J. Hand, M. Kummert, and B. Grifﬁth. Comparison of
+Capabilities of 20 Building Simulation Programs.
+[7] D. Crawley, L. Lawrie, and et. al. Energyplus, a new-generation build-
+ing energy simulation program. In Proceedings of the Renewable and
+Advanced Energy Systems for the 21st Century, April 1999.
+[8] D. T. Delaney, G. M. P. O’Hare, and A. G. Ruzzelli. Evaluation of
+energy-efﬁciency in lighting systems using sensor networks. Proceed-
+ings of the First ACM Workshop on Embedded Sensing Systems for
+Energy-Efﬁciency in Buildings, pages 61–66, 2009.
+[9] DOE. Buildings Energy Data Book, Department of Energy, March
+2009. http://buildingsdatabook.eren.doe.gov/.
+[10] V. L. Erickson, Y. Lin, A. Kamthe, R. Brahme, A. Surana, A. E. Cerpa,
+M. D. Sohn, and S. Narayanan. Energy efﬁcient building environment
+control strategies using real-time occupancy measurements. Proceed-
+ings of the First ACM Workshop on Embedded Sensing Systems for
+Energy-Efﬁciency in Buildings, pages 19–24, 2009.
+[11] D. Estrin, L. Girod, G. Pottie, and M. Srivastava. Instrumenting The
+World With Wireless Sensor Networks. In International Conference
+on Acoustics, Speech, and Signal Processing (ICASSP 2001), pages
+2033–2036, 2001.
+[12] G. Gao and K. Whitehouse. The self-programming thermostat: op-
+timizing setback schedules based on home occupancy patterns. Pro-
+ceedings of the First ACM Workshop on Embedded Sensing Systems
+for Energy-Efﬁciency in Buildings, pages 67–72, 2009.
+[13] Honeywell.
+Honeywell WSK-24 Wireless Occupancy Solu-
+tion.
+http://specifyhoneywell.com/customer/techlit/pdf/
+63-0000s/63-4519.pdf.
+[14] J. Kleissl and Y. Agarwal. Cyber-Physical Energy Systems: Focus
+on Smart Buildings. In Proceedings of the ACM/EDAC/IEEE Design
+Automation Conference, 2010.
+[15] L. J. Lo and A. Novoselac. Localized air-conditioning with occupancy
+control in an open ofﬁce. Energy and Buildings, 2010.
+[16] K. Padmanabh, A. M. V, S. Sen, S. P. Katru, A. Kumar, S. P. C, S. K.
+Vuppala, and S. Paul. isense: A wireless sensor network based confer-
+ence room management system. Proceedings of the First ACM Work-
+shop on Embedded Sensing Systems for Energy-Efﬁciency in Build-
+ings, pages 37–42, 2009.
+[17] S. P. Tarzia, R. P. Dick, P. A. Dinda, and G. Memik. Sonar-based
+measurement of user presence and attention. UbiComp, pages 89–92,
+2009.
+[18] T. Teixeira and A. Savvides. Lightweight people counting and local-
+izing for easily deployable indoors wsns. IEEE Journal of Selected
+Topics in Signal Processing, 2(4):493–502, August 2008.
+[19] S. Wang and X. Jin. Co 2-based occupancy detection for on-line out-
+door air ﬂow control. Indoor and Built Environment, 7(3):165–181,
+1998.
+[20] Y. Zhu, M. Liu, and et. al. Optimization of Control Strategies for
+HVAC Terminal Boxes. In Proceedings of 12th Symposium on Im-
+proving Building Systems in Hot and Humid Climates.
+6
