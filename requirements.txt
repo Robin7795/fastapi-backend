@@ -1,30 +1,50 @@
+# 基礎建構
 setuptools>=65.5.0
 wheel
-annotated-types==0.7.0
-anyio==4.5.2
-certifi==2025.7.14
-click==8.1.8
-colorama==0.4.6
-distro==1.9.0
-exceptiongroup==1.3.0
-faiss-cpu==1.7.4
+
+# FastAPI 相關
 fastapi==0.116.1
-h11==0.16.0
-httpcore==1.0.9
-httpx==0.28.1
-idna==3.10
-jiter==0.9.1
-lxml==6.0.0
+uvicorn==0.33.0
+python-multipart
+starlette==0.44.0
+
+# 向量查詢與模型
+faiss-cpu==1.7.4
+sentence-transformers==2.2.2
 numpy==1.24.4
-openai==1.97.0
-packaging==25.0
-pydantic==2.10.6
-pydantic-core==2.27.2
+
+# PDF、Word 處理
 PyMuPDF==1.24.11
 python-docx==1.1.2
-python-multipart==0.0.20
-sniffio==1.3.1
-starlette==0.44.0
+lxml==4.9.3
+
+# OpenAI API
+openai==1.97.0
+
+# 網路與請求處理
+httpx==0.28.1
+httpcore==1.0.9
+h11==0.16.0
+idna==3.10
+certifi==2025.7.14
+
+# 資料處理與輔助工具
 tqdm==4.67.1
+click==8.1.8
+packaging==25.0
+distro==1.9.0
+colorama==0.4.6
 typing-extensions==4.13.2
-uvicorn==0.33.0
+
+# Pydantic 2.x 架構
+pydantic==2.10.6
+pydantic-core==2.27.2
+annotated-types==0.7.0
+
+# 其他相依
+anyio==4.5.2
+sniffio==1.3.1
+exceptiongroup==1.3.0
+
+# 你原本的自訂或實驗模組
+jiter==0.9.1  # 若實際無使用可移除
