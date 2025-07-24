@@ -135,8 +135,11 @@ def query_text(request: QueryRequest):
     D, I = index.search(query_vec, k=3)
     matched_contexts = [metadatas[i]["content"] for i in I[0] if i < len(metadatas)]
 
-    prompt = f"以下是相關資料：\n{'\n\n'.join(matched_contexts)}\n\n請根據上面的內容回答問題：{question}，越詳細越好"
-
+    prompt = (
+    "以下是相關資料：\n"
+    + "\n\n".join(matched_contexts)
+    + f"\n\n請根據上面的內容回答問題：{question}，越詳細越好")
+    
     try:
         response = model_gemini.generate_content(prompt)
         return {"answer": response.text, "matched_documents": matched_contexts}
